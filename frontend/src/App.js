@@ -234,12 +234,30 @@ function App() {
 
   // Flight search state
   const [flightSearch, setFlightSearch] = useState({
+    tripType: 'oneway', // oneway, return, multicity
     origin: '',
     destination: '',
     departure_date: '',
     return_date: '',
-    passengers: 1,
-    class_type: 'economy'
+    passengers: {
+      adults: 1,
+      children: 0,
+      infants: 0
+    },
+    class_type: 'economy',
+    specialFares: {
+      seniorCitizen: false,
+      student: false,
+      armedForces: false
+    },
+    preferences: {
+      directFlights: false,
+      flexibleDates: false
+    },
+    multiCityFlights: [
+      { origin: '', destination: '', departure_date: '' },
+      { origin: '', destination: '', departure_date: '' }
+    ]
   });
   const [flightResults, setFlightResults] = useState([]);
   const [flightSearching, setFlightSearching] = useState(false);
