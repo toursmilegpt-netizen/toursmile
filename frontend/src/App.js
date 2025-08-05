@@ -1199,7 +1199,7 @@ function App() {
                           ...flightSearch,
                           preferences: {...flightSearch.preferences, flexibleDates: e.target.checked}
                         })}
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"
+                        className="rounded border-gray-300 text-blue-600 focus:ring-orange-500 mr-2"
                       />
                       <span className="text-sm text-gray-700">Flexible Dates</span>
                     </label>
