@@ -254,13 +254,13 @@ EXPERTISE TO SHARE:
 Always be helpful, ask relevant questions, and provide expert travel guidance."""
 
         llm_chat = LlmChat(
+            api_key=OPENAI_API_KEY,
             session_id=session_id,
-            system_message=expert_system_prompt,
-            api_key=OPENAI_API_KEY
-        )
+            system_message=expert_system_prompt
+        ).with_model("openai", "gpt-4o")
         
-        user_message = UserMessage(message)
-        response = llm_chat.chat([user_message])
+        user_message = UserMessage(text=message)
+        response = await llm_chat.send_message(user_message)
         
         return response
         
