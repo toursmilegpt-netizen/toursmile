@@ -1468,21 +1468,90 @@ function App() {
                 </div>
                 
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Select Location</label>
-                  <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                    <input
-                      type="text"
-                      placeholder="Enter city name"
-                      value={selectedLocation}
-                      onChange={(e) => setSelectedLocation(e.target.value)}
-                      className="flex-1 p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white/50"
-                    />
-                    <button
-                      onClick={() => getActivities(selectedLocation)}
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 sm:py-4 rounded-xl hover:from-blue-700 hover:to-purple-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                    >
-                      Search
-                    </button>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Select Global Destination</label>
+                  <div className="relative">
+                    <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          placeholder="Search destinations worldwide (e.g., Paris, Mumbai, Dubai, Tokyo)"
+                          value={selectedLocation}
+                          onChange={(e) => {
+                            setSelectedLocation(e.target.value);
+                            searchDestinations(e.target.value);
+                          }}
+                          onFocus={() => {
+                            if (destinationSuggestions.length > 0) {
+                              setShowDestinationSuggestions(true);
+                            }
+                          }}
+                          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white/50 backdrop-blur-sm text-lg"
+                        />
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                          <div className="text-sm">🌍</div>
+                        </div>
+                        
+                        {/* Global Destination Suggestions Dropdown */}
+                        {showDestinationSuggestions && destinationSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 mt-2 max-h-64 overflow-y-auto">
+                            {destinationSuggestions.map((destination, index) => (
+                              <div
+                                key={index}
+                                onClick={() => selectDestination(destination)}
+                                className="flex items-center p-3 hover:bg-orange-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors duration-200"
+                              >
+                                <div className="flex-1">
+                                  <div className="flex items-center space-x-2">
+                                    <span className="text-lg">
+                                      {destination.type === 'city' ? '🏙️' : 
+                                       destination.type === 'landmark' ? '🏛️' : 
+                                       destination.type === 'country' ? '🏳️' : '📍'}
+                                    </span>
+                                    <div>
+                                      <div className="font-medium text-gray-900">{destination.name}</div>
+                                      <div className="text-sm text-gray-500">{destination.country}</div>
+                                    </div>
+                                  </div>
+                                  {destination.attractions && destination.attractions.length > 0 && (
+                                    <div className="mt-1 text-xs text-blue-600">
+                                      Popular: {destination.attractions.slice(0, 3).join(', ')}
+                                      {destination.attractions.length > 3 && '...'}
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="text-xs text-gray-400 capitalize">{destination.type}</div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      
+                      <button
+                        onClick={searchActivities}
+                        className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-6 sm:px-8 py-4 rounded-xl hover:from-orange-700 hover:to-amber-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 whitespace-nowrap"
+                      >
+                        🔍 Find Activities
+                      </button>
+                    </div>
+                    
+                    {/* Quick Destination Suggestions */}
+                    {!selectedLocation && !showDestinationSuggestions && (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <span className="text-sm text-gray-600 mr-2">Popular:</span>
+                        {['Mumbai', 'Delhi', 'Paris', 'Dubai', 'Tokyo', 'London', 'Singapore', 'Bangkok'].map(dest => (
+                          <button
+                            key={dest}
+                            onClick={() => {
+                              setSelectedLocation(dest);
+                              searchActivities();
+                            }}
+                            className="text-sm bg-orange-100 text-orange-700 px-3 py-1 rounded-full hover:bg-orange-200 transition-colors duration-200"
+                          >
+                            {dest}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
 
