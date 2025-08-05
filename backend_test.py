@@ -55,7 +55,9 @@ class BackendTester:
             print(f"❌ {test_name}: {message}")
         
         if response_data:
-            print(f"   Response: {json.dumps(response_data, indent=2)[:200]}...")
+            print(f"📄 FULL RESPONSE DATA:")
+            print(json.dumps(response_data, indent=2))
+            print("-" * 80)
 
     def test_health_check(self):
         """Test basic health check endpoint"""
