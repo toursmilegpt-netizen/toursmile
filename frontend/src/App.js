@@ -1435,7 +1435,7 @@ function App() {
                       placeholder="Where do you want to go?"
                       value={itineraryForm.destination}
                       onChange={(e) => setItineraryForm({...itineraryForm, destination: e.target.value})}
-                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
+                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white/50"
                     />
                   </div>
                   
