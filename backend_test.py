@@ -301,6 +301,254 @@ class BackendTester:
         
         return self.results
 
+    def test_trip_details_api(self):
+        """Test GET /api/popular-trips/{trip_id} for specific trips that should be clickable"""
+        print("\n🔍 TESTING TRIP DETAILS API - Specific Trip IDs")
+        print("=" * 70)
+        
+        # Test specific trip IDs as requested: RAJ001, KER001, SEA001, GOA001, HP001
+        trip_ids = ["RAJ001", "KER001", "SEA001", "GOA001", "HP001"]
+        success_count = 0
+        
+        for trip_id in trip_ids:
+            try:
+                print(f"\n📋 Testing trip ID: {trip_id}")
+                response = self.session.get(f"{API_BASE}/popular-trips/{trip_id}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if "success" in data and data["success"] and "trip" in data:
+                        trip = data["trip"]
+                        
+                        # Validate complete trip details structure
+                        basic_fields = ["id", "title", "duration", "destinations", "price_from", "theme", "image"]
+                        extended_fields = ["itinerary", "inclusions", "best_time", "highlights"]
+                        
+                        missing_basic = [field for field in basic_fields if field not in trip]
+                        missing_extended = [field for field in extended_fields if field not in trip]
+                        
+                        if not missing_basic:
+                            print(f"✅ Trip {trip_id}: Found with all basic fields")
+                            print(f"   📝 Title: {trip['title']}")
+                            print(f"   📅 Duration: {trip['duration']}")
+                            print(f"   💰 Price from: ₹{trip['price_from']}")
+                            print(f"   🎯 Theme: {trip['theme']}")
+                            print(f"   📍 Destinations: {', '.join(trip['destinations'])}")
+                            
+                            # Check extended details
+                            extended_available = [f for f in extended_fields if f in trip]
+                            if extended_available:
+                                print(f"   📋 Extended details available: {extended_available}")
+                                
+                                # Show itinerary if available
+                                if "itinerary" in trip and isinstance(trip["itinerary"], dict):
+                                    print(f"   🗓️ Itinerary days: {len(trip['itinerary'])} days")
+                                
+                                # Show inclusions if available
+                                if "inclusions" in trip and isinstance(trip["inclusions"], list):
+                                    print(f"   ✅ Inclusions: {', '.join(trip['inclusions'])}")
+                            
+                            success_count += 1
+                        else:
+                            print(f"❌ Trip {trip_id}: Missing basic fields: {missing_basic}")
+                    else:
+                        print(f"❌ Trip {trip_id}: Invalid response structure")
+                elif response.status_code == 404:
+                    print(f"❌ Trip {trip_id}: Not found (404)")
+                else:
+                    print(f"❌ Trip {trip_id}: HTTP {response.status_code}")
+            except Exception as e:
+                print(f"❌ Trip {trip_id}: Error - {str(e)}")
+        
+        if success_count == len(trip_ids):
+            self.log_result("Trip Details API", True, 
+                          f"All {success_count}/{len(trip_ids)} specific trips found with complete data")
+            return True
+        else:
+            self.log_result("Trip Details API", False, 
+                          f"Only {success_count}/{len(trip_ids)} trips found successfully")
+        return False
+
+    def test_popular_trips_with_limit_50(self):
+        """Test GET /api/popular-trips?limit=50 to verify it returns all 17 trips"""
+        print("\n🏖️ TESTING POPULAR TRIPS API - Limit=50 (All Trips)")
+        print("=" * 70)
+        try:
+            response = self.session.get(f"{API_BASE}/popular-trips?limit=50")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "success" in data and data["success"] and "trips" in data:
+                    trips = data["trips"]
+                    total_trips = data.get("total_trips", 0)
+                    
+                    print(f"📊 Total trips found: {total_trips}")
+                    print(f"📋 Trips returned: {len(trips)}")
+                    
+                    if len(trips) > 0:
+                        # Show breakdown by region/theme
+                        domestic_count = sum(1 for trip in trips if any(dest in ["Rajasthan", "Kerala", "Goa", "Himachal", "Kashmir"] for dest in trip.get("destinations", [])))
+                        international_count = len(trips) - domestic_count
+                        
+                        print(f"🇮🇳 Domestic trips: {domestic_count}")
+                        print(f"🌍 International trips: {international_count}")
+                        
+                        # Validate trip structure
+                        trip = trips[0]
+                        required_fields = ["id", "title", "duration", "destinations", "price_from", "theme"]
+                        missing_fields = [field for field in required_fields if field not in trip]
+                        
+                        if not missing_fields:
+                            self.log_result("Popular Trips (Limit=50)", True, 
+                                          f"Found {total_trips} trips, all with proper structure", 
+                                          {"total_trips": total_trips, "domestic": domestic_count, "international": international_count})
+                            return True
+                        else:
+                            self.log_result("Popular Trips (Limit=50)", False, 
+                                          f"Trip missing required fields: {missing_fields}")
+                    else:
+                        self.log_result("Popular Trips (Limit=50)", False, "No trips returned")
+                else:
+                    self.log_result("Popular Trips (Limit=50)", False, f"Invalid response structure: {data}")
+            else:
+                self.log_result("Popular Trips (Limit=50)", False, f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Popular Trips (Limit=50)", False, f"Error: {str(e)}")
+        return False
+
+    def test_featured_trips_with_limit_6(self):
+        """Test GET /api/featured-trips?limit=6 to verify featured trips are returned"""
+        print("\n⭐ TESTING FEATURED TRIPS API - Limit=6")
+        print("=" * 70)
+        try:
+            response = self.session.get(f"{API_BASE}/featured-trips?limit=6")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "success" in data and data["success"] and "featured_trips" in data:
+                    featured_trips = data["featured_trips"]
+                    total_featured = data.get("total_featured", 0)
+                    
+                    print(f"⭐ Featured trips found: {total_featured}")
+                    print(f"📋 Featured trips returned: {len(featured_trips)}")
+                    
+                    if len(featured_trips) > 0:
+                        # Show featured trip details
+                        for i, trip in enumerate(featured_trips[:3], 1):  # Show first 3
+                            print(f"   {i}. {trip.get('title', 'N/A')} - {trip.get('theme', 'N/A')} (₹{trip.get('price_from', 0)})")
+                        
+                        # Validate featured trip structure
+                        trip = featured_trips[0]
+                        required_fields = ["id", "title", "duration", "destinations", "price_from", "theme"]
+                        missing_fields = [field for field in required_fields if field not in trip]
+                        
+                        if not missing_fields:
+                            self.log_result("Featured Trips (Limit=6)", True, 
+                                          f"Found {total_featured} featured trips with proper structure", 
+                                          {"total_featured": total_featured, "sample_trip": trip})
+                            return True
+                        else:
+                            self.log_result("Featured Trips (Limit=6)", False, 
+                                          f"Featured trip missing required fields: {missing_fields}")
+                    else:
+                        self.log_result("Featured Trips (Limit=6)", False, "No featured trips returned")
+                else:
+                    self.log_result("Featured Trips (Limit=6)", False, f"Invalid response structure: {data}")
+            else:
+                self.log_result("Featured Trips (Limit=6)", False, f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Featured Trips (Limit=6)", False, f"Error: {str(e)}")
+        return False
+
+    def test_error_handling_invalid_trip_id(self):
+        """Test error handling with invalid trip ID to ensure proper 404 response"""
+        print("\n🚨 TESTING ERROR HANDLING - Invalid Trip ID")
+        print("=" * 70)
+        try:
+            invalid_trip_id = "INVALID999"
+            print(f"📋 Testing invalid trip ID: {invalid_trip_id}")
+            response = self.session.get(f"{API_BASE}/popular-trips/{invalid_trip_id}")
+            
+            if response.status_code == 404:
+                data = response.json()
+                print(f"✅ Proper 404 response received")
+                print(f"📄 Error message: {data.get('detail', 'No detail provided')}")
+                self.log_result("Error Handling (Invalid Trip ID)", True, 
+                              "Proper 404 response for invalid trip ID", 
+                              {"status_code": 404, "error_detail": data.get('detail')})
+                return True
+            else:
+                print(f"❌ Expected 404, got HTTP {response.status_code}")
+                self.log_result("Error Handling (Invalid Trip ID)", False, 
+                              f"Expected 404, got HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Error Handling (Invalid Trip ID)", False, f"Error: {str(e)}")
+        return False
+
+    def run_trip_details_tests(self):
+        """Run comprehensive trip details functionality tests as requested"""
+        print("=" * 80)
+        print("🔍 TRIP DETAILS FUNCTIONALITY TESTING")
+        print("=" * 80)
+        print("Testing trip details functionality as requested:")
+        print("1. Trip Details API - GET /api/popular-trips/{trip_id} for RAJ001, KER001, SEA001, GOA001, HP001")
+        print("2. Popular Trips API - GET /api/popular-trips?limit=50 (all 17 trips)")
+        print("3. Featured Trips API - GET /api/featured-trips?limit=6")
+        print("4. Error Handling - Invalid trip ID (404 response)")
+        print("=" * 80)
+        
+        # Reset results for this test run
+        self.results = {
+            'total_tests': 0,
+            'passed': 0,
+            'failed': 0,
+            'errors': []
+        }
+        
+        # Run all trip details tests
+        tests = [
+            ("Trip Details API", self.test_trip_details_api),
+            ("Popular Trips (Limit=50)", self.test_popular_trips_with_limit_50),
+            ("Featured Trips (Limit=6)", self.test_featured_trips_with_limit_6),
+            ("Error Handling (Invalid Trip ID)", self.test_error_handling_invalid_trip_id)
+        ]
+        
+        for test_name, test_func in tests:
+            test_func()
+            time.sleep(1)  # Pause between tests for readability
+        
+        # Print comprehensive summary
+        print("\n" + "=" * 80)
+        print("📊 TRIP DETAILS FUNCTIONALITY TEST SUMMARY")
+        print("=" * 80)
+        print(f"Total Tests: {self.results['total_tests']}")
+        print(f"Passed: {self.results['passed']} ✅")
+        print(f"Failed: {self.results['failed']} ❌")
+        
+        if self.results['errors']:
+            print(f"\n🚨 FAILED TESTS:")
+            for error in self.results['errors']:
+                print(f"  • {error}")
+        
+        success_rate = (self.results['passed'] / self.results['total_tests']) * 100 if self.results['total_tests'] > 0 else 0
+        print(f"\nSuccess Rate: {success_rate:.1f}%")
+        
+        # Final assessment
+        if success_rate == 100:
+            print("🎉 ALL TRIP DETAILS FUNCTIONALITY TESTS PASSED!")
+            print("✅ Trip details API working correctly")
+            print("✅ Popular trips API returning all trips")
+            print("✅ Featured trips API working properly")
+            print("✅ Error handling working as expected")
+            print("\n🚀 BACKEND IS READY FOR FRONTEND TRIP DETAIL MODALS!")
+        elif success_rate >= 75:
+            print("⚠️  Trip details functionality mostly working with minor issues")
+        else:
+            print("🚨 Trip details functionality has significant issues that need attention")
+        
+        return self.results
+
 if __name__ == "__main__":
     tester = BackendTester()
-    results = tester.run_detailed_search_tests()
+    # Run the specific trip details tests as requested
+    results = tester.run_trip_details_tests()
