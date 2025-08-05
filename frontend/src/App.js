@@ -692,54 +692,11 @@ function App() {
                     </p>
 
                     {/* REVOLUTIONARY COMMAND BAR SHOWCASE */}
-                    <div className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 p-1 rounded-2xl mb-8 shadow-2xl overflow-visible">
-                      {/* 8 Travel Icons Continuously Circling the Border */}
-                      <div className="absolute inset-0 rounded-2xl pointer-events-none z-20">
-                        {/* Icon 1 - Aircraft */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl animate-circle-border opacity-90 bg-purple-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '0s'}}>
-                          ✈️
-                        </div>
-                        
-                        {/* Icon 2 - Luggage */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl animate-circle-border opacity-85 bg-pink-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '2s'}}>
-                          🧳
-                        </div>
-                        
-                        {/* Icon 3 - Camera */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl animate-circle-border opacity-90 bg-indigo-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '4s'}}>
-                          📸
-                        </div>
-                        
-                        {/* Icon 4 - Hotel */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl animate-circle-border opacity-85 bg-purple-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '6s'}}>
-                          🏨
-                        </div>
-                        
-                        {/* Icon 5 - Map */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl animate-circle-border opacity-90 bg-pink-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '8s'}}>
-                          🗺️
-                        </div>
-                        
-                        {/* Icon 6 - Globe */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl animate-circle-border opacity-85 bg-indigo-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '10s'}}>
-                          🌍
-                        </div>
-                        
-                        {/* Icon 7 - Tickets */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl animate-circle-border opacity-90 bg-purple-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '12s'}}>
-                          🎫
-                        </div>
-                        
-                        {/* Icon 8 - Star */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl animate-circle-border opacity-85 bg-pink-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '14s'}}>
-                          ⭐
-                        </div>
-                      </div>
-                      
+                    <div className="relative bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 p-1 rounded-2xl mb-8 shadow-2xl">
                       <div className="bg-white rounded-xl p-6 sm:p-8 relative z-10">
                         <div className="flex items-center justify-center mb-4">
-                          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                            <span className="animate-pulse">🚀</span> PREMIUM AI-POWERED SEARCH
+                          <div className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                            <span className="animate-pulse">✨</span> CAREFULLY CRAFTED TRAVEL EXPERIENCES
                           </div>
                         </div>
                         
@@ -748,53 +705,53 @@ function App() {
                         </h2>
                         
                         <p className="text-gray-600 mb-6">
-                          Experience the future of travel planning with intelligent, conversational search
+                          Our travel experts understand your needs and craft personalized experiences with human attention to detail
                         </p>
 
                         {/* Interactive Demo Command Bar */}
                         <div 
                           onClick={() => setShowCommandBar(true)}
-                          className="relative bg-gradient-to-r from-gray-50 to-blue-50 border-2 border-dashed border-purple-300 rounded-xl p-4 sm:p-6 cursor-pointer hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 transition-all duration-500 group shadow-sm hover:shadow-md"
+                          className="relative bg-gradient-to-r from-gray-50 to-orange-50 border-2 border-dashed border-orange-300 rounded-xl p-4 sm:p-6 cursor-pointer hover:border-orange-500 hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 transition-all duration-500 group shadow-sm hover:shadow-md"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1 text-left">
-                              <div className="text-lg text-gray-500 group-hover:text-purple-700 transition-colors duration-500 font-medium">
+                              <div className="text-lg text-gray-500 group-hover:text-orange-700 transition-colors duration-500 font-medium">
                                 "Executive trip to Dubai next week, business class preferred"
                               </div>
                             </div>
                             <div className="flex items-center space-x-3">
-                              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
+                              <div className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
                                 Try Now
                               </div>
-                              <svg className="w-6 h-6 text-purple-600 group-hover:scale-110 group-hover:text-purple-700 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-6 h-6 text-orange-600 group-hover:scale-110 group-hover:text-orange-700 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                               </svg>
                             </div>
                           </div>
                           
                           {/* Subtle animated border effect */}
-                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
                         </div>
 
                         {/* Professional Example Commands */}
                         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                          <div className="bg-purple-50 text-purple-800 px-4 py-3 rounded-lg border border-purple-200 hover:bg-purple-100 transition-colors duration-300">
+                          <div className="bg-orange-50 text-orange-800 px-4 py-3 rounded-lg border border-orange-200 hover:bg-orange-100 transition-colors duration-300">
                             <span className="font-semibold">Business Travel:</span> "First class to London, flexible dates"
                           </div>
-                          <div className="bg-pink-50 text-pink-800 px-4 py-3 rounded-lg border border-pink-200 hover:bg-pink-100 transition-colors duration-300">
+                          <div className="bg-amber-50 text-amber-800 px-4 py-3 rounded-lg border border-amber-200 hover:bg-amber-100 transition-colors duration-300">
                             <span className="font-semibold">Family Vacation:</span> "Premium family trip to Singapore"
                           </div>
-                          <div className="bg-indigo-50 text-indigo-800 px-4 py-3 rounded-lg border border-indigo-200 hover:bg-indigo-100 transition-colors duration-300">
+                          <div className="bg-yellow-50 text-yellow-800 px-4 py-3 rounded-lg border border-yellow-200 hover:bg-yellow-100 transition-colors duration-300">
                             <span className="font-semibold">Corporate Group:</span> "Team travel to Mumbai, 8 executives"
                           </div>
-                          <div className="bg-blue-50 text-blue-800 px-4 py-3 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors duration-300">
+                          <div className="bg-orange-50 text-orange-800 px-4 py-3 rounded-lg border border-orange-200 hover:bg-orange-100 transition-colors duration-300">
                             <span className="font-semibold">Luxury Travel:</span> "Premium weekend getaway to Goa"
                           </div>
                         </div>
 
                         <div className="mt-6 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-500">
                           <div className="flex items-center">
-                            <span className="font-medium text-purple-600">Quick Access:</span>
+                            <span className="font-medium text-orange-600">Quick Access:</span>
                             <span className="ml-2">Press Cmd/Ctrl + K from anywhere</span>
                           </div>
                           <div className="flex items-center">
