@@ -568,8 +568,8 @@ function App() {
       onClick={onClick}
       className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
         isActive 
-          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg transform scale-105' 
-          : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+          ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg transform scale-105' 
+          : 'text-gray-600 hover:text-orange-600 hover:bg-orange-50'
       }`}
     >
       {children}
