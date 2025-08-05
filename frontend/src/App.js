@@ -629,19 +629,19 @@ function App() {
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setShowCommandBar(true)}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 md:hidden"
+                className="bg-gradient-to-r from-orange-600 to-amber-600 text-white p-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 md:hidden"
               >
                 🚀
               </button>
               <button
                 onClick={() => setIsChatOpen(!isChatOpen)}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 md:hidden"
+                className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 md:hidden"
               >
                 💬
               </button>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden text-gray-600 hover:text-blue-600 p-2"
+                className="md:hidden text-gray-600 hover:text-orange-600 p-2"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
