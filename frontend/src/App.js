@@ -230,6 +230,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [showPassengerDropdown, setShowPassengerDropdown] = useState(false);
   const chatEndRef = useRef(null);
 
   // Flight search state
