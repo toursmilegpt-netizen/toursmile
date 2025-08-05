@@ -15,7 +15,7 @@ class ExpertTravelConsultantChat:
         """
         Initialize Expert Travel Consultant Chat Service
         """
-        self.llm_chat = LlmChat(api_key=api_key)
+        self.api_key = api_key
         self.conversation_memory = {}  # Store conversation context
         
     def analyze_user_intent(self, message: str, session_id: str) -> Dict:
