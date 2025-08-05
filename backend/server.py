@@ -255,7 +255,8 @@ Always be helpful, ask relevant questions, and provide expert travel guidance.""
 
         llm_chat = LlmChat(
             session_id=session_id,
-            system_message=expert_system_prompt
+            system_message=expert_system_prompt,
+            api_key=OPENAI_API_KEY
         )
         
         user_message = UserMessage(content=message)
