@@ -303,4 +303,4 @@ class BackendTester:
 
 if __name__ == "__main__":
     tester = BackendTester()
-    results = tester.run_all_tests()
+    results = tester.run_detailed_search_tests()
