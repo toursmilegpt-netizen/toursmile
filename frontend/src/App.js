@@ -681,14 +681,85 @@ function App() {
           <div className="lg:col-span-2">
             {activeTab === 'home' && (
               <div className="space-y-6 sm:space-y-8">
+                {/* Hero Section with Command Bar Highlight */}
                 <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-white/20 hover:shadow-2xl transition-all duration-500">
                   <div className="text-center mb-8">
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
                       Plan Your Perfect Trip with AI
                     </h1>
-                    <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
                       Discover amazing destinations, book flights & hotels, and get personalized travel recommendations powered by artificial intelligence.
                     </p>
+
+                    {/* REVOLUTIONARY COMMAND BAR SHOWCASE */}
+                    <div className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 p-1 rounded-2xl mb-8 animate-pulse shadow-2xl">
+                      <div className="bg-white rounded-xl p-6 sm:p-8">
+                        <div className="flex items-center justify-center mb-4">
+                          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-bounce shadow-lg">
+                            🚀 NEW: AI-POWERED SEARCH
+                          </div>
+                        </div>
+                        
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+                          Just Tell Us What You Want!
+                        </h2>
+                        
+                        <p className="text-gray-600 mb-6">
+                          Skip the forms! Use natural language to search flights instantly
+                        </p>
+
+                        {/* Interactive Demo Command Bar */}
+                        <div 
+                          onClick={() => setShowCommandBar(true)}
+                          className="relative bg-gradient-to-r from-gray-50 to-blue-50 border-2 border-dashed border-purple-300 rounded-xl p-4 sm:p-6 cursor-pointer hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 transition-all duration-300 group"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1 text-left">
+                              <div className="text-lg text-gray-400 group-hover:text-purple-600 transition-colors duration-300">
+                                "Find flights from Delhi to Dubai tomorrow for 2 adults"
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full text-sm font-medium animate-pulse">
+                                Try It!
+                              </div>
+                              <svg className="w-6 h-6 text-purple-600 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                              </svg>
+                            </div>
+                          </div>
+                          
+                          {/* Animated border effect */}
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                        </div>
+
+                        {/* Example Commands Carousel */}
+                        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                          <div className="bg-purple-50 text-purple-800 px-4 py-2 rounded-lg border border-purple-200">
+                            💼 "Business class to London next week"
+                          </div>
+                          <div className="bg-pink-50 text-pink-800 px-4 py-2 rounded-lg border border-pink-200">
+                            👨‍👩‍👧‍👦 "Family trip to Goa for 4 people"
+                          </div>
+                          <div className="bg-indigo-50 text-indigo-800 px-4 py-2 rounded-lg border border-indigo-200">
+                            🔄 "Round trip Mumbai to Singapore"
+                          </div>
+                          <div className="bg-blue-50 text-blue-800 px-4 py-2 rounded-lg border border-blue-200">
+                            ⚡ "Cheap flight to Bangkok tomorrow"
+                          </div>
+                        </div>
+
+                        <div className="mt-6 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-500">
+                          <div className="flex items-center">
+                            <span className="font-medium text-purple-600">Pro Tip:</span>
+                            <span className="ml-1">Press Cmd/Ctrl + K anywhere!</span>
+                          </div>
+                          <div className="flex items-center">
+                            <span className="bg-gray-200 px-2 py-1 rounded text-xs font-mono">⌘K</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -709,6 +780,45 @@ function App() {
                       <h3 className="font-semibold text-gray-900 mb-2">AI Trip Planner</h3>
                       <p className="text-gray-600 text-sm">Get personalized itineraries created by AI</p>
                     </div>
+                  </div>
+                </div>
+
+                {/* Secondary CTA Section */}
+                <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 rounded-2xl shadow-xl p-1">
+                  <div className="bg-white rounded-xl p-6 sm:p-8 text-center">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+                      🎯 World's First AI Travel Command Bar
+                    </h2>
+                    <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                      No more clicking through endless forms. Just describe your trip in plain English and watch the magic happen!
+                    </p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                      <div className="bg-purple-50 p-4 rounded-xl border border-purple-200">
+                        <div className="text-2xl mb-2">🗣️</div>
+                        <h3 className="font-semibold text-purple-800 mb-1">Speak Naturally</h3>
+                        <p className="text-purple-600 text-sm">Use everyday language</p>
+                      </div>
+                      
+                      <div className="bg-pink-50 p-4 rounded-xl border border-pink-200">
+                        <div className="text-2xl mb-2">🤖</div>
+                        <h3 className="font-semibold text-pink-800 mb-1">AI Understands</h3>
+                        <p className="text-pink-600 text-sm">Smart parsing with GPT-4</p>
+                      </div>
+                      
+                      <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-200">
+                        <div className="text-2xl mb-2">⚡</div>
+                        <h3 className="font-semibold text-indigo-800 mb-1">Instant Results</h3>
+                        <p className="text-indigo-600 text-sm">Auto-filled forms & search</p>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => setShowCommandBar(true)}
+                      className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl hover:from-purple-700 hover:to-pink-700 font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      🚀 Try AI Search Now
+                    </button>
                   </div>
                 </div>
 
