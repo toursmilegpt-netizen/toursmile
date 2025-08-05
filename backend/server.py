@@ -259,7 +259,7 @@ Always be helpful, ask relevant questions, and provide expert travel guidance.""
             api_key=OPENAI_API_KEY
         )
         
-        user_message = UserMessage(content=message)
+        user_message = UserMessage(message)
         response = llm_chat.chat([user_message])
         
         return response
