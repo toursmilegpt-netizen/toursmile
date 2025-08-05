@@ -244,6 +244,50 @@ function App() {
   const [showCommandBar, setShowCommandBar] = useState(false);
   const chatEndRef = useRef(null);
 
+  // Fetch featured trips on component mount
+  useEffect(() => {
+    fetchFeaturedTrips();
+  }, []);
+
+  const fetchFeaturedTrips = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/featured-trips?limit=6`);
+      const data = await response.json();
+      if (data.success) {
+        setFeaturedTrips(data.featured_trips);
+      }
+    } catch (error) {
+      console.error('Error fetching featured trips:', error);
+    }
+  };
+
+  const fetchPopularTrips = async (filters = {}) => {
+    try {
+      const queryParams = new URLSearchParams();
+      if (filters.region) queryParams.append('region', filters.region);
+      if (filters.theme) queryParams.append('theme', filters.theme);
+      if (filters.maxBudget) queryParams.append('max_budget', filters.maxBudget);
+      if (filters.duration) {
+        const [min, max] = filters.duration.split('-');
+        queryParams.append('min_nights', min);
+        queryParams.append('max_nights', max);
+      }
+      
+      const response = await fetch(`${BACKEND_URL}/api/popular-trips?${queryParams}`);
+      const data = await response.json();
+      if (data.success) {
+        setPopularTrips(data.trips);
+      }
+    } catch (error) {
+      console.error('Error fetching popular trips:', error);
+    }
+  };
+
+  const handleTripInquiry = async (tripId) => {
+    // For now, show alert - in production this would open a proper inquiry form
+    alert(`Thank you for your interest! Please call us at +91-XXXXXXXXXX to book trip ${tripId} or use our AI assistant for more details.`);
+  };
+
   // Flight search state
   const [flightSearch, setFlightSearch] = useState({
     tripType: 'oneway', // oneway, return, multicity
