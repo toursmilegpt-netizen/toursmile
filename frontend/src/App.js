@@ -227,6 +227,8 @@ function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [popularTrips, setPopularTrips] = useState([]);
   const [featuredTrips, setFeaturedTrips] = useState([]);
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [showTripDetails, setShowTripDetails] = useState(false);
   const [tripFilters, setTripFilters] = useState({
     region: '',
     theme: '',
