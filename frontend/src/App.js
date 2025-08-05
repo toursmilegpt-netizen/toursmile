@@ -5,6 +5,134 @@ import axios from "axios";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Popular Indian cities for autocomplete
+const POPULAR_CITIES = [
+  { code: "DEL", name: "Delhi", fullName: "Delhi, India" },
+  { code: "BOM", name: "Mumbai", fullName: "Mumbai, India" }, 
+  { code: "BLR", name: "Bangalore", fullName: "Bangalore, India" },
+  { code: "MAA", name: "Chennai", fullName: "Chennai, India" },
+  { code: "CCU", name: "Kolkata", fullName: "Kolkata, India" },
+  { code: "HYD", name: "Hyderabad", fullName: "Hyderabad, India" },
+  { code: "PNQ", name: "Pune", fullName: "Pune, India" },
+  { code: "AMD", name: "Ahmedabad", fullName: "Ahmedabad, India" },
+  { code: "GOI", name: "Goa", fullName: "Goa, India" },
+  { code: "COK", name: "Kochi", fullName: "Kochi, India" },
+  { code: "JAI", name: "Jaipur", fullName: "Jaipur, India" },
+  { code: "LKO", name: "Lucknow", fullName: "Lucknow, India" },
+  { code: "CJB", name: "Coimbatore", fullName: "Coimbatore, India" },
+  { code: "TRV", name: "Trivandrum", fullName: "Trivandrum, India" },
+  { code: "BBI", name: "Bhubaneswar", fullName: "Bhubaneswar, India" },
+  { code: "IXC", name: "Chandigarh", fullName: "Chandigarh, India" },
+  { code: "NAG", name: "Nagpur", fullName: "Nagpur, India" },
+  { code: "IXM", name: "Madurai", fullName: "Madurai, India" },
+  { code: "VNS", name: "Varanasi", fullName: "Varanasi, India" },
+  { code: "IXB", name: "Bagdogra", fullName: "Bagdogra, India" }
+];
+
+// City Autocomplete Component
+const CityAutocomplete = ({ value, onChange, placeholder, label }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [inputValue, setInputValue] = useState(value);
+  const inputRef = useRef(null);
+  const suggestionsRef = useRef(null);
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setInputValue(inputValue);
+    onChange(inputValue);
+
+    if (inputValue.length > 0) {
+      const filteredSuggestions = POPULAR_CITIES.filter(city =>
+        city.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        city.fullName.toLowerCase().includes(inputValue.toLowerCase()) ||
+        city.code.toLowerCase().includes(inputValue.toLowerCase())
+      ).slice(0, 8);
+      
+      setSuggestions(filteredSuggestions);
+      setShowSuggestions(true);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleSuggestionClick = (city) => {
+    setInputValue(city.name);
+    onChange(city.name);
+    setShowSuggestions(false);
+  };
+
+  const handleBlur = (e) => {
+    // Delay hiding suggestions to allow clicks
+    setTimeout(() => {
+      setShowSuggestions(false);
+    }, 200);
+  };
+
+  const handleFocus = () => {
+    if (inputValue.length > 0) {
+      const filteredSuggestions = POPULAR_CITIES.filter(city =>
+        city.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        city.fullName.toLowerCase().includes(inputValue.toLowerCase()) ||
+        city.code.toLowerCase().includes(inputValue.toLowerCase())
+      ).slice(0, 8);
+      
+      setSuggestions(filteredSuggestions);
+      setShowSuggestions(true);
+    }
+  };
+
+  return (
+    <div className="space-y-2 relative">
+      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <div className="relative">
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder={placeholder}
+          value={inputValue}
+          onChange={handleInputChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50 pr-10"
+        />
+        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          ✈️
+        </div>
+        
+        {showSuggestions && suggestions.length > 0 && (
+          <div 
+            ref={suggestionsRef}
+            className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-64 overflow-y-auto"
+          >
+            {suggestions.map((city, index) => (
+              <div
+                key={city.code}
+                onClick={() => handleSuggestionClick(city)}
+                className="px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors duration-200"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-medium text-gray-900">{city.name}</div>
+                    <div className="text-sm text-gray-500">{city.fullName}</div>
+                  </div>
+                  <div className="text-xs text-gray-400 font-mono bg-gray-100 px-2 py-1 rounded">
+                    {city.code}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [chatMessages, setChatMessages] = useState([]);
