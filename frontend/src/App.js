@@ -567,8 +567,10 @@ function App() {
     <button
       onClick={onClick}
       className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
-        isActive 
+        isActive && tabName !== 'home'
           ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg transform scale-105' 
+          : isActive && tabName === 'home'
+          ? 'text-orange-600 font-semibold'
           : 'text-gray-600 hover:text-orange-600 hover:bg-orange-50'
       }`}
     >
