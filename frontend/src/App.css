@@ -29,6 +29,51 @@
   background: linear-gradient(135deg, #3b82f6, #9333ea);
 }
 
+/* Circular Border Animation for Travel Icons */
+@keyframes circle-border {
+  0% {
+    /* Start at top center */
+    transform: translate(-50%, -50%) translateX(0px) translateY(-200px);
+  }
+  12.5% {
+    /* Top right corner */
+    transform: translate(-50%, -50%) translateX(200px) translateY(-200px);
+  }
+  25% {
+    /* Right center */
+    transform: translate(-50%, -50%) translateX(300px) translateY(0px);
+  }
+  37.5% {
+    /* Bottom right corner */
+    transform: translate(-50%, -50%) translateX(200px) translateY(200px);
+  }
+  50% {
+    /* Bottom center */
+    transform: translate(-50%, -50%) translateX(0px) translateY(250px);
+  }
+  62.5% {
+    /* Bottom left corner */
+    transform: translate(-50%, -50%) translateX(-200px) translateY(200px);
+  }
+  75% {
+    /* Left center */
+    transform: translate(-50%, -50%) translateX(-300px) translateY(0px);
+  }
+  87.5% {
+    /* Top left corner */
+    transform: translate(-50%, -50%) translateX(-200px) translateY(-200px);
+  }
+  100% {
+    /* Back to top center */
+    transform: translate(-50%, -50%) translateX(0px) translateY(-200px);
+  }
+}
+
+/* Apply circular border animation */
+.animate-circle-border {
+  animation: circle-border 16s linear infinite;
+}
+
 /* Sophisticated Travel Icon Animations */
 @keyframes float {
   0%, 100% {
