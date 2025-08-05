@@ -187,7 +187,7 @@ const CityAutocomplete = ({ value, onChange, placeholder, label }) => {
           onChange={handleInputChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50 pr-10"
+          className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white/50 pr-10"
         />
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
           ✈️
