@@ -13,6 +13,7 @@ import json
 import asyncio
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from popular_trips_routes import router as popular_trips_router
+from enhanced_chat_service import ExpertTravelConsultantChat
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
