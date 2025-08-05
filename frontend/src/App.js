@@ -763,22 +763,22 @@ function App() {
                   </div>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    <div className="group text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl hover:from-blue-100 hover:to-blue-200 transition-all duration-300 cursor-pointer transform hover:scale-105">
+                    <div className="group text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl hover:from-orange-100 hover:to-orange-200 transition-all duration-300 cursor-pointer transform hover:scale-105">
                       <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">✈️</div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Smart Flight Search</h3>
-                      <p className="text-gray-600 text-sm">Find the best flights with AI-powered recommendations</p>
+                      <h3 className="font-semibold text-gray-900 mb-2">Expert Flight Curation</h3>
+                      <p className="text-gray-600 text-sm">Handpicked flights with personalized recommendations from travel specialists</p>
                     </div>
                     
-                    <div className="group text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl hover:from-green-100 hover:to-green-200 transition-all duration-300 cursor-pointer transform hover:scale-105">
+                    <div className="group text-center p-6 bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl hover:from-amber-100 hover:to-amber-200 transition-all duration-300 cursor-pointer transform hover:scale-105">
                       <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🏨</div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Perfect Hotels</h3>
-                      <p className="text-gray-600 text-sm">Discover ideal accommodations tailored to your preferences</p>
+                      <h3 className="font-semibold text-gray-900 mb-2">Curated Accommodations</h3>
+                      <p className="text-gray-600 text-sm">Carefully selected hotels and resorts that match your preferences and standards</p>
                     </div>
                     
-                    <div className="group text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl hover:from-purple-100 hover:to-purple-200 transition-all duration-300 cursor-pointer transform hover:scale-105 sm:col-span-2 lg:col-span-1">
+                    <div className="group text-center p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl hover:from-yellow-100 hover:to-yellow-200 transition-all duration-300 cursor-pointer transform hover:scale-105 sm:col-span-2 lg:col-span-1">
                       <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🗺️</div>
-                      <h3 className="font-semibold text-gray-900 mb-2">AI Trip Planner</h3>
-                      <p className="text-gray-600 text-sm">Get personalized itineraries created by AI</p>
+                      <h3 className="font-semibold text-gray-900 mb-2">Bespoke Trip Planning</h3>
+                      <p className="text-gray-600 text-sm">Personalized itineraries crafted by experienced travel consultants</p>
                     </div>
                   </div>
                 </div>
