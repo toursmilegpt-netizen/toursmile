@@ -776,6 +776,11 @@ function App() {
           <div className="lg:col-span-2">
             {activeTab === 'home' && (
               <div className="space-y-6 sm:space-y-8">
+                {/* Hero Video Section */}
+                <div className="text-center">
+                  <HeroVideo />
+                </div>
+                
                 {/* Hero Section with Command Bar Highlight */}
                 <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-white/20 hover:shadow-2xl transition-all duration-500">
                   <div className="text-center mb-8">
