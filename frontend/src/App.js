@@ -722,6 +722,9 @@ function App() {
                 <NavButton tabName="activities" isActive={activeTab === 'activities'} onClick={() => {setActiveTab('activities'); setIsMobileMenuOpen(false);}}>
                   🎯 Activities
                 </NavButton>
+                <NavButton tabName="popular-trips" isActive={activeTab === 'popular-trips'} onClick={() => {setActiveTab('popular-trips'); setIsMobileMenuOpen(false);}}>
+                  🌟 Popular Trips
+                </NavButton>
                 <NavButton tabName="itinerary" isActive={activeTab === 'itinerary'} onClick={() => {setActiveTab('itinerary'); setIsMobileMenuOpen(false);}}>
                   🤖 AI Planner
                 </NavButton>
