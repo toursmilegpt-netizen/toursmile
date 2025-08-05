@@ -252,6 +252,14 @@ function App() {
     fetchFeaturedTrips();
   }, []);
 
+  // Auto-load popular trips when Popular Trips tab is opened
+  useEffect(() => {
+    if (activeTab === 'popular-trips' && popularTrips.length === 0 && featuredTrips.length > 0) {
+      // Load all trips (increase limit to show more than just 6 featured trips)
+      fetchPopularTrips({});
+    }
+  }, [activeTab]);
+
   const fetchFeaturedTrips = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/featured-trips?limit=6`);
