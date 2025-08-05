@@ -411,6 +411,9 @@ app.include_router(api_router)
 # Include the popular trips router
 app.include_router(popular_trips_router, prefix="/api", tags=["popular-trips"])
 
+# Include the destinations router
+app.include_router(destinations_router, prefix="/api", tags=["destinations"])
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
