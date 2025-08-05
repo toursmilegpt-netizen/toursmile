@@ -221,7 +221,48 @@ async def get_ai_response(message: str, session_id: str) -> str:
         return "I'm having trouble processing your request right now. Please try again in a moment, or feel free to browse our travel options!"
 
 # Initialize Expert Travel Consultant Chat
-expert_consultant = ExpertTravelConsultantChat(api_key=os.environ.get('OPENAI_API_KEY'))
+async def get_expert_consultant_response(message: str, session_id: str) -> str:
+    """Enhanced AI response with travel consultant expertise"""
+    try:
+        expert_system_prompt = """You are an Expert Travel Consultant for TourSmile, a premium travel platform. 
+
+PERSONALITY: Professional, respectful, practical, and friendly. You are knowledgeable about destinations, practical logistics, and provide realistic insights.
+
+CONSULTATION APPROACH:
+- Always ask about client preferences (budget, hotel category, travel type)
+- Be interactive and engaging
+- Focus on convenience, comfort, and client needs  
+- Follow booking sequence: Flights first → Hotels → Sightseeing
+- Share realistic insights about destinations and timing
+
+QUESTIONS TO ASK:
+- What's your budget range for this trip?
+- Which hotel category do you prefer? (Luxury 5*, Premium 4*, Comfort 3*, Budget)
+- What type of experience are you looking for? (Luxury, adventure, cultural, family, honeymoon)
+- What time of year are you planning to travel?
+
+EXPERTISE TO SHARE:
+- Best times to visit destinations (weather, crowds, pricing)
+- Practical travel logistics and timing
+- Local insights and hidden gems
+- Cultural etiquette and customs
+- Budget optimization strategies
+
+Always be helpful, ask relevant questions, and provide expert travel guidance."""
+
+        llm_chat = LlmChat(
+            session_id=session_id,
+            system_message=expert_system_prompt
+        )
+        
+        user_message = UserMessage(content=message)
+        response = llm_chat.chat([user_message])
+        
+        return response
+        
+    except Exception as e:
+        logging.error(f"Expert consultant error: {str(e)}")
+        return "As your travel consultant, I'm here to help you plan the perfect trip! Could you tell me about your destination preferences and what type of travel experience you're looking for?"
 
 @api_router.post("/chat")
 async def chat_with_expert_consultant(request: ChatRequest):
@@ -230,25 +271,15 @@ async def chat_with_expert_consultant(request: ChatRequest):
         session_id = request.session_id or str(uuid.uuid4())
         
         # Use Expert Travel Consultant instead of generic AI
-        consultation_result = expert_consultant.get_consultation_response(
-            user_message=request.message,
+        response = await get_expert_consultant_response(
+            message=request.message,
             session_id=session_id
         )
         
-        if consultation_result["success"]:
-            return {
-                "response": consultation_result["response"],
-                "session_id": consultation_result["session_id"],
-                "consultation_stage": consultation_result.get("consultation_stage"),
-                "booking_progress": consultation_result.get("booking_progress"),
-                "next_steps": consultation_result.get("next_steps")
-            }
-        else:
-            return {
-                "response": consultation_result["response"],
-                "session_id": session_id,
-                "error": consultation_result.get("error")
-            }
+        return {
+            "response": response,
+            "session_id": session_id
+        }
             
     except Exception as e:
         logging.error(f"Expert consultation error: {str(e)}")
