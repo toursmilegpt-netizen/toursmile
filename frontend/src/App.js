@@ -306,6 +306,29 @@ function App() {
     alert(`Thank you for your interest! Please call us at +91-XXXXXXXXXX to book trip ${tripId} or use our AI assistant for more details.`);
   };
 
+  const handleTripClick = async (tripId) => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/popular-trips/${tripId}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setSelectedTrip(data.trip);
+        setShowTripDetails(true);
+      } else {
+        console.error('Trip not found:', tripId);
+        alert('Trip details not found. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error fetching trip details:', error);
+      alert('Error loading trip details. Please try again.');
+    }
+  };
+
+  const closeTripDetails = () => {
+    setShowTripDetails(false);
+    setSelectedTrip(null);
+  };
+
   // Global destination search for activities
   const searchDestinations = async (query) => {
     if (query.length < 2) {
