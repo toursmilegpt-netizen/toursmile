@@ -463,6 +463,12 @@ function App() {
     }
   };
 
+  const searchActivities = () => {
+    if (selectedLocation.trim()) {
+      getActivities(selectedLocation);
+    }
+  };
+
   const generateItinerary = async () => {
     if (!itineraryForm.destination) {
       alert('Please enter a destination');
