@@ -692,53 +692,61 @@ function App() {
                     </p>
 
                     {/* REVOLUTIONARY COMMAND BAR SHOWCASE */}
-                    <div className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 p-1 rounded-2xl mb-8 shadow-2xl overflow-hidden">
+                    <div className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 p-1 rounded-2xl mb-8 shadow-2xl overflow-visible">
                       {/* Animated Travel Icons Orbiting the Border */}
-                      <div className="absolute inset-0 rounded-2xl">
-                        {/* Top orbit */}
-                        <div className="absolute top-2 left-1/4 text-white text-lg animate-float opacity-80">
+                      <div className="absolute inset-0 rounded-2xl pointer-events-none z-20">
+                        {/* Top orbit - more visible positions */}
+                        <div className="absolute -top-2 left-1/4 text-white text-2xl animate-float opacity-90 bg-purple-500/30 rounded-full p-2 backdrop-blur-sm">
                           <div className="animate-spin-slow">✈️</div>
                         </div>
-                        <div className="absolute top-4 right-1/3 text-white text-base animate-bounce-subtle opacity-70">
+                        <div className="absolute -top-1 right-1/3 text-white text-xl animate-bounce-subtle opacity-85 bg-pink-500/30 rounded-full p-2 backdrop-blur-sm">
                           🧳
                         </div>
                         
-                        {/* Right orbit */}
-                        <div className="absolute right-3 top-1/3 text-white text-lg animate-pulse-gentle opacity-75">
+                        {/* Right orbit - more prominent */}
+                        <div className="absolute -right-2 top-1/3 text-white text-2xl animate-pulse-gentle opacity-90 bg-indigo-500/30 rounded-full p-2 backdrop-blur-sm">
                           📸
                         </div>
-                        <div className="absolute right-5 bottom-1/3 text-white text-base animate-float-reverse opacity-80">
+                        <div className="absolute -right-1 bottom-1/3 text-white text-xl animate-float-reverse opacity-85 bg-purple-500/30 rounded-full p-2 backdrop-blur-sm">
                           🏨
                         </div>
                         
-                        {/* Bottom orbit */}
-                        <div className="absolute bottom-3 right-1/4 text-white text-lg animate-sway opacity-70">
+                        {/* Bottom orbit - enhanced visibility */}
+                        <div className="absolute -bottom-2 right-1/4 text-white text-2xl animate-sway opacity-90 bg-pink-500/30 rounded-full p-2 backdrop-blur-sm">
                           🗺️
                         </div>
-                        <div className="absolute bottom-4 left-1/3 text-white text-base animate-float opacity-85">
+                        <div className="absolute -bottom-1 left-1/3 text-white text-xl animate-float opacity-85 bg-indigo-500/30 rounded-full p-2 backdrop-blur-sm">
                           🌍
                         </div>
                         
-                        {/* Left orbit */}
-                        <div className="absolute left-3 bottom-1/3 text-white text-lg animate-pulse-gentle opacity-75">
+                        {/* Left orbit - more visible */}
+                        <div className="absolute -left-2 bottom-1/3 text-white text-2xl animate-pulse-gentle opacity-90 bg-purple-500/30 rounded-full p-2 backdrop-blur-sm">
                           🎫
                         </div>
-                        <div className="absolute left-5 top-1/3 text-white text-base animate-bounce-subtle opacity-80">
+                        <div className="absolute -left-1 top-1/3 text-white text-xl animate-bounce-subtle opacity-85 bg-pink-500/30 rounded-full p-2 backdrop-blur-sm">
                           ⭐
                         </div>
                         
-                        {/* Corner accents */}
-                        <div className="absolute top-6 left-6 text-white text-sm animate-twinkle opacity-60">
+                        {/* Corner accents - enhanced */}
+                        <div className="absolute -top-3 -left-3 text-white text-lg animate-twinkle opacity-80 bg-indigo-500/40 rounded-full p-2 backdrop-blur-sm">
                           🧭
                         </div>
-                        <div className="absolute top-6 right-6 text-white text-sm animate-twinkle opacity-60">
+                        <div className="absolute -top-3 -right-3 text-white text-lg animate-twinkle opacity-80 bg-purple-500/40 rounded-full p-2 backdrop-blur-sm">
                           ☁️
                         </div>
-                        <div className="absolute bottom-6 left-6 text-white text-sm animate-twinkle opacity-60">
+                        <div className="absolute -bottom-3 -left-3 text-white text-lg animate-twinkle opacity-80 bg-pink-500/40 rounded-full p-2 backdrop-blur-sm">
                           🎒
                         </div>
-                        <div className="absolute bottom-6 right-6 text-white text-sm animate-twinkle opacity-60">
+                        <div className="absolute -bottom-3 -right-3 text-white text-lg animate-twinkle opacity-80 bg-indigo-500/40 rounded-full p-2 backdrop-blur-sm">
                           🏖️
+                        </div>
+                        
+                        {/* Additional moving elements for orbital effect */}
+                        <div className="absolute top-1/2 -left-4 text-white text-lg animate-orbital opacity-75 bg-gradient-to-r from-purple-500/40 to-pink-500/40 rounded-full p-2 backdrop-blur-sm">
+                          🌟
+                        </div>
+                        <div className="absolute top-1/2 -right-4 text-white text-lg animate-orbital-reverse opacity-75 bg-gradient-to-r from-indigo-500/40 to-purple-500/40 rounded-full p-2 backdrop-blur-sm">
+                          🎭
                         </div>
                       </div>
                       
