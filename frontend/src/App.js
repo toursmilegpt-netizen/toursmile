@@ -693,60 +693,46 @@ function App() {
 
                     {/* REVOLUTIONARY COMMAND BAR SHOWCASE */}
                     <div className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 p-1 rounded-2xl mb-8 shadow-2xl overflow-visible">
-                      {/* Animated Travel Icons Orbiting the Border */}
+                      {/* 8 Travel Icons Continuously Circling the Border */}
                       <div className="absolute inset-0 rounded-2xl pointer-events-none z-20">
-                        {/* Top orbit - more visible positions */}
-                        <div className="absolute -top-2 left-1/4 text-white text-2xl animate-float opacity-90 bg-purple-500/30 rounded-full p-2 backdrop-blur-sm">
-                          <div className="animate-spin-slow">✈️</div>
+                        {/* Icon 1 - Aircraft */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl animate-circle-border opacity-90 bg-purple-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '0s'}}>
+                          ✈️
                         </div>
-                        <div className="absolute -top-1 right-1/3 text-white text-xl animate-bounce-subtle opacity-85 bg-pink-500/30 rounded-full p-2 backdrop-blur-sm">
+                        
+                        {/* Icon 2 - Luggage */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl animate-circle-border opacity-85 bg-pink-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '2s'}}>
                           🧳
                         </div>
                         
-                        {/* Right orbit - more prominent */}
-                        <div className="absolute -right-2 top-1/3 text-white text-2xl animate-pulse-gentle opacity-90 bg-indigo-500/30 rounded-full p-2 backdrop-blur-sm">
+                        {/* Icon 3 - Camera */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl animate-circle-border opacity-90 bg-indigo-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '4s'}}>
                           📸
                         </div>
-                        <div className="absolute -right-1 bottom-1/3 text-white text-xl animate-float-reverse opacity-85 bg-purple-500/30 rounded-full p-2 backdrop-blur-sm">
+                        
+                        {/* Icon 4 - Hotel */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl animate-circle-border opacity-85 bg-purple-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '6s'}}>
                           🏨
                         </div>
                         
-                        {/* Bottom orbit - enhanced visibility */}
-                        <div className="absolute -bottom-2 right-1/4 text-white text-2xl animate-sway opacity-90 bg-pink-500/30 rounded-full p-2 backdrop-blur-sm">
+                        {/* Icon 5 - Map */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl animate-circle-border opacity-90 bg-pink-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '8s'}}>
                           🗺️
                         </div>
-                        <div className="absolute -bottom-1 left-1/3 text-white text-xl animate-float opacity-85 bg-indigo-500/30 rounded-full p-2 backdrop-blur-sm">
+                        
+                        {/* Icon 6 - Globe */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl animate-circle-border opacity-85 bg-indigo-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '10s'}}>
                           🌍
                         </div>
                         
-                        {/* Left orbit - more visible */}
-                        <div className="absolute -left-2 bottom-1/3 text-white text-2xl animate-pulse-gentle opacity-90 bg-purple-500/30 rounded-full p-2 backdrop-blur-sm">
+                        {/* Icon 7 - Tickets */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl animate-circle-border opacity-90 bg-purple-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '12s'}}>
                           🎫
                         </div>
-                        <div className="absolute -left-1 top-1/3 text-white text-xl animate-bounce-subtle opacity-85 bg-pink-500/30 rounded-full p-2 backdrop-blur-sm">
+                        
+                        {/* Icon 8 - Star */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl animate-circle-border opacity-85 bg-pink-500/40 rounded-full p-2 backdrop-blur-sm" style={{animationDelay: '14s'}}>
                           ⭐
-                        </div>
-                        
-                        {/* Corner accents - enhanced */}
-                        <div className="absolute -top-3 -left-3 text-white text-lg animate-twinkle opacity-80 bg-indigo-500/40 rounded-full p-2 backdrop-blur-sm">
-                          🧭
-                        </div>
-                        <div className="absolute -top-3 -right-3 text-white text-lg animate-twinkle opacity-80 bg-purple-500/40 rounded-full p-2 backdrop-blur-sm">
-                          ☁️
-                        </div>
-                        <div className="absolute -bottom-3 -left-3 text-white text-lg animate-twinkle opacity-80 bg-pink-500/40 rounded-full p-2 backdrop-blur-sm">
-                          🎒
-                        </div>
-                        <div className="absolute -bottom-3 -right-3 text-white text-lg animate-twinkle opacity-80 bg-indigo-500/40 rounded-full p-2 backdrop-blur-sm">
-                          🏖️
-                        </div>
-                        
-                        {/* Additional moving elements for orbital effect */}
-                        <div className="absolute top-1/2 -left-4 text-white text-lg animate-orbital opacity-75 bg-gradient-to-r from-purple-500/40 to-pink-500/40 rounded-full p-2 backdrop-blur-sm">
-                          🌟
-                        </div>
-                        <div className="absolute top-1/2 -right-4 text-white text-lg animate-orbital-reverse opacity-75 bg-gradient-to-r from-indigo-500/40 to-purple-500/40 rounded-full p-2 backdrop-blur-sm">
-                          🎭
                         </div>
                       </div>
                       
