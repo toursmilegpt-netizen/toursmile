@@ -784,40 +784,40 @@ function App() {
                 </div>
 
                 {/* Professional CTA Section */}
-                <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 rounded-2xl shadow-xl p-1">
+                <div className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 rounded-2xl shadow-xl p-1">
                   <div className="bg-white rounded-xl p-6 sm:p-8 text-center">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-                      🎯 India's Most Advanced Travel Intelligence Platform
+                      🎯 India's Most Personalized Travel Service Platform
                     </h2>
                     <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                      Transform your travel planning experience with enterprise-grade AI technology. Perfect for business executives, corporate teams, and discerning travelers.
+                      Experience handcrafted travel planning with our expert consultants who understand your unique preferences. Perfect for business executives, corporate teams, and discerning travelers.
                     </p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                      <div className="bg-purple-50 p-6 rounded-xl border border-purple-200 hover:shadow-md transition-shadow duration-300">
-                        <div className="text-3xl mb-3">🗣️</div>
-                        <h3 className="font-semibold text-purple-800 mb-2">Natural Language Processing</h3>
-                        <p className="text-purple-600 text-sm">Communicate your travel needs in plain English, just as you would with a personal travel consultant</p>
+                      <div className="bg-orange-50 p-6 rounded-xl border border-orange-200 hover:shadow-md transition-shadow duration-300">
+                        <div className="text-3xl mb-3">👥</div>
+                        <h3 className="font-semibold text-orange-800 mb-2">Expert Human Consultation</h3>
+                        <p className="text-orange-600 text-sm">Dedicated travel experts who listen, understand, and craft your perfect journey with personal attention</p>
                       </div>
                       
-                      <div className="bg-pink-50 p-6 rounded-xl border border-pink-200 hover:shadow-md transition-shadow duration-300">
-                        <div className="text-3xl mb-3">🤖</div>
-                        <h3 className="font-semibold text-pink-800 mb-2">Enterprise AI Intelligence</h3>
-                        <p className="text-pink-600 text-sm">Powered by GPT-4 technology for sophisticated understanding and personalized recommendations</p>
+                      <div className="bg-amber-50 p-6 rounded-xl border border-amber-200 hover:shadow-md transition-shadow duration-300">
+                        <div className="text-3xl mb-3">✨</div>
+                        <h3 className="font-semibold text-amber-800 mb-2">Carefully Curated Experiences</h3>
+                        <p className="text-amber-600 text-sm">Handpicked accommodations, meticulously planned itineraries, and thoughtfully selected experiences</p>
                       </div>
                       
-                      <div className="bg-indigo-50 p-6 rounded-xl border border-indigo-200 hover:shadow-md transition-shadow duration-300">
-                        <div className="text-3xl mb-3">⚡</div>
-                        <h3 className="font-semibold text-indigo-800 mb-2">Instant Results</h3>
-                        <p className="text-indigo-600 text-sm">Automated form completion and intelligent search with real-time availability and pricing</p>
+                      <div className="bg-yellow-50 p-6 rounded-xl border border-yellow-200 hover:shadow-md transition-shadow duration-300">
+                        <div className="text-3xl mb-3">🏆</div>
+                        <h3 className="font-semibold text-yellow-800 mb-2">Premium Service Excellence</h3>
+                        <p className="text-yellow-600 text-sm">24/7 dedicated support, real-time assistance, and commitment to exceeding your expectations</p>
                       </div>
                     </div>
 
                     <button
                       onClick={() => setShowCommandBar(true)}
-                      className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl hover:from-purple-700 hover:to-pink-700 font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                      className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-8 py-4 rounded-xl hover:from-orange-700 hover:to-amber-700 font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
                     >
-                      Experience AI Travel Intelligence
+                      Experience Personalized Travel Planning
                     </button>
                     
                     <div className="mt-6 text-sm text-gray-500">
