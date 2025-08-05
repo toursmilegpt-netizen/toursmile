@@ -284,6 +284,11 @@ function App() {
         queryParams.append('max_nights', max);
       }
       
+      // Default to showing more trips (50 instead of 20)
+      if (!queryParams.has('limit')) {
+        queryParams.append('limit', '50');
+      }
+      
       const response = await fetch(`${BACKEND_URL}/api/popular-trips?${queryParams}`);
       const data = await response.json();
       if (data.success) {
