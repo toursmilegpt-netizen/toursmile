@@ -446,27 +446,19 @@ function App() {
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">From</label>
-                    <input
-                      type="text"
-                      placeholder="Origin city"
-                      value={flightSearch.origin}
-                      onChange={(e) => setFlightSearch({...flightSearch, origin: e.target.value})}
-                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
-                    />
-                  </div>
+                  <CityAutocomplete
+                    label="From"
+                    placeholder="Origin city"
+                    value={flightSearch.origin}
+                    onChange={(value) => setFlightSearch({...flightSearch, origin: value})}
+                  />
                   
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">To</label>
-                    <input
-                      type="text"
-                      placeholder="Destination city"
-                      value={flightSearch.destination}
-                      onChange={(e) => setFlightSearch({...flightSearch, destination: e.target.value})}
-                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
-                    />
-                  </div>
+                  <CityAutocomplete
+                    label="To"
+                    placeholder="Destination city"
+                    value={flightSearch.destination}
+                    onChange={(value) => setFlightSearch({...flightSearch, destination: value})}
+                  />
                   
                   <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">Departure Date</label>
