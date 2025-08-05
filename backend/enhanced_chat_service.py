@@ -115,12 +115,13 @@ class ExpertTravelConsultantChat:
             full_system_prompt = system_prompt + consultation_context
             
             # Generate response using LLM
-            user_msg = UserMessage(content=user_message)
-            response = self.llm_chat.chat(
-                messages=[user_msg],
-                system_prompt=full_system_prompt,
-                model="gpt-4"
+            llm_chat = LlmChat(
+                session_id=session_id,
+                system_message=full_system_prompt
             )
+            
+            user_msg = UserMessage(content=user_message)
+            response = llm_chat.chat([user_msg])
             
             # Update conversation stage based on response
             self._update_conversation_stage(user_message, intent, memory)
