@@ -684,11 +684,11 @@ function App() {
                 {/* Hero Section with Command Bar Highlight */}
                 <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-white/20 hover:shadow-2xl transition-all duration-500">
                   <div className="text-center mb-8">
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                      Plan Your Perfect Trip with AI
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-4">
+                      Unlock Extraordinary Travel Experiences
                     </h1>
                     <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-                      Discover amazing destinations, book flights & hotels, and get personalized travel recommendations powered by artificial intelligence.
+                      Discover handcrafted journeys, exclusive destinations, and personalized service that transforms ordinary trips into unforgettable adventures.
                     </p>
 
                     {/* REVOLUTIONARY COMMAND BAR SHOWCASE */}
