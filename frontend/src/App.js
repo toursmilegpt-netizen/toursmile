@@ -658,6 +658,9 @@ function App() {
               <NavButton tabName="activities" isActive={activeTab === 'activities'} onClick={() => setActiveTab('activities')}>
                 🎯 Activities
               </NavButton>
+              <NavButton tabName="popular-trips" isActive={activeTab === 'popular-trips'} onClick={() => setActiveTab('popular-trips')}>
+                🌟 Popular Trips
+              </NavButton>
               <NavButton tabName="itinerary" isActive={activeTab === 'itinerary'} onClick={() => setActiveTab('itinerary')}>
                 🤖 AI Planner
               </NavButton>
