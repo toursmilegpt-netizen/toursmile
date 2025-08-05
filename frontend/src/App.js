@@ -1512,6 +1512,71 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* Command Bar Modal */}
+      {showCommandBar && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl transform transition-all duration-300 scale-100">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 flex items-center">
+                    <span className="mr-2">🚀</span>Quick Flight Search
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">Describe your trip in natural language</p>
+                </div>
+                <button
+                  onClick={() => setShowCommandBar(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              <div className="relative mb-6">
+                <input
+                  type="text"
+                  value={commandBarInput}
+                  onChange={(e) => setCommandBarInput(e.target.value)}
+                  onKeyPress={handleCommandBarKeyPress}
+                  placeholder="e.g., 'Find flights from Delhi to New York on March 15 for 2 adults in business class'"
+                  className="w-full p-4 pr-12 text-lg border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 bg-gray-50"
+                  autoFocus
+                />
+                <button
+                  onClick={processCommandBarInput}
+                  disabled={commandBarProcessing || !commandBarInput.trim()}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-2 rounded-lg hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                >
+                  {commandBarProcessing ? (
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4">
+                <h4 className="font-semibold text-gray-800 mb-2">💡 Example searches:</h4>
+                <div className="space-y-1 text-sm text-gray-600">
+                  <div>"Delhi to Mumbai tomorrow for 2 people"</div>
+                  <div>"Round trip from Bangalore to London on March 15"</div>
+                  <div>"Business class flight from Chennai to Dubai next week"</div>
+                  <div>"Family trip to Goa for 2 adults and 1 child"</div>
+                </div>
+              </div>
+              
+              <div className="mt-4 text-xs text-gray-400 text-center">
+                Press Enter to search • Press Escape to close
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
