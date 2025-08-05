@@ -290,6 +290,33 @@ function App() {
     alert(`Thank you for your interest! Please call us at +91-XXXXXXXXXX to book trip ${tripId} or use our AI assistant for more details.`);
   };
 
+  // Global destination search for activities
+  const searchDestinations = async (query) => {
+    if (query.length < 2) {
+      setDestinationSuggestions([]);
+      setShowDestinationSuggestions(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/destinations/search?query=${encodeURIComponent(query)}&limit=8`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setDestinationSuggestions(data.destinations);
+        setShowDestinationSuggestions(true);
+      }
+    } catch (error) {
+      console.error('Error searching destinations:', error);
+    }
+  };
+
+  const selectDestination = (destination) => {
+    setSelectedLocation(destination.full_name || destination.name);
+    setShowDestinationSuggestions(false);
+    setDestinationSuggestions([]);
+  };
+
   // Flight search state
   const [flightSearch, setFlightSearch] = useState({
     tripType: 'oneway', // oneway, return, multicity
