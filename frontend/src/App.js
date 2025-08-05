@@ -586,9 +586,8 @@ function App() {
               <img 
                 src="https://customer-assets.emergentagent.com/job_booking-buddy-5/artifacts/5qov7o4f_FINAL%20LOGO%20-%20Copy.png" 
                 alt="TourSmile Logo" 
-                className="h-10 w-auto sm:h-12"
+                className="h-16 w-auto"
               />
-              <div className="ml-3 text-xs sm:text-sm text-gray-500 font-medium">AI-Powered Travel Platform</div>
             </div>
             
             {/* Desktop Navigation */}
