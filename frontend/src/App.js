@@ -417,7 +417,7 @@ function App() {
         }
         
         Extract information from natural language. If information is missing, use reasonable defaults. Only return the JSON, no other text.`,
-        session_id: sessionId || str(uuid.uuid4())
+        session_id: sessionId || `cmd-${Date.now()}`
       });
 
       let parsedData;
