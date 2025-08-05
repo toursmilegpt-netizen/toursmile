@@ -100,6 +100,42 @@
   }
 }
 
+@keyframes orbital {
+  0% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateX(10px) translateY(-5px) rotate(90deg);
+  }
+  50% {
+    transform: translateX(0px) translateY(-10px) rotate(180deg);
+  }
+  75% {
+    transform: translateX(-10px) translateY(-5px) rotate(270deg);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px) rotate(360deg);
+  }
+}
+
+@keyframes orbital-reverse {
+  0% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-10px) translateY(-5px) rotate(-90deg);
+  }
+  50% {
+    transform: translateX(0px) translateY(-10px) rotate(-180deg);
+  }
+  75% {
+    transform: translateX(10px) translateY(-5px) rotate(-270deg);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px) rotate(-360deg);
+  }
+}
+
 /* Apply sophisticated animations */
 .animate-float {
   animation: float 4s ease-in-out infinite;
@@ -127,6 +163,14 @@
 
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
+}
+
+.animate-orbital {
+  animation: orbital 8s ease-in-out infinite;
+}
+
+.animate-orbital-reverse {
+  animation: orbital-reverse 6s ease-in-out infinite;
 }
 
 /* Smooth animations and transitions */
