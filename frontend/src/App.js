@@ -597,6 +597,19 @@ function App() {
               </NavButton>
             </nav>
 
+            {/* Command Bar Button */}
+            <div className="hidden md:flex items-center ml-4">
+              <button
+                onClick={() => setShowCommandBar(true)}
+                className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-sm font-medium">Quick Search</span>
+              </button>
+            </div>
+
             {/* Mobile menu button and chat toggle */}
             <div className="flex items-center space-x-2">
               <button
