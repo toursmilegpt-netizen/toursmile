@@ -386,9 +386,9 @@ class BackendTester:
                     print(f"📋 Trips returned: {len(trips)}")
                     
                     if len(trips) > 0:
-                        # Show breakdown by region/theme
-                        domestic_count = sum(1 for trip in trips if any(dest in ["Rajasthan", "Kerala", "Goa", "Himachal", "Kashmir"] for dest in trip.get("destinations", [])))
-                        international_count = len(trips) - domestic_count
+                        # Show breakdown by region/theme - check trip IDs for better classification
+                        domestic_count = sum(1 for trip in trips if trip.get("id", "").startswith(("RAJ", "KER", "GOA", "HP", "KAS")))
+                        international_count = sum(1 for trip in trips if trip.get("id", "").startswith(("SEA", "ME", "EUR")))
                         
                         print(f"🇮🇳 Domestic trips: {domestic_count}")
                         print(f"🌍 International trips: {international_count}")
