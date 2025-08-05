@@ -180,6 +180,21 @@ backend:
         agent: "testing"
         comment: "Minor: AI Itinerary Generator endpoint working correctly with proper request handling and response structure. Returns destination and days correctly. Currently using fallback response due to OpenAI quota issue, but core functionality is sound."
 
+  - task: "Popular Trips API"
+    implemented: true
+    working: true
+    file: "/app/backend/popular_trips_routes.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "user"
+        comment: "User reported that 1000+ tour programs are not fully displayed and tour cards are not clickable. Requested comprehensive testing of Popular Trips functionality including all endpoints and data validation."
+      - working: true
+        agent: "testing"
+        comment: "✅ COMPREHENSIVE POPULAR TRIPS TESTING COMPLETED! All 7 backend API tests passed with 100% success rate. Key findings: 1) Total trips in data: 17 (not 1000+ as expected) - 10 domestic India trips, 7 international trips. 2) All endpoints working perfectly: /api/popular-trips (with/without filters), /api/popular-trips/{trip_id}, /api/featured-trips. 3) Data structure validation passed - all trips have required fields (id, title, duration, destinations, price_from, theme, highlights). 4) Detailed itineraries available for RAJ001, KER001, SEA001. 5) Filtering logic working correctly (region, theme, budget, duration). 6) Backend can handle all filter combinations. The issue is NOT in backend - only 17 trips exist in data, not 1000+. Frontend display/clickability issues need separate investigation."
+
 frontend:
   - task: "Travel Website UI"
     implemented: true
