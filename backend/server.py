@@ -225,28 +225,38 @@ expert_consultant = ExpertTravelConsultantChat(api_key=os.environ.get('OPENAI_AP
 
 @api_router.post("/chat")
 async def chat_with_expert_consultant(request: ChatRequest):
-    """Chat with AI travel assistant"""
+    """Chat with Expert Travel Consultant"""
     try:
         session_id = request.session_id or str(uuid.uuid4())
-        response = await get_ai_response(request.message, session_id)
         
-        # Save chat message to database
-        chat_message = ChatMessage(
-            session_id=session_id,
-            message=request.message,
-            response=response
+        # Use Expert Travel Consultant instead of generic AI
+        consultation_result = expert_consultant.get_consultation_response(
+            user_message=request.message,
+            session_id=session_id
         )
         
-        await db.chat_messages.insert_one(chat_message.dict())
-        
-        return {
-            "response": response,
-            "session_id": session_id
-        }
-        
+        if consultation_result["success"]:
+            return {
+                "response": consultation_result["response"],
+                "session_id": consultation_result["session_id"],
+                "consultation_stage": consultation_result.get("consultation_stage"),
+                "booking_progress": consultation_result.get("booking_progress"),
+                "next_steps": consultation_result.get("next_steps")
+            }
+        else:
+            return {
+                "response": consultation_result["response"],
+                "session_id": session_id,
+                "error": consultation_result.get("error")
+            }
+            
     except Exception as e:
-        logging.error(f"Chat error: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to process chat message")
+        logging.error(f"Expert consultation error: {str(e)}")
+        return {
+            "response": "I apologize for the technical issue. As your travel consultant, I'm here to help you plan the perfect trip. Could you please tell me about your destination preferences?",
+            "session_id": session_id,
+            "error": "consultation_unavailable"
+        }
 
 @api_router.post("/flights/search")
 async def search_flights(request: FlightSearchRequest):
