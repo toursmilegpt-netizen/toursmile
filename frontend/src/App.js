@@ -1444,7 +1444,7 @@ function App() {
                     <select
                       value={itineraryForm.days}
                       onChange={(e) => setItineraryForm({...itineraryForm, days: parseInt(e.target.value)})}
-                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
+                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white/50"
                     >
                       {[1,2,3,4,5,6,7,8,9,10].map(num => (
                         <option key={num} value={num}>{num} Day{num > 1 ? 's' : ''}</option>
