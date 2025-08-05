@@ -1472,7 +1472,7 @@ function App() {
                       placeholder="e.g., culture, food, adventure"
                       value={itineraryForm.interests.join(', ')}
                       onChange={(e) => setItineraryForm({...itineraryForm, interests: e.target.value.split(', ').filter(i => i.trim())})}
-                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
+                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white/50"
                     />
                   </div>
                 </div>
