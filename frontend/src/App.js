@@ -712,16 +712,16 @@ function App() {
                         {/* Interactive Demo Command Bar */}
                         <div 
                           onClick={() => setShowCommandBar(true)}
-                          className="relative bg-gradient-to-r from-gray-50 to-orange-50 border-2 border-dashed border-orange-300 rounded-xl p-4 sm:p-6 cursor-pointer hover:border-orange-500 hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 transition-all duration-500 group shadow-sm hover:shadow-md"
+                          className="relative bg-gradient-to-r from-gray-50 to-orange-50 border-2 border-dashed border-orange-400 rounded-xl p-4 sm:p-6 cursor-pointer hover:border-orange-500 hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 transition-all duration-500 group shadow-lg hover:shadow-xl animate-glow"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1 text-left">
-                              <div className="text-lg text-gray-500 group-hover:text-orange-700 transition-colors duration-500 font-medium">
+                              <div className="text-lg text-gray-600 group-hover:text-orange-700 transition-colors duration-500 font-medium">
                                 "Executive trip to Dubai next week, business class preferred"
                               </div>
                             </div>
                             <div className="flex items-center space-x-3">
-                              <div className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
+                              <div className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg animate-pulse">
                                 Try Now
                               </div>
                               <svg className="w-6 h-6 text-orange-600 group-hover:scale-110 group-hover:text-orange-700 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -730,8 +730,11 @@ function App() {
                             </div>
                           </div>
                           
-                          {/* Subtle animated border effect */}
-                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+                          {/* Enhanced animated border effect */}
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+                          
+                          {/* Glowing ring effect */}
+                          <div className="absolute inset-0 rounded-xl ring-2 ring-orange-300 ring-opacity-50 animate-ping"></div>
                         </div>
 
                         {/* Professional Example Commands */}
