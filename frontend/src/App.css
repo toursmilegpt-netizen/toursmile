@@ -10,6 +10,48 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Command Bar Glow Animation */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(251, 146, 60, 0.3), 0 0 10px rgba(251, 146, 60, 0.2), 0 0 15px rgba(251, 146, 60, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(251, 146, 60, 0.4), 0 0 20px rgba(251, 146, 60, 0.3), 0 0 30px rgba(251, 146, 60, 0.2);
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Enhanced pulse for Try Now button */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Ping animation for attention */
+@keyframes ping {
+  75%, 100% {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
 /* Enhanced scrollbar for better UX */
 .overflow-y-auto::-webkit-scrollbar {
   width: 8px;
