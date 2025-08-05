@@ -832,33 +832,33 @@ function App() {
                   </div>
                 </div>
 
-                {/* Secondary CTA Section */}
+                {/* Professional CTA Section */}
                 <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 rounded-2xl shadow-xl p-1">
                   <div className="bg-white rounded-xl p-6 sm:p-8 text-center">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-                      🎯 World's First AI Travel Command Bar
+                      🎯 India's Most Advanced Travel Intelligence Platform
                     </h2>
                     <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                      No more clicking through endless forms. Just describe your trip in plain English and watch the magic happen!
+                      Transform your travel planning experience with enterprise-grade AI technology. Perfect for business executives, corporate teams, and discerning travelers.
                     </p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                      <div className="bg-purple-50 p-4 rounded-xl border border-purple-200">
-                        <div className="text-2xl mb-2">🗣️</div>
-                        <h3 className="font-semibold text-purple-800 mb-1">Speak Naturally</h3>
-                        <p className="text-purple-600 text-sm">Use everyday language</p>
+                      <div className="bg-purple-50 p-6 rounded-xl border border-purple-200 hover:shadow-md transition-shadow duration-300">
+                        <div className="text-3xl mb-3">🗣️</div>
+                        <h3 className="font-semibold text-purple-800 mb-2">Natural Language Processing</h3>
+                        <p className="text-purple-600 text-sm">Communicate your travel needs in plain English, just as you would with a personal travel consultant</p>
                       </div>
                       
-                      <div className="bg-pink-50 p-4 rounded-xl border border-pink-200">
-                        <div className="text-2xl mb-2">🤖</div>
-                        <h3 className="font-semibold text-pink-800 mb-1">AI Understands</h3>
-                        <p className="text-pink-600 text-sm">Smart parsing with GPT-4</p>
+                      <div className="bg-pink-50 p-6 rounded-xl border border-pink-200 hover:shadow-md transition-shadow duration-300">
+                        <div className="text-3xl mb-3">🤖</div>
+                        <h3 className="font-semibold text-pink-800 mb-2">Enterprise AI Intelligence</h3>
+                        <p className="text-pink-600 text-sm">Powered by GPT-4 technology for sophisticated understanding and personalized recommendations</p>
                       </div>
                       
-                      <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-200">
-                        <div className="text-2xl mb-2">⚡</div>
-                        <h3 className="font-semibold text-indigo-800 mb-1">Instant Results</h3>
-                        <p className="text-indigo-600 text-sm">Auto-filled forms & search</p>
+                      <div className="bg-indigo-50 p-6 rounded-xl border border-indigo-200 hover:shadow-md transition-shadow duration-300">
+                        <div className="text-3xl mb-3">⚡</div>
+                        <h3 className="font-semibold text-indigo-800 mb-2">Instant Results</h3>
+                        <p className="text-indigo-600 text-sm">Automated form completion and intelligent search with real-time availability and pricing</p>
                       </div>
                     </div>
 
@@ -866,8 +866,12 @@ function App() {
                       onClick={() => setShowCommandBar(true)}
                       className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl hover:from-purple-700 hover:to-pink-700 font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
                     >
-                      🚀 Try AI Search Now
+                      Experience AI Travel Intelligence
                     </button>
+                    
+                    <div className="mt-6 text-sm text-gray-500">
+                      Trusted by executives and premium travelers across India
+                    </div>
                   </div>
                 </div>
 
