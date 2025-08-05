@@ -1790,7 +1790,7 @@ function App() {
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                       {popularTrips.map(trip => (
-                        <div key={trip.id} className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-100">
+                        <div key={trip.id} className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-100 cursor-pointer" onClick={() => handleTripClick(trip.id)}>
                           <div className="relative">
                             <img 
                               src={trip.image || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400'}
@@ -1833,12 +1833,26 @@ function App() {
                                   ₹{trip.price_from?.toLocaleString()}
                                 </div>
                               </div>
-                              <button 
-                                onClick={() => handleTripInquiry(trip.id)}
-                                className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-orange-700 hover:to-amber-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm"
-                              >
-                                Inquire Now
-                              </button>
+                              <div className="flex gap-2">
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleTripClick(trip.id);
+                                  }}
+                                  className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-3 py-2 rounded-xl hover:from-blue-700 hover:to-blue-800 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm"
+                                >
+                                  View Details
+                                </button>
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleTripInquiry(trip.id);
+                                  }}
+                                  className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-3 py-2 rounded-xl hover:from-orange-700 hover:to-amber-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm"
+                                >
+                                  Inquire Now
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
