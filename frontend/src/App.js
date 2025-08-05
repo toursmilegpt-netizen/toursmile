@@ -552,42 +552,349 @@ function App() {
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Search Flights</h2>
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <CityAutocomplete
-                    label="From"
-                    placeholder="Origin city"
-                    value={flightSearch.origin}
-                    onChange={(value) => setFlightSearch({...flightSearch, origin: value})}
-                  />
-                  
-                  <CityAutocomplete
-                    label="To"
-                    placeholder="Destination city"
-                    value={flightSearch.destination}
-                    onChange={(value) => setFlightSearch({...flightSearch, destination: value})}
-                  />
-                  
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">Departure Date</label>
-                    <input
-                      type="date"
-                      value={flightSearch.departure_date}
-                      onChange={(e) => setFlightSearch({...flightSearch, departure_date: e.target.value})}
-                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
-                    />
+                {/* Trip Type Selection */}
+                <div className="mb-6">
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <button
+                      onClick={() => setFlightSearch({...flightSearch, tripType: 'oneway'})}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                        flightSearch.tripType === 'oneway'
+                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      One Way
+                    </button>
+                    <button
+                      onClick={() => setFlightSearch({...flightSearch, tripType: 'return'})}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                        flightSearch.tripType === 'return'
+                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      Round Trip
+                    </button>
+                    <button
+                      onClick={() => setFlightSearch({...flightSearch, tripType: 'multicity'})}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                        flightSearch.tripType === 'multicity'
+                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      Multi City
+                    </button>
                   </div>
-                  
+                </div>
+
+                {/* One Way & Round Trip Form */}
+                {(flightSearch.tripType === 'oneway' || flightSearch.tripType === 'return') && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <CityAutocomplete
+                      label="From"
+                      placeholder="Origin city"
+                      value={flightSearch.origin}
+                      onChange={(value) => setFlightSearch({...flightSearch, origin: value})}
+                    />
+                    
+                    <CityAutocomplete
+                      label="To"
+                      placeholder="Destination city"
+                      value={flightSearch.destination}
+                      onChange={(value) => setFlightSearch({...flightSearch, destination: value})}
+                    />
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-700">Departure</label>
+                      <input
+                        type="date"
+                        value={flightSearch.departure_date}
+                        onChange={(e) => setFlightSearch({...flightSearch, departure_date: e.target.value})}
+                        className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
+                      />
+                    </div>
+                    
+                    {flightSearch.tripType === 'return' && (
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">Return</label>
+                        <input
+                          type="date"
+                          value={flightSearch.return_date}
+                          onChange={(e) => setFlightSearch({...flightSearch, return_date: e.target.value})}
+                          className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Multi City Form */}
+                {flightSearch.tripType === 'multicity' && (
+                  <div className="space-y-4 mb-6">
+                    {flightSearch.multiCityFlights.map((flight, index) => (
+                      <div key={index} className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-xl">
+                        <CityAutocomplete
+                          label={`From ${index + 1}`}
+                          placeholder="Origin city"
+                          value={flight.origin}
+                          onChange={(value) => {
+                            const updatedFlights = [...flightSearch.multiCityFlights];
+                            updatedFlights[index].origin = value;
+                            setFlightSearch({...flightSearch, multiCityFlights: updatedFlights});
+                          }}
+                        />
+                        
+                        <CityAutocomplete
+                          label={`To ${index + 1}`}
+                          placeholder="Destination city"
+                          value={flight.destination}
+                          onChange={(value) => {
+                            const updatedFlights = [...flightSearch.multiCityFlights];
+                            updatedFlights[index].destination = value;
+                            setFlightSearch({...flightSearch, multiCityFlights: updatedFlights});
+                          }}
+                        />
+                        
+                        <div className="space-y-2">
+                          <label className="block text-sm font-medium text-gray-700">Departure {index + 1}</label>
+                          <input
+                            type="date"
+                            value={flight.departure_date}
+                            onChange={(e) => {
+                              const updatedFlights = [...flightSearch.multiCityFlights];
+                              updatedFlights[index].departure_date = e.target.value;
+                              setFlightSearch({...flightSearch, multiCityFlights: updatedFlights});
+                            }}
+                            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                    
+                    <button
+                      onClick={() => {
+                        setFlightSearch({
+                          ...flightSearch,
+                          multiCityFlights: [...flightSearch.multiCityFlights, { origin: '', destination: '', departure_date: '' }]
+                        });
+                      }}
+                      className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center"
+                    >
+                      + Add Another City
+                    </button>
+                  </div>
+                )}
+
+                {/* Passengers & Class */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  {/* Passengers Dropdown */}
                   <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">Passengers</label>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setShowPassengerDropdown(!showPassengerDropdown)}
+                        className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50 text-left flex items-center justify-between"
+                      >
+                        <span>
+                          {flightSearch.passengers.adults + flightSearch.passengers.children + flightSearch.passengers.infants} Passenger
+                          {(flightSearch.passengers.adults + flightSearch.passengers.children + flightSearch.passengers.infants) > 1 ? 's' : ''}
+                        </span>
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      
+                      {showPassengerDropdown && (
+                        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-xl p-4">
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <div className="font-medium text-gray-900">Adults</div>
+                                <div className="text-sm text-gray-500">12+ years</div>
+                              </div>
+                              <div className="flex items-center space-x-3">
+                                <button
+                                  onClick={() => setFlightSearch({
+                                    ...flightSearch,
+                                    passengers: {...flightSearch.passengers, adults: Math.max(1, flightSearch.passengers.adults - 1)}
+                                  })}
+                                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                                >
+                                  -
+                                </button>
+                                <span className="w-8 text-center">{flightSearch.passengers.adults}</span>
+                                <button
+                                  onClick={() => setFlightSearch({
+                                    ...flightSearch,
+                                    passengers: {...flightSearch.passengers, adults: Math.min(9, flightSearch.passengers.adults + 1)}
+                                  })}
+                                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <div className="font-medium text-gray-900">Children</div>
+                                <div className="text-sm text-gray-500">2-12 years</div>
+                              </div>
+                              <div className="flex items-center space-x-3">
+                                <button
+                                  onClick={() => setFlightSearch({
+                                    ...flightSearch,
+                                    passengers: {...flightSearch.passengers, children: Math.max(0, flightSearch.passengers.children - 1)}
+                                  })}
+                                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                                >
+                                  -
+                                </button>
+                                <span className="w-8 text-center">{flightSearch.passengers.children}</span>
+                                <button
+                                  onClick={() => setFlightSearch({
+                                    ...flightSearch,
+                                    passengers: {...flightSearch.passengers, children: Math.min(6, flightSearch.passengers.children + 1)}
+                                  })}
+                                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <div className="font-medium text-gray-900">Infants</div>
+                                <div className="text-sm text-gray-500">0-2 years</div>
+                              </div>
+                              <div className="flex items-center space-x-3">
+                                <button
+                                  onClick={() => setFlightSearch({
+                                    ...flightSearch,
+                                    passengers: {...flightSearch.passengers, infants: Math.max(0, flightSearch.passengers.infants - 1)}
+                                  })}
+                                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                                >
+                                  -
+                                </button>
+                                <span className="w-8 text-center">{flightSearch.passengers.infants}</span>
+                                <button
+                                  onClick={() => setFlightSearch({
+                                    ...flightSearch,
+                                    passengers: {...flightSearch.passengers, infants: Math.min(flightSearch.passengers.adults, flightSearch.passengers.infants + 1)}
+                                  })}
+                                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <button
+                            onClick={() => setShowPassengerDropdown(false)}
+                            className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                          >
+                            Done
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Travel Class */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Class</label>
                     <select
-                      value={flightSearch.passengers}
-                      onChange={(e) => setFlightSearch({...flightSearch, passengers: parseInt(e.target.value)})}
+                      value={flightSearch.class_type}
+                      onChange={(e) => setFlightSearch({...flightSearch, class_type: e.target.value})}
                       className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
                     >
-                      {[1,2,3,4,5,6].map(num => (
-                        <option key={num} value={num}>{num} Passenger{num > 1 ? 's' : ''}</option>
-                      ))}
+                      <option value="economy">Economy</option>
+                      <option value="premium_economy">Premium Economy</option>
+                      <option value="business">Business</option>
+                      <option value="first">First Class</option>
                     </select>
+                  </div>
+                </div>
+
+                {/* Special Fares */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Special Fares</label>
+                  <div className="flex flex-wrap gap-4">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={flightSearch.specialFares.seniorCitizen}
+                        onChange={(e) => setFlightSearch({
+                          ...flightSearch,
+                          specialFares: {...flightSearch.specialFares, seniorCitizen: e.target.checked}
+                        })}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"
+                      />
+                      <span className="text-sm text-gray-700">Senior Citizen (60+)</span>
+                    </label>
+                    
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={flightSearch.specialFares.student}
+                        onChange={(e) => setFlightSearch({
+                          ...flightSearch,
+                          specialFares: {...flightSearch.specialFares, student: e.target.checked}
+                        })}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"
+                      />
+                      <span className="text-sm text-gray-700">Student Fares</span>
+                    </label>
+                    
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={flightSearch.specialFares.armedForces}
+                        onChange={(e) => setFlightSearch({
+                          ...flightSearch,
+                          specialFares: {...flightSearch.specialFares, armedForces: e.target.checked}
+                        })}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"
+                      />
+                      <span className="text-sm text-gray-700">Armed Forces</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Preferences */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Preferences</label>
+                  <div className="flex flex-wrap gap-4">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={flightSearch.preferences.directFlights}
+                        onChange={(e) => setFlightSearch({
+                          ...flightSearch,
+                          preferences: {...flightSearch.preferences, directFlights: e.target.checked}
+                        })}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"
+                      />
+                      <span className="text-sm text-gray-700">Direct Flights Only</span>
+                    </label>
+                    
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={flightSearch.preferences.flexibleDates}
+                        onChange={(e) => setFlightSearch({
+                          ...flightSearch,
+                          preferences: {...flightSearch.preferences, flexibleDates: e.target.checked}
+                        })}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"
+                      />
+                      <span className="text-sm text-gray-700">Flexible Dates</span>
+                    </label>
                   </div>
                 </div>
                 
@@ -599,9 +906,9 @@ function App() {
                   {flightSearching ? (
                     <div className="flex items-center justify-center">
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                      Searching...
+                      Searching Flights...
                     </div>
-                  ) : 'Search Flights'}
+                  ) : `🔍 Search ${flightSearch.tripType === 'multicity' ? 'Multi-City' : flightSearch.tripType === 'return' ? 'Round Trip' : 'One Way'} Flights`}
                 </button>
 
                 {flightResults.length > 0 && (
