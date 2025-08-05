@@ -394,6 +394,162 @@ function App() {
     }
   };
 
+  const processCommandBarInput = async () => {
+    if (!commandBarInput.trim()) return;
+
+    setCommandBarProcessing(true);
+    
+    try {
+      const response = await axios.post(`${API}/chat`, {
+        message: `Parse this flight search request and return ONLY a JSON object with the extracted information: "${commandBarInput}". 
+        
+        Return JSON in this exact format:
+        {
+          "tripType": "oneway|return|multicity",
+          "origin": "city name",
+          "destination": "city name", 
+          "departure_date": "YYYY-MM-DD",
+          "return_date": "YYYY-MM-DD or null",
+          "adults": number,
+          "children": number,
+          "infants": number,
+          "class_type": "economy|premium_economy|business|first"
+        }
+        
+        Extract information from natural language. If information is missing, use reasonable defaults. Only return the JSON, no other text.`,
+        session_id: sessionId || str(uuid.uuid4())
+      });
+
+      let parsedData;
+      try {
+        // Try to extract JSON from the AI response
+        const jsonMatch = response.data.response.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          parsedData = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error('No JSON found in response');
+        }
+      } catch (parseError) {
+        console.error('JSON parsing error:', parseError);
+        // Fallback: try to extract basic info using regex
+        parsedData = extractBasicFlightInfo(commandBarInput);
+      }
+
+      // Update flight search form with parsed data
+      if (parsedData) {
+        setFlightSearch({
+          ...flightSearch,
+          tripType: parsedData.tripType || 'oneway',
+          origin: parsedData.origin || '',
+          destination: parsedData.destination || '',
+          departure_date: parsedData.departure_date || '',
+          return_date: parsedData.return_date || '',
+          passengers: {
+            adults: parsedData.adults || 1,
+            children: parsedData.children || 0,
+            infants: parsedData.infants || 0
+          },
+          class_type: parsedData.class_type || 'economy'
+        });
+
+        // Switch to flights tab and trigger search
+        setActiveTab('flights');
+        
+        // Give a moment for the form to update, then search
+        setTimeout(() => {
+          if (parsedData.origin && parsedData.destination && parsedData.departure_date) {
+            searchFlights();
+          }
+        }, 500);
+
+        // Show success message
+        alert(`✅ Parsed your request! Searching flights from ${parsedData.origin} to ${parsedData.destination}`);
+      }
+
+    } catch (error) {
+      console.error('Command bar processing error:', error);
+      // Fallback parsing
+      const fallbackData = extractBasicFlightInfo(commandBarInput);
+      if (fallbackData.origin && fallbackData.destination) {
+        setFlightSearch({
+          ...flightSearch,
+          origin: fallbackData.origin,
+          destination: fallbackData.destination,
+          departure_date: fallbackData.departure_date || '',
+          passengers: {
+            adults: fallbackData.adults || 1,
+            children: 0,
+            infants: 0
+          }
+        });
+        setActiveTab('flights');
+        alert(`✅ Found basic info! Please verify the details and search.`);
+      } else {
+        alert('❌ Could not parse your request. Please try again with more details like "Delhi to Mumbai on March 15"');
+      }
+    } finally {
+      setCommandBarProcessing(false);
+      setCommandBarInput('');
+      setShowCommandBar(false);
+    }
+  };
+
+  // Fallback function to extract basic flight info using regex
+  const extractBasicFlightInfo = (input) => {
+    const lowerInput = input.toLowerCase();
+    
+    // Extract cities (simple pattern)
+    const fromMatch = lowerInput.match(/from\s+([a-zA-Z\s]+?)(?:\s+to|\s+→)/);
+    const toMatch = lowerInput.match(/to\s+([a-zA-Z\s]+?)(?:\s+on|\s+date|\s+for|\s*$)/);
+    
+    // Extract date patterns
+    const datePatterns = [
+      /(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/,
+      /(\d{4}-\d{1,2}-\d{1,2})/,
+      /(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2}/i,
+      /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\s+\d{1,2}/i
+    ];
+    
+    let extractedDate = '';
+    for (const pattern of datePatterns) {
+      const match = input.match(pattern);
+      if (match) {
+        extractedDate = match[1];
+        break;
+      }
+    }
+
+    // Extract passenger count
+    const passengersMatch = lowerInput.match(/(\d+)\s*(?:adults?|passengers?|people)/);
+    const adults = passengersMatch ? parseInt(passengersMatch[1]) : 1;
+
+    // Extract class
+    let classType = 'economy';
+    if (lowerInput.includes('business')) classType = 'business';
+    else if (lowerInput.includes('first')) classType = 'first';
+    else if (lowerInput.includes('premium')) classType = 'premium_economy';
+
+    return {
+      origin: fromMatch ? fromMatch[1].trim() : '',
+      destination: toMatch ? toMatch[1].trim() : '',
+      departure_date: extractedDate,
+      adults: adults,
+      class_type: classType,
+      tripType: lowerInput.includes('return') || lowerInput.includes('round') ? 'return' : 'oneway'
+    };
+  };
+
+  const handleCommandBarKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      processCommandBarInput();
+    }
+    if (e.key === 'Escape') {
+      setShowCommandBar(false);
+      setCommandBarInput('');
+    }
+  };
+
   const NavButton = ({ tabName, children, isActive, onClick }) => (
     <button
       onClick={onClick}
