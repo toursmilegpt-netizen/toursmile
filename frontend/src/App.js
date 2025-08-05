@@ -5,8 +5,9 @@ import axios from "axios";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Popular Indian cities for autocomplete
+// Popular Indian and International cities for autocomplete
 const POPULAR_CITIES = [
+  // Indian Cities
   { code: "DEL", name: "Delhi", fullName: "Delhi, India" },
   { code: "BOM", name: "Mumbai", fullName: "Mumbai, India" }, 
   { code: "BLR", name: "Bangalore", fullName: "Bangalore, India" },
@@ -26,7 +27,95 @@ const POPULAR_CITIES = [
   { code: "NAG", name: "Nagpur", fullName: "Nagpur, India" },
   { code: "IXM", name: "Madurai", fullName: "Madurai, India" },
   { code: "VNS", name: "Varanasi", fullName: "Varanasi, India" },
-  { code: "IXB", name: "Bagdogra", fullName: "Bagdogra, India" }
+  { code: "IXB", name: "Bagdogra", fullName: "Bagdogra, India" },
+  
+  // Popular International Destinations
+  // Middle East
+  { code: "DXB", name: "Dubai", fullName: "Dubai, UAE" },
+  { code: "AUH", name: "Abu Dhabi", fullName: "Abu Dhabi, UAE" },
+  { code: "DOH", name: "Doha", fullName: "Doha, Qatar" },
+  { code: "KWI", name: "Kuwait City", fullName: "Kuwait City, Kuwait" },
+  { code: "RUH", name: "Riyadh", fullName: "Riyadh, Saudi Arabia" },
+  { code: "JED", name: "Jeddah", fullName: "Jeddah, Saudi Arabia" },
+  { code: "MCT", name: "Muscat", fullName: "Muscat, Oman" },
+  { code: "BAH", name: "Bahrain", fullName: "Manama, Bahrain" },
+  
+  // Southeast Asia
+  { code: "SIN", name: "Singapore", fullName: "Singapore" },
+  { code: "KUL", name: "Kuala Lumpur", fullName: "Kuala Lumpur, Malaysia" },
+  { code: "BKK", name: "Bangkok", fullName: "Bangkok, Thailand" },
+  { code: "CGK", name: "Jakarta", fullName: "Jakarta, Indonesia" },
+  { code: "MNL", name: "Manila", fullName: "Manila, Philippines" },
+  { code: "HAN", name: "Hanoi", fullName: "Hanoi, Vietnam" },
+  { code: "SGN", name: "Ho Chi Minh City", fullName: "Ho Chi Minh City, Vietnam" },
+  { code: "PNH", name: "Phnom Penh", fullName: "Phnom Penh, Cambodia" },
+  { code: "RGN", name: "Yangon", fullName: "Yangon, Myanmar" },
+  
+  // East Asia
+  { code: "NRT", name: "Tokyo", fullName: "Tokyo (Narita), Japan" },
+  { code: "HND", name: "Tokyo Haneda", fullName: "Tokyo (Haneda), Japan" },
+  { code: "ICN", name: "Seoul", fullName: "Seoul, South Korea" },
+  { code: "PEK", name: "Beijing", fullName: "Beijing, China" },
+  { code: "PVG", name: "Shanghai", fullName: "Shanghai, China" },
+  { code: "HKG", name: "Hong Kong", fullName: "Hong Kong" },
+  { code: "TPE", name: "Taipei", fullName: "Taipei, Taiwan" },
+  
+  // Europe
+  { code: "LHR", name: "London", fullName: "London (Heathrow), UK" },
+  { code: "LGW", name: "London Gatwick", fullName: "London (Gatwick), UK" },
+  { code: "CDG", name: "Paris", fullName: "Paris (Charles de Gaulle), France" },
+  { code: "FRA", name: "Frankfurt", fullName: "Frankfurt, Germany" },
+  { code: "MUC", name: "Munich", fullName: "Munich, Germany" },
+  { code: "AMS", name: "Amsterdam", fullName: "Amsterdam, Netherlands" },
+  { code: "ZUR", name: "Zurich", fullName: "Zurich, Switzerland" },
+  { code: "VIE", name: "Vienna", fullName: "Vienna, Austria" },
+  { code: "FCO", name: "Rome", fullName: "Rome, Italy" },
+  { code: "MAD", name: "Madrid", fullName: "Madrid, Spain" },
+  { code: "BCN", name: "Barcelona", fullName: "Barcelona, Spain" },
+  { code: "IST", name: "Istanbul", fullName: "Istanbul, Turkey" },
+  { code: "SVO", name: "Moscow", fullName: "Moscow, Russia" },
+  
+  // North America
+  { code: "JFK", name: "New York", fullName: "New York (JFK), USA" },
+  { code: "LGA", name: "New York LaGuardia", fullName: "New York (LaGuardia), USA" },
+  { code: "EWR", name: "Newark", fullName: "Newark, USA" },
+  { code: "LAX", name: "Los Angeles", fullName: "Los Angeles, USA" },
+  { code: "SFO", name: "San Francisco", fullName: "San Francisco, USA" },
+  { code: "ORD", name: "Chicago", fullName: "Chicago, USA" },
+  { code: "MIA", name: "Miami", fullName: "Miami, USA" },
+  { code: "DFW", name: "Dallas", fullName: "Dallas, USA" },
+  { code: "YYZ", name: "Toronto", fullName: "Toronto, Canada" },
+  { code: "YVR", name: "Vancouver", fullName: "Vancouver, Canada" },
+  
+  // Australia & Oceania
+  { code: "SYD", name: "Sydney", fullName: "Sydney, Australia" },
+  { code: "MEL", name: "Melbourne", fullName: "Melbourne, Australia" },
+  { code: "BNE", name: "Brisbane", fullName: "Brisbane, Australia" },
+  { code: "PER", name: "Perth", fullName: "Perth, Australia" },
+  { code: "AKL", name: "Auckland", fullName: "Auckland, New Zealand" },
+  
+  // Africa
+  { code: "CAI", name: "Cairo", fullName: "Cairo, Egypt" },
+  { code: "JNB", name: "Johannesburg", fullName: "Johannesburg, South Africa" },
+  { code: "CPT", name: "Cape Town", fullName: "Cape Town, South Africa" },
+  { code: "NBO", name: "Nairobi", fullName: "Nairobi, Kenya" },
+  { code: "ADD", name: "Addis Ababa", fullName: "Addis Ababa, Ethiopia" },
+  
+  // South America
+  { code: "GRU", name: "São Paulo", fullName: "São Paulo, Brazil" },
+  { code: "GIG", name: "Rio de Janeiro", fullName: "Rio de Janeiro, Brazil" },
+  { code: "EZE", name: "Buenos Aires", fullName: "Buenos Aires, Argentina" },
+  { code: "SCL", name: "Santiago", fullName: "Santiago, Chile" },
+  { code: "LIM", name: "Lima", fullName: "Lima, Peru" },
+  
+  // Popular vacation destinations
+  { code: "MLE", name: "Maldives", fullName: "Malé, Maldives" },
+  { code: "CMB", name: "Colombo", fullName: "Colombo, Sri Lanka" },
+  { code: "KTM", name: "Kathmandu", fullName: "Kathmandu, Nepal" },
+  { code: "DAC", name: "Dhaka", fullName: "Dhaka, Bangladesh" },
+  { code: "TAS", name: "Tashkent", fullName: "Tashkent, Uzbekistan" },
+  { code: "BKS", name: "Bangkok", fullName: "Bangkok, Thailand" },
+  { code: "DPS", name: "Bali", fullName: "Denpasar (Bali), Indonesia" }
 ];
 
 // City Autocomplete Component
