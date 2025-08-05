@@ -299,6 +299,19 @@ function App() {
     scrollToBottom();
   }, [chatMessages]);
 
+  // Keyboard shortcut for command bar (Cmd/Ctrl + K)
+  useEffect(() => {
+    const handleKeydown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setShowCommandBar(true);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeydown);
+    return () => document.removeEventListener('keydown', handleKeydown);
+  }, []);
+
   const sendChatMessage = async () => {
     if (!chatInput.trim()) return;
 
