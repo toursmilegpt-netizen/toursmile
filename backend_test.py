@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Backend API Testing Suite for TourSmile AI Travel Platform
-Tests all backend endpoints including OpenAI GPT-4 integration
+Tests all backend endpoints and shows actual mockup data for frontend display
 """
 
 import requests
