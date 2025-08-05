@@ -231,6 +231,9 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [showPassengerDropdown, setShowPassengerDropdown] = useState(false);
+  const [commandBarInput, setCommandBarInput] = useState('');
+  const [commandBarProcessing, setCommandBarProcessing] = useState(false);
+  const [showCommandBar, setShowCommandBar] = useState(false);
   const chatEndRef = useRef(null);
 
   // Flight search state
