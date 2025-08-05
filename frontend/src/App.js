@@ -160,8 +160,12 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <div className="text-3xl font-bold text-indigo-600">✈️ TourSmile</div>
-              <div className="ml-2 text-sm text-gray-500">AI-Powered Travel Platform</div>
+              <img 
+                src="https://customer-assets.emergentagent.com/job_booking-buddy-5/artifacts/5qov7o4f_FINAL%20LOGO%20-%20Copy.png" 
+                alt="TourSmile Logo" 
+                className="h-12 w-auto"
+              />
+              <div className="ml-3 text-sm text-gray-500 font-medium">AI-Powered Travel Platform</div>
             </div>
             
             <nav className="flex space-x-8">
