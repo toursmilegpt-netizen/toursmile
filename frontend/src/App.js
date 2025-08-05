@@ -1003,7 +1003,7 @@ function App() {
                       <button
                         type="button"
                         onClick={() => setShowPassengerDropdown(!showPassengerDropdown)}
-                        className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50 text-left flex items-center justify-between"
+                        className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white/50 text-left flex items-center justify-between"
                       >
                         <span>
                           {flightSearch.passengers.adults + flightSearch.passengers.children + flightSearch.passengers.infants} Passenger
