@@ -692,67 +692,116 @@ function App() {
                     </p>
 
                     {/* REVOLUTIONARY COMMAND BAR SHOWCASE */}
-                    <div className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 p-1 rounded-2xl mb-8 animate-pulse shadow-2xl">
-                      <div className="bg-white rounded-xl p-6 sm:p-8">
+                    <div className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 p-1 rounded-2xl mb-8 shadow-2xl overflow-hidden">
+                      {/* Animated Travel Icons Orbiting the Border */}
+                      <div className="absolute inset-0 rounded-2xl">
+                        {/* Top orbit */}
+                        <div className="absolute top-2 left-1/4 text-white text-lg animate-float opacity-80">
+                          <div className="animate-spin-slow">✈️</div>
+                        </div>
+                        <div className="absolute top-4 right-1/3 text-white text-base animate-bounce-subtle opacity-70">
+                          🧳
+                        </div>
+                        
+                        {/* Right orbit */}
+                        <div className="absolute right-3 top-1/3 text-white text-lg animate-pulse-gentle opacity-75">
+                          📸
+                        </div>
+                        <div className="absolute right-5 bottom-1/3 text-white text-base animate-float-reverse opacity-80">
+                          🏨
+                        </div>
+                        
+                        {/* Bottom orbit */}
+                        <div className="absolute bottom-3 right-1/4 text-white text-lg animate-sway opacity-70">
+                          🗺️
+                        </div>
+                        <div className="absolute bottom-4 left-1/3 text-white text-base animate-float opacity-85">
+                          🌍
+                        </div>
+                        
+                        {/* Left orbit */}
+                        <div className="absolute left-3 bottom-1/3 text-white text-lg animate-pulse-gentle opacity-75">
+                          🎫
+                        </div>
+                        <div className="absolute left-5 top-1/3 text-white text-base animate-bounce-subtle opacity-80">
+                          ⭐
+                        </div>
+                        
+                        {/* Corner accents */}
+                        <div className="absolute top-6 left-6 text-white text-sm animate-twinkle opacity-60">
+                          🧭
+                        </div>
+                        <div className="absolute top-6 right-6 text-white text-sm animate-twinkle opacity-60">
+                          ☁️
+                        </div>
+                        <div className="absolute bottom-6 left-6 text-white text-sm animate-twinkle opacity-60">
+                          🎒
+                        </div>
+                        <div className="absolute bottom-6 right-6 text-white text-sm animate-twinkle opacity-60">
+                          🏖️
+                        </div>
+                      </div>
+                      
+                      <div className="bg-white rounded-xl p-6 sm:p-8 relative z-10">
                         <div className="flex items-center justify-center mb-4">
-                          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-bounce shadow-lg">
-                            🚀 NEW: AI-POWERED SEARCH
+                          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                            <span className="animate-pulse">🚀</span> PREMIUM AI-POWERED SEARCH
                           </div>
                         </div>
                         
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-                          Just Tell Us What You Want!
+                          Simply Describe Your Journey
                         </h2>
                         
                         <p className="text-gray-600 mb-6">
-                          Skip the forms! Use natural language to search flights instantly
+                          Experience the future of travel planning with intelligent, conversational search
                         </p>
 
                         {/* Interactive Demo Command Bar */}
                         <div 
                           onClick={() => setShowCommandBar(true)}
-                          className="relative bg-gradient-to-r from-gray-50 to-blue-50 border-2 border-dashed border-purple-300 rounded-xl p-4 sm:p-6 cursor-pointer hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 transition-all duration-300 group"
+                          className="relative bg-gradient-to-r from-gray-50 to-blue-50 border-2 border-dashed border-purple-300 rounded-xl p-4 sm:p-6 cursor-pointer hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 transition-all duration-500 group shadow-sm hover:shadow-md"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1 text-left">
-                              <div className="text-lg text-gray-400 group-hover:text-purple-600 transition-colors duration-300">
-                                "Find flights from Delhi to Dubai tomorrow for 2 adults"
+                              <div className="text-lg text-gray-500 group-hover:text-purple-700 transition-colors duration-500 font-medium">
+                                "Executive trip to Dubai next week, business class preferred"
                               </div>
                             </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full text-sm font-medium animate-pulse">
-                                Try It!
+                            <div className="flex items-center space-x-3">
+                              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
+                                Try Now
                               </div>
-                              <svg className="w-6 h-6 text-purple-600 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-6 h-6 text-purple-600 group-hover:scale-110 group-hover:text-purple-700 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                               </svg>
                             </div>
                           </div>
                           
-                          {/* Animated border effect */}
-                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                          {/* Subtle animated border effect */}
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
                         </div>
 
-                        {/* Example Commands Carousel */}
+                        {/* Professional Example Commands */}
                         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                          <div className="bg-purple-50 text-purple-800 px-4 py-2 rounded-lg border border-purple-200">
-                            💼 "Business class to London next week"
+                          <div className="bg-purple-50 text-purple-800 px-4 py-3 rounded-lg border border-purple-200 hover:bg-purple-100 transition-colors duration-300">
+                            <span className="font-semibold">Business Travel:</span> "First class to London, flexible dates"
                           </div>
-                          <div className="bg-pink-50 text-pink-800 px-4 py-2 rounded-lg border border-pink-200">
-                            👨‍👩‍👧‍👦 "Family trip to Goa for 4 people"
+                          <div className="bg-pink-50 text-pink-800 px-4 py-3 rounded-lg border border-pink-200 hover:bg-pink-100 transition-colors duration-300">
+                            <span className="font-semibold">Family Vacation:</span> "Premium family trip to Singapore"
                           </div>
-                          <div className="bg-indigo-50 text-indigo-800 px-4 py-2 rounded-lg border border-indigo-200">
-                            🔄 "Round trip Mumbai to Singapore"
+                          <div className="bg-indigo-50 text-indigo-800 px-4 py-3 rounded-lg border border-indigo-200 hover:bg-indigo-100 transition-colors duration-300">
+                            <span className="font-semibold">Corporate Group:</span> "Team travel to Mumbai, 8 executives"
                           </div>
-                          <div className="bg-blue-50 text-blue-800 px-4 py-2 rounded-lg border border-blue-200">
-                            ⚡ "Cheap flight to Bangkok tomorrow"
+                          <div className="bg-blue-50 text-blue-800 px-4 py-3 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors duration-300">
+                            <span className="font-semibold">Luxury Travel:</span> "Premium weekend getaway to Goa"
                           </div>
                         </div>
 
                         <div className="mt-6 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-500">
                           <div className="flex items-center">
-                            <span className="font-medium text-purple-600">Pro Tip:</span>
-                            <span className="ml-1">Press Cmd/Ctrl + K anywhere!</span>
+                            <span className="font-medium text-purple-600">Quick Access:</span>
+                            <span className="ml-2">Press Cmd/Ctrl + K from anywhere</span>
                           </div>
                           <div className="flex items-center">
                             <span className="bg-gray-200 px-2 py-1 rounded text-xs font-mono">⌘K</span>
