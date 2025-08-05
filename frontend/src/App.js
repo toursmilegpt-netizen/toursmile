@@ -1482,6 +1482,229 @@ function App() {
               </div>
             )}
 
+            {activeTab === 'popular-trips' && (
+              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-white/20">
+                <div className="flex items-center mb-6">
+                  <div className="text-3xl mr-3">🌟</div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Popular Trip Packages</h2>
+                </div>
+                
+                {/* Filter Section */}
+                <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-4 sm:p-6 mb-6 border border-orange-200">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Filter Your Perfect Trip</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Region</label>
+                      <select 
+                        value={tripFilters.region}
+                        onChange={(e) => setTripFilters({...tripFilters, region: e.target.value})}
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white"
+                      >
+                        <option value="">All Regions</option>
+                        <option value="india_domestic">India</option>
+                        <option value="international">International</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Theme</label>
+                      <select 
+                        value={tripFilters.theme}
+                        onChange={(e) => setTripFilters({...tripFilters, theme: e.target.value})}
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white"
+                      >
+                        <option value="">All Themes</option>
+                        <option value="Heritage">Heritage & Culture</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Beach">Beach & Leisure</option>
+                        <option value="Luxury">Luxury</option>
+                        <option value="Nature">Nature & Wildlife</option>
+                        <option value="Honeymoon">Honeymoon</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                      <select 
+                        value={tripFilters.duration}
+                        onChange={(e) => setTripFilters({...tripFilters, duration: e.target.value})}
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white"
+                      >
+                        <option value="">Any Duration</option>
+                        <option value="4-6">4-6 Nights</option>
+                        <option value="7-9">7-9 Nights</option>
+                        <option value="10-12">10-12 Nights</option>
+                        <option value="13-15">13-15 Nights</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Budget (₹)</label>
+                      <select 
+                        value={tripFilters.maxBudget}
+                        onChange={(e) => setTripFilters({...tripFilters, maxBudget: e.target.value})}
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white"
+                      >
+                        <option value="">Any Budget</option>
+                        <option value="25000">Under ₹25,000</option>
+                        <option value="50000">Under ₹50,000</option>
+                        <option value="100000">Under ₹1,00,000</option>
+                        <option value="200000">Above ₹1,00,000</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <button
+                      onClick={() => fetchPopularTrips(tripFilters)}
+                      className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-6 py-3 rounded-xl hover:from-orange-700 hover:to-amber-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      🔍 Find Trips
+                    </button>
+                  </div>
+                </div>
+
+                {/* Featured Trips Section - Show when no filters applied */}
+                {featuredTrips.length > 0 && popularTrips.length === 0 && (
+                  <div className="mb-8">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                      <span className="mr-2">⭐</span>Featured Destinations
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {featuredTrips.map(trip => (
+                        <div key={trip.id} className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-100">
+                          <div className="relative">
+                            <img 
+                              src={trip.image || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400'}
+                              alt={trip.title}
+                              className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
+                              onError={(e) => {
+                                e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400';
+                              }}
+                            />
+                            <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                              {trip.duration}
+                            </div>
+                            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700">
+                              {trip.theme}
+                            </div>
+                          </div>
+                          <div className="p-6">
+                            <h4 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-300">
+                              {trip.title}
+                            </h4>
+                            <p className="text-sm text-gray-600 mb-3">
+                              📍 {trip.destinations?.join(' • ') || 'Multiple Destinations'}
+                            </p>
+                            <div className="flex items-center mb-4">
+                              {trip.highlights?.slice(0, 2).map((highlight, idx) => (
+                                <span key={idx} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full mr-2 font-medium">
+                                  {highlight}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <span className="text-sm text-gray-500">Starting from</span>
+                                <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                                  ₹{trip.price_from?.toLocaleString() || '25,000'}
+                                </div>
+                              </div>
+                              <button 
+                                onClick={() => handleTripInquiry(trip.id)}
+                                className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-orange-700 hover:to-amber-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm"
+                              >
+                                Inquire Now
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Popular Trips Results */}
+                {popularTrips.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                      <span className="mr-2">🎒</span>Matching Trips ({popularTrips.length} found)
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {popularTrips.map(trip => (
+                        <div key={trip.id} className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-100">
+                          <div className="relative">
+                            <img 
+                              src={trip.image || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400'}
+                              alt={trip.title}
+                              className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
+                              onError={(e) => {
+                                e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400';
+                              }}
+                            />
+                            <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                              {trip.duration}
+                            </div>
+                            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700">
+                              {trip.theme}
+                            </div>
+                            {trip.best_time && (
+                              <div className="absolute bottom-4 left-4 bg-black/70 text-white px-2 py-1 rounded-full text-xs">
+                                Best: {trip.best_time}
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-6">
+                            <h4 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-300">
+                              {trip.title}
+                            </h4>
+                            <p className="text-sm text-gray-600 mb-3">
+                              📍 {trip.destinations?.join(' • ') || 'Multiple Destinations'}
+                            </p>
+                            <div className="flex flex-wrap gap-1 mb-4">
+                              {trip.highlights?.slice(0, 3).map((highlight, idx) => (
+                                <span key={idx} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full font-medium">
+                                  {highlight}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <span className="text-sm text-gray-500">Starting from</span>
+                                <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                                  ₹{trip.price_from?.toLocaleString()}
+                                </div>
+                              </div>
+                              <button 
+                                onClick={() => handleTripInquiry(trip.id)}
+                                className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-orange-700 hover:to-amber-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm"
+                              >
+                                Inquire Now
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* No trips found message */}
+                {popularTrips.length === 0 && featuredTrips.length === 0 && (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">🌍</div>
+                    <h3 className="text-xl font-semibold text-gray-700 mb-2">No trips found</h3>
+                    <p className="text-gray-500 mb-6">Try adjusting your filters or browse our featured destinations</p>
+                    <button
+                      onClick={() => {
+                        setTripFilters({region: '', theme: '', maxBudget: '', duration: ''});
+                        fetchFeaturedTrips();
+                      }}
+                      className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-6 py-3 rounded-xl hover:from-orange-700 hover:to-amber-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      Show All Destinations
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
             {activeTab === 'itinerary' && (
               <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-white/20">
                 <div className="flex items-center mb-6">
