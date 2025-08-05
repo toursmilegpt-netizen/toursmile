@@ -224,6 +224,14 @@ const CityAutocomplete = ({ value, onChange, placeholder, label }) => {
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
+  const [popularTrips, setPopularTrips] = useState([]);
+  const [featuredTrips, setFeaturedTrips] = useState([]);
+  const [tripFilters, setTripFilters] = useState({
+    region: '',
+    theme: '',
+    maxBudget: '',
+    duration: ''
+  });
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
   const [sessionId, setSessionId] = useState(null);
