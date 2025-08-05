@@ -104,8 +104,10 @@ class BackendTester:
             self.log_result("AI Chat Integration", False, f"Error: {str(e)}")
         return False
 
-    def test_flight_search(self):
-        """Test flight search API with AI recommendations"""
+    def test_flight_search_detailed(self):
+        """Test flight search API with detailed mockup data display"""
+        print("\n🛫 TESTING FLIGHT SEARCH API - Delhi to Mumbai")
+        print("=" * 60)
         try:
             payload = {
                 "origin": "Delhi",
@@ -115,6 +117,7 @@ class BackendTester:
                 "class_type": "economy"
             }
             
+            print(f"📤 REQUEST: {json.dumps(payload, indent=2)}")
             response = self.session.post(f"{API_BASE}/flights/search", json=payload)
             
             if response.status_code == 200:
@@ -126,10 +129,9 @@ class BackendTester:
                         flight = flights[0]
                         required_fields = ["id", "airline", "flight_number", "origin", "destination", "price"]
                         if all(field in flight for field in required_fields):
-                            ai_rec_length = len(data["ai_recommendation"])
                             self.log_result("Flight Search API", True, 
-                                          f"Found {len(flights)} flights with AI recommendation ({ai_rec_length} chars)",
-                                          {"flights_count": len(flights), "search_id": data["search_id"]})
+                                          f"Found {len(flights)} flights with AI recommendation",
+                                          data)
                             return True
                         else:
                             self.log_result("Flight Search API", False, "Flight data missing required fields")
@@ -143,8 +145,10 @@ class BackendTester:
             self.log_result("Flight Search API", False, f"Error: {str(e)}")
         return False
 
-    def test_hotel_search(self):
-        """Test hotel search API with AI recommendations"""
+    def test_hotel_search_detailed(self):
+        """Test hotel search API with detailed mockup data display"""
+        print("\n🏨 TESTING HOTEL SEARCH API - Mumbai")
+        print("=" * 60)
         try:
             payload = {
                 "location": "Mumbai",
@@ -154,6 +158,7 @@ class BackendTester:
                 "rooms": 1
             }
             
+            print(f"📤 REQUEST: {json.dumps(payload, indent=2)}")
             response = self.session.post(f"{API_BASE}/hotels/search", json=payload)
             
             if response.status_code == 200:
@@ -165,10 +170,9 @@ class BackendTester:
                         hotel = hotels[0]
                         required_fields = ["id", "name", "location", "rating", "price_per_night", "amenities", "image"]
                         if all(field in hotel for field in required_fields):
-                            ai_rec_length = len(data["ai_recommendation"])
                             self.log_result("Hotel Search API", True,
-                                          f"Found {len(hotels)} hotels with AI recommendation ({ai_rec_length} chars)",
-                                          {"hotels_count": len(hotels), "search_id": data["search_id"]})
+                                          f"Found {len(hotels)} hotels with AI recommendation",
+                                          data)
                             return True
                         else:
                             self.log_result("Hotel Search API", False, "Hotel data missing required fields")
@@ -182,10 +186,13 @@ class BackendTester:
             self.log_result("Hotel Search API", False, f"Error: {str(e)}")
         return False
 
-    def test_activities_api(self):
-        """Test activities API"""
+    def test_activities_detailed(self):
+        """Test activities API with detailed mockup data display"""
+        print("\n🎯 TESTING ACTIVITIES API - Mumbai")
+        print("=" * 60)
         try:
             location = "Mumbai"
+            print(f"📤 REQUEST: GET /api/activities/{location}")
             response = self.session.get(f"{API_BASE}/activities/{location}")
             
             if response.status_code == 200:
@@ -199,7 +206,7 @@ class BackendTester:
                         if all(field in activity for field in required_fields):
                             self.log_result("Activities API", True,
                                           f"Found {len(activities)} activities for {location}",
-                                          {"activities_count": len(activities)})
+                                          data)
                             return True
                         else:
                             self.log_result("Activities API", False, "Activity data missing required fields")
@@ -213,16 +220,19 @@ class BackendTester:
             self.log_result("Activities API", False, f"Error: {str(e)}")
         return False
 
-    def test_ai_itinerary_generator(self):
-        """Test AI-powered itinerary generation"""
+    def test_ai_itinerary_detailed(self):
+        """Test AI-powered itinerary generation with detailed mockup data display"""
+        print("\n🤖 TESTING AI ITINERARY GENERATOR - Goa")
+        print("=" * 60)
         try:
             payload = {
                 "destination": "Goa",
                 "days": 3,
                 "budget": "medium",
-                "interests": ["beach", "culture", "nightlife"]
+                "interests": ["beach", "culture"]
             }
             
+            print(f"📤 REQUEST: {json.dumps(payload, indent=2)}")
             response = self.session.post(f"{API_BASE}/itinerary/generate", json=payload)
             
             if response.status_code == 200:
@@ -231,8 +241,8 @@ class BackendTester:
                     itinerary = data["itinerary"]
                     if len(itinerary) > 50:  # Check for meaningful itinerary content
                         self.log_result("AI Itinerary Generator", True,
-                                      f"Generated {len(itinerary)} character itinerary for {data['destination']}",
-                                      {"destination": data["destination"], "days": data["days"]})
+                                      f"Generated itinerary for {data['destination']} ({data['days']} days)",
+                                      data)
                         return True
                     else:
                         self.log_result("AI Itinerary Generator", False, "Itinerary content too short")
