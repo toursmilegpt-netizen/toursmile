@@ -358,6 +358,9 @@ async def root():
 # Include the router in the main app
 app.include_router(api_router)
 
+# Include the popular trips router
+app.include_router(popular_trips_router, prefix="/api", tags=["popular-trips"])
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
