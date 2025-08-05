@@ -220,8 +220,11 @@ async def get_ai_response(message: str, session_id: str) -> str:
         logging.error(f"AI response error: {str(e)}")
         return "I'm having trouble processing your request right now. Please try again in a moment, or feel free to browse our travel options!"
 
+# Initialize Expert Travel Consultant Chat
+expert_consultant = ExpertTravelConsultantChat(api_key=os.environ.get('OPENAI_API_KEY'))
+
 @api_router.post("/chat")
-async def chat_with_ai(request: ChatRequest):
+async def chat_with_expert_consultant(request: ChatRequest):
     """Chat with AI travel assistant"""
     try:
         session_id = request.session_id or str(uuid.uuid4())
