@@ -1119,7 +1119,7 @@ function App() {
                     <select
                       value={flightSearch.class_type}
                       onChange={(e) => setFlightSearch({...flightSearch, class_type: e.target.value})}
-                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50"
+                      className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white/50"
                     >
                       <option value="economy">Economy</option>
                       <option value="premium_economy">Premium Economy</option>
