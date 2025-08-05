@@ -232,6 +232,8 @@ function App() {
     maxBudget: '',
     duration: ''
   });
+  const [destinationSuggestions, setDestinationSuggestions] = useState([]);
+  const [showDestinationSuggestions, setShowDestinationSuggestions] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
   const [sessionId, setSessionId] = useState(null);
