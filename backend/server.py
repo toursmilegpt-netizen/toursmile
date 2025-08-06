@@ -2,6 +2,10 @@ from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+
+# Import the real hotel API service
+from real_hotel_api import hotel_api_service
+
 import os
 import logging
 from pathlib import Path
