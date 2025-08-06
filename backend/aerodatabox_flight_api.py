@@ -19,8 +19,14 @@ logger = logging.getLogger(__name__)
 
 class AeroDataBoxService:
     def __init__(self):
-        # API.Market MCP endpoint for AeroDataBox
-        self.api_base_url = "https://prod.api.market/api/mcp/aedbx/aerodatabox"
+        # Try multiple endpoint configurations
+        self.api_endpoints = [
+            "https://prod.api.market/api/mcp/aedbx/aerodatabox",  # Original API.Market MCP
+            "https://api.market/api/mcp/aedbx/aerodatabox",       # Alternative API.Market
+            "https://aerodatabox.p.rapidapi.com",                # RapidAPI endpoint
+            "https://api.aerodatabox.com"                        # Direct AeroDataBox
+        ]
+        self.api_base_url = self.api_endpoints[0]  # Default to first
         self._api_key = None
         
     @property
