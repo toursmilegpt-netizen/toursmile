@@ -19,22 +19,23 @@ logger = logging.getLogger(__name__)
 
 class AeroDataBoxService:
     def __init__(self):
-        self.api_base_url = "https://aerodatabox.p.rapidapi.com"
+        # API.Market endpoint (not RapidAPI!)
+        self.api_base_url = "https://aerodatabox.com/api/v1"  # Direct API.Market endpoint
         self._api_key = None
         
     @property
     def api_key(self):
         """Lazy load API key from environment"""
         if self._api_key is None:
-            self._api_key = os.environ.get('AERODATABOX_RAPIDAPI_KEY')
+            self._api_key = os.environ.get('AERODATABOX_RAPIDAPI_KEY')  # Same env var name
         return self._api_key
     
     def get_headers(self):
-        """Get RapidAPI headers for authentication"""
+        """Get API.Market headers for authentication"""
         return {
-            'X-RapidAPI-Key': self.api_key,
-            'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com',
-            'Accept': 'application/json'
+            'X-API-Key': self.api_key,  # API.Market uses X-API-Key
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
     
     def search_flights_by_airport(self, origin: str, destination: str, departure_date: str, passengers: int = 1) -> List[Dict]:
