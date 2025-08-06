@@ -293,12 +293,15 @@ class AeroDataBoxService:
         """Test if the API connection is working"""
         try:
             if not self.api_key:
+                logger.error("No API key found for testing")
                 return False
                 
             # Test with Delhi airport
             departures = self.get_airport_departures('DEL', '2025-02-15')
+            logger.info(f"API test returned {len(departures)} departures")
             return len(departures) >= 0  # API working even if no flights
-        except:
+        except Exception as e:
+            logger.error(f"API connection test failed: {str(e)}")
             return False
 
 
