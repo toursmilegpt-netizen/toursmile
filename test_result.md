@@ -348,8 +348,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Popular Trips Frontend UI - Phase 1 Complete"
-  stuck_tasks: []
+    - "AeroDataBox Flight API Integration - Subscription Issue"
+  stuck_tasks:
+    - "AeroDataBox Flight API Integration"
   test_all: false
   test_priority: "high_first"
 
