@@ -83,12 +83,15 @@ class AeroDataBoxService:
     def get_airport_departures(self, airport_code: str, date: str) -> List[Dict]:
         """Get departure flights from an airport on a specific date"""
         try:
-            # Try RapidAPI endpoint first
+            # API.Market MCP endpoint for airport departures
             url = f"{self.api_base_url}/flights/airports/iata/{airport_code}/{date}/12:00/24:00"
+            
             headers = self.get_headers()
             
-            logger.info(f"Trying RapidAPI endpoint: {url}")
+            logger.info(f"Using API.Market MCP endpoint: {url}")
+            logger.info(f"Headers: {list(headers.keys())}")
             
+            # Parameters for the API call
             params = {
                 'withLeg': 'true',
                 'direction': 'Departure',
@@ -99,38 +102,28 @@ class AeroDataBoxService:
             }
             
             response = requests.get(url, headers=headers, params=params, timeout=30)
-            logger.info(f"RapidAPI response status: {response.status_code}")
+            logger.info(f"API.Market MCP response status: {response.status_code}")
             
             if response.status_code == 200:
                 data = response.json()
                 departures = data.get('departures', [])
-                logger.info(f"✅ RapidAPI success: Retrieved {len(departures)} departures from {airport_code}")
+                logger.info(f"✅ API.Market MCP success: Retrieved {len(departures)} departures from {airport_code}")
                 return departures
-                
-            # If RapidAPI fails, try direct API
-            logger.info("RapidAPI failed, trying direct API endpoint")
-            direct_url = f"{self.direct_api_url}/v2/flights/airports/iata/{airport_code}/{date}/12:00/24:00"
-            direct_headers = self.get_direct_headers()
-            
-            logger.info(f"Trying direct endpoint: {direct_url}")
-            
-            response = requests.get(direct_url, headers=direct_headers, params=params, timeout=30)
-            logger.info(f"Direct API response status: {response.status_code}")
-            
-            if response.status_code == 200:
-                data = response.json()
-                departures = data.get('departures', [])
-                logger.info(f"✅ Direct API success: Retrieved {len(departures)} departures from {airport_code}")
-                return departures
+            elif response.status_code == 401:
+                logger.error("API.Market authentication failed - Invalid API key")
+                return []
+            elif response.status_code == 403:
+                logger.error("API.Market access forbidden - Check subscription/quota")
+                return []
             elif response.status_code == 429:
-                logger.warning("AeroDataBox API rate limit exceeded")
+                logger.warning("API.Market rate limit exceeded")
                 return []
             else:
-                logger.error(f"Both API endpoints failed. Last response: {response.status_code} - {response.text}")
+                logger.error(f"API.Market MCP error: {response.status_code} - {response.text}")
                 return []
                 
         except Exception as e:
-            logger.error(f"Airport departures request failed: {str(e)}")
+            logger.error(f"API.Market MCP request failed: {str(e)}")
             return []
     
     def transform_flight_data(self, raw_flights: List[Dict], origin: str, destination: str) -> List[Dict]:
