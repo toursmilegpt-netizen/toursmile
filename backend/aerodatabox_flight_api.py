@@ -36,13 +36,59 @@ class AeroDataBoxService:
             self._api_key = os.environ.get('AERODATABOX_RAPIDAPI_KEY')
         return self._api_key
     
-    def get_headers(self):
-        """Get API.Market MCP headers for authentication"""
-        return {
-            'Authorization': f'Bearer {self.api_key}',
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+    def get_headers(self, endpoint_type="api_market"):
+        """Get headers for different API endpoints"""
+        if endpoint_type == "rapidapi":
+            return {
+                'X-RapidAPI-Key': self.api_key,
+                'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com',
+                'Accept': 'application/json'
+            }
+        elif endpoint_type == "direct":
+            return {
+                'X-API-Key': self.api_key,
+                'Accept': 'application/json'
+            }
+        else:  # api_market default
+            return {
+                'Authorization': f'Bearer {self.api_key}',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+    
+    def test_endpoint_connectivity(self, endpoint_url, endpoint_type="api_market"):
+        """Test connectivity to a specific endpoint"""
+        try:
+            headers = self.get_headers(endpoint_type)
+            test_url = f"{endpoint_url}/flights/airports/iata/DEL/2025-02-15/12:00/24:00"
+            
+            params = {
+                'withLeg': 'true',
+                'direction': 'Departure',
+                'withCancelled': 'false',
+                'withCodeshared': 'true',
+                'withCargo': 'false',
+                'withPrivate': 'false'
+            }
+            
+            response = requests.get(test_url, headers=headers, params=params, timeout=10)
+            logger.info(f"Testing endpoint {endpoint_url}: Status {response.status_code}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                departures = data.get('departures', [])
+                logger.info(f"✅ Endpoint {endpoint_url} working! Found {len(departures)} departures")
+                return True, len(departures)
+            elif response.status_code in [401, 403]:
+                logger.warning(f"⚠️ Endpoint {endpoint_url}: Authentication issue ({response.status_code})")
+                return False, f"Auth error: {response.status_code}"
+            else:
+                logger.warning(f"❌ Endpoint {endpoint_url}: Error {response.status_code}")
+                return False, f"HTTP {response.status_code}"
+                
+        except Exception as e:
+            logger.error(f"❌ Endpoint {endpoint_url}: Exception {str(e)}")
+            return False, str(e)
     
     def search_flights_by_airport(self, origin: str, destination: str, departure_date: str, passengers: int = 1) -> List[Dict]:
         """
