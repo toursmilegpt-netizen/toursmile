@@ -465,7 +465,13 @@ function App() {
 
     setFlightSearching(true);
     try {
-      const response = await axios.post(`${API}/flights/search`, flightSearch);
+      // Fix passengers format for backend - send total count as integer
+      const flightRequestData = {
+        ...flightSearch,
+        passengers: flightSearch.passengers.adults + flightSearch.passengers.children + flightSearch.passengers.infants
+      };
+      
+      const response = await axios.post(`${API}/flights/search`, flightRequestData);
       setFlightResults(response.data.flights);
     } catch (error) {
       console.error('Flight search error:', error);
