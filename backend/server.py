@@ -315,7 +315,7 @@ async def search_flights(request: FlightSearchRequest):
             # Check if Amadeus credentials are configured
             if amadeus_service.api_key:
                 logging.info(f"Using Amadeus API for route: {request.origin} → {request.destination}")
-                real_flights = amadeus_service.search_flights_by_airport(
+                real_flights = amadeus_service.search_flights(
                     request.origin,
                     request.destination, 
                     request.departure_date,
