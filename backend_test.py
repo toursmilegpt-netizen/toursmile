@@ -860,5 +860,5 @@ class BackendTester:
 
 if __name__ == "__main__":
     tester = BackendTester()
-    # Run the specific trip details tests as requested
-    results = tester.run_trip_details_tests()
+    # Run the AeroDataBox integration tests as requested
+    results = tester.run_aerodatabox_integration_tests()
