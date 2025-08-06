@@ -15,7 +15,14 @@ logger = logging.getLogger(__name__)
 class FlightAPIService:
     def __init__(self):
         self.api_base_url = "https://api.flightapi.io"
-        self.api_key = os.environ.get('FLIGHTAPI_KEY')
+        self._api_key = None
+    
+    @property
+    def api_key(self):
+        """Lazy load API key from environment"""
+        if self._api_key is None:
+            self._api_key = os.environ.get('FLIGHTAPI_KEY')
+        return self._api_key
         
     def search_oneway_flights(self, origin: str, destination: str, departure_date: str, passengers: int = 1) -> List[Dict]:
         """
