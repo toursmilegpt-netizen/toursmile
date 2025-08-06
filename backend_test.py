@@ -289,56 +289,46 @@ class BackendTester:
             self.log_result("AeroDataBox API Key Loading", False, f"Error: {str(e)}")
             return False
 
-    def test_aerodatabox_rapidapi_endpoint(self):
-        """Test 2: Test multiple API endpoints to find the working one"""
-        print("\n🌐 TESTING MULTIPLE AERODATABOX ENDPOINTS")
+    def test_aerodatabox_api_market_endpoint(self):
+        """Test 2: Test the correct API.Market endpoint with Bearer token authentication"""
+        print("\n🌐 TESTING API.MARKET AERODATABOX ENDPOINT")
         print("=" * 60)
         try:
             from aerodatabox_flight_api import aerodatabox_service
             
             if not aerodatabox_service.api_key:
-                self.log_result("Multiple Endpoints Test", False, "No API key available")
+                self.log_result("API.Market Endpoint Test", False, "No API key available")
                 return False
             
-            # Test different endpoint configurations
-            endpoints_to_test = [
-                ("API.Market MCP", "https://prod.api.market/api/mcp/aedbx/aerodatabox", "api_market"),
-                ("API.Market Alt", "https://api.market/api/mcp/aedbx/aerodatabox", "api_market"),
-                ("RapidAPI", "https://aerodatabox.p.rapidapi.com", "rapidapi"),
-                ("Direct AeroDataBox", "https://api.aerodatabox.com", "direct")
-            ]
+            print(f"🔑 API Key: {aerodatabox_service.api_key[:8]}...{aerodatabox_service.api_key[-4:]}")
+            print(f"🌐 Base URL: {aerodatabox_service.api_base_url}")
+            print(f"🔐 Auth Method: Bearer Token")
             
-            working_endpoints = []
-            
-            for name, endpoint_url, endpoint_type in endpoints_to_test:
-                print(f"\n🔍 Testing {name}: {endpoint_url}")
+            # Test the current API.Market endpoint directly
+            try:
+                # Test airport departures endpoint
+                departures = aerodatabox_service.get_airport_departures('DEL', '2025-02-15')
                 
-                try:
-                    success, result = aerodatabox_service.test_endpoint_connectivity(endpoint_url, endpoint_type)
-                    if success:
-                        working_endpoints.append((name, endpoint_url, result))
-                        print(f"✅ {name}: Working! Found {result} departures")
-                    else:
-                        print(f"❌ {name}: Failed - {result}")
-                except Exception as e:
-                    print(f"❌ {name}: Exception - {str(e)}")
-            
-            if working_endpoints:
-                best_endpoint = working_endpoints[0]  # Use first working endpoint
-                self.log_result("Multiple Endpoints Test", True, 
-                              f"Found {len(working_endpoints)} working endpoint(s). Best: {best_endpoint[0]} with {best_endpoint[2]} departures",
-                              {"working_endpoints": [{"name": ep[0], "url": ep[1], "departures": ep[2]} for ep in working_endpoints]})
-                
-                # Update the service to use the working endpoint
-                aerodatabox_service.api_base_url = best_endpoint[1]
-                return True
-            else:
-                self.log_result("Multiple Endpoints Test", False, 
-                              "No working endpoints found - all endpoints failed authentication or connectivity")
+                if departures:
+                    print(f"✅ API.Market endpoint working! Found {len(departures)} departures")
+                    self.log_result("API.Market Endpoint Test", True, 
+                                  f"API.Market endpoint working with Bearer token auth. Found {len(departures)} departures",
+                                  {"endpoint": aerodatabox_service.api_base_url, "departures_count": len(departures)})
+                    return True
+                else:
+                    print("❌ API.Market endpoint returned no departures")
+                    self.log_result("API.Market Endpoint Test", False, 
+                                  "API.Market endpoint accessible but returned no departures")
+                    return False
+                    
+            except Exception as api_error:
+                print(f"❌ API.Market endpoint error: {str(api_error)}")
+                self.log_result("API.Market Endpoint Test", False, 
+                              f"API.Market endpoint failed: {str(api_error)}")
                 return False
                 
         except Exception as e:
-            self.log_result("Multiple Endpoints Test", False, f"Error: {str(e)}")
+            self.log_result("API.Market Endpoint Test", False, f"Error: {str(e)}")
             return False
 
     def test_flight_search_delhi_mumbai_specific(self):
