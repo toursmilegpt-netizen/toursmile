@@ -348,9 +348,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "AeroDataBox Flight API Integration - Subscription Issue"
-  stuck_tasks:
-    - "AeroDataBox Flight API Integration"
+    - "Amadeus Flight API Integration - Successfully Completed"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
