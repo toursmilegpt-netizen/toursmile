@@ -19,14 +19,8 @@ logger = logging.getLogger(__name__)
 
 class AeroDataBoxService:
     def __init__(self):
-        # Try multiple endpoint configurations
-        self.api_endpoints = [
-            "https://prod.api.market/api/mcp/aedbx/aerodatabox",  # Original API.Market MCP
-            "https://api.market/api/mcp/aedbx/aerodatabox",       # Alternative API.Market
-            "https://aerodatabox.p.rapidapi.com",                # RapidAPI endpoint
-            "https://api.aerodatabox.com"                        # Direct AeroDataBox
-        ]
-        self.api_base_url = self.api_endpoints[0]  # Default to first
+        # Correct API.Market base URL for AeroDataBox
+        self.api_base_url = "https://api.api.market/aerodatabox"
         self._api_key = None
         
     @property
@@ -36,25 +30,13 @@ class AeroDataBoxService:
             self._api_key = os.environ.get('AERODATABOX_RAPIDAPI_KEY')
         return self._api_key
     
-    def get_headers(self, endpoint_type="api_market"):
-        """Get headers for different API endpoints"""
-        if endpoint_type == "rapidapi":
-            return {
-                'X-RapidAPI-Key': self.api_key,
-                'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com',
-                'Accept': 'application/json'
-            }
-        elif endpoint_type == "direct":
-            return {
-                'X-API-Key': self.api_key,
-                'Accept': 'application/json'
-            }
-        else:  # api_market default
-            return {
-                'Authorization': f'Bearer {self.api_key}',
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+    def get_headers(self):
+        """Get API.Market headers for authentication"""
+        return {
+            'Authorization': f'Bearer {self.api_key}',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     
     def test_endpoint_connectivity(self, endpoint_url, endpoint_type="api_market"):
         """Test connectivity to a specific endpoint"""
