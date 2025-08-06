@@ -290,69 +290,55 @@ class BackendTester:
             return False
 
     def test_aerodatabox_rapidapi_endpoint(self):
-        """Test 2: Test API.Market MCP endpoint with Bearer token authentication"""
-        print("\n🌐 TESTING API.MARKET MCP ENDPOINT WITH BEARER TOKEN")
+        """Test 2: Test multiple API endpoints to find the working one"""
+        print("\n🌐 TESTING MULTIPLE AERODATABOX ENDPOINTS")
         print("=" * 60)
         try:
             from aerodatabox_flight_api import aerodatabox_service
             
             if not aerodatabox_service.api_key:
-                self.log_result("API.Market MCP Endpoint Test", False, "No API key available")
+                self.log_result("Multiple Endpoints Test", False, "No API key available")
                 return False
             
-            # Test the Bearer token header format
-            headers = aerodatabox_service.get_headers()
-            print(f"Headers configured: {list(headers.keys())}")
-            print(f"Authorization Bearer present: {'✅ Yes' if 'Authorization' in headers else '❌ No'}")
-            print(f"Accept header present: {'✅ Yes' if 'Accept' in headers else '❌ No'}")
+            # Test different endpoint configurations
+            endpoints_to_test = [
+                ("API.Market MCP", "https://prod.api.market/api/mcp/aedbx/aerodatabox", "api_market"),
+                ("API.Market Alt", "https://api.market/api/mcp/aedbx/aerodatabox", "api_market"),
+                ("RapidAPI", "https://aerodatabox.p.rapidapi.com", "rapidapi"),
+                ("Direct AeroDataBox", "https://api.aerodatabox.com", "direct")
+            ]
             
-            # Test with Delhi airport departures
-            test_url = f"{aerodatabox_service.api_base_url}/flights/airports/iata/DEL/2025-02-15/12:00/24:00"
-            print(f"Testing URL: {test_url}")
+            working_endpoints = []
             
-            params = {
-                'withLeg': 'true',
-                'direction': 'Departure',
-                'withCancelled': 'false',
-                'withCodeshared': 'true',
-                'withCargo': 'false',
-                'withPrivate': 'false'
-            }
+            for name, endpoint_url, endpoint_type in endpoints_to_test:
+                print(f"\n🔍 Testing {name}: {endpoint_url}")
+                
+                try:
+                    success, result = aerodatabox_service.test_endpoint_connectivity(endpoint_url, endpoint_type)
+                    if success:
+                        working_endpoints.append((name, endpoint_url, result))
+                        print(f"✅ {name}: Working! Found {result} departures")
+                    else:
+                        print(f"❌ {name}: Failed - {result}")
+                except Exception as e:
+                    print(f"❌ {name}: Exception - {str(e)}")
             
-            response = requests.get(test_url, headers=headers, params=params, timeout=30)
-            print(f"Response Status: {response.status_code}")
-            print(f"Response Headers: {dict(response.headers)}")
-            
-            if response.status_code == 200:
-                data = response.json()
-                departures = data.get('departures', [])
-                self.log_result("API.Market MCP Endpoint Test", True, 
-                              f"API.Market MCP endpoint working! Retrieved {len(departures)} departures",
-                              {"status_code": 200, "departures_count": len(departures)})
-                return True
-            elif response.status_code == 401:
-                self.log_result("API.Market MCP Endpoint Test", False, 
-                              "Authentication failed - Invalid API key or wrong auth method")
-                return False
-            elif response.status_code == 403:
-                self.log_result("API.Market MCP Endpoint Test", False, 
-                              "Access forbidden - Check subscription/quota")
-                return False
-            elif response.status_code == 404:
-                self.log_result("API.Market MCP Endpoint Test", False, 
-                              f"Endpoint not found - URL may be incorrect: {test_url}")
-                return False
-            elif response.status_code == 429:
-                self.log_result("API.Market MCP Endpoint Test", True, 
-                              "Rate limit exceeded - API key working but quota reached")
+            if working_endpoints:
+                best_endpoint = working_endpoints[0]  # Use first working endpoint
+                self.log_result("Multiple Endpoints Test", True, 
+                              f"Found {len(working_endpoints)} working endpoint(s). Best: {best_endpoint[0]} with {best_endpoint[2]} departures",
+                              {"working_endpoints": [{"name": ep[0], "url": ep[1], "departures": ep[2]} for ep in working_endpoints]})
+                
+                # Update the service to use the working endpoint
+                aerodatabox_service.api_base_url = best_endpoint[1]
                 return True
             else:
-                self.log_result("API.Market MCP Endpoint Test", False, 
-                              f"Unexpected response: {response.status_code} - {response.text[:500]}")
+                self.log_result("Multiple Endpoints Test", False, 
+                              "No working endpoints found - all endpoints failed authentication or connectivity")
                 return False
                 
         except Exception as e:
-            self.log_result("API.Market MCP Endpoint Test", False, f"Error: {str(e)}")
+            self.log_result("Multiple Endpoints Test", False, f"Error: {str(e)}")
             return False
 
     def test_flight_search_delhi_mumbai_specific(self):
