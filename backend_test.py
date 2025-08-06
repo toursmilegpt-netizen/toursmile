@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
 Backend API Testing Suite for TourSmile AI Travel Platform
-Tests all backend endpoints and shows actual mockup data for frontend display
+Tests all backend endpoints with focus on AeroDataBox flight API integration
 """
 
 import requests
 import json
 import time
 import os
+import sys
 from datetime import datetime, timedelta
+
+# Add backend to path for importing AeroDataBox service
+sys.path.append('/app/backend')
 
 # Load backend URL from frontend .env
 def get_backend_url():
