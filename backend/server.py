@@ -315,7 +315,7 @@ async def search_flights(request: FlightSearchRequest):
             # Check if AeroDataBox credentials are configured
             if aerodatabox_service.api_key:
                 logging.info(f"Using AeroDataBox API for route: {request.origin} → {request.destination}")
-                real_flights = aerodatabox_service.search_oneway_flights(
+                real_flights = aerodatabox_service.search_flights_by_airport(
                     request.origin,
                     request.destination, 
                     request.departure_date,
