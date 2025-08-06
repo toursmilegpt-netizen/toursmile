@@ -138,7 +138,7 @@ class AeroDataBoxService:
             # API.Market MCP endpoint for airport departures
             url = f"{self.api_base_url}/flights/airports/iata/{airport_code}/{date}/12:00/24:00"
             
-            headers = self.get_headers()
+            headers = self.get_headers("api_market")
             
             logger.info(f"Using API.Market MCP endpoint: {url}")
             logger.info(f"Headers: {list(headers.keys())}")
@@ -166,6 +166,9 @@ class AeroDataBoxService:
                 return []
             elif response.status_code == 403:
                 logger.error("API.Market access forbidden - Check subscription/quota")
+                return []
+            elif response.status_code == 404:
+                logger.error(f"API.Market endpoint not found - URL may be incorrect: {url}")
                 return []
             elif response.status_code == 429:
                 logger.warning("API.Market rate limit exceeded")
