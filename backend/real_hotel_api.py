@@ -17,12 +17,26 @@ class HotelAPIService:
         self.auth_url = "https://api.makcorps.com/auth"
         self.api_base_url = "https://api.makcorps.com/free"
         
-        # These will be loaded from environment variables
-        self.username = os.environ.get('HOTELAPI_USERNAME')
-        self.password = os.environ.get('HOTELAPI_PASSWORD')
+        # These will be loaded lazily from environment variables
+        self._username = None
+        self._password = None
         
         self.jwt_token = None
         self.token_expiry = None
+    
+    @property
+    def username(self):
+        """Lazy load username from environment"""
+        if self._username is None:
+            self._username = os.environ.get('HOTELAPI_USERNAME')
+        return self._username
+    
+    @property
+    def password(self):
+        """Lazy load password from environment"""
+        if self._password is None:
+            self._password = os.environ.get('HOTELAPI_PASSWORD')
+        return self._password
     
     def authenticate(self) -> bool:
         """
