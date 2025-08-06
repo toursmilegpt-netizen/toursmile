@@ -114,7 +114,7 @@ class FlightAPIService:
     
     def transform_flight_data(self, raw_data: Dict, origin: str, destination: str) -> List[Dict]:
         """
-        Transform the raw API response into our standard flight data format
+        Transform the FlightAPI.io response into our standard flight data format
         
         Args:
             raw_data (Dict): Raw response from FlightAPI.io
@@ -127,45 +127,109 @@ class FlightAPIService:
         flights = []
         
         try:
-            # FlightAPI.io returns data in a specific format
-            if not raw_data or 'data' not in raw_data:
+            # FlightAPI.io returns data with itineraries, legs, segments, etc.
+            if not raw_data:
                 logger.warning("No flight data in API response")
                 return []
             
-            flight_data = raw_data.get('data', [])
+            itineraries = raw_data.get('itineraries', [])
+            legs = raw_data.get('legs', [])
+            segments = raw_data.get('segments', [])
+            carriers = raw_data.get('carriers', {})
             
-            for flight_item in flight_data:
-                # Extract flight information
-                airline_code = flight_item.get('airline_code', 'AI')
-                airline_name = self.get_airline_name(airline_code)
-                
-                flight = {
-                    "id": f"FL_{flight_item.get('flight_number', 'unknown')}",
-                    "airline": airline_name,
-                    "airline_code": airline_code,
-                    "flight_number": flight_item.get('flight_number', ''),
-                    "origin": origin,
-                    "destination": destination,
-                    "departure_time": flight_item.get('departure_time', '08:00'),
-                    "arrival_time": flight_item.get('arrival_time', '10:00'),
-                    "duration": flight_item.get('duration', '2h 0m'),
-                    "price": flight_item.get('price', 4500),
-                    "currency": flight_item.get('currency', 'INR'),
-                    "stops": flight_item.get('stops', 0),
-                    "aircraft": flight_item.get('aircraft', 'Boeing 737'),
-                    "booking_class": flight_item.get('booking_class', 'Economy'),
-                    "available_seats": flight_item.get('available_seats', 'Available'),
-                    "baggage": flight_item.get('baggage', '15kg checked + 7kg carry-on')
-                }
-                
-                flights.append(flight)
+            logger.info(f"Processing {len(itineraries)} itineraries")
+            
+            for itinerary in itineraries:
+                try:
+                    # Get pricing information
+                    pricing_options = itinerary.get('pricing_options', [])
+                    if not pricing_options:
+                        continue
+                    
+                    best_price = pricing_options[0]['price']['amount']  # First option is usually best
+                    
+                    # Get flight leg information
+                    leg_ids = itinerary.get('leg_ids', [])
+                    if not leg_ids:
+                        continue
+                    
+                    # Find the corresponding leg
+                    leg_data = None
+                    for leg in legs:
+                        if leg.get('id') == leg_ids[0]:
+                            leg_data = leg
+                            break
+                    
+                    if not leg_data:
+                        continue
+                    
+                    # Get segment information for flight details
+                    segment_ids = leg_data.get('segment_ids', [])
+                    if not segment_ids:
+                        continue
+                    
+                    # Find the corresponding segment
+                    segment_data = None
+                    for segment in segments:
+                        if segment.get('id') == segment_ids[0]:
+                            segment_data = segment
+                            break
+                    
+                    if not segment_data:
+                        continue
+                    
+                    # Get carrier information
+                    carrier_id = segment_data.get('marketing_carrier_id')
+                    airline_name = "Unknown Airline"
+                    airline_code = "XX"
+                    
+                    if carrier_id and str(carrier_id) in carriers:
+                        carrier_info = carriers[str(carrier_id)]
+                        airline_name = carrier_info.get('name', airline_name)
+                        airline_code = carrier_info.get('iata_code', airline_code)
+                    
+                    # Create flight object
+                    flight = {
+                        "id": f"FL_{itinerary.get('id', 'unknown')}",
+                        "airline": airline_name,
+                        "airline_code": airline_code,
+                        "flight_number": segment_data.get('marketing_flight_number', 'XXX'),
+                        "origin": origin,
+                        "destination": destination,
+                        "departure_time": self.format_time(leg_data.get('departure', '')),
+                        "arrival_time": self.format_time(leg_data.get('arrival', '')),
+                        "duration": f"{leg_data.get('duration', 120)}m",
+                        "price": int(best_price) if best_price else 5000,
+                        "currency": "INR",
+                        "stops": leg_data.get('stop_count', 0),
+                        "aircraft": "Boeing 737",  # Default since API doesn't always provide this
+                        "booking_class": "Economy",
+                        "available_seats": "Available",
+                        "baggage": "15kg checked + 7kg carry-on"
+                    }
+                    
+                    flights.append(flight)
+                    
+                except Exception as e:
+                    logger.error(f"Error processing itinerary: {str(e)}")
+                    continue
             
             logger.info(f"Transformed {len(flights)} flights for {origin} → {destination}")
-            return flights
+            return flights[:10]  # Limit to top 10 flights
             
         except Exception as e:
             logger.error(f"Error transforming flight data: {str(e)}")
             return []
+    
+    def format_time(self, datetime_str: str) -> str:
+        """Convert datetime string to HH:MM format"""
+        try:
+            if 'T' in datetime_str:
+                time_part = datetime_str.split('T')[1]
+                return time_part[:5]  # Return HH:MM
+            return "06:00"  # Default
+        except:
+            return "06:00"  # Default
     
     def get_airline_name(self, airline_code: str) -> str:
         """Get full airline name from IATA code"""
