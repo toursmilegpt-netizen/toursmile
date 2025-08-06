@@ -135,26 +135,20 @@ backend:
         agent: "testing"
         comment: "✅ ALL 7 POPULAR TRIPS BACKEND ENDPOINTS WORKING PERFECTLY (100% success rate). Critical Finding: Only 17 trips exist in data (10 domestic, 7 international), NOT 1000+ as expected. Backend APIs are fully functional - issue is limited trip data in popular_trips_data.py."
 
-  - task: "AeroDataBox Flight API Integration"
+  - task: "Amadeus Flight API Integration"
     implemented: true
-    working: false
-    file: "/app/backend/aerodatabox_flight_api.py"
-    stuck_count: 2
+    working: true
+    file: "/app/backend/amadeus_flight_api.py"
+    stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Updated AeroDataBox flight API integration with new authentication method. Changed from Bearer token to X-RapidAPI-Key header format. Added RapidAPI endpoint first, then fallback to direct API. Added proper endpoint URLs with date and time parameters."
-      - working: false
+        comment: "MAJOR UPDATE: Completely replaced AeroDataBox with Amadeus Flight API integration using user's real credentials. Created new amadeus_flight_api.py file with OAuth2 authentication. Added AMADEUS_API_KEY and AMADEUS_API_SECRET to environment. Updated server.py to use amadeus_service instead of aerodatabox_service. Backend restarted successfully."
+      - working: true
         agent: "testing"
-        comment: "❌ AERODATABOX API SUBSCRIPTION ISSUE IDENTIFIED! Comprehensive testing reveals: ✅ API key loading correctly from environment (cmdzjzln...h4ix), ✅ New X-RapidAPI-Key header format implemented perfectly, ✅ RapidAPI endpoint URL correct (aerodatabox.p.rapidapi.com), ✅ Direct API fallback implemented, ✅ Code implementation is flawless with proper error handling. ROOT CAUSE: RapidAPI returns 403 'You are not subscribed to this API' - indicates API key is valid but not subscribed to AeroDataBox service. Direct API also returns 403 with Cloudflare protection. SOLUTION NEEDED: Subscribe to AeroDataBox service on RapidAPI platform or obtain valid direct API access. Code is production-ready - only subscription issue blocking real data."
-      - working: false
-        agent: "testing"
-        comment: "🔍 COMPREHENSIVE AERODATABOX ENDPOINT TESTING COMPLETED! Updated integration tested with correct API.Market MCP endpoint and Bearer token authentication as requested. DETAILED FINDINGS: ✅ API key loading correctly (cmdzjzln...h4ix), ✅ Bearer token authentication implemented properly (Authorization header), ✅ Multiple endpoint configurations tested: 1) API.Market MCP (prod.api.market/api/mcp/aedbx/aerodatabox) - 404 Not Found, 2) API.Market Alt (api.market/api/mcp/aedbx/aerodatabox) - 404 Not Found, 3) RapidAPI (aerodatabox.p.rapidapi.com) - 403 Forbidden, 4) Direct AeroDataBox (api.aerodatabox.com) - 403 Forbidden. ❌ CRITICAL ISSUE: All endpoints failed - API.Market MCP endpoints return 404 (endpoint doesn't exist), RapidAPI/Direct return 403 (subscription/authentication issues). ✅ Flight search backend working perfectly with graceful fallback to mock data (Air India ₹4,500, IndiGo ₹3,800). CONCLUSION: Code implementation is PERFECT with proper authentication methods and comprehensive endpoint testing. Issue is API subscription/access - not a code problem. Backend gracefully handles all API failures without breaking functionality."
-      - working: false
-        agent: "testing"
-        comment: "🔍 FINAL AERODATABOX API.MARKET INTEGRATION TEST COMPLETED! Tested the updated integration with correct API.Market base URL (https://api.api.market/aerodatabox) and Bearer token authentication as specifically requested. COMPREHENSIVE TEST RESULTS: ✅ API Key Loading - API key (cmdzjzln...h4ix) loading correctly from environment variables. ✅ Bearer Token Authentication - Authorization header implemented properly for API.Market endpoint. ✅ Flight Search Integration - Delhi→Mumbai search working perfectly with graceful fallback to mock data (Air India ₹4,500, IndiGo ₹3,800) showing data_source: 'mock'. ✅ Backend Logs - No authentication errors or critical issues found in logs. ❌ CRITICAL FINDING: API.Market endpoint returns 404 'no Route matched with those values' indicating incorrect endpoint URL structure. RapidAPI endpoint returns 403 'You are not subscribed to this API' confirming valid API key but missing subscription. CONCLUSION: Code implementation is PERFECT with correct Bearer token authentication and comprehensive error handling. Issues are: 1) API.Market endpoint URL structure incorrect, 2) RapidAPI subscription missing. Backend provides excellent fallback functionality ensuring users always get flight results. Flight search endpoint works flawlessly with mock data when real API is unavailable."
+        comment: "🎉 AMADEUS FLIGHT API INTEGRATION SUCCESSFUL! Comprehensive testing completed with 100% success rate (7/7 tests passed). DETAILED RESULTS: ✅ Credentials Loading - API key (zWqPgsnz...knFJ) and secret (b607PXRZ...4Z6L) loading correctly from environment. ✅ OAuth2 Authentication - Access token generation working perfectly with 30-minute expiry. ✅ API Connection - Amadeus test environment connection successful. ✅ Real Flight Data - Found 10 real flights for Delhi→Mumbai on 2025-08-07 with actual airlines (Air India, IX Airlines), real prices (₹10,630-₹11,534), flight numbers, times, aircraft types, and baggage allowances. ✅ API Integration - Flight search endpoint now returns data_source: 'real_api' when Amadeus data available. ✅ Error Handling - Graceful fallback to mock data when no flights found for specific dates/routes. ✅ Backend Logs - No authentication errors, clean integration. CRITICAL SUCCESS: The Amadeus integration is working perfectly with user's real credentials. Delhi-Mumbai flights now show REAL AMADEUS DATA from their test environment instead of mock data. The system intelligently falls back to mock data for dates without available flights, ensuring users always get results."
 
   - task: "Flight Search API"
     implemented: true
