@@ -290,21 +290,21 @@ class BackendTester:
             return False
 
     def test_aerodatabox_rapidapi_endpoint(self):
-        """Test 2: Test new RapidAPI endpoint with X-RapidAPI-Key header"""
-        print("\n🌐 TESTING RAPIDAPI ENDPOINT WITH NEW HEADERS")
+        """Test 2: Test API.Market MCP endpoint with Bearer token authentication"""
+        print("\n🌐 TESTING API.MARKET MCP ENDPOINT WITH BEARER TOKEN")
         print("=" * 60)
         try:
             from aerodatabox_flight_api import aerodatabox_service
             
             if not aerodatabox_service.api_key:
-                self.log_result("RapidAPI Endpoint Test", False, "No API key available")
+                self.log_result("API.Market MCP Endpoint Test", False, "No API key available")
                 return False
             
-            # Test the new header format
+            # Test the Bearer token header format
             headers = aerodatabox_service.get_headers()
             print(f"Headers configured: {list(headers.keys())}")
-            print(f"X-RapidAPI-Key present: {'✅ Yes' if 'X-RapidAPI-Key' in headers else '❌ No'}")
-            print(f"X-RapidAPI-Host present: {'✅ Yes' if 'X-RapidAPI-Host' in headers else '❌ No'}")
+            print(f"Authorization Bearer present: {'✅ Yes' if 'Authorization' in headers else '❌ No'}")
+            print(f"Accept header present: {'✅ Yes' if 'Accept' in headers else '❌ No'}")
             
             # Test with Delhi airport departures
             test_url = f"{aerodatabox_service.api_base_url}/flights/airports/iata/DEL/2025-02-15/12:00/24:00"
@@ -321,33 +321,38 @@ class BackendTester:
             
             response = requests.get(test_url, headers=headers, params=params, timeout=30)
             print(f"Response Status: {response.status_code}")
+            print(f"Response Headers: {dict(response.headers)}")
             
             if response.status_code == 200:
                 data = response.json()
                 departures = data.get('departures', [])
-                self.log_result("RapidAPI Endpoint Test", True, 
-                              f"RapidAPI endpoint working! Retrieved {len(departures)} departures",
+                self.log_result("API.Market MCP Endpoint Test", True, 
+                              f"API.Market MCP endpoint working! Retrieved {len(departures)} departures",
                               {"status_code": 200, "departures_count": len(departures)})
                 return True
             elif response.status_code == 401:
-                self.log_result("RapidAPI Endpoint Test", False, 
-                              "Authentication failed - Invalid API key")
+                self.log_result("API.Market MCP Endpoint Test", False, 
+                              "Authentication failed - Invalid API key or wrong auth method")
                 return False
             elif response.status_code == 403:
-                self.log_result("RapidAPI Endpoint Test", False, 
+                self.log_result("API.Market MCP Endpoint Test", False, 
                               "Access forbidden - Check subscription/quota")
                 return False
+            elif response.status_code == 404:
+                self.log_result("API.Market MCP Endpoint Test", False, 
+                              f"Endpoint not found - URL may be incorrect: {test_url}")
+                return False
             elif response.status_code == 429:
-                self.log_result("RapidAPI Endpoint Test", True, 
+                self.log_result("API.Market MCP Endpoint Test", True, 
                               "Rate limit exceeded - API key working but quota reached")
                 return True
             else:
-                self.log_result("RapidAPI Endpoint Test", False, 
-                              f"Unexpected response: {response.status_code} - {response.text}")
+                self.log_result("API.Market MCP Endpoint Test", False, 
+                              f"Unexpected response: {response.status_code} - {response.text[:500]}")
                 return False
                 
         except Exception as e:
-            self.log_result("RapidAPI Endpoint Test", False, f"Error: {str(e)}")
+            self.log_result("API.Market MCP Endpoint Test", False, f"Error: {str(e)}")
             return False
 
     def test_flight_search_delhi_mumbai_specific(self):
