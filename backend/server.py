@@ -333,29 +333,69 @@ async def search_flights(request: FlightSearchRequest):
 
 @api_router.post("/hotels/search")
 async def search_hotels(request: HotelSearchRequest):
-    """Search for hotels with AI recommendations"""
+    """Search for hotels with real API integration and AI recommendations"""
     try:
         # Save search query
         search = HotelSearch(**request.dict())
         await db.hotel_searches.insert_one(search.dict())
         
-        # Filter hotels by location
-        filtered_hotels = [
-            hotel for hotel in MOCK_HOTELS
-            if request.location.lower() in hotel["location"].lower()
-        ]
+        # Try to get real hotel data first
+        real_hotels = []
+        use_real_api = False
         
-        if not filtered_hotels:
-            filtered_hotels = MOCK_HOTELS[:2]
+        try:
+            # Check if HotelAPI credentials are configured
+            if hotel_api_service.username and hotel_api_service.password:
+                logging.info(f"Using real HotelAPI for location: {request.location}")
+                real_hotels = hotel_api_service.search_hotels(request.location)
+                if real_hotels:
+                    use_real_api = True
+                    logging.info(f"✅ Real API returned {len(real_hotels)} hotels")
+                else:
+                    logging.warning("Real API returned no hotels, falling back to mock data")
+            else:
+                logging.info("HotelAPI credentials not configured, using mock data")
+        except Exception as api_error:
+            logging.error(f"Real Hotel API error: {str(api_error)}, falling back to mock data")
+        
+        # Fallback to mock data if real API failed or no credentials
+        if not use_real_api:
+            filtered_hotels = [
+                hotel for hotel in MOCK_HOTELS
+                if request.location.lower() in hotel["location"].lower()
+            ]
+            
+            if not filtered_hotels:
+                filtered_hotels = MOCK_HOTELS[:2]
+            
+            # Convert mock data to match real API format
+            real_hotels = []
+            for hotel in filtered_hotels:
+                real_hotels.append({
+                    "id": hotel["id"],
+                    "name": hotel["name"],
+                    "location": hotel["location"],
+                    "price_per_night": hotel["price_per_night"],
+                    "total_price": hotel["price_per_night"],
+                    "rating": hotel["rating"],
+                    "amenities": hotel["amenities"],
+                    "image": hotel["image"],
+                    "vendor": "TourSmile",
+                    "currency": "INR",
+                    "tax": 0,
+                    "description": hotel.get("description", "")
+                })
         
         # Get AI recommendations
         ai_prompt = f"Give a brief travel tip for staying in {request.location} from {request.checkin_date} to {request.checkout_date}"
         ai_tip = await get_ai_response(ai_prompt, str(uuid.uuid4()))
         
         return {
-            "hotels": filtered_hotels,
+            "hotels": real_hotels,
             "search_id": search.id,
-            "ai_recommendation": ai_tip
+            "ai_recommendation": ai_tip,
+            "data_source": "real_api" if use_real_api else "mock",
+            "total_found": len(real_hotels)
         }
         
     except Exception as e:
