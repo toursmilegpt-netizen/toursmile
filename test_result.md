@@ -261,9 +261,9 @@ frontend:
 
   - task: "Flight Search UI"
     implemented: true
-    working: true
+    working: false
     file: "/app/frontend/src/App.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
@@ -273,6 +273,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ Flight Search UI working excellently! Form accepts all inputs (Delhi to Mumbai, date: 2025-02-15, 2 passengers), search functionality works perfectly, displays realistic flight results with Air India (₹4,500) and IndiGo (₹3,800) flights, shows flight times, duration, non-stop status, and 'Select Flight' buttons are present and functional. Backend integration working seamlessly."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL FLIGHT SEARCH API ISSUE IDENTIFIED! Flight search form works perfectly (all inputs accepted, UI responsive), but results not displaying due to API 422 error. Root cause: Frontend sends passengers as object {adults: 2, children: 0, infants: 0} but backend expects integer. API error: 'Input should be a valid integer' for passengers field. This is a data format mismatch between frontend and backend that prevents flight results from displaying. Form functionality is perfect, but API integration is broken due to data structure incompatibility."
 
   - task: "Hotel Search UI"
     implemented: true
