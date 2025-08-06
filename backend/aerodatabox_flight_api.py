@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 
 class AeroDataBoxService:
     def __init__(self):
-        # API.Market endpoint (not RapidAPI!)
-        self.api_base_url = "https://aerodatabox.com/api/v1"  # Direct API.Market endpoint
+        # API.Market endpoint for AeroDataBox
+        self.api_base_url = "https://api.market/v1/aedbx/aerodatabox"
         self._api_key = None
         
     @property
@@ -33,7 +33,7 @@ class AeroDataBoxService:
     def get_headers(self):
         """Get API.Market headers for authentication"""
         return {
-            'X-API-Key': self.api_key,  # API.Market uses X-API-Key
+            'Authorization': f'Bearer {self.api_key}',  # API.Market uses Bearer token
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
