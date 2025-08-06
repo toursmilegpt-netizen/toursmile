@@ -92,12 +92,12 @@ class AeroDataBoxService:
     def get_airport_departures(self, airport_code: str, date: str) -> List[Dict]:
         """Get departure flights from an airport on a specific date"""
         try:
-            # AeroDataBox API.Market endpoint for airport departures
-            url = f"{self.api_base_url}/flights/airports/iata/{airport_code}"
-            
+            # Try RapidAPI endpoint first
+            url = f"{self.api_base_url}/flights/airports/iata/{airport_code}/{date}/12:00/24:00"
             headers = self.get_headers()
             
-            # Add date parameter for specific day
+            logger.info(f"Trying RapidAPI endpoint: {url}")
+            
             params = {
                 'withLeg': 'true',
                 'direction': 'Departure',
@@ -108,18 +108,34 @@ class AeroDataBoxService:
             }
             
             response = requests.get(url, headers=headers, params=params, timeout=30)
-            logger.info(f"AeroDataBox API.Market response status: {response.status_code}")
+            logger.info(f"RapidAPI response status: {response.status_code}")
             
             if response.status_code == 200:
                 data = response.json()
                 departures = data.get('departures', [])
-                logger.info(f"Retrieved {len(departures)} departures from {airport_code}")
+                logger.info(f"✅ RapidAPI success: Retrieved {len(departures)} departures from {airport_code}")
+                return departures
+                
+            # If RapidAPI fails, try direct API
+            logger.info("RapidAPI failed, trying direct API endpoint")
+            direct_url = f"{self.direct_api_url}/v2/flights/airports/iata/{airport_code}/{date}/12:00/24:00"
+            direct_headers = self.get_direct_headers()
+            
+            logger.info(f"Trying direct endpoint: {direct_url}")
+            
+            response = requests.get(direct_url, headers=direct_headers, params=params, timeout=30)
+            logger.info(f"Direct API response status: {response.status_code}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                departures = data.get('departures', [])
+                logger.info(f"✅ Direct API success: Retrieved {len(departures)} departures from {airport_code}")
                 return departures
             elif response.status_code == 429:
                 logger.warning("AeroDataBox API rate limit exceeded")
                 return []
             else:
-                logger.error(f"AeroDataBox API error: {response.status_code} - {response.text}")
+                logger.error(f"Both API endpoints failed. Last response: {response.status_code} - {response.text}")
                 return []
                 
         except Exception as e:
