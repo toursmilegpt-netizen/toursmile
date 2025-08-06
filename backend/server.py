@@ -5,7 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 # Import the real APIs
 from real_hotel_api import hotel_api_service
-from aerodatabox_flight_api import aerodatabox_service  # NEW: Working AeroDataBox API
+from amadeus_flight_api import amadeus_service  # NEW: Working Amadeus API
 
 import os
 import logging
@@ -301,7 +301,7 @@ async def chat_with_expert_consultant(request: ChatRequest):
 
 @api_router.post("/flights/search")
 async def search_flights(request: FlightSearchRequest):
-    """Search for flights with real AeroDataBox API integration and AI recommendations"""
+    """Search for flights with real Amadeus API integration and AI recommendations"""
     try:
         # Save search query
         search = FlightSearch(**request.dict())
@@ -312,10 +312,10 @@ async def search_flights(request: FlightSearchRequest):
         use_real_api = False
         
         try:
-            # Check if AeroDataBox credentials are configured
-            if aerodatabox_service.api_key:
-                logging.info(f"Using AeroDataBox API for route: {request.origin} → {request.destination}")
-                real_flights = aerodatabox_service.search_flights_by_airport(
+            # Check if Amadeus credentials are configured
+            if amadeus_service.api_key:
+                logging.info(f"Using Amadeus API for route: {request.origin} → {request.destination}")
+                real_flights = amadeus_service.search_flights_by_airport(
                     request.origin,
                     request.destination, 
                     request.departure_date,
@@ -323,13 +323,13 @@ async def search_flights(request: FlightSearchRequest):
                 )
                 if real_flights:
                     use_real_api = True
-                    logging.info(f"✅ AeroDataBox API returned {len(real_flights)} flights")
+                    logging.info(f"✅ Amadeus API returned {len(real_flights)} flights")
                 else:
-                    logging.warning("AeroDataBox API returned no flights, falling back to mock data")
+                    logging.warning("Amadeus API returned no flights, falling back to mock data")
             else:
-                logging.info("AeroDataBox API key not configured, using mock data")
+                logging.info("Amadeus API key not configured, using mock data")
         except Exception as api_error:
-            logging.error(f"AeroDataBox API error: {str(api_error)}, falling back to mock data")
+            logging.error(f"Amadeus API error: {str(api_error)}, falling back to mock data")
         
         # Fallback to mock data if real API failed or no credentials
         if not use_real_api:
