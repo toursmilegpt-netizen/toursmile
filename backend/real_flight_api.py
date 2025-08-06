@@ -19,7 +19,7 @@ class FlightAPIService:
         
     def search_oneway_flights(self, origin: str, destination: str, departure_date: str, passengers: int = 1) -> List[Dict]:
         """
-        Search for one-way flights using FlightAPI.io
+        Search for one-way flights using FlightAPI.io with correct URL format
         
         Args:
             origin (str): Origin airport code or city
@@ -39,26 +39,26 @@ class FlightAPIService:
             origin_code = self.get_airport_code(origin)
             dest_code = self.get_airport_code(destination)
             
-            # FlightAPI.io oneway endpoint
-            url = f"{self.api_base_url}/oneway"
-            
-            params = {
-                'key': self.api_key,
-                'from': origin_code,
-                'to': dest_code,
-                'date': departure_date,
-                'adult': passengers,
-                'currency': 'INR'  # Get prices in Indian Rupees
-            }
+            # FlightAPI.io uses URL path format: 
+            # https://api.flightapi.io/onewaytrip/<api-key>/<departure>/<arrival>/<date>/<adults>/<children>/<infants>/<class>/<currency>
+            url = f"https://api.flightapi.io/onewaytrip/{self.api_key}/{origin_code}/{dest_code}/{departure_date}/{passengers}/0/0/Economy/INR"
             
             logger.info(f"Searching flights: {origin_code} → {dest_code} on {departure_date}")
-            response = requests.get(url, params=params, timeout=30)
+            logger.info(f"FlightAPI URL: {url}")
+            
+            response = requests.get(url, timeout=30)
+            logger.info(f"FlightAPI Response Status: {response.status_code}")
             
             if response.status_code == 200:
                 raw_data = response.json()
+                logger.info("✅ FlightAPI returned data successfully")
                 return self.transform_flight_data(raw_data, origin, destination)
             elif response.status_code == 410:
                 logger.warning(f"No flights found for {origin_code} → {dest_code} on {departure_date}")
+                return []
+            elif response.status_code == 404:
+                logger.error(f"FlightAPI 404 error - API key or endpoint issue")
+                logger.error(f"Response: {response.text}")
                 return []
             else:
                 logger.error(f"Flight search failed: {response.status_code} - {response.text}")
