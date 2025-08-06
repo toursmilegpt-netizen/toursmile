@@ -402,6 +402,50 @@ async def search_hotels(request: HotelSearchRequest):
         logging.error(f"Hotel search error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to search hotels")
 
+@api_router.get("/test-hotel-api")
+async def test_hotel_api_endpoint():
+    """Test endpoint to verify HotelAPI.co integration"""
+    try:
+        # Check if credentials are configured
+        if not hotel_api_service.username or not hotel_api_service.password:
+            return {
+                "status": "credentials_missing",
+                "message": "HotelAPI credentials not configured in environment variables",
+                "required_env_vars": ["HOTELAPI_USERNAME", "HOTELAPI_PASSWORD"],
+                "instructions": "Add your HotelAPI.co credentials to backend/.env file"
+            }
+        
+        # Test authentication
+        auth_success = hotel_api_service.authenticate()
+        if not auth_success:
+            return {
+                "status": "authentication_failed",
+                "message": "Failed to authenticate with HotelAPI.co",
+                "check": "Verify your username and password are correct"
+            }
+        
+        # Test hotel search
+        test_hotels = hotel_api_service.search_hotels("Mumbai")
+        
+        return {
+            "status": "success",
+            "message": "HotelAPI.co integration working perfectly!",
+            "authenticated": True,
+            "test_search": {
+                "city": "Mumbai",
+                "hotels_found": len(test_hotels),
+                "sample_hotels": test_hotels[:3] if test_hotels else []
+            }
+        }
+        
+    except Exception as e:
+        logging.error(f"HotelAPI test error: {str(e)}")
+        return {
+            "status": "error", 
+            "message": f"Test failed: {str(e)}",
+            "authenticated": False
+        }
+
 @api_router.get("/activities/{location}")
 async def get_activities(location: str):
     """Get activities for a location"""
