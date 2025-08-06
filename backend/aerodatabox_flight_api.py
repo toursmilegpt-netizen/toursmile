@@ -33,7 +33,7 @@ class AeroDataBoxService:
     def get_headers(self):
         """Get API.Market MCP headers for authentication"""
         return {
-            'X-API-Key': self.api_key,
+            'Authorization': f'Bearer {self.api_key}',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
