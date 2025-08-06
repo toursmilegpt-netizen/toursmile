@@ -92,6 +92,32 @@ class HotelAPIService:
         Returns:
             List[Dict]: List of hotel data with pricing information
         """
+        # Try using API key first if available
+        api_key = os.environ.get('HOTELAPI_KEY')
+        if api_key:
+            try:
+                # Clean city name for API call
+                city_clean = city.strip().replace(' ', '').lower()
+                
+                headers = {
+                    "Authorization": f"Bearer {api_key}",
+                    "X-API-Key": api_key
+                }
+                
+                url = f"{self.api_base_url}/{city_clean}"
+                
+                logger.info(f"Searching hotels for city: {city} using API key")
+                response = requests.get(url, headers=headers, timeout=30)
+                
+                if response.status_code == 200:
+                    raw_data = response.json()
+                    return self.transform_hotel_data(raw_data, city)
+                else:
+                    logger.warning(f"API Key method failed: {response.status_code} - {response.text}")
+            except Exception as e:
+                logger.warning(f"API Key method error: {str(e)}")
+        
+        # Fallback to JWT authentication method
         if not self.ensure_authenticated():
             logger.error("Failed to authenticate with HotelAPI")
             return []
