@@ -7,6 +7,11 @@ import os
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
 import logging
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load environment variables
+load_dotenv()
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
