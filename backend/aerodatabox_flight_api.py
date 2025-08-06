@@ -83,7 +83,7 @@ class AeroDataBoxService:
     def get_airport_departures(self, airport_code: str, date: str) -> List[Dict]:
         """Get departure flights from an airport on a specific date"""
         try:
-            # AeroDataBox FIDS endpoint for airport departures
+            # AeroDataBox API.Market endpoint for airport departures
             url = f"{self.api_base_url}/flights/airports/iata/{airport_code}"
             
             headers = self.get_headers()
@@ -99,7 +99,7 @@ class AeroDataBoxService:
             }
             
             response = requests.get(url, headers=headers, params=params, timeout=30)
-            logger.info(f"AeroDataBox API response status: {response.status_code}")
+            logger.info(f"AeroDataBox API.Market response status: {response.status_code}")
             
             if response.status_code == 200:
                 data = response.json()
