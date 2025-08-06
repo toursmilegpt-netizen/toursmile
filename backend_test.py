@@ -504,7 +504,7 @@ class BackendTester:
         # Run all AeroDataBox tests
         tests = [
             ("API Key Loading", self.test_aerodatabox_api_key_loading),
-            ("Multiple Endpoints Test", self.test_aerodatabox_rapidapi_endpoint),
+            ("API.Market Endpoint Test", self.test_aerodatabox_api_market_endpoint),
             ("Delhi-Mumbai Flight Search", self.test_flight_search_delhi_mumbai_specific),
             ("Direct Service Test", self.test_aerodatabox_direct_service),
             ("Backend Logs Analysis", self.check_backend_logs_for_aerodatabox)
