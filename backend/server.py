@@ -301,31 +301,61 @@ async def chat_with_expert_consultant(request: ChatRequest):
 
 @api_router.post("/flights/search")
 async def search_flights(request: FlightSearchRequest):
-    """Search for flights with AI-powered recommendations"""
+    """Search for flights with real FlightAPI.io integration and AI recommendations"""
     try:
         # Save search query
         search = FlightSearch(**request.dict())
         await db.flight_searches.insert_one(search.dict())
         
-        # Filter mock flights based on origin/destination
-        filtered_flights = [
-            flight for flight in MOCK_FLIGHTS 
-            if (flight["origin"].lower() == request.origin.lower() and 
-                flight["destination"].lower() == request.destination.lower())
-        ]
+        # Try to get real flight data first
+        real_flights = []
+        use_real_api = False
         
-        # If no exact matches, return some sample flights
-        if not filtered_flights:
-            filtered_flights = MOCK_FLIGHTS[:2]
+        try:
+            # Check if FlightAPI credentials are configured
+            if flight_api_service.api_key:
+                logging.info(f"Using real FlightAPI for route: {request.origin} → {request.destination}")
+                real_flights = flight_api_service.search_oneway_flights(
+                    request.origin,
+                    request.destination, 
+                    request.departure_date,
+                    request.passengers if hasattr(request, 'passengers') and isinstance(request.passengers, int) else 1
+                )
+                if real_flights:
+                    use_real_api = True
+                    logging.info(f"✅ Real Flight API returned {len(real_flights)} flights")
+                else:
+                    logging.warning("Real Flight API returned no flights, falling back to mock data")
+            else:
+                logging.info("FlightAPI key not configured, using mock data")
+        except Exception as api_error:
+            logging.error(f"Real Flight API error: {str(api_error)}, falling back to mock data")
+        
+        # Fallback to mock data if real API failed or no credentials
+        if not use_real_api:
+            filtered_flights = [
+                flight for flight in MOCK_FLIGHTS 
+                if (flight["origin"].lower() == request.origin.lower() and 
+                    flight["destination"].lower() == request.destination.lower())
+            ]
+            
+            # If no exact matches, return some sample flights
+            if not filtered_flights:
+                filtered_flights = MOCK_FLIGHTS[:2]
+            
+            # Use mock data in the same format as real API
+            real_flights = filtered_flights
         
         # Get AI recommendations
         ai_prompt = f"Provide a brief travel tip for flying from {request.origin} to {request.destination} on {request.departure_date}"
         ai_tip = await get_ai_response(ai_prompt, str(uuid.uuid4()))
         
         return {
-            "flights": filtered_flights,
+            "flights": real_flights,
             "search_id": search.id,
-            "ai_recommendation": ai_tip
+            "ai_recommendation": ai_tip,
+            "data_source": "real_api" if use_real_api else "mock",
+            "total_found": len(real_flights)
         }
         
     except Exception as e:
