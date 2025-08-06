@@ -117,12 +117,12 @@ class AeroDataBoxService:
     def get_airport_departures(self, airport_code: str, date: str) -> List[Dict]:
         """Get departure flights from an airport on a specific date"""
         try:
-            # API.Market MCP endpoint for airport departures
+            # API.Market correct endpoint for airport departures (FIDS)
             url = f"{self.api_base_url}/flights/airports/iata/{airport_code}/{date}/12:00/24:00"
             
-            headers = self.get_headers("api_market")
+            headers = self.get_headers()
             
-            logger.info(f"Using API.Market MCP endpoint: {url}")
+            logger.info(f"Using correct API.Market endpoint: {url}")
             logger.info(f"Headers: {list(headers.keys())}")
             
             # Parameters for the API call
@@ -136,12 +136,12 @@ class AeroDataBoxService:
             }
             
             response = requests.get(url, headers=headers, params=params, timeout=30)
-            logger.info(f"API.Market MCP response status: {response.status_code}")
+            logger.info(f"API.Market response status: {response.status_code}")
             
             if response.status_code == 200:
                 data = response.json()
                 departures = data.get('departures', [])
-                logger.info(f"✅ API.Market MCP success: Retrieved {len(departures)} departures from {airport_code}")
+                logger.info(f"✅ API.Market success: Retrieved {len(departures)} departures from {airport_code}")
                 return departures
             elif response.status_code == 401:
                 logger.error("API.Market authentication failed - Invalid API key")
@@ -156,11 +156,11 @@ class AeroDataBoxService:
                 logger.warning("API.Market rate limit exceeded")
                 return []
             else:
-                logger.error(f"API.Market MCP error: {response.status_code} - {response.text}")
+                logger.error(f"API.Market error: {response.status_code} - {response.text}")
                 return []
                 
         except Exception as e:
-            logger.error(f"API.Market MCP request failed: {str(e)}")
+            logger.error(f"API.Market request failed: {str(e)}")
             return []
     
     def transform_flight_data(self, raw_flights: List[Dict], origin: str, destination: str) -> List[Dict]:
