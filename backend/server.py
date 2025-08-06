@@ -3,8 +3,9 @@ from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 
-# Import the real hotel API service
+# Import the real APIs
 from real_hotel_api import hotel_api_service
+from real_flight_api import flight_api_service
 
 import os
 import logging
