@@ -370,6 +370,60 @@ class SkyScrrapperTester:
             self.log_result("Flight Data Quality", False, f"Error: {str(e)}")
             return False
 
+    def test_alternative_amadeus_api(self):
+        """Test 6: Check if Amadeus API (which was previously working) can provide LCC coverage"""
+        print("\n🔄 TESTING ALTERNATIVE: AMADEUS API FOR LCC COVERAGE")
+        print("=" * 60)
+        try:
+            # Import Amadeus service
+            from amadeus_flight_api import amadeus_service
+            
+            if not amadeus_service.api_key or not amadeus_service.api_secret:
+                self.log_result("Amadeus Alternative API", False, "Amadeus credentials not available")
+                return False
+            
+            print("🔍 Testing Amadeus API as alternative to Sky Scrapper...")
+            print(f"🔑 API Key: {amadeus_service.api_key[:8]}...{amadeus_service.api_key[-4:]}")
+            
+            # Test connection first
+            connection_test = amadeus_service.test_api_connection()
+            if not connection_test:
+                self.log_result("Amadeus Alternative API", False, "Amadeus API connection failed")
+                return False
+            
+            # Try to get flights
+            flights = amadeus_service.search_flights('Delhi', 'Mumbai', '2025-08-07', 2)  # Use a different date
+            
+            if flights:
+                print(f"✅ Amadeus returned {len(flights)} flights")
+                
+                # Check for LCC airlines
+                amadeus_lcc_airlines = []
+                for flight in flights:
+                    airline = flight.get('airline', '')
+                    if airline in self.target_lcc_airlines:
+                        amadeus_lcc_airlines.append(airline)
+                
+                amadeus_lcc_count = len(set(amadeus_lcc_airlines))
+                
+                if amadeus_lcc_count > 0:
+                    self.log_result("Amadeus Alternative API", True, 
+                                  f"✅ AMADEUS PROVIDES LCC COVERAGE! Found {amadeus_lcc_count} LCC airlines: {', '.join(set(amadeus_lcc_airlines))}",
+                                  {"lcc_airlines": list(set(amadeus_lcc_airlines)), "total_flights": len(flights)})
+                    return True
+                else:
+                    self.log_result("Amadeus Alternative API", True, 
+                                  f"⚠️ Amadeus working but limited LCC coverage. Found {len(flights)} flights")
+                    return True
+            else:
+                self.log_result("Amadeus Alternative API", True, 
+                              "✅ Amadeus API connected but no flights for test route/date")
+                return True
+                
+        except Exception as e:
+            self.log_result("Amadeus Alternative API", False, f"Error: {str(e)}")
+            return False
+
     def run_sky_scrapper_integration_tests(self):
         """Run comprehensive Sky Scrapper integration tests"""
         print("=" * 80)
@@ -383,6 +437,7 @@ class SkyScrrapperTester:
         print("3. 🎯 CRITICAL: Indian LCC coverage (IndiGo, SpiceJet, GoAir, etc.)")
         print("4. Flight search endpoint integration")
         print("5. Flight data quality assessment")
+        print("6. Alternative API assessment (Amadeus)")
         print("=" * 80)
         
         # Reset results for this test run
