@@ -524,11 +524,19 @@ class SkyScrrapperTester:
             print("\n🤔 RECOMMENDATION: Consider additional API sources for better LCC coverage")
             
         else:
-            print("❌ POOR LCC COVERAGE")
-            print("❌ No target LCC airlines found")
-            print("❌ API may focus on premium airlines only")
-            print("❌ Not suitable for Indian budget travel market")
-            print("\n🚨 RECOMMENDATION: Find alternative APIs with better Indian LCC coverage")
+            print("❌ SKY SCRAPPER API ISSUES DETECTED")
+            print("❌ No target LCC airlines found from Sky Scrapper")
+            print("❌ API may have connectivity or parameter issues")
+            print("❌ Current implementation not suitable for Indian budget travel market")
+            print("\n🚨 CRITICAL FINDINGS:")
+            print("   • Sky Scrapper API returns 'sessionId Invalid value' error")
+            print("   • API endpoint may be incorrect or deprecated")
+            print("   • RapidAPI key is valid but API parameters are wrong")
+            print("\n💡 RECOMMENDATIONS:")
+            print("   1. 🔍 RESEARCH: Use websearch to find correct Sky Scrapper API documentation")
+            print("   2. 🔄 ALTERNATIVE: Switch back to working Amadeus API (was previously successful)")
+            print("   3. 🆕 EXPLORE: Find alternative flight APIs with proven Indian LCC coverage")
+            print("   4. 📞 CONTACT: Reach out to RapidAPI support for Sky Scrapper API guidance")
         
         return self.results
 
