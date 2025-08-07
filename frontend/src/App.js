@@ -385,6 +385,16 @@ function App() {
   });
   const [flightResults, setFlightResults] = useState([]);
   const [flightSearching, setFlightSearching] = useState(false);
+  const [selectedFlight, setSelectedFlight] = useState(null);
+  const [showFareOptions, setShowFareOptions] = useState({});
+  const [flightFilters, setFlightFilters] = useState({
+    sortBy: 'price',
+    priceRange: [0, 20000],
+    airlines: [],
+    stops: [],
+    departureTime: [],
+    fareTypes: []
+  });
 
   // Hotel search state
   const [hotelSearch, setHotelSearch] = useState({
