@@ -375,9 +375,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Sky Scrapper Flight API Integration - CRITICAL FAILURE DETECTED"
+    - "Tripjack Flight API Integration - AWAITING USER CREDENTIALS"
+    - "Tripjack Hotel API Integration - AWAITING USER CREDENTIALS"
   stuck_tasks:
-    - "Sky Scrapper Flight API Integration"
+    []
   test_all: false
   test_priority: "high_first"
 
