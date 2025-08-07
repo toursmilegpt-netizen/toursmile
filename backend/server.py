@@ -5,7 +5,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 # Import the real APIs
 from real_hotel_api import hotel_api_service
-from sky_scrapper_api import sky_scrapper_service  # NEW: Sky Scrapper with LCC coverage
+from tripjack_flight_api import tripjack_flight_service  # NEW: Tripjack with comprehensive LCC coverage
+from tripjack_hotel_api import tripjack_hotel_service   # NEW: Tripjack hotel search
 
 import os
 import logging
@@ -301,7 +302,7 @@ async def chat_with_expert_consultant(request: ChatRequest):
 
 @api_router.post("/flights/search")
 async def search_flights(request: FlightSearchRequest):
-    """Search for flights with Sky Scrapper API integration and AI recommendations"""
+    """Search for flights with Tripjack API integration and AI recommendations"""
     try:
         # Save search query
         search = FlightSearch(**request.dict())
@@ -312,10 +313,10 @@ async def search_flights(request: FlightSearchRequest):
         use_real_api = False
         
         try:
-            # Check if Sky Scrapper credentials are configured
-            if sky_scrapper_service.api_key:
-                logging.info(f"Using Sky Scrapper API for route: {request.origin} → {request.destination}")
-                real_flights = sky_scrapper_service.search_flights(
+            # Check if Tripjack credentials are configured
+            if tripjack_flight_service.api_key:
+                logging.info(f"Using Tripjack API for route: {request.origin} → {request.destination}")
+                real_flights = tripjack_flight_service.search_flights(
                     request.origin,
                     request.destination, 
                     request.departure_date,
@@ -323,13 +324,13 @@ async def search_flights(request: FlightSearchRequest):
                 )
                 if real_flights:
                     use_real_api = True
-                    logging.info(f"✅ Sky Scrapper API returned {len(real_flights)} flights")
+                    logging.info(f"✅ Tripjack API returned {len(real_flights)} flights")
                 else:
-                    logging.warning("Sky Scrapper API returned no flights, falling back to mock data")
+                    logging.warning("Tripjack API returned no flights, falling back to mock data")
             else:
-                logging.info("Sky Scrapper API key not configured, using mock data")
+                logging.info("Tripjack API key not configured, using mock data")
         except Exception as api_error:
-            logging.error(f"Sky Scrapper API error: {str(api_error)}, falling back to mock data")
+            logging.error(f"Tripjack API error: {str(api_error)}, falling back to mock data")
         
         # Fallback to mock data if real API failed or no credentials
         if not use_real_api:
