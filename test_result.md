@@ -135,6 +135,21 @@ backend:
         agent: "testing"
         comment: "✅ ALL 7 POPULAR TRIPS BACKEND ENDPOINTS WORKING PERFECTLY (100% success rate). Critical Finding: Only 17 trips exist in data (10 domestic, 7 international), NOT 1000+ as expected. Backend APIs are fully functional - issue is limited trip data in popular_trips_data.py."
 
+  - task: "Sky Scrapper Flight API Integration"
+    implemented: true
+    working: false
+    file: "/app/backend/sky_scrapper_api.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "MAJOR UPDATE: Integrated Sky Scrapper API (RapidAPI-based flight search) to replace Amadeus for Indian LCC coverage. Created sky_scrapper_api.py with RapidAPI authentication. Added RAPIDAPI_KEY to .env. Updated server.py to use sky_scrapper_service instead of amadeus_service. Backend restarted successfully."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL SKY SCRAPPER API INTEGRATION FAILURE! Comprehensive testing completed with 66.7% success rate (4/6 tests passed). DETAILED RESULTS: ✅ RapidAPI Key Loading - API key (0bc23d6d...9a3e) loading correctly from environment. ✅ API Connection - Sky Scrapper API endpoint accessible with proper authentication headers. ❌ CRITICAL ISSUE: Sky Scrapper API returns 'sessionId Invalid value' error for all flight searches. ❌ Zero flights returned for Delhi→Mumbai route - NO INDIAN LCC COVERAGE ACHIEVED. ✅ Flight Search Endpoint - Gracefully falls back to mock data when Sky Scrapper fails. ✅ Amadeus Alternative - Previous Amadeus integration still available and connected. CRITICAL FINDINGS: 1) Sky Scrapper API endpoint may be incorrect or deprecated, 2) API parameters don't match expected format, 3) No Indian LCC airlines (IndiGo, SpiceJet, GoAir, AirAsia India, Air India Express) found, 4) Current implementation unsuitable for Indian budget travel market. URGENT RECOMMENDATIONS: Use websearch to find correct Sky Scrapper API documentation OR switch back to working Amadeus API OR explore alternative flight APIs with proven Indian LCC coverage."
+
   - task: "Amadeus Flight API Integration"
     implemented: true
     working: true
@@ -149,6 +164,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "🎉 AMADEUS FLIGHT API INTEGRATION SUCCESSFUL! Comprehensive testing completed with 100% success rate (7/7 tests passed). DETAILED RESULTS: ✅ Credentials Loading - API key (zWqPgsnz...knFJ) and secret (b607PXRZ...4Z6L) loading correctly from environment. ✅ OAuth2 Authentication - Access token generation working perfectly with 30-minute expiry. ✅ API Connection - Amadeus test environment connection successful. ✅ Real Flight Data - Found 10 real flights for Delhi→Mumbai on 2025-08-07 with actual airlines (Air India, IX Airlines), real prices (₹10,630-₹11,534), flight numbers, times, aircraft types, and baggage allowances. ✅ API Integration - Flight search endpoint now returns data_source: 'real_api' when Amadeus data available. ✅ Error Handling - Graceful fallback to mock data when no flights found for specific dates/routes. ✅ Backend Logs - No authentication errors, clean integration. CRITICAL SUCCESS: The Amadeus integration is working perfectly with user's real credentials. Delhi-Mumbai flights now show REAL AMADEUS DATA from their test environment instead of mock data. The system intelligently falls back to mock data for dates without available flights, ensuring users always get results."
+      - working: true
+        agent: "testing"
+        comment: "✅ AMADEUS API STILL AVAILABLE AS BACKUP: During Sky Scrapper testing, confirmed Amadeus API remains connected and functional with valid credentials. API connection test passed successfully. While no flights returned for current test dates, the OAuth2 authentication and API integration remain intact. Amadeus provides a reliable fallback option if Sky Scrapper issues cannot be resolved."
 
   - task: "Flight Search API"
     implemented: true
