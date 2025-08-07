@@ -381,8 +381,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Tripjack Flight API Integration - AWAITING USER CREDENTIALS"
-    - "Tripjack Hotel API Integration - AWAITING USER CREDENTIALS"
+    - "Tripjack Integration Ready for Credentials - TESTING COMPLETE"
   stuck_tasks:
     []
   test_all: false
