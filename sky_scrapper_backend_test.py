@@ -457,7 +457,8 @@ class SkyScrrapperTester:
             ("Sky Scrapper API Connection", self.test_sky_scrapper_api_connection),
             ("Delhi-Mumbai LCC Coverage", self.test_delhi_mumbai_lcc_coverage),
             ("Flight Search Endpoint Integration", self.test_flight_search_endpoint_integration),
-            ("Flight Data Quality", self.test_flight_data_quality)
+            ("Flight Data Quality", self.test_flight_data_quality),
+            ("Amadeus Alternative API", self.test_alternative_amadeus_api)
         ]
         
         for test_name, test_func in tests:
