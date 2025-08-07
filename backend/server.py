@@ -376,19 +376,25 @@ async def search_hotels(request: HotelSearchRequest):
         use_real_api = False
         
         try:
-            # Check if HotelAPI credentials are configured
-            if hotel_api_service.username and hotel_api_service.password:
-                logging.info(f"Using real HotelAPI for location: {request.location}")
-                real_hotels = hotel_api_service.search_hotels(request.location)
+            # Check if Tripjack Hotel API credentials are configured
+            if tripjack_hotel_service.api_key and tripjack_hotel_service.api_secret:
+                logging.info(f"Using Tripjack Hotel API for location: {request.location}")
+                real_hotels = tripjack_hotel_service.search_hotels(
+                    location=request.location,
+                    checkin_date=request.checkin_date,
+                    checkout_date=request.checkout_date,
+                    guests=request.guests,
+                    rooms=request.rooms
+                )
                 if real_hotels:
                     use_real_api = True
-                    logging.info(f"✅ Real API returned {len(real_hotels)} hotels")
+                    logging.info(f"✅ Tripjack Hotel API returned {len(real_hotels)} hotels")
                 else:
-                    logging.warning("Real API returned no hotels, falling back to mock data")
+                    logging.warning("Tripjack Hotel API returned no hotels, falling back to mock data")
             else:
-                logging.info("HotelAPI credentials not configured, using mock data")
+                logging.info("Tripjack Hotel API credentials not configured, using mock data")
         except Exception as api_error:
-            logging.error(f"Real Hotel API error: {str(api_error)}, falling back to mock data")
+            logging.error(f"Tripjack Hotel API error: {str(api_error)}, falling back to mock data")
         
         # Fallback to mock data if real API failed or no credentials
         if not use_real_api:
