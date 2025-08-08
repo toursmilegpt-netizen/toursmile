@@ -171,7 +171,7 @@ function ComingSoon() {
               </div>
               
               {error && (
-                <div className="text-red-400 text-sm text-center">{error}</div>
+                <div className="text-red-600 text-sm text-center">{error}</div>
               )}
             </form>
 
@@ -182,7 +182,7 @@ function ComingSoon() {
 
           {/* Features Preview */}
           <div className="mt-20">
-            <div className="text-gray-400 text-sm mb-8 uppercase tracking-wider">
+            <div className="text-gray-500 text-sm mb-8 uppercase tracking-wider">
               What makes us different
             </div>
             
@@ -204,17 +204,17 @@ function ComingSoon() {
                   icon: "🎯"
                 }
               ].map((feature, index) => (
-                <div key={index} className="text-center p-6 bg-gray-900/30 border border-gray-800 rounded-2xl">
+                <div key={index} className="text-center p-6 bg-gray-50 border border-gray-200 rounded-2xl">
                   <div className="text-3xl mb-4">{feature.icon}</div>
-                  <h4 className="text-white font-semibold text-lg mb-2">{feature.title}</h4>
-                  <p className="text-gray-400">{feature.description}</p>
+                  <h4 className="text-gray-900 font-semibold text-lg mb-2">{feature.title}</h4>
+                  <p className="text-gray-600">{feature.description}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Footer */}
-          <div className="mt-20 pt-8 border-t border-gray-800">
+          <div className="mt-20 pt-8 border-t border-gray-200">
             <p className="text-gray-500 text-sm">
               © 2025 TourSmile. Crafting the future of travel planning.
               <br />
