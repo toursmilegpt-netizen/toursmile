@@ -1376,6 +1376,8 @@ function App() {
                   </div>
                 </div>
               </div>
+                </div>
+              )}
             )}
 
             {activeTab === 'flights' && (
