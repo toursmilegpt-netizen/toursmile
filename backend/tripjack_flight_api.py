@@ -56,10 +56,11 @@ class TripjackFlightService:
         return self._api_secret
 
     def authenticate(self) -> bool:
-        """Authenticate with Tripjack API and get access token"""
+        """Authenticate with Tripjack API using credentials"""
         try:
-            if not self.api_key or not self.api_secret:
-                logger.error("❌ Tripjack API credentials not found in environment")
+            if not self._user_id or not self._email or not self._password:
+                logger.error("❌ Tripjack credentials not found in environment")
+                logger.error(f"User ID: {self._user_id}, Email: {self._email}, Password: {'*' * len(self._password) if self._password else 'None'}")
                 return False
 
             # Check if we have a valid token
@@ -67,37 +68,130 @@ class TripjackFlightService:
                 datetime.now() < self._token_expires_at):
                 return True
 
-            # Authentication endpoint (inferred based on common patterns)
-            auth_url = f"{self.base_url}/api/auth/token"
+            logger.info(f"🔐 Authenticating with Tripjack as {self._email}...")
+            
+            # Tripjack authentication endpoint (based on common travel API patterns)
+            auth_url = f"{self.base_url}/api/login"
             
             auth_data = {
-                "api_key": self.api_key,
-                "api_secret": self.api_secret
+                "user_id": self._user_id,
+                "email": self._email,
+                "password": self._password,
+                "agency_name": self._agency_name
             }
 
             headers = {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Accept": "application/json",
+                "User-Agent": "TourSmile/1.0"
             }
 
+            logger.info(f"📡 Making auth request to: {auth_url}")
             response = requests.post(auth_url, json=auth_data, headers=headers, timeout=30)
             
+            logger.info(f"📊 Auth Response Status: {response.status_code}")
+            logger.info(f"📄 Auth Response Headers: {dict(response.headers)}")
+            
             if response.status_code == 200:
-                auth_response = response.json()
-                self._access_token = auth_response.get('access_token')
-                
-                # Set token expiry (usually 1 hour, setting to 50 minutes for safety)
-                self._token_expires_at = datetime.now() + timedelta(minutes=50)
-                
-                logger.info("✅ Tripjack authentication successful")
-                return True
+                try:
+                    auth_response = response.json()
+                    logger.info(f"✅ Auth response received: {auth_response.keys() if isinstance(auth_response, dict) else 'Not dict'}")
+                    
+                    # Extract authentication token (structure may vary)
+                    if 'access_token' in auth_response:
+                        self._access_token = auth_response['access_token']
+                    elif 'token' in auth_response:
+                        self._access_token = auth_response['token']
+                    elif 'authToken' in auth_response:
+                        self._access_token = auth_response['authToken']
+                    else:
+                        # Try to extract any token-like field
+                        for key, value in auth_response.items():
+                            if 'token' in key.lower() and isinstance(value, str):
+                                self._access_token = value
+                                logger.info(f"🔑 Using token from field: {key}")
+                                break
+                    
+                    if self._access_token:
+                        # Set token expiry (usually 1 hour, setting to 50 minutes for safety)
+                        self._token_expires_at = datetime.now() + timedelta(minutes=50)
+                        
+                        logger.info("✅ Tripjack authentication successful!")
+                        return True
+                    else:
+                        logger.error(f"❌ No token found in auth response: {auth_response}")
+                        return False
+                        
+                except json.JSONDecodeError:
+                    logger.error(f"❌ Invalid JSON in auth response: {response.text}")
+                    return False
+                    
+            elif response.status_code == 401:
+                logger.error("❌ Tripjack authentication failed - Invalid credentials")
+                logger.error(f"Response: {response.text}")
+                return False
+            elif response.status_code == 403:
+                logger.error("❌ Tripjack access forbidden - IP might not be whitelisted")
+                logger.error(f"Response: {response.text}")
+                return False
             else:
                 logger.error(f"❌ Tripjack authentication failed: {response.status_code}")
                 logger.error(f"Response: {response.text}")
-                return False
+                
+                # Try alternative authentication endpoint
+                return self._try_alternative_auth()
 
         except Exception as e:
             logger.error(f"❌ Tripjack authentication error: {str(e)}")
+            return False
+
+    def _try_alternative_auth(self) -> bool:
+        """Try alternative authentication methods"""
+        try:
+            logger.info("🔄 Trying alternative authentication methods...")
+            
+            # Method 2: Try different endpoint structure
+            alt_endpoints = [
+                f"{self.base_url}/auth/login",
+                f"{self.base_url}/user/login",
+                f"{self.base_url}/api/auth/login",
+                f"{self.base_url}/api/user/authenticate"
+            ]
+            
+            for endpoint in alt_endpoints:
+                try:
+                    logger.info(f"🔄 Trying endpoint: {endpoint}")
+                    
+                    auth_data = {
+                        "username": self._email,
+                        "password": self._password,
+                        "userId": self._user_id
+                    }
+                    
+                    response = requests.post(endpoint, json=auth_data, headers={
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }, timeout=10)
+                    
+                    if response.status_code == 200:
+                        auth_response = response.json()
+                        logger.info(f"✅ Alternative auth successful at {endpoint}")
+                        
+                        # Extract token
+                        for token_field in ['access_token', 'token', 'authToken', 'sessionToken']:
+                            if token_field in auth_response:
+                                self._access_token = auth_response[token_field]
+                                self._token_expires_at = datetime.now() + timedelta(minutes=50)
+                                return True
+                                
+                except Exception as e:
+                    logger.info(f"Endpoint {endpoint} failed: {str(e)}")
+                    continue
+            
+            return False
+            
+        except Exception as e:
+            logger.error(f"Alternative auth failed: {str(e)}")
             return False
 
     def get_headers(self):
