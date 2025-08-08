@@ -2720,6 +2720,19 @@ function App() {
               </div>
             )}
           </div>
+          
+          {/* Sidebar Column - Third column of the grid */}
+          <div className="space-y-6">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sticky top-24 border border-white/20">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                <span className="mr-2">🤖</span>TourSmile AI Assistant
+              </h3>
+              <div className="text-center text-gray-500">
+                <div className="text-4xl mb-4">👋</div>
+                <p className="text-sm">Your AI travel assistant is ready to help!</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
