@@ -2717,7 +2717,6 @@ function App() {
                 )}
               </div>
             )}
-            </React.Fragment>
           </div>
         </div>
       </div>
