@@ -713,6 +713,9 @@ app.include_router(popular_trips_router, prefix="/api", tags=["popular-trips"])
 # Include the destinations router
 app.include_router(destinations_router, prefix="/api", tags=["destinations"])
 
+# Include the waitlist router
+app.include_router(waitlist_router, prefix="/api", tags=["waitlist"])
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
