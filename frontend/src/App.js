@@ -881,41 +881,6 @@ function App() {
         <div className="mb-12">
           <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
         </div>
-
-        {/* Search Results Preview */}
-        {searchResults.length > 0 && (
-          <div className="bg-white rounded-3xl shadow-xl p-8">
-            <h3 className="text-3xl font-bold text-gray-900 mb-6">Available Flights</h3>
-            <div className="space-y-4">
-              {searchResults.map((flight, index) => (
-                <div key={index} className="border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:border-blue-300">
-                  <div className="flex justify-between items-center">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-4">
-                        <div className="font-bold text-xl text-gray-900">{flight.airline}</div>
-                        {flight.is_lcc && (
-                          <span className="px-3 py-1 bg-orange-100 text-orange-600 text-sm font-medium rounded-full">
-                            💰 Low Cost
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-gray-600 text-lg mt-1">{flight.departure_time} - {flight.arrival_time}</div>
-                      <div className="text-sm text-gray-500 mt-1">
-                        {flight.duration} • {flight.stops === 0 ? 'Non-stop' : `${flight.stops} stops`}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-3xl font-bold text-blue-600">₹{flight.price?.toLocaleString()}</div>
-                      <button className="mt-3 bg-blue-600 text-white px-8 py-3 rounded-xl hover:bg-blue-700 transition-colors font-semibold">
-                        Select Flight
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </main>
     </div>
   );
