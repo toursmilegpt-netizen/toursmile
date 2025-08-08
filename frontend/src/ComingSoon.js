@@ -114,8 +114,7 @@ function ComingSoon() {
 
           {/* Subheading */}
           <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-            No clutter, no confusion, no surprises.<br />
-            Just plan your trip and go.
+            Find what you need, book with confidence, travel with ease.
           </p>
 
           {/* Value Props */}
