@@ -2718,6 +2718,7 @@ function App() {
                 )}
               </div>
             )}
+          </div>
 
           {/* AI Chat Sidebar - Desktop */}
           <div className="hidden lg:block">
