@@ -2720,14 +2720,6 @@ function App() {
               </div>
             )}
           </div>
-          
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-white/20">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-              <p className="text-gray-600">Sidebar content will go here.</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
