@@ -217,6 +217,8 @@ function ComingSoon() {
           <div className="mt-20 pt-8 border-t border-gray-800">
             <p className="text-gray-500 text-sm">
               © 2025 TourSmile. Crafting the future of travel planning.
+              <br />
+              <span className="text-xs">Coming soon to toursmile.in</span>
             </p>
           </div>
         </div>
