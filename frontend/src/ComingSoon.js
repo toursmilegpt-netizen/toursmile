@@ -73,18 +73,6 @@ function ComingSoon() {
 
   return (
     <div className="min-h-screen bg-white overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-orange-500/10"></div>
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <defs>
-            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5"/>
-            </pattern>
-          </defs>
-          <rect width="100" height="100" fill="url(#grid)" className="text-gray-300" />
-        </svg>
-      </div>
 
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className="max-w-4xl mx-auto text-center">
