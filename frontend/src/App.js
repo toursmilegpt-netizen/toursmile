@@ -4,7 +4,7 @@ import axios from "axios";
 import ComingSoon from "./ComingSoon";
 
 // For development - set to false to show flight search
-const SHOW_COMING_SOON = true;
+const SHOW_COMING_SOON = false;
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
