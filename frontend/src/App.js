@@ -2720,6 +2720,59 @@ function App() {
             </div>
       </div>
     </div>
+
+    {/* Command Bar Modal */}
+    {showCommandBar && (
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-4">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-gray-900">Quick Flight Search</h3>
+              <button
+                onClick={() => {setShowCommandBar(false); setCommandBarInput('');}}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="relative">
+              <input
+                type="text"
+                value={commandBarInput}
+                onChange={(e) => setCommandBarInput(e.target.value)}
+                onKeyPress={handleCommandBarKeyPress}
+                placeholder='Try: "Delhi to Mumbai tomorrow 2 passengers"'
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:outline-none text-lg"
+                autoFocus
+                disabled={commandBarProcessing}
+              />
+              
+              <button
+                onClick={processCommandBarInput}
+                disabled={commandBarProcessing || !commandBarInput.trim()}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-2 rounded-lg hover:from-orange-700 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+              >
+                {commandBarProcessing ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                ) : (
+                  'Search'
+                )}
+              </button>
+            </div>
+            
+            <div className="mt-4 text-sm text-gray-500">
+              <div className="flex items-center justify-between">
+                <span>Press Enter to search • Esc to close</span>
+                <span className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">⌘K</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
   );
 }
 
