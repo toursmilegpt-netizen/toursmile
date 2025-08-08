@@ -738,6 +738,9 @@ function App() {
   // Original flight search functionality
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [searchData, setSearchData] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSearch = async (searchData) => {
     setIsSearching(true);
