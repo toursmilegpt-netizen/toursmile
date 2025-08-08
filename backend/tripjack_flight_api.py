@@ -203,7 +203,8 @@ class TripjackFlightService:
         return {
             "Authorization": f"Bearer {self._access_token}",
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "User-Agent": "TourSmile/1.0"
         }
 
     def get_airport_code(self, city_or_code: str) -> str:
