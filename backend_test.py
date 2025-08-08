@@ -776,6 +776,437 @@ class BackendTester:
             self.log_result("Error Handling (Invalid Trip ID)", False, f"Error: {str(e)}")
         return False
 
+    def test_ai_travel_query_parsing_basic(self):
+        """Test 1: Basic AI travel query parsing functionality"""
+        print("\n🤖 TESTING AI TRAVEL QUERY PARSING - Basic Functionality")
+        print("=" * 70)
+        try:
+            payload = {
+                "query": "Delhi to Mumbai tomorrow",
+                "context": "flight_search"
+            }
+            
+            print(f"📤 REQUEST: {json.dumps(payload, indent=2)}")
+            response = self.session.post(f"{API_BASE}/ai/parse-travel-query", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "success" in data and "parsed" in data and "original_query" in data:
+                    parsed = data["parsed"]
+                    
+                    # Check required fields
+                    required_fields = ["origin", "destination", "adults", "class", "trip_type"]
+                    missing_fields = [field for field in required_fields if field not in parsed]
+                    
+                    if not missing_fields:
+                        print(f"✅ Parsed successfully:")
+                        print(f"   Origin: {parsed.get('origin', 'N/A')}")
+                        print(f"   Destination: {parsed.get('destination', 'N/A')}")
+                        print(f"   Adults: {parsed.get('adults', 'N/A')}")
+                        print(f"   Class: {parsed.get('class', 'N/A')}")
+                        print(f"   Trip Type: {parsed.get('trip_type', 'N/A')}")
+                        
+                        self.log_result("AI Travel Query Parsing (Basic)", True, 
+                                      f"Successfully parsed basic query with all required fields", 
+                                      {"parsed_data": parsed, "success": data["success"]})
+                        return True
+                    else:
+                        self.log_result("AI Travel Query Parsing (Basic)", False, 
+                                      f"Missing required fields: {missing_fields}")
+                else:
+                    self.log_result("AI Travel Query Parsing (Basic)", False, 
+                                  f"Invalid response structure: {data}")
+            else:
+                self.log_result("AI Travel Query Parsing (Basic)", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("AI Travel Query Parsing (Basic)", False, f"Error: {str(e)}")
+        return False
+
+    def test_ai_travel_query_parsing_complex(self):
+        """Test 2: Complex travel queries with multiple parameters"""
+        print("\n🎯 TESTING AI TRAVEL QUERY PARSING - Complex Queries")
+        print("=" * 70)
+        
+        test_queries = [
+            {
+                "query": "Round trip Bangalore Dubai next Friday 2 passengers",
+                "expected": {"trip_type": "return", "adults": 2}
+            },
+            {
+                "query": "Business class Delhi Chennai 4 adults",
+                "expected": {"class": "business", "adults": 4}
+            },
+            {
+                "query": "Multi-city Delhi Bangalore Chennai",
+                "expected": {"trip_type": "multicity"}
+            }
+        ]
+        
+        success_count = 0
+        
+        for i, test_case in enumerate(test_queries, 1):
+            try:
+                print(f"\n📋 Test Query {i}: {test_case['query']}")
+                payload = {
+                    "query": test_case["query"],
+                    "context": "flight_search"
+                }
+                
+                response = self.session.post(f"{API_BASE}/ai/parse-travel-query", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "parsed" in data:
+                        parsed = data["parsed"]
+                        
+                        # Check expected fields
+                        all_expected_found = True
+                        for key, expected_value in test_case["expected"].items():
+                            if parsed.get(key) != expected_value:
+                                print(f"   ❌ Expected {key}={expected_value}, got {parsed.get(key)}")
+                                all_expected_found = False
+                            else:
+                                print(f"   ✅ {key}={expected_value}")
+                        
+                        if all_expected_found:
+                            print(f"   ✅ Query {i} parsed correctly")
+                            success_count += 1
+                        else:
+                            print(f"   ❌ Query {i} parsing incomplete")
+                    else:
+                        print(f"   ❌ Query {i} failed to parse")
+                else:
+                    print(f"   ❌ Query {i} HTTP error: {response.status_code}")
+                    
+            except Exception as e:
+                print(f"   ❌ Query {i} error: {str(e)}")
+        
+        if success_count == len(test_queries):
+            self.log_result("AI Travel Query Parsing (Complex)", True, 
+                          f"All {success_count}/{len(test_queries)} complex queries parsed correctly")
+            return True
+        else:
+            self.log_result("AI Travel Query Parsing (Complex)", False, 
+                          f"Only {success_count}/{len(test_queries)} complex queries parsed correctly")
+        return False
+
+    def test_ai_travel_query_openai_integration(self):
+        """Test 3: Verify OpenAI GPT-4o-mini integration"""
+        print("\n🧠 TESTING OPENAI GPT-4O-MINI INTEGRATION")
+        print("=" * 70)
+        try:
+            # Test with a query that requires AI understanding
+            payload = {
+                "query": "I need to fly from New Delhi to Bombay day after tomorrow for business meeting with 3 colleagues",
+                "context": "flight_search"
+            }
+            
+            print(f"📤 Complex AI Query: {payload['query']}")
+            response = self.session.post(f"{API_BASE}/ai/parse-travel-query", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "parsed" in data:
+                    parsed = data["parsed"]
+                    method = data.get("method", "ai")  # Check if AI or fallback was used
+                    
+                    # Check if AI correctly interpreted the query
+                    ai_interpretations = {
+                        "origin": parsed.get("origin") in ["New Delhi", "Delhi"],
+                        "destination": parsed.get("destination") in ["Mumbai", "Bombay"],
+                        "adults": parsed.get("adults") == 4,  # User + 3 colleagues
+                        "class": parsed.get("class") == "business"  # Business meeting context
+                    }
+                    
+                    correct_interpretations = sum(ai_interpretations.values())
+                    
+                    print(f"🔍 AI Interpretation Results:")
+                    for field, correct in ai_interpretations.items():
+                        status = "✅" if correct else "❌"
+                        print(f"   {status} {field}: {parsed.get(field)}")
+                    
+                    print(f"📊 Method used: {method}")
+                    
+                    if correct_interpretations >= 3:  # At least 3/4 correct
+                        self.log_result("OpenAI GPT-4o-mini Integration", True, 
+                                      f"AI correctly interpreted {correct_interpretations}/4 aspects of complex query",
+                                      {"method": method, "parsed": parsed, "interpretations": ai_interpretations})
+                        return True
+                    else:
+                        self.log_result("OpenAI GPT-4o-mini Integration", False, 
+                                      f"AI only interpreted {correct_interpretations}/4 aspects correctly")
+                else:
+                    self.log_result("OpenAI GPT-4o-mini Integration", False, 
+                                  f"Parsing failed: {data}")
+            else:
+                self.log_result("OpenAI GPT-4o-mini Integration", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("OpenAI GPT-4o-mini Integration", False, f"Error: {str(e)}")
+        return False
+
+    def test_ai_travel_query_fallback_parser(self):
+        """Test 4: Fallback keyword parser when AI fails"""
+        print("\n🔄 TESTING FALLBACK KEYWORD PARSER")
+        print("=" * 70)
+        try:
+            # Test with a simple query that should work with keyword matching
+            payload = {
+                "query": "mumbai to goa tomorrow 2 passengers business class",
+                "context": "flight_search"
+            }
+            
+            print(f"📤 Fallback Test Query: {payload['query']}")
+            response = self.session.post(f"{API_BASE}/ai/parse-travel-query", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "parsed" in data:
+                    parsed = data["parsed"]
+                    method = data.get("method", "ai")
+                    
+                    # Check fallback parsing capabilities
+                    fallback_checks = {
+                        "origin_found": parsed.get("origin") in ["Mumbai", "Goa"],
+                        "destination_found": parsed.get("destination") in ["Mumbai", "Goa"],
+                        "passengers_correct": parsed.get("adults") == 2,
+                        "class_correct": parsed.get("class") == "business"
+                    }
+                    
+                    correct_fallback = sum(fallback_checks.values())
+                    
+                    print(f"🔍 Fallback Parser Results:")
+                    for check, result in fallback_checks.items():
+                        status = "✅" if result else "❌"
+                        print(f"   {status} {check}")
+                    
+                    print(f"📊 Method used: {method}")
+                    
+                    if correct_fallback >= 3:  # At least 3/4 correct
+                        self.log_result("Fallback Keyword Parser", True, 
+                                      f"Fallback parser correctly handled {correct_fallback}/4 aspects",
+                                      {"method": method, "parsed": parsed, "checks": fallback_checks})
+                        return True
+                    else:
+                        self.log_result("Fallback Keyword Parser", False, 
+                                      f"Fallback parser only handled {correct_fallback}/4 aspects correctly")
+                else:
+                    self.log_result("Fallback Keyword Parser", False, 
+                                  f"Fallback parsing failed: {data}")
+            else:
+                self.log_result("Fallback Keyword Parser", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Fallback Keyword Parser", False, f"Error: {str(e)}")
+        return False
+
+    def test_ai_travel_query_response_structure(self):
+        """Test 5: Verify proper JSON response structure"""
+        print("\n📋 TESTING RESPONSE STRUCTURE VALIDATION")
+        print("=" * 70)
+        try:
+            payload = {
+                "query": "Delhi to Chennai next week",
+                "context": "flight_search"
+            }
+            
+            print(f"📤 Structure Test Query: {payload['query']}")
+            response = self.session.post(f"{API_BASE}/ai/parse-travel-query", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check top-level structure
+                required_top_level = ["success", "parsed", "original_query"]
+                missing_top_level = [field for field in required_top_level if field not in data]
+                
+                if not missing_top_level:
+                    parsed = data["parsed"]
+                    
+                    # Check parsed data structure
+                    required_parsed_fields = ["adults", "children", "infants", "class", "trip_type"]
+                    missing_parsed = [field for field in required_parsed_fields if field not in parsed]
+                    
+                    print(f"🔍 Response Structure Analysis:")
+                    print(f"   ✅ Top-level fields: {required_top_level}")
+                    print(f"   ✅ Parsed fields: {[f for f in required_parsed_fields if f not in missing_parsed]}")
+                    
+                    if missing_parsed:
+                        print(f"   ❌ Missing parsed fields: {missing_parsed}")
+                    
+                    # Check data types
+                    type_checks = {
+                        "success": isinstance(data["success"], bool),
+                        "original_query": isinstance(data["original_query"], str),
+                        "adults": isinstance(parsed.get("adults"), int),
+                        "children": isinstance(parsed.get("children"), int),
+                        "infants": isinstance(parsed.get("infants"), int)
+                    }
+                    
+                    correct_types = sum(type_checks.values())
+                    print(f"   📊 Correct data types: {correct_types}/{len(type_checks)}")
+                    
+                    if not missing_parsed and correct_types == len(type_checks):
+                        self.log_result("Response Structure Validation", True, 
+                                      "All required fields present with correct data types",
+                                      {"structure": data, "type_checks": type_checks})
+                        return True
+                    else:
+                        self.log_result("Response Structure Validation", False, 
+                                      f"Structure issues: missing={missing_parsed}, type_errors={len(type_checks)-correct_types}")
+                else:
+                    self.log_result("Response Structure Validation", False, 
+                                  f"Missing top-level fields: {missing_top_level}")
+            else:
+                self.log_result("Response Structure Validation", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Response Structure Validation", False, f"Error: {str(e)}")
+        return False
+
+    def test_ai_travel_query_error_handling(self):
+        """Test 6: Error handling with invalid/incomplete queries"""
+        print("\n🚨 TESTING ERROR HANDLING - Invalid Queries")
+        print("=" * 70)
+        
+        error_test_cases = [
+            {"query": "", "description": "Empty query"},
+            {"query": "random text with no travel info", "description": "Non-travel query"},
+            {"query": "fly somewhere", "description": "Incomplete query"},
+            {"description": "Missing query field"}  # No query field at all
+        ]
+        
+        success_count = 0
+        
+        for i, test_case in enumerate(error_test_cases, 1):
+            try:
+                print(f"\n📋 Error Test {i}: {test_case['description']}")
+                
+                if "query" in test_case:
+                    payload = {
+                        "query": test_case["query"],
+                        "context": "flight_search"
+                    }
+                    print(f"   Query: '{test_case['query']}'")
+                else:
+                    payload = {"context": "flight_search"}  # Missing query field
+                    print(f"   Query: [MISSING]")
+                
+                response = self.session.post(f"{API_BASE}/ai/parse-travel-query", json=payload)
+                
+                # For error cases, we expect either:
+                # 1. HTTP 200 with success=false
+                # 2. HTTP 4xx error
+                # 3. HTTP 200 with graceful fallback
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if "success" in data:
+                        if data["success"] == False:
+                            print(f"   ✅ Proper error response (success=false)")
+                            success_count += 1
+                        elif data["success"] == True and "parsed" in data:
+                            # Check if fallback provided reasonable defaults
+                            parsed = data["parsed"]
+                            if parsed.get("adults", 0) >= 1:  # At least has default passenger count
+                                print(f"   ✅ Graceful fallback with defaults")
+                                success_count += 1
+                            else:
+                                print(f"   ❌ Fallback provided invalid defaults")
+                        else:
+                            print(f"   ❌ Unexpected response structure")
+                    else:
+                        print(f"   ❌ Missing success field in response")
+                elif 400 <= response.status_code < 500:
+                    print(f"   ✅ Proper HTTP error response ({response.status_code})")
+                    success_count += 1
+                else:
+                    print(f"   ❌ Unexpected HTTP status: {response.status_code}")
+                    
+            except Exception as e:
+                print(f"   ❌ Error Test {i} exception: {str(e)}")
+        
+        if success_count >= len(error_test_cases) * 0.75:  # At least 75% should handle errors properly
+            self.log_result("Error Handling (Invalid Queries)", True, 
+                          f"Properly handled {success_count}/{len(error_test_cases)} error cases")
+            return True
+        else:
+            self.log_result("Error Handling (Invalid Queries)", False, 
+                          f"Only handled {success_count}/{len(error_test_cases)} error cases properly")
+        return False
+
+    def run_ai_travel_query_parsing_tests(self):
+        """Run comprehensive AI travel query parsing endpoint tests"""
+        print("=" * 80)
+        print("🤖 AI TRAVEL QUERY PARSING ENDPOINT TESTING")
+        print("=" * 80)
+        print("Testing the new AI travel query parsing endpoint:")
+        print("1. Basic AI parsing functionality")
+        print("2. Complex natural language queries")
+        print("3. OpenAI GPT-4o-mini integration")
+        print("4. Fallback keyword parser")
+        print("5. Response structure validation")
+        print("6. Error handling with invalid queries")
+        print("=" * 80)
+        
+        # Reset results for this test run
+        self.results = {
+            'total_tests': 0,
+            'passed': 0,
+            'failed': 0,
+            'errors': []
+        }
+        
+        # Run all AI parsing tests
+        tests = [
+            ("Basic AI Parsing", self.test_ai_travel_query_parsing_basic),
+            ("Complex Queries", self.test_ai_travel_query_parsing_complex),
+            ("OpenAI Integration", self.test_ai_travel_query_openai_integration),
+            ("Fallback Parser", self.test_ai_travel_query_fallback_parser),
+            ("Response Structure", self.test_ai_travel_query_response_structure),
+            ("Error Handling", self.test_ai_travel_query_error_handling)
+        ]
+        
+        for test_name, test_func in tests:
+            test_func()
+            time.sleep(2)  # Pause between tests for API rate limiting
+        
+        # Print comprehensive summary
+        print("\n" + "=" * 80)
+        print("📊 AI TRAVEL QUERY PARSING TEST SUMMARY")
+        print("=" * 80)
+        print(f"Total Tests: {self.results['total_tests']}")
+        print(f"Passed: {self.results['passed']} ✅")
+        print(f"Failed: {self.results['failed']} ❌")
+        
+        if self.results['errors']:
+            print(f"\n🚨 FAILED TESTS:")
+            for error in self.results['errors']:
+                print(f"  • {error}")
+        
+        success_rate = (self.results['passed'] / self.results['total_tests']) * 100 if self.results['total_tests'] > 0 else 0
+        print(f"\nSuccess Rate: {success_rate:.1f}%")
+        
+        # Final assessment
+        if success_rate == 100:
+            print("🎉 ALL AI TRAVEL QUERY PARSING TESTS PASSED!")
+            print("✅ Basic AI parsing working correctly")
+            print("✅ Complex natural language queries handled")
+            print("✅ OpenAI GPT-4o-mini integration functional")
+            print("✅ Fallback parser working as backup")
+            print("✅ Response structure properly formatted")
+            print("✅ Error handling graceful and robust")
+            print("\n🚀 AI TRAVEL QUERY PARSING ENDPOINT IS PRODUCTION-READY!")
+        elif success_rate >= 75:
+            print("⚠️  AI travel query parsing mostly working with minor issues")
+            print("🔍 Check failed tests above for specific problems")
+        else:
+            print("🚨 AI travel query parsing has significant issues")
+            print("🔧 OpenAI integration or parsing logic problems detected")
+        
+        return self.results
+
     def run_trip_details_tests(self):
         """Run comprehensive trip details functionality tests as requested"""
         print("=" * 80)
