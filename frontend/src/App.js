@@ -721,6 +721,258 @@ function App() {
     };
   };
 
+  // Flight Booking Flow Functions
+  const startBookingFlow = (flight, fareType) => {
+    console.log('Starting booking flow for:', flight.airline, flight.flight_number);
+    
+    // Initialize booking data
+    const initialPassengers = [];
+    const totalPassengers = flightSearch.passengers.adults + flightSearch.passengers.children + flightSearch.passengers.infants;
+    
+    // Create passenger forms based on search criteria
+    for (let i = 0; i < flightSearch.passengers.adults; i++) {
+      initialPassengers.push({
+        type: 'adult',
+        title: '',
+        firstName: '',
+        lastName: '',
+        dateOfBirth: '',
+        nationality: 'IN',
+        passportNumber: '',
+        passportExpiry: '',
+        panCard: '',
+        gender: '',
+        frequentFlyerNumber: ''
+      });
+    }
+    
+    for (let i = 0; i < flightSearch.passengers.children; i++) {
+      initialPassengers.push({
+        type: 'child',
+        title: '',
+        firstName: '',
+        lastName: '',
+        dateOfBirth: '',
+        nationality: 'IN',
+        passportNumber: '',
+        passportExpiry: '',
+        gender: ''
+      });
+    }
+    
+    for (let i = 0; i < flightSearch.passengers.infants; i++) {
+      initialPassengers.push({
+        type: 'infant',
+        title: '',
+        firstName: '',
+        lastName: '',
+        dateOfBirth: '',
+        nationality: 'IN',
+        passportNumber: '',
+        passportExpiry: '',
+        gender: ''
+      });
+    }
+
+    setBookingData({
+      flight: flight,
+      fareType: fareType,
+      passengers: initialPassengers,
+      seats: [],
+      addons: {
+        meals: [],
+        baggage: [],
+        insurance: false
+      },
+      contactDetails: {
+        email: '',
+        phone: '',
+        alternatePhone: ''
+      },
+      totalAmount: fareType ? fareType.totalPrice * totalPassengers : flight.price * totalPassengers,
+      bookingReference: null
+    });
+
+    setPassengerForms(initialPassengers);
+    setShowBookingFlow(true);
+    setBookingStep(1);
+  };
+
+  const nextBookingStep = () => {
+    if (bookingStep < 6) {
+      setBookingStep(bookingStep + 1);
+      
+      // Load seat map when moving to seat selection
+      if (bookingStep === 2) {
+        loadSeatMap();
+      }
+    }
+  };
+
+  const previousBookingStep = () => {
+    if (bookingStep > 1) {
+      setBookingStep(bookingStep - 1);
+    }
+  };
+
+  const loadSeatMap = async () => {
+    try {
+      // This will integrate with Tripjack seat map API once credentials are available
+      // For now, generate a mock seat map
+      const mockSeatMap = generateMockSeatMap();
+      setSeatMap(mockSeatMap);
+    } catch (error) {
+      console.error('Error loading seat map:', error);
+    }
+  };
+
+  const generateMockSeatMap = () => {
+    // Generate a mock seat map similar to Tripjack structure
+    const rows = 32;
+    const columns = 6;
+    const seats = [];
+    
+    const seatLetters = ['A', 'B', 'C', 'D', 'E', 'F'];
+    
+    for (let row = 1; row <= rows; row++) {
+      for (let col = 0; col < columns; col++) {
+        if (row === 13) continue; // Skip row 13 (common in aviation)
+        
+        const seatNo = `${row}${seatLetters[col]}`;
+        const isBooked = Math.random() < 0.3; // 30% seats already booked
+        const isLegroom = row <= 3 || row === 15 || row === 16;
+        const isAisle = col === 2 || col === 3;
+        
+        let amount = 0;
+        if (isLegroom) amount = 1200;
+        else if (isAisle) amount = 600;
+        else amount = 400;
+
+        seats.push({
+          seatNo,
+          seatPosition: { row, column: col + 1 },
+          isBooked,
+          isLegroom,
+          isAisle,
+          amount,
+          code: seatNo
+        });
+      }
+    }
+    
+    return {
+      tripSeat: {
+        sData: { row: rows, column: columns },
+        sInfo: seats
+      }
+    };
+  };
+
+  const selectSeat = (seat, passengerIndex) => {
+    if (seat.isBooked) return;
+    
+    setSelectedSeats(prev => {
+      const updated = { ...prev };
+      
+      // Remove previous seat selection for this passenger
+      Object.keys(updated).forEach(key => {
+        if (updated[key].passengerIndex === passengerIndex) {
+          delete updated[key];
+        }
+      });
+      
+      // Add new seat selection
+      updated[seat.seatNo] = {
+        passengerIndex,
+        seat,
+        amount: seat.amount
+      };
+      
+      return updated;
+    });
+    
+    // Update total amount
+    updateBookingTotal();
+  };
+
+  const updateBookingTotal = () => {
+    const baseAmount = bookingData.fareType 
+      ? bookingData.fareType.totalPrice * bookingData.passengers.length 
+      : bookingData.flight.price * bookingData.passengers.length;
+    
+    const seatAmount = Object.values(selectedSeats).reduce((total, seat) => total + seat.amount, 0);
+    
+    const mealsAmount = bookingData.addons.meals.reduce((total, meal) => total + meal.amount, 0);
+    const baggageAmount = bookingData.addons.baggage.reduce((total, bag) => total + bag.amount, 0);
+    const insuranceAmount = bookingData.addons.insurance ? 500 : 0;
+    
+    const totalAmount = baseAmount + seatAmount + mealsAmount + baggageAmount + insuranceAmount;
+    
+    setBookingData(prev => ({ ...prev, totalAmount }));
+  };
+
+  const updatePassengerForm = (index, field, value) => {
+    setPassengerForms(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
+
+  const completeBooking = async () => {
+    setBookingLoading(true);
+    
+    try {
+      // Prepare booking payload
+      const bookingPayload = {
+        flight: bookingData.flight,
+        fareType: bookingData.fareType,
+        passengers: passengerForms,
+        seats: Object.values(selectedSeats),
+        addons: bookingData.addons,
+        contactDetails: bookingData.contactDetails,
+        totalAmount: bookingData.totalAmount,
+        searchData: flightSearch
+      };
+
+      // This will integrate with Tripjack booking API
+      const response = await axios.post(`${API}/flights/book`, bookingPayload);
+      
+      if (response.data.success) {
+        setBookingData(prev => ({
+          ...prev,
+          bookingReference: response.data.bookingReference || `TJ${Date.now()}`
+        }));
+        setBookingStep(6); // Move to confirmation step
+      } else {
+        alert('Booking failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('Booking failed. Please try again.');
+    } finally {
+      setBookingLoading(false);
+    }
+  };
+
+  const cancelBookingFlow = () => {
+    setShowBookingFlow(false);
+    setBookingStep(1);
+    setBookingData({
+      flight: null,
+      fareType: null,
+      passengers: [],
+      seats: [],
+      addons: { meals: [], baggage: [], insurance: false },
+      contactDetails: { email: '', phone: '', alternatePhone: '' },
+      totalAmount: 0,
+      bookingReference: null
+    });
+    setPassengerForms([]);
+    setSelectedSeats({});
+    setSeatMap(null);
+  };
+
   const handleCommandBarKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
