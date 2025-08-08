@@ -1272,5 +1272,5 @@ class BackendTester:
 
 if __name__ == "__main__":
     tester = BackendTester()
-    # Run the AeroDataBox integration tests as requested
-    results = tester.run_aerodatabox_integration_tests()
+    # Run the AI Travel Query Parsing tests as requested
+    results = tester.run_ai_travel_query_parsing_tests()
