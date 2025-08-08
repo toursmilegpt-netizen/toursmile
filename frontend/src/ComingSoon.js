@@ -135,10 +135,10 @@ function ComingSoon() {
 
           {/* Email Signup Form */}
           <div className="max-w-xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
               Be the first to experience stress-free travel planning
             </h3>
-            <p className="text-gray-400 mb-8">
+            <p className="text-gray-600 mb-8">
               Get early access and exclusive launch updates
             </p>
             
@@ -150,7 +150,7 @@ function ComingSoon() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address"
-                    className="w-full px-6 py-4 bg-gray-900 border border-gray-700 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                    className="w-full px-6 py-4 bg-gray-50 border border-gray-300 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
                     required
                   />
                 </div>
