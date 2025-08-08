@@ -423,6 +423,12 @@ function App() {
   const [selectedSeats, setSelectedSeats] = useState({});
   const [bookingLoading, setBookingLoading] = useState(false);
 
+  // AI Search State
+  const [aiSearchQuery, setAiSearchQuery] = useState('');
+  const [aiSearchLoading, setAiSearchLoading] = useState(false);
+  const [showManualSearch, setShowManualSearch] = useState(false);
+  const [currentHighlightedField, setCurrentHighlightedField] = useState('origin');
+
   // Hotel search state
   const [hotelSearch, setHotelSearch] = useState({
     location: '',
