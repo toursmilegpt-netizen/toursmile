@@ -396,6 +396,33 @@ function App() {
     fareTypes: []
   });
 
+  // Flight Booking State Management
+  const [showBookingFlow, setShowBookingFlow] = useState(false);
+  const [bookingStep, setBookingStep] = useState(1); // 1: Flight Details, 2: Passengers, 3: Seats, 4: Add-ons, 5: Payment, 6: Confirmation
+  const [selectedFareType, setSelectedFareType] = useState(null);
+  const [bookingData, setBookingData] = useState({
+    flight: null,
+    fareType: null,
+    passengers: [],
+    seats: [],
+    addons: {
+      meals: [],
+      baggage: [],
+      insurance: false
+    },
+    contactDetails: {
+      email: '',
+      phone: '',
+      alternatePhone: ''
+    },
+    totalAmount: 0,
+    bookingReference: null
+  });
+  const [passengerForms, setPassengerForms] = useState([]);
+  const [seatMap, setSeatMap] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState({});
+  const [bookingLoading, setBookingLoading] = useState(false);
+
   // Hotel search state
   const [hotelSearch, setHotelSearch] = useState({
     location: '',
