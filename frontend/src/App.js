@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import ComingSoon from "./ComingSoon";
+import FlightResults from "./FlightResults";
 
 // For development - set to false to show flight search
 const SHOW_COMING_SOON = false;
