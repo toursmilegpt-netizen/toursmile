@@ -1911,8 +1911,18 @@ function App() {
                                   {showFareOptions[flight.id] ? 'Hide Fare Options' : `View ${flight.fare_options?.length || 3} Fare Types`}
                                 </button>
                                 
-                                <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                                  Quick Book ₹{flight.price.toLocaleString()}
+                                <button 
+                                  onClick={() => startBookingFlow(flight, flight.fare_options?.[0] || {
+                                    fareType: "Regular Fare",
+                                    totalPrice: flight.price,
+                                    basePrice: Math.floor(flight.price * 0.7),
+                                    taxes: Math.floor(flight.price * 0.3),
+                                    refundable: false,
+                                    changeable: true
+                                  })}
+                                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                                >
+                                  Book Now ₹{flight.price.toLocaleString()}
                                 </button>
                               </div>
                             </div>
