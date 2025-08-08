@@ -1733,5 +1733,5 @@ class BackendTester:
 
 if __name__ == "__main__":
     tester = BackendTester()
-    # Run the AI Travel Query Parsing tests as requested
-    results = tester.run_ai_travel_query_parsing_tests()
+    # Run the Waitlist Functionality tests as requested
+    results = tester.run_waitlist_functionality_tests()
