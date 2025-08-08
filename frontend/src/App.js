@@ -740,10 +740,11 @@ function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [searchData, setSearchData] = useState(null);
-  const [isSearching, setIsSearching] = useState(false);
 
-  const handleSearch = async (searchData) => {
+  const handleSearch = async (formData) => {
     setIsSearching(true);
+    setSearchData(formData);
+    setShowResults(true);
     
     try {
       console.log('Searching with:', searchData);
