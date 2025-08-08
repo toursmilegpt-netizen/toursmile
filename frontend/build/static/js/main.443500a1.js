@@ -1,3 +1,0 @@
-/*! For license information please see main.443500a1.js.LICENSE.txt */
-(()=>{"use strict";var e={4:(e,t,n)=>{var r=n(853),a=n(43),l=n(950);function o(e){var t="https://a9bef55e-6620-4095-85bb-fe21f7fd7924.preview.emergentagent.com","/api");const Ft=function(){return(0,Lt.jsx)(jt,{})};l.createRoot(document.getElementById("root")).render((0,Lt.jsx)(a.StrictMode,{children:(0,Lt.jsx)(Ft,{})}))})();
-//# sourceMappingURL=main.443500a1.js.map
