@@ -582,6 +582,89 @@ function App() {
     }
   };
 
+  // AI Search Processing Function
+  const processAISearch = async (query) => {
+    setAiSearchLoading(true);
+    
+    try {
+      console.log('🤖 Processing AI search:', query);
+      
+      // Send query to backend AI processing
+      const response = await axios.post(`${API}/ai/parse-travel-query`, {
+        query: query,
+        context: 'flight_search'
+      });
+      
+      if (response.data.success) {
+        const parsed = response.data.parsed;
+        
+        // Auto-fill flight search form based on AI parsing
+        setFlightSearch({
+          origin: parsed.origin || '',
+          destination: parsed.destination || '',
+          departure_date: parsed.departure_date || '',
+          return_date: parsed.return_date || '',
+          passengers: {
+            adults: parsed.adults || 1,
+            children: parsed.children || 0,
+            infants: parsed.infants || 0
+          },
+          tripType: parsed.trip_type || 'oneway',
+          class: parsed.class || 'economy',
+          multiCityFlights: parsed.multi_city || [
+            { origin: '', destination: '', departure_date: '' },
+            { origin: '', destination: '', departure_date: '' }
+          ]
+        });
+        
+        // Auto-trigger search if all required fields are populated
+        if (parsed.origin && parsed.destination && parsed.departure_date) {
+          console.log('🎯 AI parsed complete search - auto-executing...');
+          await searchFlights();
+        } else {
+          // Show manual form with populated fields for completion
+          setShowManualSearch(true);
+          highlightNextRequiredField(parsed);
+        }
+        
+      } else {
+        // Fallback: Show manual form
+        setShowManualSearch(true);
+        alert('I understood some parts of your request. Please complete the details below.');
+      }
+      
+    } catch (error) {
+      console.error('AI Search Error:', error);
+      // Graceful fallback to manual form
+      setShowManualSearch(true);
+      alert('Let me help you search manually. Please fill in the details below.');
+    } finally {
+      setAiSearchLoading(false);
+    }
+  };
+
+  const highlightNextRequiredField = (parsed) => {
+    // Determine which field to highlight next based on what's missing
+    if (!parsed.origin) {
+      setCurrentHighlightedField('origin');
+    } else if (!parsed.destination) {
+      setCurrentHighlightedField('destination');
+    } else if (!parsed.departure_date) {
+      setCurrentHighlightedField('departure_date');
+    } else if (parsed.trip_type === 'return' && !parsed.return_date) {
+      setCurrentHighlightedField('return_date');
+    } else {
+      setCurrentHighlightedField('search_button');
+    }
+  };
+
+  const handleAISearchSubmit = (e) => {
+    e.preventDefault();
+    if (aiSearchQuery.trim()) {
+      processAISearch(aiSearchQuery.trim());
+    }
+  };
+
   const processCommandBarInput = async () => {
     if (!commandBarInput.trim()) return;
 
