@@ -2720,7 +2720,6 @@ function App() {
             )}
           </div>
 
-          {/* Sidebar Column */}
           <div className="space-y-6">
             {/* AI Chat Sidebar - Desktop */}
           <div className="hidden lg:block">
