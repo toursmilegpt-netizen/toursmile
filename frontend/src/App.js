@@ -217,6 +217,8 @@ const CityAutocomplete = ({ value, onChange, placeholder, label }) => {
               </div>
             ))}
           </div>
+                </div>
+              )}
         )}
       </div>
     </div>
