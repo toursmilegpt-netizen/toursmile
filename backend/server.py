@@ -21,6 +21,7 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 from popular_trips_routes import router as popular_trips_router
 from enhanced_chat_service import ExpertTravelConsultantChat
 from destinations_routes import router as destinations_router
+from waitlist_routes import router as waitlist_router
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
