@@ -94,8 +94,13 @@ async def get_recent_subscribers(limit: int = 10):
     try:
         recent = list(waitlist_collection.find(
             {"status": "active"},
-            {"email": 1, "source": 1, "timestamp": 1, "created_at": 1}
+            {"_id": 0, "email": 1, "source": 1, "timestamp": 1, "created_at": 1}  # Exclude _id field
         ).sort("created_at", -1).limit(limit))
+        
+        # Convert datetime objects to strings for JSON serialization
+        for subscriber in recent:
+            if "created_at" in subscriber and hasattr(subscriber["created_at"], "isoformat"):
+                subscriber["created_at"] = subscriber["created_at"].isoformat()
         
         return {"subscribers": recent, "success": True}
     except Exception as e:
