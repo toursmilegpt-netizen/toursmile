@@ -312,7 +312,12 @@ async def parse_travel_query(request_data: dict):
         # Use OpenAI to parse the travel query
         from emergentintegrations.llm.chat import LlmChat
         
-        chat = LlmChat()
+        session_id = str(uuid.uuid4())
+        chat = LlmChat(
+            api_key=OPENAI_API_KEY,
+            session_id=session_id,
+            system_message="You are a travel query parser."
+        )
         
         system_prompt = """You are a travel query parser. Parse natural language travel requests into structured data.
 
