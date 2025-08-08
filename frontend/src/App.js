@@ -2721,7 +2721,6 @@ function App() {
             )}
           </div>
           
-          {/* Sidebar Column - Third column of the grid */}
           <div className="space-y-6">
             <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sticky top-24 border border-white/20">
               <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
