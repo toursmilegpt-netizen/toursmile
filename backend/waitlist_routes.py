@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 import pymongo
 
-router = APIRouter(prefix="/api/waitlist", tags=["waitlist"])
+router = APIRouter(prefix="/waitlist", tags=["waitlist"])
 
 # MongoDB connection
 MONGO_URL = os.environ.get('MONGO_URL')
