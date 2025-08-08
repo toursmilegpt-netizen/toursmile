@@ -300,6 +300,172 @@ async def chat_with_expert_consultant(request: ChatRequest):
             "error": "consultation_unavailable"
         }
 
+@app.post("/api/ai/parse-travel-query")
+async def parse_travel_query(request_data: dict):
+    """Parse natural language travel queries using AI"""
+    try:
+        query = request_data.get('query', '')
+        context = request_data.get('context', 'flight_search')
+        
+        logging.info(f"🤖 AI parsing travel query: {query}")
+        
+        # Use OpenAI to parse the travel query
+        from emergentintegrations.llm.chat import LlmChat
+        
+        chat = LlmChat()
+        
+        system_prompt = """You are a travel query parser. Parse natural language travel requests into structured data.
+
+Return a JSON response with these fields:
+- origin: departure city/airport
+- destination: arrival city/airport  
+- departure_date: in YYYY-MM-DD format
+- return_date: in YYYY-MM-DD format (if round trip)
+- trip_type: "oneway", "return", or "multicity"
+- adults: number of adult passengers
+- children: number of child passengers  
+- infants: number of infant passengers
+- class: "economy", "business", or "first"
+- multi_city: array of {origin, destination, departure_date} for multi-city trips
+
+Examples:
+- "Delhi to Mumbai tomorrow" → {origin: "Delhi", destination: "Mumbai", departure_date: "2025-01-16", trip_type: "oneway", adults: 1}
+- "Round trip Bangalore Dubai next Friday 2 passengers" → {origin: "Bangalore", destination: "Dubai", departure_date: "2025-01-17", trip_type: "return", adults: 2}
+- "Business class Delhi Chennai 4 adults" → {origin: "Delhi", destination: "Chennai", class: "business", adults: 4}
+
+Today's date: """ + datetime.now().strftime('%Y-%m-%d') + """
+
+Parse this query and return only the JSON:"""
+
+        try:
+            response = chat.chat_completion(
+                system_prompt=system_prompt,
+                user_prompt=f"Parse this travel query: '{query}'",
+                model="gpt-4o-mini"  # Using cost-effective model for parsing
+            )
+            
+            # Try to extract JSON from response
+            response_text = response.strip()
+            if response_text.startswith('```json'):
+                response_text = response_text.replace('```json', '').replace('```', '').strip()
+            
+            parsed_data = json.loads(response_text)
+            
+            # Validate and set defaults
+            parsed_data.setdefault('adults', 1)
+            parsed_data.setdefault('children', 0)
+            parsed_data.setdefault('infants', 0)
+            parsed_data.setdefault('class', 'economy')
+            parsed_data.setdefault('trip_type', 'oneway')
+            
+            logging.info(f"✅ AI parsing successful: {parsed_data}")
+            
+            return {
+                "success": True,
+                "parsed": parsed_data,
+                "original_query": query
+            }
+            
+        except json.JSONDecodeError:
+            logging.error(f"❌ AI response not valid JSON: {response}")
+            raise Exception("AI parsing failed - invalid JSON response")
+        except Exception as ai_error:
+            logging.error(f"❌ AI parsing error: {str(ai_error)}")
+            # Fallback: Basic keyword parsing
+            return parse_query_fallback(query)
+        
+    except Exception as e:
+        logging.error(f"❌ Travel query parsing error: {str(e)}")
+        return {
+            "success": False,
+            "error": str(e),
+            "parsed": {}
+        }
+
+def parse_query_fallback(query):
+    """Fallback parser using keyword matching"""
+    try:
+        query_lower = query.lower()
+        parsed = {
+            "adults": 1,
+            "children": 0,
+            "infants": 0,
+            "class": "economy",
+            "trip_type": "oneway"
+        }
+        
+        # Extract cities (basic keyword matching)
+        indian_cities = {
+            'delhi': 'Delhi', 'mumbai': 'Mumbai', 'bangalore': 'Bangalore', 'bengaluru': 'Bangalore',
+            'chennai': 'Chennai', 'kolkata': 'Kolkata', 'hyderabad': 'Hyderabad', 'pune': 'Pune',
+            'ahmedabad': 'Ahmedabad', 'goa': 'Goa', 'kochi': 'Kochi', 'cochin': 'Kochi',
+            'jaipur': 'Jaipur', 'lucknow': 'Lucknow', 'chandigarh': 'Chandigarh'
+        }
+        
+        international_cities = {
+            'dubai': 'Dubai', 'singapore': 'Singapore', 'bangkok': 'Bangkok',
+            'london': 'London', 'paris': 'Paris', 'new york': 'New York'
+        }
+        
+        all_cities = {**indian_cities, **international_cities}
+        
+        words = query_lower.split()
+        cities_found = []
+        
+        for city_key, city_name in all_cities.items():
+            if city_key in query_lower:
+                cities_found.append(city_name)
+        
+        if len(cities_found) >= 2:
+            parsed['origin'] = cities_found[0]
+            parsed['destination'] = cities_found[1]
+        
+        # Extract passenger count
+        import re
+        passenger_match = re.search(r'(\d+)\s*(passenger|adult|people)', query_lower)
+        if passenger_match:
+            parsed['adults'] = int(passenger_match.group(1))
+        
+        # Extract trip type
+        if 'round trip' in query_lower or 'return' in query_lower:
+            parsed['trip_type'] = 'return'
+        elif 'multi' in query_lower:
+            parsed['trip_type'] = 'multicity'
+        
+        # Extract class
+        if 'business' in query_lower:
+            parsed['class'] = 'business'
+        elif 'first' in query_lower:
+            parsed['class'] = 'first'
+        
+        # Extract basic date (tomorrow, today, etc.)
+        from datetime import datetime, timedelta
+        today = datetime.now()
+        
+        if 'tomorrow' in query_lower:
+            parsed['departure_date'] = (today + timedelta(days=1)).strftime('%Y-%m-%d')
+        elif 'today' in query_lower:
+            parsed['departure_date'] = today.strftime('%Y-%m-%d')
+        elif 'next week' in query_lower:
+            parsed['departure_date'] = (today + timedelta(days=7)).strftime('%Y-%m-%d')
+        
+        logging.info(f"🔄 Fallback parsing result: {parsed}")
+        
+        return {
+            "success": True,
+            "parsed": parsed,
+            "original_query": query,
+            "method": "fallback"
+        }
+        
+    except Exception as e:
+        logging.error(f"❌ Fallback parsing error: {str(e)}")
+        return {
+            "success": False,
+            "error": str(e),
+            "parsed": {}
+        }
+
 @api_router.post("/flights/search")
 async def search_flights(request: FlightSearchRequest):
     """Search for flights with Tripjack API integration and AI recommendations"""
