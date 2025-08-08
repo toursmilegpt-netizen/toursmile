@@ -2720,7 +2720,9 @@ function App() {
             )}
           </div>
 
-          {/* AI Chat Sidebar - Desktop */}
+          {/* Sidebar Column */}
+          <div className="space-y-6">
+            {/* AI Chat Sidebar - Desktop */}
           <div className="hidden lg:block">
             <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sticky top-24 border border-white/20">
               <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
