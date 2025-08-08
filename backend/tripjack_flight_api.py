@@ -26,7 +26,11 @@ class TripjackFlightService:
         # Current base URL
         self.base_url = self.prod_base_url if self.is_production else self.uat_base_url
         
-        # API credentials - lazy loaded
+        # API credentials - from environment
+        self._user_id = os.environ.get('TRIPJACK_USER_ID')
+        self._email = os.environ.get('TRIPJACK_EMAIL')
+        self._password = os.environ.get('TRIPJACK_PASSWORD')
+        self._agency_name = os.environ.get('TRIPJACK_AGENCY_NAME')
         self._api_key = None
         self._api_secret = None
         self._access_token = None
@@ -34,6 +38,8 @@ class TripjackFlightService:
         
         logger.info(f"🚀 TripjackFlightService initialized - Environment: {'PRODUCTION' if self.is_production else 'UAT'}")
         logger.info(f"📡 Base URL: {self.base_url}")
+        logger.info(f"🏢 Agency: {self._agency_name}")
+        logger.info(f"👤 User ID: {self._user_id}")
 
     @property
     def api_key(self):
