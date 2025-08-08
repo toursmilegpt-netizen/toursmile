@@ -343,11 +343,11 @@ Today's date: """ + datetime.now().strftime('%Y-%m-%d') + """
 Parse this query and return only the JSON:"""
 
         try:
-            response = chat.chat_completion(
-                system_prompt=system_prompt,
-                user_prompt=f"Parse this travel query: '{query}'",
-                model="gpt-4o-mini"  # Using cost-effective model for parsing
-            )
+            chat = chat.with_model("openai", "gpt-4o-mini")
+            
+            from emergentintegrations.llm.chat import UserMessage
+            user_message = UserMessage(text=f"Parse this travel query: '{query}'")
+            response = await chat.send_message(user_message)
             
             # Try to extract JSON from response
             response_text = response.strip()
