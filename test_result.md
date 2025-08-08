@@ -399,7 +399,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "AI Travel Query Parsing Endpoint - TESTING COMPLETE"
+    - "Waitlist Subscription Functionality - TESTING COMPLETE"
   stuck_tasks:
     []
   test_all: false
