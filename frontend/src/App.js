@@ -747,18 +747,18 @@ function App() {
     setShowResults(true);
     
     try {
-      console.log('Searching with:', searchData);
+      console.log('Searching with:', formData);
       
       // Convert to backend format
       const searchPayload = {
-        tripType: searchData.tripType,
-        origin: searchData.segments[0].origin,
-        destination: searchData.segments[0].destination,
-        departureDate: searchData.segments[0].departureDate,
-        returnDate: searchData.returnDate,
-        passengers: searchData.passengers.adults + searchData.passengers.children + searchData.passengers.infants,
-        class: searchData.class,
-        segments: searchData.segments
+        tripType: formData.tripType,
+        origin: formData.segments[0].origin,
+        destination: formData.segments[0].destination,
+        departureDate: formData.segments[0].departureDate,
+        returnDate: formData.returnDate,
+        passengers: formData.passengers.adults + formData.passengers.children + formData.passengers.infants,
+        class: formData.class,
+        segments: formData.segments
       };
       
       const response = await axios.post(`${API}/flights/search`, searchPayload);
