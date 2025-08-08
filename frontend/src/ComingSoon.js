@@ -127,8 +127,8 @@ function ComingSoon() {
             ].map((item, index) => (
               <div key={index} className="text-center p-4">
                 <div className="text-4xl mb-3">{item.icon}</div>
-                <div className="text-white font-semibold mb-1">{item.title}</div>
-                <div className="text-gray-400 text-sm">{item.subtitle}</div>
+                <div className="text-gray-900 font-semibold mb-1">{item.title}</div>
+                <div className="text-gray-600 text-sm">{item.subtitle}</div>
               </div>
             ))}
           </div>
