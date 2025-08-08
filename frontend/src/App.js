@@ -730,10 +730,8 @@ const PassengerSelector = ({ passengers, onChange }) => {
 };
 
 function App() {
-  // Show coming soon page by default
-  if (SHOW_COMING_SOON) {
-    return <ComingSoon />;
-  }
+  // FORCE SHOW coming soon page
+  return <ComingSoon />;
 
   // Original flight search functionality
   const [searchResults, setSearchResults] = useState([]);
