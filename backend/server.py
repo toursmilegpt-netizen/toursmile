@@ -313,11 +313,6 @@ async def parse_travel_query(request_data: dict):
         from emergentintegrations.llm.chat import LlmChat
         
         session_id = str(uuid.uuid4())
-        chat = LlmChat(
-            api_key=OPENAI_API_KEY,
-            session_id=session_id,
-            system_message="You are a travel query parser."
-        )
         
         system_prompt = """You are a travel query parser. Parse natural language travel requests into structured data.
 
@@ -341,6 +336,12 @@ Examples:
 Today's date: """ + datetime.now().strftime('%Y-%m-%d') + """
 
 Parse this query and return only the JSON:"""
+        
+        chat = LlmChat(
+            api_key=OPENAI_API_KEY,
+            session_id=session_id,
+            system_message=system_prompt
+        )
 
         try:
             chat = chat.with_model("openai", "gpt-4o-mini")
