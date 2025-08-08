@@ -773,6 +773,60 @@ function App() {
     }
   };
 
+  const handleFlightSelect = (flight) => {
+    console.log('Selected flight:', flight);
+    // TODO: Navigate to booking flow
+  };
+
+  const handleBackToSearch = () => {
+    setShowResults(false);
+    setSearchResults([]);
+  };
+
+  // Show results page if user has searched
+  if (showResults) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        {/* Header with back button */}
+        <header className="bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200 sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <button
+                  onClick={handleBackToSearch}
+                  className="mr-4 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <div className="flex items-center">
+                  <span className="text-3xl mr-2">✈️</span>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    TourSmile
+                  </h1>
+                </div>
+              </div>
+              <div className="hidden md:flex items-center space-x-6">
+                <span className="text-blue-600 font-semibold">Flights</span>
+                <span className="text-gray-400 hover:text-gray-600 cursor-pointer">Hotels</span>
+                <span className="text-gray-400 hover:text-gray-600 cursor-pointer">Activities</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Flight Results */}
+        <FlightResults 
+          searchData={searchData}
+          flights={searchResults}
+          onFlightSelect={handleFlightSelect}
+          isLoading={isSearching}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Enhanced Header */}
