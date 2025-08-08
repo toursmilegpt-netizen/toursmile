@@ -2719,7 +2719,7 @@ function App() {
               </div>
             )}
           </div>
-      </div>
+        </div>
       </div>
 
       {/* Command Bar Modal */}
