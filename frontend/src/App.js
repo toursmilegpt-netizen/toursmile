@@ -5,7 +5,7 @@ import ComingSoon from "./ComingSoon";
 import FlightResults from "./FlightResults";
 
 // For development - set to false to show flight search
-const SHOW_COMING_SOON = false;
+const SHOW_COMING_SOON = true;
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
