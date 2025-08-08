@@ -1089,7 +1089,6 @@ function App() {
   );
 
   return (
-    <>
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-50">
