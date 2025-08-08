@@ -397,9 +397,24 @@ metadata:
   test_sequence: 0
   run_ui: false
 
+  - task: "ComingSoon Page Email Capture Functionality"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/ComingSoon.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "ComingSoon page now serving from production build with TourSmile logo, email capture form, and professional design. Backend waitlist APIs are fully functional and ready for live deployment on vimanpravas.com."
+      - working: true
+        agent: "testing"
+        comment: "🎉 COMINGSOON PAGE EMAIL CAPTURE FUNCTIONALITY TESTING COMPLETED SUCCESSFULLY! Comprehensive end-to-end testing completed with 100% success rate (8/8 test scenarios passed). DETAILED RESULTS: ✅ Page Load & Visual Elements - ComingSoon page loads correctly at localhost:3000, TourSmile logo displays properly (https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png), all visual elements render correctly (heading 'Travel planning made simple', subtext, value props for Flights/Hotels/Activities/Planning, email form). ✅ Email Subscription Form - Valid email submission works perfectly (test@example.com), success message 'You're In!' appears with proper emoji and text, 'Add another email' functionality works correctly. ✅ Email Validation - All 6 invalid email formats properly rejected (invalid-email, test@, @domain.com, test..test@domain.com, test@domain, empty string) with appropriate error handling and 422 API responses. ✅ Duplicate Email Handling - Gracefully handles duplicate submissions with success page display. ✅ Form Interactions - Email input field accepts text properly, submit button states work correctly (enabled/loading), form resets after successful submission. ✅ Backend Integration - API calls to /api/waitlist/subscribe working perfectly, proper success/error messages displayed, no console errors during form submission, waitlist count increased from 27 to 30+ during testing. ✅ Responsive Design - Mobile (390x844) and tablet (768x1024) layouts work perfectly, all elements visible and accessible, form submission works on all screen sizes. ✅ Production Readiness - No critical console errors, clean network requests, professional UI design with gradient backgrounds and smooth animations. CRITICAL SUCCESS: The complete email capture flow works seamlessly for users visiting vimanpravas.com. All functionality is production-ready for live deployment."
+
 test_plan:
   current_focus:
-    - "Waitlist Subscription Functionality - TESTING COMPLETE"
+    - "ComingSoon Page Email Capture Functionality - TESTING COMPLETE"
   stuck_tasks:
     []
   test_all: false
@@ -422,6 +437,9 @@ test_plan:
       - working: true
         agent: "testing"
         comment: "🎉 WAITLIST SUBSCRIPTION FUNCTIONALITY RE-TESTING COMPLETED SUCCESSFULLY! Comprehensive re-testing completed with 85.7% success rate (6/7 tests passed). DETAILED RESULTS: ✅ New Email Subscription - POST /api/waitlist/subscribe working perfectly with unique test emails, returns proper success message 'Success! You'll be first to know when we launch.' ✅ Duplicate Email Handling - Gracefully handles duplicate subscriptions with message 'You're already on our waitlist! We'll notify you when we launch.' ✅ Email Validation - Robust validation rejects all 6 invalid email formats (invalid-email, test@, @domain.com, test..test@domain.com, test@domain, empty string) with proper 422 validation errors. ✅ Waitlist Count Endpoint - GET /api/waitlist/count returns accurate count (17 subscribers) with proper JSON structure. ✅ Recent Subscribers Endpoint - GET /api/waitlist/recent returns 10 recent subscribers with complete data structure (email, source, timestamp, created_at). ✅ MongoDB Integration - Perfect data persistence verified: count increased from 19 to 20, test emails found in recent subscribers, data stored and retrievable correctly. ⚠️ Minor: Error handling gracefully accepts extremely long source field (1000 chars) - not critical as it handles gracefully without breaking. CRITICAL SUCCESS: All core waitlist functionality is production-ready and fully functional for ComingSoon page email capture. The waitlist API is secure, robust, and ready for live deployment."
+      - working: true
+        agent: "testing"
+        comment: "✅ BACKEND API ENDPOINTS VERIFIED: Direct API testing confirms all endpoints working perfectly. POST /api/waitlist/subscribe returns 200 with proper success message, GET /api/waitlist/count returns accurate count (27 subscribers), email validation properly rejects invalid formats with 422 status. Backend integration is solid and production-ready."
 
 agent_communication:
   - agent: "main"
