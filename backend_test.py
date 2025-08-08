@@ -1270,6 +1270,467 @@ class BackendTester:
         
         return self.results
 
+    def test_waitlist_subscribe_new_email(self):
+        """Test 1: Subscribe new email to waitlist"""
+        print("\n📧 TESTING WAITLIST SUBSCRIPTION - New Email")
+        print("=" * 70)
+        try:
+            # Use a unique email for testing
+            test_email = f"test.user.{int(time.time())}@toursmile.com"
+            payload = {
+                "email": test_email,
+                "source": "website"
+            }
+            
+            print(f"📤 REQUEST: {json.dumps(payload, indent=2)}")
+            response = self.session.post(f"{API_BASE}/waitlist/subscribe", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "success" in data and "message" in data and "email" in data:
+                    if data["success"] and data["email"] == test_email:
+                        expected_messages = ["Success!", "first to know", "launch"]
+                        message_check = any(phrase in data["message"] for phrase in expected_messages)
+                        
+                        if message_check:
+                            self.log_result("Waitlist Subscribe (New Email)", True, 
+                                          f"Successfully subscribed {test_email}",
+                                          {"response": data})
+                            return True
+                        else:
+                            self.log_result("Waitlist Subscribe (New Email)", False, 
+                                          f"Unexpected success message: {data['message']}")
+                    else:
+                        self.log_result("Waitlist Subscribe (New Email)", False, 
+                                      f"Success flag or email mismatch: {data}")
+                else:
+                    self.log_result("Waitlist Subscribe (New Email)", False, 
+                                  f"Missing required response fields: {data}")
+            else:
+                self.log_result("Waitlist Subscribe (New Email)", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Waitlist Subscribe (New Email)", False, f"Error: {str(e)}")
+        return False
+
+    def test_waitlist_subscribe_duplicate_email(self):
+        """Test 2: Subscribe duplicate email to waitlist"""
+        print("\n🔄 TESTING WAITLIST SUBSCRIPTION - Duplicate Email")
+        print("=" * 70)
+        try:
+            # Use the same email twice
+            test_email = f"duplicate.test.{int(time.time())}@toursmile.com"
+            payload = {
+                "email": test_email,
+                "source": "website"
+            }
+            
+            # First subscription
+            print(f"📤 FIRST SUBSCRIPTION: {test_email}")
+            response1 = self.session.post(f"{API_BASE}/waitlist/subscribe", json=payload)
+            
+            if response1.status_code == 200:
+                # Second subscription (duplicate)
+                print(f"📤 DUPLICATE SUBSCRIPTION: {test_email}")
+                response2 = self.session.post(f"{API_BASE}/waitlist/subscribe", json=payload)
+                
+                if response2.status_code == 200:
+                    data = response2.json()
+                    if "success" in data and "message" in data and "email" in data:
+                        if data["success"] and data["email"] == test_email:
+                            expected_messages = ["already on", "waitlist", "notify"]
+                            message_check = any(phrase in data["message"] for phrase in expected_messages)
+                            
+                            if message_check:
+                                self.log_result("Waitlist Subscribe (Duplicate Email)", True, 
+                                              f"Properly handled duplicate email {test_email}",
+                                              {"response": data})
+                                return True
+                            else:
+                                self.log_result("Waitlist Subscribe (Duplicate Email)", False, 
+                                              f"Unexpected duplicate message: {data['message']}")
+                        else:
+                            self.log_result("Waitlist Subscribe (Duplicate Email)", False, 
+                                          f"Success flag or email mismatch: {data}")
+                    else:
+                        self.log_result("Waitlist Subscribe (Duplicate Email)", False, 
+                                      f"Missing required response fields: {data}")
+                else:
+                    self.log_result("Waitlist Subscribe (Duplicate Email)", False, 
+                                  f"Duplicate subscription HTTP {response2.status_code}: {response2.text}")
+            else:
+                self.log_result("Waitlist Subscribe (Duplicate Email)", False, 
+                              f"First subscription failed HTTP {response1.status_code}: {response1.text}")
+        except Exception as e:
+            self.log_result("Waitlist Subscribe (Duplicate Email)", False, f"Error: {str(e)}")
+        return False
+
+    def test_waitlist_email_validation(self):
+        """Test 3: Email validation for invalid emails"""
+        print("\n✉️ TESTING WAITLIST EMAIL VALIDATION")
+        print("=" * 70)
+        
+        invalid_emails = [
+            "invalid-email",
+            "test@",
+            "@domain.com",
+            "test..test@domain.com",
+            "test@domain",
+            ""
+        ]
+        
+        success_count = 0
+        
+        for i, invalid_email in enumerate(invalid_emails, 1):
+            try:
+                print(f"\n📋 Test {i}: Invalid email '{invalid_email}'")
+                payload = {
+                    "email": invalid_email,
+                    "source": "website"
+                }
+                
+                response = self.session.post(f"{API_BASE}/waitlist/subscribe", json=payload)
+                
+                # Should return 422 for validation error
+                if response.status_code == 422:
+                    print(f"   ✅ Proper validation error (422)")
+                    success_count += 1
+                elif response.status_code == 400:
+                    print(f"   ✅ Proper client error (400)")
+                    success_count += 1
+                else:
+                    print(f"   ❌ Expected validation error, got HTTP {response.status_code}")
+                    
+            except Exception as e:
+                print(f"   ❌ Email validation test {i} error: {str(e)}")
+        
+        if success_count >= len(invalid_emails) * 0.8:  # At least 80% should fail validation
+            self.log_result("Waitlist Email Validation", True, 
+                          f"Properly validated {success_count}/{len(invalid_emails)} invalid emails")
+            return True
+        else:
+            self.log_result("Waitlist Email Validation", False, 
+                          f"Only validated {success_count}/{len(invalid_emails)} invalid emails")
+        return False
+
+    def test_waitlist_count_endpoint(self):
+        """Test 4: Waitlist count endpoint"""
+        print("\n📊 TESTING WAITLIST COUNT ENDPOINT")
+        print("=" * 70)
+        try:
+            # First, add a test subscriber to ensure count > 0
+            test_email = f"count.test.{int(time.time())}@toursmile.com"
+            subscribe_payload = {
+                "email": test_email,
+                "source": "website"
+            }
+            
+            # Subscribe first
+            subscribe_response = self.session.post(f"{API_BASE}/waitlist/subscribe", json=subscribe_payload)
+            
+            # Then get count
+            print(f"📤 REQUEST: GET /api/waitlist/count")
+            response = self.session.get(f"{API_BASE}/waitlist/count")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "count" in data and "success" in data:
+                    if data["success"] and isinstance(data["count"], int) and data["count"] >= 0:
+                        print(f"✅ Waitlist count: {data['count']} subscribers")
+                        self.log_result("Waitlist Count Endpoint", True, 
+                                      f"Count endpoint working, found {data['count']} subscribers",
+                                      {"response": data})
+                        return True
+                    else:
+                        self.log_result("Waitlist Count Endpoint", False, 
+                                      f"Invalid count data: {data}")
+                else:
+                    self.log_result("Waitlist Count Endpoint", False, 
+                                  f"Missing required response fields: {data}")
+            else:
+                self.log_result("Waitlist Count Endpoint", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Waitlist Count Endpoint", False, f"Error: {str(e)}")
+        return False
+
+    def test_waitlist_recent_subscribers(self):
+        """Test 5: Recent subscribers endpoint"""
+        print("\n👥 TESTING RECENT SUBSCRIBERS ENDPOINT")
+        print("=" * 70)
+        try:
+            # First, add a test subscriber to ensure we have recent data
+            test_email = f"recent.test.{int(time.time())}@toursmile.com"
+            subscribe_payload = {
+                "email": test_email,
+                "source": "website"
+            }
+            
+            # Subscribe first
+            subscribe_response = self.session.post(f"{API_BASE}/waitlist/subscribe", json=subscribe_payload)
+            
+            # Then get recent subscribers
+            print(f"📤 REQUEST: GET /api/waitlist/recent")
+            response = self.session.get(f"{API_BASE}/waitlist/recent")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "subscribers" in data and "success" in data:
+                    if data["success"] and isinstance(data["subscribers"], list):
+                        subscribers = data["subscribers"]
+                        print(f"✅ Recent subscribers: {len(subscribers)} found")
+                        
+                        # Validate subscriber structure if any exist
+                        if len(subscribers) > 0:
+                            subscriber = subscribers[0]
+                            required_fields = ["email", "source", "timestamp", "created_at"]
+                            missing_fields = [field for field in required_fields if field not in subscriber]
+                            
+                            if not missing_fields:
+                                print(f"   📋 Subscriber structure valid")
+                                print(f"   📧 Sample email: {subscriber.get('email', 'N/A')}")
+                                print(f"   📍 Source: {subscriber.get('source', 'N/A')}")
+                                
+                                self.log_result("Recent Subscribers Endpoint", True, 
+                                              f"Found {len(subscribers)} recent subscribers with valid structure",
+                                              {"response": data})
+                                return True
+                            else:
+                                self.log_result("Recent Subscribers Endpoint", False, 
+                                              f"Subscriber missing required fields: {missing_fields}")
+                        else:
+                            # No subscribers is also valid
+                            self.log_result("Recent Subscribers Endpoint", True, 
+                                          "Recent subscribers endpoint working (no subscribers yet)",
+                                          {"response": data})
+                            return True
+                    else:
+                        self.log_result("Recent Subscribers Endpoint", False, 
+                                      f"Invalid subscribers data: {data}")
+                else:
+                    self.log_result("Recent Subscribers Endpoint", False, 
+                                  f"Missing required response fields: {data}")
+            else:
+                self.log_result("Recent Subscribers Endpoint", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Recent Subscribers Endpoint", False, f"Error: {str(e)}")
+        return False
+
+    def test_waitlist_mongodb_integration(self):
+        """Test 6: MongoDB integration and data persistence"""
+        print("\n🗄️ TESTING MONGODB INTEGRATION")
+        print("=" * 70)
+        try:
+            # Subscribe with unique email
+            test_email = f"mongodb.test.{int(time.time())}@toursmile.com"
+            payload = {
+                "email": test_email,
+                "source": "mongodb_test"
+            }
+            
+            print(f"📤 SUBSCRIBING: {test_email}")
+            subscribe_response = self.session.post(f"{API_BASE}/waitlist/subscribe", json=payload)
+            
+            if subscribe_response.status_code == 200:
+                subscribe_data = subscribe_response.json()
+                
+                if subscribe_data.get("success"):
+                    # Check if data persisted by getting count
+                    count_response = self.session.get(f"{API_BASE}/waitlist/count")
+                    
+                    if count_response.status_code == 200:
+                        count_data = count_response.json()
+                        initial_count = count_data.get("count", 0)
+                        
+                        # Subscribe another email
+                        test_email2 = f"mongodb.test2.{int(time.time())}@toursmile.com"
+                        payload2 = {
+                            "email": test_email2,
+                            "source": "mongodb_test"
+                        }
+                        
+                        subscribe_response2 = self.session.post(f"{API_BASE}/waitlist/subscribe", json=payload2)
+                        
+                        if subscribe_response2.status_code == 200:
+                            # Check count increased
+                            count_response2 = self.session.get(f"{API_BASE}/waitlist/count")
+                            
+                            if count_response2.status_code == 200:
+                                count_data2 = count_response2.json()
+                                new_count = count_data2.get("count", 0)
+                                
+                                if new_count > initial_count:
+                                    print(f"✅ MongoDB persistence working")
+                                    print(f"   📊 Count increased from {initial_count} to {new_count}")
+                                    
+                                    # Check recent subscribers to verify data structure
+                                    recent_response = self.session.get(f"{API_BASE}/waitlist/recent?limit=5")
+                                    
+                                    if recent_response.status_code == 200:
+                                        recent_data = recent_response.json()
+                                        subscribers = recent_data.get("subscribers", [])
+                                        
+                                        # Look for our test emails
+                                        test_emails_found = [s for s in subscribers if s.get("email") in [test_email, test_email2]]
+                                        
+                                        if len(test_emails_found) >= 1:
+                                            print(f"   📧 Found {len(test_emails_found)} test emails in recent subscribers")
+                                            
+                                            self.log_result("MongoDB Integration", True, 
+                                                          f"MongoDB integration working - data persisted and retrievable",
+                                                          {"count_increase": new_count - initial_count, 
+                                                           "test_emails_found": len(test_emails_found)})
+                                            return True
+                                        else:
+                                            self.log_result("MongoDB Integration", False, 
+                                                          "Data not found in recent subscribers")
+                                    else:
+                                        self.log_result("MongoDB Integration", False, 
+                                                      "Could not verify data in recent subscribers")
+                                else:
+                                    self.log_result("MongoDB Integration", False, 
+                                                  f"Count did not increase: {initial_count} -> {new_count}")
+                            else:
+                                self.log_result("MongoDB Integration", False, 
+                                              "Could not get updated count")
+                        else:
+                            self.log_result("MongoDB Integration", False, 
+                                          "Second subscription failed")
+                    else:
+                        self.log_result("MongoDB Integration", False, 
+                                      "Could not get initial count")
+                else:
+                    self.log_result("MongoDB Integration", False, 
+                                  "Initial subscription failed")
+            else:
+                self.log_result("MongoDB Integration", False, 
+                              f"Subscription failed HTTP {subscribe_response.status_code}")
+        except Exception as e:
+            self.log_result("MongoDB Integration", False, f"Error: {str(e)}")
+        return False
+
+    def test_waitlist_error_handling(self):
+        """Test 7: Error handling for invalid requests"""
+        print("\n🚨 TESTING WAITLIST ERROR HANDLING")
+        print("=" * 70)
+        
+        error_test_cases = [
+            {
+                "payload": {},
+                "description": "Empty payload"
+            },
+            {
+                "payload": {"source": "website"},
+                "description": "Missing email field"
+            },
+            {
+                "payload": {"email": "valid@email.com", "source": "x" * 1000},
+                "description": "Extremely long source field"
+            }
+        ]
+        
+        success_count = 0
+        
+        for i, test_case in enumerate(error_test_cases, 1):
+            try:
+                print(f"\n📋 Error Test {i}: {test_case['description']}")
+                
+                response = self.session.post(f"{API_BASE}/waitlist/subscribe", json=test_case["payload"])
+                
+                # Should return 4xx error for invalid requests
+                if 400 <= response.status_code < 500:
+                    print(f"   ✅ Proper error response (HTTP {response.status_code})")
+                    success_count += 1
+                else:
+                    print(f"   ❌ Expected 4xx error, got HTTP {response.status_code}")
+                    
+            except Exception as e:
+                print(f"   ❌ Error test {i} exception: {str(e)}")
+        
+        if success_count >= len(error_test_cases) * 0.75:  # At least 75% should handle errors properly
+            self.log_result("Waitlist Error Handling", True, 
+                          f"Properly handled {success_count}/{len(error_test_cases)} error cases")
+            return True
+        else:
+            self.log_result("Waitlist Error Handling", False, 
+                          f"Only handled {success_count}/{len(error_test_cases)} error cases properly")
+        return False
+
+    def run_waitlist_functionality_tests(self):
+        """Run comprehensive waitlist functionality tests"""
+        print("=" * 80)
+        print("📧 WAITLIST SUBSCRIPTION FUNCTIONALITY TESTING")
+        print("=" * 80)
+        print("Testing the new waitlist subscription functionality:")
+        print("1. New email subscription - POST /api/waitlist/subscribe")
+        print("2. Duplicate email handling - graceful duplicate detection")
+        print("3. Email validation - invalid email rejection")
+        print("4. Waitlist count endpoint - GET /api/waitlist/count")
+        print("5. Recent subscribers endpoint - GET /api/waitlist/recent")
+        print("6. MongoDB integration - data persistence verification")
+        print("7. Error handling - invalid request handling")
+        print("=" * 80)
+        
+        # Reset results for this test run
+        self.results = {
+            'total_tests': 0,
+            'passed': 0,
+            'failed': 0,
+            'errors': []
+        }
+        
+        # Run all waitlist tests
+        tests = [
+            ("New Email Subscription", self.test_waitlist_subscribe_new_email),
+            ("Duplicate Email Handling", self.test_waitlist_subscribe_duplicate_email),
+            ("Email Validation", self.test_waitlist_email_validation),
+            ("Waitlist Count Endpoint", self.test_waitlist_count_endpoint),
+            ("Recent Subscribers Endpoint", self.test_waitlist_recent_subscribers),
+            ("MongoDB Integration", self.test_waitlist_mongodb_integration),
+            ("Error Handling", self.test_waitlist_error_handling)
+        ]
+        
+        for test_name, test_func in tests:
+            test_func()
+            time.sleep(2)  # Pause between tests for database operations
+        
+        # Print comprehensive summary
+        print("\n" + "=" * 80)
+        print("📊 WAITLIST FUNCTIONALITY TEST SUMMARY")
+        print("=" * 80)
+        print(f"Total Tests: {self.results['total_tests']}")
+        print(f"Passed: {self.results['passed']} ✅")
+        print(f"Failed: {self.results['failed']} ❌")
+        
+        if self.results['errors']:
+            print(f"\n🚨 FAILED TESTS:")
+            for error in self.results['errors']:
+                print(f"  • {error}")
+        
+        success_rate = (self.results['passed'] / self.results['total_tests']) * 100 if self.results['total_tests'] > 0 else 0
+        print(f"\nSuccess Rate: {success_rate:.1f}%")
+        
+        # Final assessment
+        if success_rate == 100:
+            print("🎉 ALL WAITLIST FUNCTIONALITY TESTS PASSED!")
+            print("✅ Email subscription working correctly")
+            print("✅ Duplicate email handling working properly")
+            print("✅ Email validation working as expected")
+            print("✅ Count endpoint returning accurate data")
+            print("✅ Recent subscribers endpoint functional")
+            print("✅ MongoDB integration working perfectly")
+            print("✅ Error handling robust and secure")
+            print("\n🚀 WAITLIST FUNCTIONALITY IS PRODUCTION-READY!")
+        elif success_rate >= 75:
+            print("⚠️  Waitlist functionality mostly working with minor issues")
+            print("🔍 Check failed tests above for specific problems")
+        else:
+            print("🚨 Waitlist functionality has significant issues")
+            print("🔧 Database or API endpoint problems detected")
+        
+        return self.results
+
 if __name__ == "__main__":
     tester = BackendTester()
     # Run the AI Travel Query Parsing tests as requested
