@@ -1195,7 +1195,7 @@ function App() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
           <div>
-            <div>
+            {/* All Tab Sections Wrapped Together */}
             {activeTab === 'home' && (
               <div className="space-y-6 sm:space-y-8">
                 {/* Hero Video Section */}
