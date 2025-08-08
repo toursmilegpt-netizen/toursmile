@@ -40,7 +40,7 @@ function ComingSoon() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="max-w-2xl mx-auto text-center">
           {/* Logo */}
           <div className="mb-12">
@@ -52,17 +52,17 @@ function ComingSoon() {
           </div>
 
           {/* Success Message */}
-          <div className="bg-green-900/30 border border-green-500/30 rounded-2xl p-8 mb-8">
+          <div className="bg-green-50 border border-green-200 rounded-2xl p-8 mb-8">
             <div className="text-6xl mb-4">🎉</div>
-            <h2 className="text-3xl font-bold text-white mb-4">You're In!</h2>
-            <p className="text-green-300 text-lg">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">You're In!</h2>
+            <p className="text-green-700 text-lg">
               We'll send you early access when we launch the simplest travel planning experience.
             </p>
           </div>
 
           <button
             onClick={() => {setSubmitted(false); setEmail("");}}
-            className="text-blue-400 hover:text-blue-300 transition-colors underline"
+            className="text-blue-600 hover:text-blue-500 transition-colors underline"
           >
             Add another email
           </button>
