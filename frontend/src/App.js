@@ -1379,11 +1379,92 @@ function App() {
             )}
 
             {activeTab === 'flights' && (
-              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-white/20">
-                <div className="flex items-center mb-6">
-                  <div className="text-3xl mr-3">✈️</div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Search Flights</h2>
+              <div className="space-y-6">
+                {/* AI Search Section - Hero Feature */}
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-white/20">
+                  <div className="text-center mb-6">
+                    <div className="text-4xl mb-3">🤖✈️</div>
+                    <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                      Smart Flight Search
+                    </h2>
+                    <p className="text-gray-600 text-sm sm:text-base">
+                      Just tell us your travel plans in natural language - no forms needed!
+                    </p>
+                  </div>
+
+                  <form onSubmit={handleAISearchSubmit} className="max-w-2xl mx-auto">
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <span className="text-blue-500 text-xl">🎯</span>
+                      </div>
+                      <input
+                        type="text"
+                        value={aiSearchQuery}
+                        onChange={(e) => setAiSearchQuery(e.target.value)}
+                        placeholder="e.g., 'Delhi to Mumbai tomorrow 2 passengers' or 'Round trip Bangalore Dubai next Friday business class'"
+                        className="w-full pl-12 pr-16 py-4 text-base border-2 border-blue-200 rounded-2xl focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 bg-white/80 placeholder-gray-500"
+                        disabled={aiSearchLoading}
+                      />
+                      <button
+                        type="submit"
+                        disabled={aiSearchLoading || !aiSearchQuery.trim()}
+                        className="absolute inset-y-0 right-0 flex items-center pr-3"
+                      >
+                        {aiSearchLoading ? (
+                          <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500 border-t-transparent"></div>
+                        ) : (
+                          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <span className="text-sm font-semibold px-2">Search</span>
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+
+                  {/* Quick Examples */}
+                  <div className="mt-4 flex flex-wrap justify-center gap-2">
+                    <span className="text-xs text-gray-500">Try:</span>
+                    {[
+                      "Delhi to Mumbai tomorrow",
+                      "Bangalore Dubai business class",
+                      "Round trip Goa 4 adults",
+                      "Multi-city Delhi Bangalore Chennai"
+                    ].map((example, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setAiSearchQuery(example)}
+                        className="text-xs bg-white/60 text-blue-600 px-3 py-1 rounded-full border border-blue-200 hover:bg-blue-50 hover:border-blue-300 transition-colors"
+                      >
+                        "{example}"
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Toggle to Manual Search */}
+                  <div className="text-center mt-6">
+                    <button
+                      onClick={() => setShowManualSearch(!showManualSearch)}
+                      className="text-sm text-gray-600 hover:text-gray-800 font-medium border-b border-gray-300 hover:border-gray-500 transition-colors"
+                    >
+                      {showManualSearch ? '🤖 Use AI Search Instead' : '📝 Prefer Manual Search?'}
+                    </button>
+                  </div>
                 </div>
+
+                {/* Manual Search Form - Progressive Enhancement */}
+                {(showManualSearch || Object.values(flightSearch).some(v => v && v.toString().trim())) && (
+                  <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-white/20">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center">
+                        <div className="text-3xl mr-3">📝</div>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Manual Search</h2>
+                      </div>
+                      {!showManualSearch && (
+                        <div className="text-xs text-green-600 bg-green-100 px-3 py-1 rounded-full">
+                          🤖 AI Pre-filled
+                        </div>
+                      )}
+                    </div>
                 
                 {/* Trip Type Selection */}
                 <div className="mb-6">
