@@ -106,10 +106,10 @@ class TripjackFlightService:
             if trip_type.lower() == "roundtrip" and return_date:
                 search_data["searchQuery"]["routeInfos"].append({
                     "fromCityOrAirport": {
-                        "code": destination
+                        "code": destination_code
                     },
                     "toCityOrAirport": {
-                        "code": origin
+                        "code": origin_code
                     },
                     "travelDate": return_date
                 })
