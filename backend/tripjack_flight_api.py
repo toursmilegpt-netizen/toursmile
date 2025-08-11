@@ -56,22 +56,41 @@ class TripjackFlightService:
         return self._api_secret
 
     def authenticate(self) -> bool:
-        """Authenticate with Tripjack API using credentials"""
+        """Authenticate with Tripjack API using API key"""
         try:
+            # First check if we have API key
+            if self.api_key:
+                logger.info(f"🔑 Using Tripjack API Key authentication")
+                logger.info(f"API Key: {self.api_key[:20]}...")
+                # For API key authentication, we don't need to call a separate auth endpoint
+                # The API key will be used directly in API calls
+                self._access_token = self.api_key
+                # Set a long expiry since API keys don't typically expire
+                self._token_expires_at = datetime.now() + timedelta(hours=24)
+                logger.info("✅ Tripjack API Key authentication ready!")
+                return True
+            
+            # Fallback to user credentials authentication if no API key
             if not self._user_id or not self._email or not self._password:
-                logger.error("❌ Tripjack credentials not found in environment")
-                logger.error(f"User ID: {self._user_id}, Email: {self._email}, Password: {'*' * len(self._password) if self._password else 'None'}")
+                logger.error("❌ Neither API key nor user credentials found in environment")
+                logger.error(f"API Key: {self.api_key[:10] if self.api_key else 'None'}...")
+                logger.error(f"User ID: {self._user_id}, Email: {self._email}")
                 return False
 
-            # Check if we have a valid token
+            # Check if we have a valid token from previous auth
             if (self._access_token and self._token_expires_at and 
                 datetime.now() < self._token_expires_at):
                 return True
 
-            logger.info(f"🔐 Authenticating with Tripjack as {self._email}...")
+            logger.info(f"🔐 Attempting user credentials authentication with {self._email}...")
             
-            # Tripjack authentication endpoint (based on common travel API patterns)
-            auth_url = f"{self.base_url}/api/login"
+            # Try various possible Tripjack authentication endpoints
+            possible_endpoints = [
+                f"{self.base_url}/fms/v1/authenticate",
+                f"{self.base_url}/api/authenticate", 
+                f"{self.base_url}/api/login",
+                f"{self.base_url}/login"
+            ]
             
             auth_data = {
                 "user_id": self._user_id,
@@ -86,61 +105,51 @@ class TripjackFlightService:
                 "User-Agent": "TourSmile/1.0"
             }
 
-            logger.info(f"📡 Making auth request to: {auth_url}")
-            response = requests.post(auth_url, json=auth_data, headers=headers, timeout=30)
-            
-            logger.info(f"📊 Auth Response Status: {response.status_code}")
-            logger.info(f"📄 Auth Response Headers: {dict(response.headers)}")
-            
-            if response.status_code == 200:
+            for auth_url in possible_endpoints:
                 try:
-                    auth_response = response.json()
-                    logger.info(f"✅ Auth response received: {auth_response.keys() if isinstance(auth_response, dict) else 'Not dict'}")
+                    logger.info(f"📡 Trying auth endpoint: {auth_url}")
+                    response = requests.post(auth_url, json=auth_data, headers=headers, timeout=15)
                     
-                    # Extract authentication token (structure may vary)
-                    if 'access_token' in auth_response:
-                        self._access_token = auth_response['access_token']
-                    elif 'token' in auth_response:
-                        self._access_token = auth_response['token']
-                    elif 'authToken' in auth_response:
-                        self._access_token = auth_response['authToken']
-                    else:
-                        # Try to extract any token-like field
-                        for key, value in auth_response.items():
-                            if 'token' in key.lower() and isinstance(value, str):
-                                self._access_token = value
-                                logger.info(f"🔑 Using token from field: {key}")
-                                break
+                    logger.info(f"📊 Auth Response Status: {response.status_code}")
                     
-                    if self._access_token:
-                        # Set token expiry (usually 1 hour, setting to 50 minutes for safety)
-                        self._token_expires_at = datetime.now() + timedelta(minutes=50)
-                        
-                        logger.info("✅ Tripjack authentication successful!")
-                        return True
-                    else:
-                        logger.error(f"❌ No token found in auth response: {auth_response}")
-                        return False
-                        
-                except json.JSONDecodeError:
-                    logger.error(f"❌ Invalid JSON in auth response: {response.text}")
-                    return False
-                    
-            elif response.status_code == 401:
-                logger.error("❌ Tripjack authentication failed - Invalid credentials")
-                logger.error(f"Response: {response.text}")
-                return False
-            elif response.status_code == 403:
-                logger.error("❌ Tripjack access forbidden - IP might not be whitelisted")
-                logger.error(f"Response: {response.text}")
-                return False
-            else:
-                logger.error(f"❌ Tripjack authentication failed: {response.status_code}")
-                logger.error(f"Response: {response.text}")
+                    if response.status_code == 200:
+                        try:
+                            auth_response = response.json()
+                            logger.info(f"✅ Auth response received from {auth_url}")
+                            
+                            # Extract authentication token (structure may vary)
+                            token_fields = ['access_token', 'token', 'authToken', 'accessToken']
+                            for field in token_fields:
+                                if field in auth_response:
+                                    self._access_token = auth_response[field]
+                                    logger.info(f"🔑 Found token in field: {field}")
+                                    break
+                            
+                            if not self._access_token:
+                                # Try to find any token-like field
+                                for key, value in auth_response.items():
+                                    if 'token' in key.lower() and isinstance(value, str):
+                                        self._access_token = value
+                                        logger.info(f"🔑 Using token from field: {key}")
+                                        break
+                            
+                            if self._access_token:
+                                # Set token expiry (usually 1 hour, setting to 50 minutes for safety)
+                                self._token_expires_at = datetime.now() + timedelta(minutes=50)
+                                logger.info("✅ Tripjack user credentials authentication successful!")
+                                return True
+                                
+                        except json.JSONDecodeError as e:
+                            logger.error(f"❌ Failed to parse auth response as JSON: {e}")
+                            continue
+                            
+                except requests.RequestException as e:
+                    logger.info(f"⚠️ Endpoint {auth_url} failed: {e}")
+                    continue
+            
+            logger.error("❌ All authentication methods failed")
+            return False
                 
-                # Try alternative authentication endpoint
-                return self._try_alternative_auth()
-
         except Exception as e:
             logger.error(f"❌ Tripjack authentication error: {str(e)}")
             return False
