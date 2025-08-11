@@ -422,7 +422,8 @@ class TripjackFlightService:
                     continue
             
             logger.error("❌ All authentication methods failed")
-            return False
+            self.authenticated = False
+            return {"success": False, "message": "All authentication methods failed"}
                 
         except Exception as e:
             logger.error(f"❌ Tripjack authentication error: {str(e)}")
