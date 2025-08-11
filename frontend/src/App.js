@@ -1023,9 +1023,16 @@ function App() {
               <div className="flex items-center">
                 <img
                   src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
-                  alt="Logo"
+                  alt="Viman Pravas Logo"
                   className="h-12 mr-3"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'block';
+                  }}
                 />
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent" style={{display: 'none'}}>
+                  Viman Pravas
+                </h1>
               </div>
               <div className="ml-4 flex items-center space-x-2">
                 <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
