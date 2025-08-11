@@ -4,8 +4,12 @@ import axios from "axios";
 import ComingSoon from "./ComingSoon";
 import FlightResults from "./FlightResults";
 
-// For development - set to false to show flight search
-const SHOW_COMING_SOON = false;
+// For development - set to true to show coming soon page
+const SHOW_COMING_SOON = true;
+
+// Check for development override in URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const isDevelopmentMode = urlParams.get('dev') === 'true';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
