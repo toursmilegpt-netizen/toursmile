@@ -1014,10 +1014,11 @@ function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <div className="flex items-center">
-                <span className="text-3xl mr-2">✈️</span>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  TourSmile
-                </h1>
+                <img
+                  src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
+                  alt="Logo"
+                  className="h-12 mr-3"
+                />
               </div>
               <div className="ml-4 flex items-center space-x-2">
                 <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
