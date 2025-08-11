@@ -1016,12 +1016,9 @@ function App() {
               <div className="flex items-center">
                 <img
                   src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
-                  alt="Viman Pravas"
-                  className="h-10 mr-2"
+                  alt="TourSmile"
+                  className="h-12 mr-2"
                 />
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Viman Pravas
-                </h1>
               </div>
               <div className="ml-4 flex items-center space-x-2">
                 <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
