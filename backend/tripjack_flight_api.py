@@ -409,8 +409,9 @@ class TripjackFlightService:
                             if self._access_token:
                                 # Set token expiry (usually 1 hour, setting to 50 minutes for safety)
                                 self._token_expires_at = datetime.now() + timedelta(minutes=50)
+                                self.authenticated = True
                                 logger.info("✅ Tripjack user credentials authentication successful!")
-                                return True
+                                return {"success": True, "message": "User credentials authentication successful"}
                                 
                         except json.JSONDecodeError as e:
                             logger.error(f"❌ Failed to parse auth response as JSON: {e}")
