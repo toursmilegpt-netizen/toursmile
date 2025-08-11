@@ -867,12 +867,27 @@ function App() {
 
   const handleFlightSelect = (flight) => {
     console.log('Selected flight:', flight);
-    // TODO: Navigate to booking flow
+    setSelectedFlight(flight);
+    setBookingStep('flight-selection');
+  };
+
+  const handleBackToResults = () => {
+    setBookingStep('search');
+    setSelectedFlight(null);
   };
 
   const handleBackToSearch = () => {
     setShowResults(false);
     setSearchResults([]);
+    setBookingStep('search');
+    setSelectedFlight(null);
+    setBookingData(null);
+  };
+
+  const handleFlightSelectionNext = (selectionData) => {
+    console.log('Flight selection completed:', selectionData);
+    setBookingData(selectionData);
+    setBookingStep('passenger-info');
   };
 
   // Show results page if user has searched
