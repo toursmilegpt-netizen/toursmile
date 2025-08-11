@@ -13,7 +13,7 @@ client = MongoClient(MONGO_URL)
 db = client.toursmile
 waitlist_collection = db.waitlist
 
-router = APIRouter()
+router = APIRouter(prefix="/waitlist")
 
 class WaitlistSubscription(BaseModel):
     email: EmailStr
