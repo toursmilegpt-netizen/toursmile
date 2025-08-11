@@ -54,12 +54,34 @@ class EmailService:
             logger.error(f"Error sending email to {to_email}: {str(e)}")
             return False
     
-    def send_waitlist_notification(self, subscriber_email: str, source: str = "website"):
+    def send_waitlist_notification(self, subscriber_email: str, source: str = "website", location_info: dict = None, ip_address: str = "Unknown"):
         """
         Send email notification to admin when someone subscribes to waitlist
         """
         try:
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            
+            # Format location info
+            if location_info:
+                location_display = f"{location_info.get('city', 'Unknown')}, {location_info.get('country', 'Unknown')}"
+                if location_info.get('region') and location_info.get('region') != location_info.get('city'):
+                    location_display = f"{location_info.get('city', 'Unknown')}, {location_info.get('region', '')}, {location_info.get('country', 'Unknown')}"
+                timezone_display = location_info.get('timezone', 'Unknown')
+                country_flag = "🌍"  # Default flag
+                
+                # Add country flag based on country code
+                country_code = location_info.get('country_code', '').upper()
+                flag_map = {
+                    'IN': '🇮🇳', 'US': '🇺🇸', 'GB': '🇬🇧', 'CA': '🇨🇦', 'AU': '🇦🇺',
+                    'DE': '🇩🇪', 'FR': '🇫🇷', 'SG': '🇸🇬', 'AE': '🇦🇪', 'MY': '🇲🇾',
+                    'TH': '🇹🇭', 'ID': '🇮🇩', 'PH': '🇵🇭', 'VN': '🇻🇳', 'KR': '🇰🇷',
+                    'JP': '🇯🇵', 'CN': '🇨🇳', 'HK': '🇭🇰', 'TW': '🇹🇼'
+                }
+                country_flag = flag_map.get(country_code, '🌍')
+            else:
+                location_display = "Unknown Location"
+                timezone_display = "Unknown"
+                country_flag = "🌍"
             
             html_content = f"""
             <html>
@@ -75,12 +97,21 @@ class EmailService:
                             <p style="margin: 5px 0;"><strong>📧 Email:</strong> {subscriber_email}</p>
                             <p style="margin: 5px 0;"><strong>🌐 Source:</strong> {source}</p>
                             <p style="margin: 5px 0;"><strong>⏰ Time:</strong> {current_time}</p>
+                            <p style="margin: 5px 0;"><strong>{country_flag} Location:</strong> {location_display}</p>
+                            <p style="margin: 5px 0;"><strong>🕐 Timezone:</strong> {timezone_display}</p>
+                            <p style="margin: 5px 0; font-family: monospace; font-size: 12px; color: #666;"><strong>🌐 IP:</strong> {ip_address}</p>
                         </div>
                         
                         <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196F3;">
                             <p style="margin: 0; color: #1976d2;">
-                                <strong>💡 Action Required:</strong> Consider reaching out to this potential customer 
-                                or add them to your marketing campaigns for TourSmile launch updates.
+                                <strong>💡 Action Required:</strong> This subscriber is from <strong>{location_display}</strong>! 
+                                Consider tailoring your outreach for this region or adding them to location-specific marketing campaigns.
+                            </p>
+                        </div>
+                        
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin-top: 15px;">
+                            <p style="margin: 0; color: #856404; font-size: 14px;">
+                                <strong>📊 Marketing Tip:</strong> Track location patterns to identify your target markets and optimize advertising spend geographically.
                             </p>
                         </div>
                         
@@ -98,7 +129,7 @@ class EmailService:
             
             return self.send_email(
                 self.notification_email,
-                f"🚀 New TourSmile Subscriber: {subscriber_email}",
+                f"🚀 New TourSmile Subscriber from {location_display}: {subscriber_email}",
                 html_content
             )
                 
