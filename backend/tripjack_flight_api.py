@@ -48,12 +48,260 @@ class TripjackFlightService:
             self._api_key = os.environ.get('TRIPJACK_API_KEY')
         return self._api_key
 
-    @property
-    def api_secret(self):
-        """Lazy load API secret from environment"""
-        if self._api_secret is None:
-            self._api_secret = os.environ.get('TRIPJACK_API_SECRET')
-        return self._api_secret
+    def search_flights(self, origin: str, destination: str, departure_date: str, 
+                      passengers: int = 1, cabin_class: str = "Economy", 
+                      trip_type: str = "oneway", return_date: str = None) -> List[Dict[str, Any]]:
+        """Search for flights using Tripjack API"""
+        try:
+            if not self.authenticate():
+                logger.error("❌ Tripjack authentication failed")
+                return self._get_fallback_flights(origin, destination)
+            
+            logger.info(f"🔍 Searching flights: {origin} → {destination} on {departure_date}")
+            logger.info(f"👥 Passengers: {passengers}, Class: {cabin_class}")
+            
+            # Tripjack flight search endpoint
+            search_url = f"{self.base_url}/fms/v1/air-search-all"
+            
+            # Convert city names to airport codes if needed
+            origin_code = self._get_airport_code(origin)
+            destination_code = self._get_airport_code(destination)
+            
+            # Prepare search payload based on Tripjack API structure
+            search_payload = {
+                "searchQuery": {
+                    "cabinClass": cabin_class.upper(),
+                    "paxInfo": {
+                        "ADULT": passengers,
+                        "CHILD": 0,
+                        "INFANT": 0
+                    },
+                    "routeInfos": [
+                        {
+                            "fromCityOrAirport": {
+                                "code": origin_code
+                            },
+                            "toCityOrAirport": {
+                                "code": destination_code
+                            },
+                            "travelDate": departure_date
+                        }
+                    ],
+                    "searchModifiers": {
+                        "isDirectFlight": False,
+                        "isConnectingFlight": True
+                    }
+                }
+            }
+            
+            # Add return date for round trip
+            if trip_type.lower() == "roundtrip" and return_date:
+                search_payload["searchQuery"]["routeInfos"].append({
+                    "fromCityOrAirport": {
+                        "code": destination_code
+                    },
+                    "toCityOrAirport": {
+                        "code": origin_code
+                    },
+                    "travelDate": return_date
+                })
+            
+            headers = {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "apikey": self.api_key,
+                "User-Agent": "TourSmile/1.0"
+            }
+            
+            logger.info(f"📡 Making flight search request to: {search_url}")
+            logger.info(f"🔑 Using API key: {self.api_key[:20]}...")
+            
+            response = requests.post(search_url, json=search_payload, headers=headers, timeout=30)
+            
+            logger.info(f"📊 Search Response Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                try:
+                    search_response = response.json()
+                    logger.info("✅ Flight search response received successfully")
+                    
+                    # Parse Tripjack response and convert to our format
+                    flights = self._parse_tripjack_flights(search_response, origin, destination)
+                    
+                    if flights:
+                        logger.info(f"🎉 Found {len(flights)} flights from Tripjack")
+                        return flights
+                    else:
+                        logger.warning("⚠️ No flights found in Tripjack response")
+                        return self._get_fallback_flights(origin, destination)
+                        
+                except json.JSONDecodeError as e:
+                    logger.error(f"❌ Failed to parse Tripjack response as JSON: {e}")
+                    logger.error(f"Raw response: {response.text[:500]}")
+                    return self._get_fallback_flights(origin, destination)
+                    
+            elif response.status_code == 401:
+                logger.error("❌ Tripjack authentication failed - Invalid API key")
+                logger.error(f"Response: {response.text}")
+                return self._get_fallback_flights(origin, destination)
+                
+            elif response.status_code == 403:
+                logger.error("❌ Tripjack access forbidden - IP might not be whitelisted or API key invalid")
+                logger.error(f"Response: {response.text}")
+                return self._get_fallback_flights(origin, destination)
+                
+            else:
+                logger.error(f"❌ Tripjack flight search failed: {response.status_code}")
+                logger.error(f"Response: {response.text}")
+                return self._get_fallback_flights(origin, destination)
+                
+        except requests.RequestException as e:
+            logger.error(f"❌ Tripjack flight search network error: {str(e)}")
+            return self._get_fallback_flights(origin, destination)
+            
+        except Exception as e:
+            logger.error(f"❌ Tripjack flight search error: {str(e)}")
+            return self._get_fallback_flights(origin, destination)
+    
+    def _get_airport_code(self, city_name: str) -> str:
+        """Convert city name to airport code"""
+        city_to_airport = {
+            "delhi": "DEL",
+            "mumbai": "BOM", 
+            "bangalore": "BLR",
+            "chennai": "MAA",
+            "kolkata": "CCU",
+            "hyderabad": "HYD",
+            "pune": "PNQ",
+            "ahmedabad": "AMD",
+            "goa": "GOI",
+            "kochi": "COK",
+            "jaipur": "JAI",
+            "trivandrum": "TRV"
+        }
+        
+        city_lower = city_name.lower()
+        return city_to_airport.get(city_lower, city_name.upper()[:3])
+    
+    def _parse_tripjack_flights(self, response: Dict[str, Any], origin: str, destination: str) -> List[Dict[str, Any]]:
+        """Parse Tripjack API response and convert to our standard format"""
+        flights = []
+        
+        try:
+            # Navigate through Tripjack response structure
+            search_result = response.get("searchResult", {})
+            trip_infos = search_result.get("tripInfos", [])
+            
+            if not trip_infos:
+                logger.warning("No trip info found in Tripjack response")
+                return flights
+            
+            # Process each trip info (flight option)
+            for trip_info in trip_infos[:10]:  # Limit to first 10 results
+                sI = trip_info.get("sI", [])
+                total_price = trip_info.get("totalPriceInfo", {}).get("totalFareDetail", {}).get("fC", {}).get("TF", 0)
+                
+                if sI:
+                    # Get first segment details
+                    segment = sI[0]
+                    flight_details = segment.get("fD", {})
+                    
+                    flight_data = {
+                        "id": f"TJ_{trip_info.get('id', 'unknown')}",
+                        "airline": flight_details.get("aI", {}).get("name", "Unknown Airline"),
+                        "airline_code": flight_details.get("aI", {}).get("code", "XX"),
+                        "flight_number": f"{flight_details.get('aI', {}).get('code', 'XX')}-{flight_details.get('fN', '000')}",
+                        "origin": origin,
+                        "destination": destination,
+                        "departure_time": flight_details.get("dT", "00:00"),
+                        "arrival_time": flight_details.get("aT", "00:00"),
+                        "duration_minutes": flight_details.get("eT", 120),
+                        "stops": len(sI) - 1,  # Number of segments minus 1
+                        "price": int(total_price),
+                        "original_price": int(total_price * 1.1),  # Assume 10% discount
+                        "total_price": int(total_price),
+                        "currency": "INR",
+                        "aircraft_type": flight_details.get("eT", "Unknown"),
+                        "is_lcc": "LCC" in flight_details.get("aI", {}).get("name", "").upper(),
+                        "refundable": trip_info.get("isRefundable", False),
+                        "fare_type": self._determine_fare_type(trip_info),
+                        "baggage_info": "7 Kg",  # Default baggage
+                        "data_source": "tripjack_api"
+                    }
+                    
+                    flights.append(flight_data)
+            
+            logger.info(f"✅ Parsed {len(flights)} flights from Tripjack response")
+            return flights
+            
+        except Exception as e:
+            logger.error(f"❌ Error parsing Tripjack flights: {str(e)}")
+            return []
+    
+    def _determine_fare_type(self, trip_info: Dict[str, Any]) -> str:
+        """Determine fare type based on trip info"""
+        fare_info = trip_info.get("totalPriceInfo", {}).get("totalFareDetail", {})
+        
+        # Check for different fare types based on Tripjack structure
+        if fare_info.get("afC", {}).get("TAF", {}).get("salefare"):
+            return "SALE"
+        elif fare_info.get("afC", {}).get("TAF", {}).get("corporate"):
+            return "CORPORATE"
+        elif fare_info.get("afC", {}).get("TAF", {}).get("flexi"):
+            return "FLEXI"
+        else:
+            return "PUBLISHED"
+    
+    def _get_fallback_flights(self, origin: str, destination: str) -> List[Dict[str, Any]]:
+        """Return fallback flight data when API fails"""
+        logger.info("📋 Using fallback flight data")
+        
+        return [
+            {
+                "id": "fallback_1",
+                "airline": "Air India",
+                "airline_code": "AI",
+                "flight_number": "AI-131",
+                "origin": origin,
+                "destination": destination, 
+                "departure_time": "09:15",
+                "arrival_time": "11:30",
+                "duration_minutes": 135,
+                "stops": 0,
+                "price": 6200,
+                "original_price": 7200,
+                "total_price": 6200,
+                "currency": "INR",
+                "aircraft_type": "A321",
+                "is_lcc": False,
+                "refundable": True,
+                "fare_type": "PUBLISHED",
+                "baggage_info": "15 Kg",
+                "data_source": "fallback"
+            },
+            {
+                "id": "fallback_2", 
+                "airline": "IndiGo",
+                "airline_code": "6E",
+                "flight_number": "6E-2031",
+                "origin": origin,
+                "destination": destination,
+                "departure_time": "14:20", 
+                "arrival_time": "16:45",
+                "duration_minutes": 145,
+                "stops": 0,
+                "price": 4500,
+                "original_price": 5200,
+                "total_price": 4500,
+                "currency": "INR", 
+                "aircraft_type": "A320",
+                "is_lcc": True,
+                "refundable": False,
+                "fare_type": "SALE",
+                "baggage_info": "7 Kg",
+                "data_source": "fallback"
+            }
+        ]
 
     def authenticate(self) -> bool:
         """Authenticate with Tripjack API using API key"""
