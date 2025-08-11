@@ -161,60 +161,103 @@ class TripjackFlightService:
         city_lower = city_name.lower()
         return city_to_airport.get(city_lower, city_name.upper()[:3])
     
-    def _parse_tripjack_flights(self, response: Dict[str, Any], origin: str, destination: str) -> List[Dict[str, Any]]:
+    def _parse_tripjack_flights(self, trip_infos: List[Dict[str, Any]], origin: str, destination: str) -> List[Dict[str, Any]]:
         """Parse Tripjack API response and convert to our standard format"""
         flights = []
         
         try:
-            # Navigate through Tripjack response structure
-            search_result = response.get("searchResult", {})
-            trip_infos = search_result.get("tripInfos", [])
-            
-            if not trip_infos:
-                logger.warning("No trip info found in Tripjack response")
-                return flights
-            
-            # Process each trip info (flight option)
-            for trip_info in trip_infos[:10]:  # Limit to first 10 results
-                sI = trip_info.get("sI", [])
-                total_price = trip_info.get("totalPriceInfo", {}).get("totalFareDetail", {}).get("fC", {}).get("TF", 0)
+            for trip_info in trip_infos:
+                # Get segments (sI = segment info)
+                segments = trip_info.get('sI', [])
                 
-                if sI:
-                    # Get first segment details
-                    segment = sI[0]
-                    flight_details = segment.get("fD", {})
+                if not segments:
+                    continue
                     
-                    flight_data = {
-                        "id": f"TJ_{trip_info.get('id', 'unknown')}",
-                        "airline": flight_details.get("aI", {}).get("name", "Unknown Airline"),
-                        "airline_code": flight_details.get("aI", {}).get("code", "XX"),
-                        "flight_number": f"{flight_details.get('aI', {}).get('code', 'XX')}-{flight_details.get('fN', '000')}",
-                        "origin": origin,
-                        "destination": destination,
-                        "departure_time": flight_details.get("dT", "00:00"),
-                        "arrival_time": flight_details.get("aT", "00:00"),
-                        "duration_minutes": flight_details.get("eT", 120),
-                        "stops": len(sI) - 1,  # Number of segments minus 1
-                        "price": int(total_price),
-                        "original_price": int(total_price * 1.1),  # Assume 10% discount
-                        "total_price": int(total_price),
-                        "currency": "INR",
-                        "aircraft_type": flight_details.get("eT", "Unknown"),
-                        "is_lcc": "LCC" in flight_details.get("aI", {}).get("name", "").upper(),
-                        "refundable": trip_info.get("isRefundable", False),
-                        "fare_type": self._determine_fare_type(trip_info),
-                        "baggage_info": "7 Kg",  # Default baggage
-                        "data_source": "tripjack_api"
+                # Use first segment for main flight details
+                first_segment = segments[0]
+                
+                # Flight designator (fD) contains airline and flight info
+                flight_designator = first_segment.get('fD', {})
+                airline_info = flight_designator.get('aI', {})
+                
+                # Airport information
+                departure_airport = first_segment.get('da', {})
+                arrival_airport = first_segment.get('aa', {})
+                
+                # Timing
+                departure_time = first_segment.get('dt', '')
+                arrival_time = first_segment.get('at', '')
+                duration = first_segment.get('duration', 0)
+                
+                # Extract pricing from totalPriceList if available
+                price_info = trip_info.get('totalPriceList', [])
+                total_price = 0
+                if price_info:
+                    # Get first price option
+                    first_price = price_info[0]
+                    adult_fare = first_price.get('fd', {}).get('ADULT', {})
+                    total_price = adult_fare.get('fF', 0) or adult_fare.get('tF', 0)
+                
+                # Build flight object in our standard format
+                flight = {
+                    "id": f"TJ_{trip_info.get('id', 'unknown')}",
+                    "airline": airline_info.get('name', 'Unknown Airline'),
+                    "airline_code": airline_info.get('code', 'XX'),
+                    "flight_number": flight_designator.get('fN', 'XXXX'),
+                    "aircraft_type": flight_designator.get('eT', ''),
+                    "origin": departure_airport.get('city', origin),
+                    "destination": arrival_airport.get('city', destination),
+                    "origin_code": departure_airport.get('code', 'XXX'),
+                    "destination_code": arrival_airport.get('code', 'XXX'),
+                    "departure_time": departure_time,
+                    "arrival_time": arrival_time,
+                    "duration": f"{duration // 60}h {duration % 60}m" if duration else "N/A",
+                    "duration_minutes": duration,
+                    "stops": len(segments) - 1,  # Number of stops = segments - 1
+                    "price": total_price,
+                    "currency": "INR",
+                    "is_lcc": airline_info.get('isLcc', False),
+                    "is_refundable": False,  # Default, can be determined from fare rules
+                    "baggage": {
+                        "checked": "15kg",  # Standard assumption
+                        "carry_on": "7kg"
+                    },
+                    "booking_class": "Y",  # Economy default
+                    "fare_type": "Regular",
+                    "segments": []
+                }
+                
+                # Add segment details
+                for segment in segments:
+                    seg_flight_designator = segment.get('fD', {})
+                    seg_airline_info = seg_flight_designator.get('aI', {})
+                    seg_departure_airport = segment.get('da', {})
+                    seg_arrival_airport = segment.get('aa', {})
+                    
+                    segment_detail = {
+                        "airline": seg_airline_info.get('name', 'Unknown'),
+                        "airline_code": seg_airline_info.get('code', 'XX'),
+                        "flight_number": seg_flight_designator.get('fN', 'XXXX'),
+                        "aircraft_type": seg_flight_designator.get('eT', ''),
+                        "origin": seg_departure_airport.get('city', ''),
+                        "destination": seg_arrival_airport.get('city', ''),
+                        "origin_code": seg_departure_airport.get('code', 'XXX'),
+                        "destination_code": seg_arrival_airport.get('code', 'XXX'),
+                        "departure_time": segment.get('dt', ''),
+                        "arrival_time": segment.get('at', ''),
+                        "duration": segment.get('duration', 0),
+                        "terminal_departure": seg_departure_airport.get('terminal', ''),
+                        "terminal_arrival": seg_arrival_airport.get('terminal', ''),
                     }
-                    
-                    flights.append(flight_data)
-            
-            logger.info(f"✅ Parsed {len(flights)} flights from Tripjack response")
-            return flights
-            
+                    flight["segments"].append(segment_detail)
+                
+                flights.append(flight)
+                
         except Exception as e:
             logger.error(f"❌ Error parsing Tripjack flights: {str(e)}")
-            return []
+            
+        logger.info(f"✅ Parsed {len(flights)} flights from Tripjack response")
+        return flights
     
     def _determine_fare_type(self, trip_info: Dict[str, Any]) -> str:
         """Determine fare type based on trip info"""
