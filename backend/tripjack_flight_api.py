@@ -346,12 +346,14 @@ class TripjackFlightService:
                 logger.error("❌ Neither API key nor user credentials found in environment")
                 logger.error(f"API Key: {self.api_key[:10] if self.api_key else 'None'}...")
                 logger.error(f"User ID: {self._user_id}, Email: {self._email}")
-                return False
+                self.authenticated = False
+                return {"success": False, "message": "No authentication credentials found"}
 
             # Check if we have a valid token from previous auth
             if (self._access_token and self._token_expires_at and 
                 datetime.now() < self._token_expires_at):
-                return True
+                self.authenticated = True
+                return {"success": True, "message": "Using cached authentication"}
 
             logger.info(f"🔐 Attempting user credentials authentication with {self._email}...")
             
