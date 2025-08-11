@@ -745,6 +745,11 @@ function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [searchData, setSearchData] = useState(null);
+  
+  // Booking flow state management
+  const [bookingStep, setBookingStep] = useState('search'); // search, flight-selection, passenger-info, payment, confirmation
+  const [selectedFlight, setSelectedFlight] = useState(null);
+  const [bookingData, setBookingData] = useState(null);
 
   const handleSearch = async (formData) => {
     setIsSearching(true);
