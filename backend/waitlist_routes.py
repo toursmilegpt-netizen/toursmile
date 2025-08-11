@@ -26,14 +26,20 @@ class WaitlistResponse(BaseModel):
     email: str
 
 @router.post("/subscribe", response_model=WaitlistResponse)
-async def subscribe_to_waitlist(subscription: WaitlistSubscription):
+async def subscribe_to_waitlist(subscription: WaitlistSubscription, background_tasks: BackgroundTasks):
     """
-    Subscribe email to TourSmile waitlist
+    Subscribe email to TourSmile waitlist with email notifications
     """
     try:
         # Check if email already exists
         existing = waitlist_collection.find_one({"email": subscription.email})
         if existing:
+            # Send notification for duplicate attempt (still valuable info)
+            background_tasks.add_task(
+                email_service.send_waitlist_notification,
+                subscription.email,
+                f"{subscription.source} (duplicate attempt)"
+            )
             return WaitlistResponse(
                 message="You're already on our waitlist! We'll notify you when we launch.",
                 success=True,
@@ -54,6 +60,19 @@ async def subscribe_to_waitlist(subscription: WaitlistSubscription):
         result = waitlist_collection.insert_one(waitlist_entry)
         
         if result.inserted_id:
+            # Send notifications in background
+            background_tasks.add_task(
+                email_service.send_waitlist_notification,
+                subscription.email,
+                subscription.source
+            )
+            
+            # Optional: Send welcome email to subscriber
+            background_tasks.add_task(
+                email_service.send_welcome_email,
+                subscription.email
+            )
+            
             return WaitlistResponse(
                 message="Success! You'll be first to know when we launch.",
                 success=True,
