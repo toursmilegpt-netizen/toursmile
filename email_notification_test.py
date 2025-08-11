@@ -16,6 +16,10 @@ from email.mime.text import MIMEText
 # Add backend to path for importing email service
 sys.path.append('/app/backend')
 
+# Load environment variables before importing email service
+from dotenv import load_dotenv
+load_dotenv('/app/backend/.env')
+
 # Load backend URL from frontend .env
 def get_backend_url():
     try:
