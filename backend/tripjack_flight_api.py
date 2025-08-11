@@ -427,7 +427,8 @@ class TripjackFlightService:
                 
         except Exception as e:
             logger.error(f"❌ Tripjack authentication error: {str(e)}")
-            return False
+            self.authenticated = False
+            return {"success": False, "message": f"Authentication error: {str(e)}"}
 
     def _try_alternative_auth(self) -> bool:
         """Try alternative authentication methods"""
