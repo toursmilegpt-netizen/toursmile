@@ -4,6 +4,9 @@ import axios from "axios";
 import ComingSoon from "./ComingSoon";
 import FlightResults from "./FlightResults";
 import FlightSelection from "./FlightSelection";
+import PassengerInfo from "./PassengerInfo";
+import Payment from "./Payment";
+import BookingConfirmation from "./BookingConfirmation";
 
 // For development - set to true to show coming soon page
 const SHOW_COMING_SOON = true;
