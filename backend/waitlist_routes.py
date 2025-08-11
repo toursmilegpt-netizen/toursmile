@@ -1,36 +1,90 @@
-from fastapi import APIRouter, HTTPException, status, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Request
 from pydantic import BaseModel, EmailStr
-from typing import Optional
-import uuid
+from pymongo import MongoClient
 from datetime import datetime
 import os
-import pymongo
+import uuid
+import requests
 from email_service import email_service
 
-router = APIRouter(prefix="/waitlist", tags=["waitlist"])
-
 # MongoDB connection
-MONGO_URL = os.environ.get('MONGO_URL')
-client = pymongo.MongoClient(MONGO_URL)
+MONGO_URL = os.getenv('MONGO_URL', 'mongodb://localhost:27017')
+client = MongoClient(MONGO_URL)
 db = client.toursmile
 waitlist_collection = db.waitlist
 
+router = APIRouter()
+
 class WaitlistSubscription(BaseModel):
     email: EmailStr
-    source: Optional[str] = "website"
-    timestamp: Optional[str] = None
+    source: str = "website"
 
 class WaitlistResponse(BaseModel):
     message: str
     success: bool
-    email: str
+
+def get_location_from_ip(ip_address: str):
+    """Get location information from IP address using free ipapi.co service"""
+    try:
+        # Skip localhost and private IPs
+        if ip_address in ['127.0.0.1', 'localhost'] or ip_address.startswith('192.168.') or ip_address.startswith('10.'):
+            return {
+                "city": "Local Development",
+                "country": "Local",
+                "region": "Dev Environment",
+                "timezone": "Local"
+            }
+        
+        # Use free ipapi.co service (1000 requests/day free)
+        response = requests.get(f"https://ipapi.co/{ip_address}/json/", timeout=5)
+        
+        if response.status_code == 200:
+            data = response.json()
+            return {
+                "city": data.get("city", "Unknown"),
+                "country": data.get("country_name", "Unknown"),
+                "region": data.get("region", "Unknown"), 
+                "timezone": data.get("timezone", "Unknown"),
+                "country_code": data.get("country_code", "Unknown")
+            }
+    except Exception as e:
+        print(f"Location lookup failed for {ip_address}: {e}")
+    
+    # Fallback if service fails
+    return {
+        "city": "Unknown",
+        "country": "Unknown", 
+        "region": "Unknown",
+        "timezone": "Unknown"
+    }
+
+def get_client_ip(request: Request):
+    """Extract client IP address from request headers"""
+    # Check for forwarded IP first (common in production behind proxy/CDN)
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    if forwarded_for:
+        # X-Forwarded-For can contain multiple IPs, take the first one
+        return forwarded_for.split(",")[0].strip()
+    
+    # Check for real IP header (some proxy configurations)
+    real_ip = request.headers.get("X-Real-IP")
+    if real_ip:
+        return real_ip.strip()
+    
+    # Fall back to client host
+    return request.client.host
 
 @router.post("/subscribe", response_model=WaitlistResponse)
-async def subscribe_to_waitlist(subscription: WaitlistSubscription, background_tasks: BackgroundTasks):
-    """
-    Subscribe email to TourSmile waitlist with email notifications
-    """
+async def subscribe_to_waitlist(subscription: WaitlistSubscription, request: Request, background_tasks: BackgroundTasks):
+    """Subscribe to waitlist with email notifications and location tracking"""
     try:
+        # Get client IP and location
+        client_ip = get_client_ip(request)
+        location_info = get_location_from_ip(client_ip)
+        
+        print(f"📍 New subscription from IP: {client_ip}")
+        print(f"📍 Location: {location_info['city']}, {location_info['country']}")
+        
         # Check if email already exists
         existing = waitlist_collection.find_one({"email": subscription.email})
         if existing:
@@ -38,33 +92,39 @@ async def subscribe_to_waitlist(subscription: WaitlistSubscription, background_t
             background_tasks.add_task(
                 email_service.send_waitlist_notification,
                 subscription.email,
-                f"{subscription.source} (duplicate attempt)"
+                f"{subscription.source} (duplicate attempt)",
+                location_info,
+                client_ip
             )
             return WaitlistResponse(
                 message="You're already on our waitlist! We'll notify you when we launch.",
-                success=True,
-                email=subscription.email
+                success=True
             )
         
-        # Create new subscription
-        waitlist_entry = {
+        # Create new subscription with location data
+        subscription_data = {
             "id": str(uuid.uuid4()),
             "email": subscription.email,
             "source": subscription.source,
-            "timestamp": subscription.timestamp or datetime.now().isoformat(),
-            "created_at": datetime.now(),
-            "status": "active"
+            "timestamp": datetime.utcnow().isoformat(),
+            "created_at": datetime.utcnow(),
+            # Location tracking data
+            "ip_address": client_ip,
+            "location": location_info,
+            "user_agent": request.headers.get("User-Agent", "Unknown")
         }
         
-        # Insert into database
-        result = waitlist_collection.insert_one(waitlist_entry)
+        # Save to database
+        result = waitlist_collection.insert_one(subscription_data)
         
         if result.inserted_id:
-            # Send notifications in background
+            # Send notifications in background with location info
             background_tasks.add_task(
                 email_service.send_waitlist_notification,
                 subscription.email,
-                subscription.source
+                subscription.source,
+                location_info,
+                client_ip
             )
             
             # Optional: Send welcome email to subscriber
@@ -74,58 +134,82 @@ async def subscribe_to_waitlist(subscription: WaitlistSubscription, background_t
             )
             
             return WaitlistResponse(
-                message="Success! You'll be first to know when we launch.",
-                success=True,
-                email=subscription.email
+                message="🎉 Welcome to TourSmile waitlist! You'll be notified when we launch.",
+                success=True
             )
         else:
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Failed to save email subscription"
-            )
-    
+            raise HTTPException(status_code=500, detail="Failed to save subscription")
+            
     except Exception as e:
-        print(f"Waitlist subscription error: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error"
-        )
+        print(f"Error in waitlist subscription: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 @router.get("/count")
 async def get_waitlist_count():
-    """
-    Get total number of waitlist subscribers
-    """
+    """Get total number of waitlist subscribers"""
     try:
-        count = waitlist_collection.count_documents({"status": "active"})
+        count = waitlist_collection.count_documents({})
         return {"count": count, "success": True}
     except Exception as e:
-        print(f"Waitlist count error: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error"
-        )
+        print(f"Error getting waitlist count: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 @router.get("/recent")
 async def get_recent_subscribers(limit: int = 10):
-    """
-    Get recent waitlist subscribers (for admin use)
-    """
+    """Get recent waitlist subscribers with location info (for admin use)"""
     try:
-        recent = list(waitlist_collection.find(
-            {"status": "active"},
-            {"_id": 0, "email": 1, "source": 1, "timestamp": 1, "created_at": 1}  # Exclude _id field
-        ).sort("created_at", -1).limit(limit))
-        
-        # Convert datetime objects to strings for JSON serialization
-        for subscriber in recent:
-            if "created_at" in subscriber and hasattr(subscriber["created_at"], "isoformat"):
-                subscriber["created_at"] = subscriber["created_at"].isoformat()
-        
-        return {"subscribers": recent, "success": True}
-    except Exception as e:
-        print(f"Recent subscribers error: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error"
+        subscribers = list(
+            waitlist_collection.find({})
+            .sort("created_at", -1)
+            .limit(limit)
         )
+        
+        # Convert ObjectId to string and format for response
+        for subscriber in subscribers:
+            subscriber["_id"] = str(subscriber["_id"])
+            
+        return {"subscribers": subscribers, "success": True}
+    except Exception as e:
+        print(f"Error getting recent subscribers: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+@router.get("/analytics")
+async def get_waitlist_analytics():
+    """Get waitlist analytics with location breakdown"""
+    try:
+        # Total count
+        total_count = waitlist_collection.count_documents({})
+        
+        # Country breakdown
+        country_pipeline = [
+            {"$group": {"_id": "$location.country", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 10}
+        ]
+        countries = list(waitlist_collection.aggregate(country_pipeline))
+        
+        # City breakdown  
+        city_pipeline = [
+            {"$group": {"_id": {"city": "$location.city", "country": "$location.country"}, "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 10}
+        ]
+        cities = list(waitlist_collection.aggregate(city_pipeline))
+        
+        # Source breakdown
+        source_pipeline = [
+            {"$group": {"_id": "$source", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}
+        ]
+        sources = list(waitlist_collection.aggregate(source_pipeline))
+        
+        return {
+            "total_subscribers": total_count,
+            "top_countries": countries,
+            "top_cities": cities, 
+            "sources": sources,
+            "success": True
+        }
+    except Exception as e:
+        print(f"Error getting waitlist analytics: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
