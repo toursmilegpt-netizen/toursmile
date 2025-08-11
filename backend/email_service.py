@@ -1,5 +1,6 @@
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import os
 from datetime import datetime
 import logging
@@ -10,25 +11,53 @@ logger = logging.getLogger(__name__)
 
 class EmailService:
     def __init__(self):
-        self.api_key = os.getenv('SENDGRID_API_KEY')
-        self.sender_email = os.getenv('SENDER_EMAIL', 'noreply@toursmile.com')
+        self.smtp_server = os.getenv('SMTP_SERVER', 'mail.smileholidays.net')
+        self.smtp_port = int(os.getenv('SMTP_PORT', '587'))
+        self.sender_email = os.getenv('SENDER_EMAIL', 'noreply@smileholidays.net')
+        self.sender_password = os.getenv('SENDER_PASSWORD', '')
         self.notification_email = os.getenv('NOTIFICATION_EMAIL', 'sujit@smileholidays.net')
         
-        if self.api_key:
-            self.client = SendGridAPIClient(self.api_key)
-            logger.info("SendGrid client initialized successfully")
+        if self.sender_password:
+            logger.info("SMTP email service initialized successfully")
         else:
-            logger.warning("SendGrid API key not found. Email notifications disabled.")
-            self.client = None
+            logger.warning("SMTP password not found. Email notifications disabled.")
+    
+    def send_email(self, to_email: str, subject: str, html_content: str):
+        """
+        Send email via SMTP
+        """
+        if not self.sender_password:
+            logger.warning("SMTP not configured. Skipping email notification.")
+            return False
+        
+        try:
+            # Create message
+            msg = MIMEMultipart('alternative')
+            msg['From'] = self.sender_email
+            msg['To'] = to_email
+            msg['Subject'] = subject
+            
+            # Add HTML content
+            html_part = MIMEText(html_content, 'html')
+            msg.attach(html_part)
+            
+            # Connect to SMTP server and send email
+            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+                server.starttls()  # Enable encryption
+                server.login(self.sender_email, self.sender_password)
+                server.send_message(msg)
+            
+            logger.info(f"Email sent successfully to {to_email}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error sending email to {to_email}: {str(e)}")
+            return False
     
     def send_waitlist_notification(self, subscriber_email: str, source: str = "website"):
         """
         Send email notification to admin when someone subscribes to waitlist
         """
-        if not self.client:
-            logger.warning("SendGrid not configured. Skipping email notification.")
-            return False
-        
         try:
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             
@@ -67,21 +96,11 @@ class EmailService:
             </html>
             """
             
-            message = Mail(
-                from_email=self.sender_email,
-                to_emails=self.notification_email,
-                subject=f"🚀 New TourSmile Subscriber: {subscriber_email}",
-                html_content=html_content
+            return self.send_email(
+                self.notification_email,
+                f"🚀 New TourSmile Subscriber: {subscriber_email}",
+                html_content
             )
-            
-            response = self.client.send(message)
-            
-            if response.status_code == 202:
-                logger.info(f"Waitlist notification sent successfully for {subscriber_email}")
-                return True
-            else:
-                logger.error(f"Failed to send notification. Status code: {response.status_code}")
-                return False
                 
         except Exception as e:
             logger.error(f"Error sending waitlist notification: {str(e)}")
@@ -89,11 +108,8 @@ class EmailService:
     
     def send_welcome_email(self, subscriber_email: str):
         """
-        Send welcome email to new subscriber (optional feature)
+        Send welcome email to new subscriber
         """
-        if not self.client:
-            return False
-        
         try:
             html_content = f"""
             <html>
@@ -139,21 +155,11 @@ class EmailService:
             </html>
             """
             
-            message = Mail(
-                from_email=self.sender_email,
-                to_emails=subscriber_email,
-                subject="Welcome to TourSmile! Your travel planning adventure begins soon ✈️",
-                html_content=html_content
+            return self.send_email(
+                subscriber_email,
+                "Welcome to TourSmile! Your travel planning adventure begins soon ✈️",
+                html_content
             )
-            
-            response = self.client.send(message)
-            
-            if response.status_code == 202:
-                logger.info(f"Welcome email sent successfully to {subscriber_email}")
-                return True
-            else:
-                logger.error(f"Failed to send welcome email. Status code: {response.status_code}")
-                return False
                 
         except Exception as e:
             logger.error(f"Error sending welcome email: {str(e)}")
