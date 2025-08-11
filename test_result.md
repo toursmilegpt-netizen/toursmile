@@ -414,6 +414,7 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Email Notification System for Waitlist - TESTING COMPLETE"
     - "ComingSoon Page Email Capture Functionality - TESTING COMPLETE"
   stuck_tasks:
     []
