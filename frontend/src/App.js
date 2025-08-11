@@ -734,8 +734,8 @@ const PassengerSelector = ({ passengers, onChange }) => {
 };
 
 function App() {
-  // Check if we should show coming soon page
-  if (SHOW_COMING_SOON) {
+  // Show coming soon page unless development mode is active
+  if (SHOW_COMING_SOON && !isDevelopmentMode) {
     return <ComingSoon />;
   }
 
