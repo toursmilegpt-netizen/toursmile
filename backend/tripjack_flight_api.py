@@ -60,6 +60,13 @@ class TripjackFlightService:
                 if not auth_result.get('success'):
                     return []
 
+            # Convert city names to airport codes
+            origin_code = self._get_airport_code(origin)
+            destination_code = self._get_airport_code(destination)
+            
+            logger.info(f"🛫 Searching flights: {origin} ({origin_code}) → {destination} ({destination_code})")
+            logger.info(f"📅 Date: {departure_date}, Passengers: {passengers}, Class: {class_type}")
+
             # Map class type to Tripjack format
             cabin_class_map = {
                 "economy": "Y",
@@ -80,10 +87,10 @@ class TripjackFlightService:
                     "routeInfos": [
                         {
                             "fromCityOrAirport": {
-                                "code": origin
+                                "code": origin_code
                             },
                             "toCityOrAirport": {
-                                "code": destination
+                                "code": destination_code
                             },
                             "travelDate": departure_date
                         }
