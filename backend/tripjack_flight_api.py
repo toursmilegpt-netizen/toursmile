@@ -337,8 +337,9 @@ class TripjackFlightService:
                 self._access_token = self.api_key
                 # Set a long expiry since API keys don't typically expire
                 self._token_expires_at = datetime.now() + timedelta(hours=24)
+                self.authenticated = True  # Set authentication status
                 logger.info("✅ Tripjack API Key authentication ready!")
-                return True
+                return {"success": True, "message": "API key authentication successful"}
             
             # Fallback to user credentials authentication if no API key
             if not self._user_id or not self._email or not self._password:
