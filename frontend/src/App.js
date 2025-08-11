@@ -890,8 +890,21 @@ function App() {
     setBookingStep('passenger-info');
   };
 
-  // Show results page if user has searched
+  // Show booking flow if user has searched
   if (showResults) {
+    // Flight Selection Step
+    if (bookingStep === 'flight-selection' && selectedFlight) {
+      return (
+        <FlightSelection
+          selectedFlight={selectedFlight}
+          searchParams={searchData}
+          onNext={handleFlightSelectionNext}
+          onBack={handleBackToResults}
+        />
+      );
+    }
+
+    // Default: Flight Results
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
         {/* Header with back button */}
