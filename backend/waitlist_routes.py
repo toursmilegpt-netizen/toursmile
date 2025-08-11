@@ -1,10 +1,11 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, BackgroundTasks
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 import uuid
 from datetime import datetime
 import os
 import pymongo
+from email_service import email_service
 
 router = APIRouter(prefix="/waitlist", tags=["waitlist"])
 
