@@ -893,6 +893,27 @@ function App() {
     setBookingStep('passenger-info');
   };
 
+  const handlePassengerInfoNext = (passengerData) => {
+    console.log('Passenger info completed:', passengerData);
+    setBookingData(passengerData);
+    setBookingStep('payment');
+  };
+
+  const handlePaymentNext = (paymentData) => {
+    console.log('Payment completed:', paymentData);
+    setBookingData(paymentData);
+    setBookingStep('confirmation');
+  };
+
+  const handleStartOver = () => {
+    setShowResults(false);
+    setSearchResults([]);
+    setBookingStep('search');
+    setSelectedFlight(null);
+    setBookingData(null);
+    setSearchData(null);
+  };
+
   // Show booking flow if user has searched
   if (showResults) {
     // Flight Selection Step
