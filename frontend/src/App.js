@@ -3,6 +3,7 @@ import "./App.css";
 import axios from "axios";
 import ComingSoon from "./ComingSoon";
 import FlightResults from "./FlightResults";
+import FlightSelection from "./FlightSelection";
 
 // For development - set to true to show coming soon page
 const SHOW_COMING_SOON = true;
