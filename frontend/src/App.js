@@ -16,8 +16,8 @@ const SHOW_COMING_SOON = window.location.hostname !== 'beta.vimanpravas.com';
 const urlParams = new URLSearchParams(window.location.search);
 const isDevelopmentMode = urlParams.get('dev') === 'true';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+const API = BACKEND_URL + '/api';
 
 // Comprehensive Indian and International Airports Database
 const AIRPORTS_DATABASE = [
