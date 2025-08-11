@@ -14,7 +14,7 @@ const SHOW_COMING_SOON = window.location.hostname !== 'beta.vimanpravas.com';
 
 // Check for development override in URL parameters
 const urlParams = new URLSearchParams(window.location.search);
-const isDevelopmentMode = urlParams.get('dev') === 'true';
+const isDevelopmentMode = urlParams.get('dev') === 'true' || true; // Force dev mode for testing
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 const API = BACKEND_URL + '/api';
