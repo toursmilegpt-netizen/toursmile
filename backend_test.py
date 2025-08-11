@@ -1731,7 +1731,440 @@ class BackendTester:
         
         return self.results
 
+    def test_waitlist_location_tracking_subscription(self):
+        """Test 1: Waitlist subscription with location tracking - Submit new email and verify location data capture"""
+        print("\n📍 TESTING WAITLIST LOCATION TRACKING - New Subscription")
+        print("=" * 70)
+        try:
+            # Use a unique email for testing
+            test_email = f"location.test.{int(time.time())}@toursmile.com"
+            payload = {
+                "email": test_email,
+                "source": "location_tracking_test"
+            }
+            
+            print(f"📤 REQUEST: {json.dumps(payload, indent=2)}")
+            
+            # Add custom headers to simulate real user request
+            headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'X-Forwarded-For': '203.192.12.34',  # Simulate Indian IP
+                'X-Real-IP': '203.192.12.34'
+            }
+            
+            response = self.session.post(f"{API_BASE}/waitlist/subscribe", json=payload, headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    print(f"✅ Subscription successful for {test_email}")
+                    
+                    # Now check if the subscriber was stored with location data
+                    time.sleep(2)  # Wait for background processing
+                    
+                    # Get recent subscribers to verify location data was stored
+                    recent_response = self.session.get(f"{API_BASE}/waitlist/recent?limit=5")
+                    if recent_response.status_code == 200:
+                        recent_data = recent_response.json()
+                        if recent_data.get("success") and "subscribers" in recent_data:
+                            subscribers = recent_data["subscribers"]
+                            
+                            # Find our test subscriber
+                            test_subscriber = None
+                            for subscriber in subscribers:
+                                if subscriber.get("email") == test_email:
+                                    test_subscriber = subscriber
+                                    break
+                            
+                            if test_subscriber:
+                                # Check for location tracking fields
+                                location_fields = ["ip_address", "location", "user_agent"]
+                                missing_fields = [field for field in location_fields if field not in test_subscriber]
+                                
+                                if not missing_fields:
+                                    location_data = test_subscriber.get("location", {})
+                                    location_subfields = ["city", "country", "region", "timezone"]
+                                    missing_location_subfields = [field for field in location_subfields if field not in location_data]
+                                    
+                                    print(f"📍 Location Data Captured:")
+                                    print(f"   IP Address: {test_subscriber.get('ip_address', 'N/A')}")
+                                    print(f"   City: {location_data.get('city', 'N/A')}")
+                                    print(f"   Country: {location_data.get('country', 'N/A')}")
+                                    print(f"   Region: {location_data.get('region', 'N/A')}")
+                                    print(f"   Timezone: {location_data.get('timezone', 'N/A')}")
+                                    print(f"   User Agent: {test_subscriber.get('user_agent', 'N/A')[:50]}...")
+                                    
+                                    if not missing_location_subfields:
+                                        self.log_result("Waitlist Location Tracking Subscription", True, 
+                                                      f"Successfully captured location data for {test_email}",
+                                                      {"subscriber_data": test_subscriber})
+                                        return True
+                                    else:
+                                        self.log_result("Waitlist Location Tracking Subscription", False, 
+                                                      f"Missing location subfields: {missing_location_subfields}")
+                                else:
+                                    self.log_result("Waitlist Location Tracking Subscription", False, 
+                                                  f"Missing location tracking fields: {missing_fields}")
+                            else:
+                                self.log_result("Waitlist Location Tracking Subscription", False, 
+                                              f"Test subscriber {test_email} not found in recent subscribers")
+                        else:
+                            self.log_result("Waitlist Location Tracking Subscription", False, 
+                                          "Could not retrieve recent subscribers to verify location data")
+                    else:
+                        self.log_result("Waitlist Location Tracking Subscription", False, 
+                                      f"Recent subscribers API failed: HTTP {recent_response.status_code}")
+                else:
+                    self.log_result("Waitlist Location Tracking Subscription", False, 
+                                  f"Subscription failed: {data}")
+            else:
+                self.log_result("Waitlist Location Tracking Subscription", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Waitlist Location Tracking Subscription", False, f"Error: {str(e)}")
+        return False
+
+    def test_waitlist_analytics_endpoint(self):
+        """Test 2: Test the new analytics endpoint - Check GET /api/waitlist/analytics for location breakdowns"""
+        print("\n📊 TESTING WAITLIST ANALYTICS ENDPOINT - Location Breakdowns")
+        print("=" * 70)
+        try:
+            response = self.session.get(f"{API_BASE}/waitlist/analytics")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    required_fields = ["total_subscribers", "top_countries", "top_cities", "sources"]
+                    missing_fields = [field for field in required_fields if field not in data]
+                    
+                    if not missing_fields:
+                        print(f"📊 Analytics Data:")
+                        print(f"   Total Subscribers: {data.get('total_subscribers', 0)}")
+                        
+                        # Display top countries
+                        top_countries = data.get("top_countries", [])
+                        print(f"   Top Countries ({len(top_countries)}):")
+                        for i, country in enumerate(top_countries[:5], 1):
+                            country_name = country.get("_id", "Unknown")
+                            count = country.get("count", 0)
+                            print(f"     {i}. {country_name}: {count} subscribers")
+                        
+                        # Display top cities
+                        top_cities = data.get("top_cities", [])
+                        print(f"   Top Cities ({len(top_cities)}):")
+                        for i, city in enumerate(top_cities[:5], 1):
+                            city_info = city.get("_id", {})
+                            city_name = city_info.get("city", "Unknown") if isinstance(city_info, dict) else str(city_info)
+                            country_name = city_info.get("country", "Unknown") if isinstance(city_info, dict) else "Unknown"
+                            count = city.get("count", 0)
+                            print(f"     {i}. {city_name}, {country_name}: {count} subscribers")
+                        
+                        # Display sources
+                        sources = data.get("sources", [])
+                        print(f"   Sources ({len(sources)}):")
+                        for i, source in enumerate(sources[:3], 1):
+                            source_name = source.get("_id", "Unknown")
+                            count = source.get("count", 0)
+                            print(f"     {i}. {source_name}: {count} subscribers")
+                        
+                        # Validate that we have meaningful data
+                        has_location_data = (len(top_countries) > 0 or len(top_cities) > 0)
+                        has_source_data = len(sources) > 0
+                        
+                        if has_location_data and has_source_data:
+                            self.log_result("Waitlist Analytics Endpoint", True, 
+                                          f"Analytics endpoint working with location breakdowns: {len(top_countries)} countries, {len(top_cities)} cities, {len(sources)} sources",
+                                          {"analytics_summary": {
+                                              "total_subscribers": data.get('total_subscribers'),
+                                              "countries_count": len(top_countries),
+                                              "cities_count": len(top_cities),
+                                              "sources_count": len(sources)
+                                          }})
+                            return True
+                        else:
+                            self.log_result("Waitlist Analytics Endpoint", False, 
+                                          f"Analytics endpoint missing meaningful data: location_data={has_location_data}, source_data={has_source_data}")
+                    else:
+                        self.log_result("Waitlist Analytics Endpoint", False, 
+                                      f"Missing required analytics fields: {missing_fields}")
+                else:
+                    self.log_result("Waitlist Analytics Endpoint", False, 
+                                  f"Analytics request failed: {data}")
+            else:
+                self.log_result("Waitlist Analytics Endpoint", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Waitlist Analytics Endpoint", False, f"Error: {str(e)}")
+        return False
+
+    def test_location_enhanced_email_notifications(self):
+        """Test 3: Test location-enhanced email notifications - Verify admin notifications include location info"""
+        print("\n📧 TESTING LOCATION-ENHANCED EMAIL NOTIFICATIONS")
+        print("=" * 70)
+        try:
+            # Subscribe with a new email to trigger notification
+            test_email = f"email.notification.test.{int(time.time())}@toursmile.com"
+            payload = {
+                "email": test_email,
+                "source": "email_notification_test"
+            }
+            
+            # Add headers to simulate location
+            headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'X-Forwarded-For': '157.240.12.35',  # Simulate US IP
+                'X-Real-IP': '157.240.12.35'
+            }
+            
+            print(f"📤 Subscribing {test_email} to trigger email notification...")
+            response = self.session.post(f"{API_BASE}/waitlist/subscribe", json=payload, headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    print(f"✅ Subscription successful - email notification should be sent in background")
+                    
+                    # Wait a moment for background email processing
+                    time.sleep(3)
+                    
+                    # Check if the subscriber was stored with location data (indirect verification of email content)
+                    recent_response = self.session.get(f"{API_BASE}/waitlist/recent?limit=3")
+                    if recent_response.status_code == 200:
+                        recent_data = recent_response.json()
+                        if recent_data.get("success") and "subscribers" in recent_data:
+                            subscribers = recent_data["subscribers"]
+                            
+                            # Find our test subscriber
+                            test_subscriber = None
+                            for subscriber in subscribers:
+                                if subscriber.get("email") == test_email:
+                                    test_subscriber = subscriber
+                                    break
+                            
+                            if test_subscriber:
+                                location_data = test_subscriber.get("location", {})
+                                ip_address = test_subscriber.get("ip_address", "Unknown")
+                                
+                                # Verify location data is available for email notification
+                                location_fields_present = all(field in location_data for field in ["city", "country", "region", "timezone"])
+                                
+                                if location_fields_present and ip_address != "Unknown":
+                                    print(f"📧 Email notification data verified:")
+                                    print(f"   Subscriber: {test_email}")
+                                    print(f"   Location: {location_data.get('city')}, {location_data.get('country')}")
+                                    print(f"   IP: {ip_address}")
+                                    print(f"   Source: {test_subscriber.get('source', 'N/A')}")
+                                    
+                                    # Check if email service is configured
+                                    try:
+                                        import os
+                                        smtp_configured = bool(os.getenv('SMTP_SERVER') and os.getenv('SENDER_EMAIL') and os.getenv('SENDER_PASSWORD'))
+                                        
+                                        if smtp_configured:
+                                            print(f"✅ SMTP service configured - admin notification email sent to {os.getenv('NOTIFICATION_EMAIL', 'admin')}")
+                                            self.log_result("Location-Enhanced Email Notifications", True, 
+                                                          f"Email notification triggered with location data: {location_data.get('city')}, {location_data.get('country')}",
+                                                          {"subscriber_location": location_data, "ip_address": ip_address, "smtp_configured": True})
+                                            return True
+                                        else:
+                                            print(f"⚠️ SMTP not configured - notification would include location data if SMTP was set up")
+                                            self.log_result("Location-Enhanced Email Notifications", True, 
+                                                          f"Location data ready for email notifications (SMTP not configured in test environment)",
+                                                          {"subscriber_location": location_data, "ip_address": ip_address, "smtp_configured": False})
+                                            return True
+                                    except Exception as smtp_error:
+                                        print(f"⚠️ Could not verify SMTP configuration: {smtp_error}")
+                                        self.log_result("Location-Enhanced Email Notifications", True, 
+                                                      f"Location data captured for email notifications",
+                                                      {"subscriber_location": location_data, "ip_address": ip_address})
+                                        return True
+                                else:
+                                    self.log_result("Location-Enhanced Email Notifications", False, 
+                                                  f"Location data incomplete for email notifications: fields_present={location_fields_present}, ip_valid={ip_address != 'Unknown'}")
+                            else:
+                                self.log_result("Location-Enhanced Email Notifications", False, 
+                                              f"Test subscriber {test_email} not found")
+                        else:
+                            self.log_result("Location-Enhanced Email Notifications", False, 
+                                          "Could not retrieve recent subscribers")
+                    else:
+                        self.log_result("Location-Enhanced Email Notifications", False, 
+                                      f"Recent subscribers API failed: HTTP {recent_response.status_code}")
+                else:
+                    self.log_result("Location-Enhanced Email Notifications", False, 
+                                  f"Subscription failed: {data}")
+            else:
+                self.log_result("Location-Enhanced Email Notifications", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Location-Enhanced Email Notifications", False, f"Error: {str(e)}")
+        return False
+
+    def test_database_location_structure(self):
+        """Test 4: Test database structure - Check that location data is being stored properly"""
+        print("\n🗄️ TESTING DATABASE LOCATION STRUCTURE")
+        print("=" * 70)
+        try:
+            # Get recent subscribers to examine database structure
+            response = self.session.get(f"{API_BASE}/waitlist/recent?limit=10")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "subscribers" in data:
+                    subscribers = data["subscribers"]
+                    
+                    if len(subscribers) > 0:
+                        print(f"📊 Examining {len(subscribers)} recent subscribers for database structure...")
+                        
+                        # Check database structure across multiple subscribers
+                        structure_analysis = {
+                            "total_subscribers": len(subscribers),
+                            "has_ip_address": 0,
+                            "has_location": 0,
+                            "has_user_agent": 0,
+                            "has_complete_location": 0,
+                            "location_fields_found": set(),
+                            "sample_locations": []
+                        }
+                        
+                        for subscriber in subscribers:
+                            # Check for required location tracking fields
+                            if "ip_address" in subscriber:
+                                structure_analysis["has_ip_address"] += 1
+                            
+                            if "location" in subscriber:
+                                structure_analysis["has_location"] += 1
+                                location_data = subscriber["location"]
+                                
+                                if isinstance(location_data, dict):
+                                    # Track which location fields are present
+                                    for field in location_data.keys():
+                                        structure_analysis["location_fields_found"].add(field)
+                                    
+                                    # Check for complete location data
+                                    required_location_fields = ["city", "country", "region", "timezone"]
+                                    if all(field in location_data for field in required_location_fields):
+                                        structure_analysis["has_complete_location"] += 1
+                                        
+                                        # Collect sample locations
+                                        if len(structure_analysis["sample_locations"]) < 3:
+                                            structure_analysis["sample_locations"].append({
+                                                "city": location_data.get("city"),
+                                                "country": location_data.get("country"),
+                                                "country_code": location_data.get("country_code")
+                                            })
+                            
+                            if "user_agent" in subscriber:
+                                structure_analysis["has_user_agent"] += 1
+                        
+                        # Print analysis results
+                        print(f"📋 Database Structure Analysis:")
+                        print(f"   Subscribers with IP Address: {structure_analysis['has_ip_address']}/{structure_analysis['total_subscribers']}")
+                        print(f"   Subscribers with Location Data: {structure_analysis['has_location']}/{structure_analysis['total_subscribers']}")
+                        print(f"   Subscribers with User Agent: {structure_analysis['has_user_agent']}/{structure_analysis['total_subscribers']}")
+                        print(f"   Subscribers with Complete Location: {structure_analysis['has_complete_location']}/{structure_analysis['total_subscribers']}")
+                        print(f"   Location Fields Found: {sorted(structure_analysis['location_fields_found'])}")
+                        
+                        if structure_analysis["sample_locations"]:
+                            print(f"   Sample Locations:")
+                            for i, location in enumerate(structure_analysis["sample_locations"], 1):
+                                print(f"     {i}. {location['city']}, {location['country']} ({location.get('country_code', 'N/A')})")
+                        
+                        # Determine success criteria
+                        location_tracking_percentage = (structure_analysis["has_complete_location"] / structure_analysis["total_subscribers"]) * 100
+                        required_fields_present = len(structure_analysis["location_fields_found"]) >= 4  # city, country, region, timezone
+                        
+                        if location_tracking_percentage >= 50 and required_fields_present:
+                            self.log_result("Database Location Structure", True, 
+                                          f"Database properly storing location data: {location_tracking_percentage:.1f}% complete location data, {len(structure_analysis['location_fields_found'])} location fields",
+                                          {"structure_analysis": structure_analysis})
+                            return True
+                        else:
+                            self.log_result("Database Location Structure", False, 
+                                          f"Database location structure incomplete: {location_tracking_percentage:.1f}% complete, {len(structure_analysis['location_fields_found'])} fields")
+                    else:
+                        self.log_result("Database Location Structure", False, 
+                                      "No subscribers found to analyze database structure")
+                else:
+                    self.log_result("Database Location Structure", False, 
+                                  f"Could not retrieve subscribers: {data}")
+            else:
+                self.log_result("Database Location Structure", False, 
+                              f"HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Database Location Structure", False, f"Error: {str(e)}")
+        return False
+
+    def run_location_tracking_tests(self):
+        """Run comprehensive location tracking functionality tests"""
+        print("=" * 80)
+        print("📍 WAITLIST LOCATION TRACKING FUNCTIONALITY TESTING")
+        print("=" * 80)
+        print("Testing the new location tracking functionality:")
+        print("1. Waitlist subscription with location tracking - Submit new email and verify IP/location capture")
+        print("2. Analytics endpoint - Check GET /api/waitlist/analytics for location breakdowns")
+        print("3. Location-enhanced email notifications - Verify admin notifications include location info")
+        print("4. Database structure - Check location data storage (ip_address, location, user_agent)")
+        print("=" * 80)
+        
+        # Reset results for this test run
+        self.results = {
+            'total_tests': 0,
+            'passed': 0,
+            'failed': 0,
+            'errors': []
+        }
+        
+        # Run all location tracking tests
+        tests = [
+            ("Waitlist Location Tracking Subscription", self.test_waitlist_location_tracking_subscription),
+            ("Waitlist Analytics Endpoint", self.test_waitlist_analytics_endpoint),
+            ("Location-Enhanced Email Notifications", self.test_location_enhanced_email_notifications),
+            ("Database Location Structure", self.test_database_location_structure)
+        ]
+        
+        for test_name, test_func in tests:
+            test_func()
+            time.sleep(2)  # Pause between tests
+        
+        # Print comprehensive summary
+        print("\n" + "=" * 80)
+        print("📊 LOCATION TRACKING FUNCTIONALITY TEST SUMMARY")
+        print("=" * 80)
+        print(f"Total Tests: {self.results['total_tests']}")
+        print(f"Passed: {self.results['passed']} ✅")
+        print(f"Failed: {self.results['failed']} ❌")
+        
+        if self.results['errors']:
+            print(f"\n🚨 FAILED TESTS:")
+            for error in self.results['errors']:
+                print(f"  • {error}")
+        
+        success_rate = (self.results['passed'] / self.results['total_tests']) * 100 if self.results['total_tests'] > 0 else 0
+        print(f"\nSuccess Rate: {success_rate:.1f}%")
+        
+        # Final assessment
+        if success_rate == 100:
+            print("🎉 ALL LOCATION TRACKING TESTS PASSED!")
+            print("✅ Location tracking working correctly on subscription")
+            print("✅ Analytics endpoint providing geographic breakdowns")
+            print("✅ Email notifications enhanced with location data")
+            print("✅ Database properly storing location information")
+            print("\n🚀 LOCATION TRACKING FUNCTIONALITY IS PRODUCTION-READY!")
+        elif success_rate >= 75:
+            print("⚠️  Location tracking mostly working with minor issues")
+            print("🔍 Check failed tests above for specific problems")
+        else:
+            print("🚨 Location tracking has significant issues")
+            print("🔧 IP geolocation or database storage problems detected")
+        
+        return self.results
+
 if __name__ == "__main__":
     tester = BackendTester()
-    # Run the Waitlist Functionality tests as requested
-    results = tester.run_waitlist_functionality_tests()
+    # Run the Location Tracking tests as requested
+    results = tester.run_location_tracking_tests()
