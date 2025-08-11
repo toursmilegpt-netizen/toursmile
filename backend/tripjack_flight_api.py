@@ -35,6 +35,7 @@ class TripjackFlightService:
         self._api_secret = None
         self._access_token = None
         self._token_expires_at = None
+        self.authenticated = False  # Track authentication status
         
         logger.info(f"🚀 TripjackFlightService initialized - Environment: {'PRODUCTION' if self.is_production else 'UAT'}")
         logger.info(f"📡 Base URL: {self.base_url}")
