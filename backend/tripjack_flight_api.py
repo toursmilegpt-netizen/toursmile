@@ -134,8 +134,11 @@ class TripjackFlightService:
                 
                 if response_data.get('searchResult', {}).get('tripInfos'):
                     # Parse flight results based on actual Tripjack structure
-                    trip_infos = response_data.get('searchResult', {}).get('tripInfos', [])
-                    flights = self._parse_tripjack_flights(trip_infos, origin, destination)
+                    trip_infos_data = response_data.get('searchResult', {}).get('tripInfos', {})
+                    
+                    # Extract ONWARD flights (and RETURN if round trip)
+                    onward_flights = trip_infos_data.get('ONWARD', [])
+                    flights = self._parse_tripjack_flights(onward_flights, origin, destination)
                     logger.info(f"✅ Successfully parsed {len(flights)} flights from Tripjack")
                     return flights
                 else:
