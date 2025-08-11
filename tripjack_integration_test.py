@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Get backend URL from environment
-BACKEND_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://a9bef55e-6620-4095-85bb-fe21f7fd7924.preview.emergentagent.com')
+BACKEND_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://30526a6a-cbf7-4ea8-b1a5-2a1241692e29.preview.emergentagent.com')
 API_BASE = f"{BACKEND_URL}/api"
 
 class TripjackIntegrationTester:
