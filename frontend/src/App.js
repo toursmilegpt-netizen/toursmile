@@ -916,6 +916,38 @@ function App() {
 
   // Show booking flow if user has searched
   if (showResults) {
+    // Booking Confirmation Step
+    if (bookingStep === 'confirmation' && bookingData) {
+      return (
+        <BookingConfirmation
+          bookingData={bookingData}
+          onStartOver={handleStartOver}
+        />
+      );
+    }
+
+    // Payment Step
+    if (bookingStep === 'payment' && bookingData) {
+      return (
+        <Payment
+          bookingData={bookingData}
+          onNext={handlePaymentNext}
+          onBack={() => setBookingStep('passenger-info')}
+        />
+      );
+    }
+
+    // Passenger Information Step
+    if (bookingStep === 'passenger-info' && bookingData) {
+      return (
+        <PassengerInfo
+          bookingData={bookingData}
+          onNext={handlePassengerInfoNext}
+          onBack={() => setBookingStep('flight-selection')}
+        />
+      );
+    }
+
     // Flight Selection Step
     if (bookingStep === 'flight-selection' && selectedFlight) {
       return (
