@@ -739,10 +739,11 @@ const PassengerSelector = ({ passengers, onChange }) => {
 };
 
 function App() {
+  // TEMPORARY FIX: Force show full booking interface for preview
   // Show coming soon page unless development mode is active
-  if (SHOW_COMING_SOON && !isDevelopmentMode) {
-    return <ComingSoon />;
-  }
+  // if (SHOW_COMING_SOON && !isDevelopmentMode) {
+  //   return <ComingSoon />;
+  // }
 
   // Original flight search functionality
   const [searchResults, setSearchResults] = useState([]);
