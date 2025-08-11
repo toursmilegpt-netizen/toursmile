@@ -768,8 +768,8 @@ function App() {
         tripType: formData.tripType,
         origin: formData.segments[0].origin,
         destination: formData.segments[0].destination,
-        departureDate: formData.segments[0].departureDate,
-        returnDate: formData.returnDate,
+        departure_date: formData.segments[0].departureDate, // Fixed: use snake_case
+        return_date: formData.returnDate, // Fixed: use snake_case
         passengers: formData.passengers.adults + formData.passengers.children + formData.passengers.infants,
         class: formData.class,
         segments: formData.segments
