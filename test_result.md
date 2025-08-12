@@ -348,9 +348,9 @@ frontend:
 
   - task: "Flight Search UI"
     implemented: true
-    working: true
+    working: false
     file: "/app/frontend/src/App.js"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: false
     status_history:
@@ -369,6 +369,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "🎯 TRIPJACK FLIGHT SEARCH TESTING COMPLETED SUCCESSFULLY! Comprehensive testing reveals that the Tripjack API integration is working perfectly at the backend level. CRITICAL FINDINGS: ✅ Backend API Integration - Direct API testing confirms 64 real flights returned from Tripjack API with data_source: 'real_api', including SpiceJet (SG-214, SG-22, SG-8157), IndiGo (6E-2766, 6E-449, 6E-6218), AI Express (IX-1163, IX-1145), and AkasaAir (QP-1131, QP-1719) flights. ✅ Real Flight Data - All flights show proper Delhi (DEL) to Mumbai (BOM) routing, realistic times, aircraft types (7M8, 321, 32N), terminal information, and baggage allowances. ✅ API Format Fixed - Corrected frontend payload from camelCase (departureDate) to snake_case (departure_date) to match backend expectations. ❌ Frontend Dev Mode Issue - The ?dev=true parameter is not working properly to show the full booking interface, still displaying coming soon page. The Tripjack integration is production-ready with 64 real flights, proper airline variety, and comprehensive flight data. Only frontend access issue remains for testing the complete user experience."
+      - working: false
+        agent: "testing"
+        comment: "🚨 CRITICAL FLIGHT BOOKING FLOW ISSUES IDENTIFIED! Comprehensive testing reveals multiple critical UX/UI issues reported by user: ❌ ISSUE 1: Flight search results not displaying seamlessly - Frontend gets stuck on 'Searching Best Flights...' loading screen and never shows results despite backend API returning 68 real flights from Tripjack. ❌ ISSUE 2: All flight prices showing as ₹0 - Backend API returns price: 0 for all flights, making booking impossible. ❌ ISSUE 3: Select Flight buttons completely missing - No 'Select Flight' buttons found on any flight cards, preventing users from proceeding with booking. ❌ ISSUE 4: Missing fare type dropdowns - No fare type selection options (Economy/Business/Premium) visible on flight results. ❌ ISSUE 5: Filters not accessible - Filter section not found when results fail to load. ❌ ISSUE 6: Complete booking flow broken - Cannot test passenger info, payment, or confirmation steps due to inability to select flights. BACKEND VERIFICATION: Direct API testing confirms backend returns 68 flights with proper airline data (SpiceJet, IndiGo, AI Express, AkasaAir) but all with price: 0. Frontend-backend integration is fundamentally broken - search form works but results never display to users."
 
   - task: "Hotel Search UI"
     implemented: true
