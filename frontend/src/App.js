@@ -786,12 +786,26 @@ function App() {
         segments: formData.segments
       };
       
-      const response = await axios.post(`${API}/flights/search`, searchPayload);
-      setSearchResults(response.data.flights || []);
+      console.log('API payload:', searchPayload);
       
-      console.log('Search results:', response.data);
+      const response = await axios.post(`${API}/flights/search`, searchPayload);
+      
+      console.log('API response:', response.data);
+      console.log('Flights in response:', response.data.flights);
+      console.log('Number of flights:', response.data.flights ? response.data.flights.length : 0);
+      
+      const flights = response.data.flights || [];
+      setSearchResults(flights);
+      
+      if (flights.length > 0) {
+        console.log('✅ Successfully loaded', flights.length, 'flights');
+      } else {
+        console.log('❌ No flights returned from API');
+      }
+      
     } catch (error) {
       console.error('Search error:', error);
+      console.log('Using sample flight data for demo');
       
       // For demo purposes, show sample flights if API fails
       const sampleFlights = [
