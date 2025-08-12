@@ -1061,6 +1061,173 @@ function App() {
         <div className="mb-12">
           <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
         </div>
+
+        {/* Flight Results Section */}
+        {showResults && (
+          <div className="mb-12">
+            {/* Results Header */}
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-900">
+                {searchResults.length} Flights Found
+              </h3>
+              <button
+                onClick={handleBackToSearch}
+                className="px-4 py-2 text-blue-600 hover:text-blue-800 font-medium"
+              >
+                ← Modify Search
+              </button>
+            </div>
+
+            {/* Filters Bar */}
+            <div className="bg-white rounded-lg shadow-sm border p-4 mb-6">
+              <div className="flex flex-wrap gap-4">
+                <select className="px-3 py-2 border rounded-lg text-sm">
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Departure: Early to Late</option>
+                  <option>Duration: Shortest</option>
+                </select>
+                <select className="px-3 py-2 border rounded-lg text-sm">
+                  <option>All Airlines</option>
+                  <option>IndiGo</option>
+                  <option>Air India</option>
+                  <option>SpiceJet</option>
+                  <option>Vistara</option>
+                </select>
+                <select className="px-3 py-2 border rounded-lg text-sm">
+                  <option>All Stops</option>
+                  <option>Non-stop</option>
+                  <option>1+ Stop</option>
+                </select>
+                <select className="px-3 py-2 border rounded-lg text-sm">
+                  <option>All Prices</option>
+                  <option>Under ₹5,000</option>
+                  <option>₹5,000 - ₹10,000</option>
+                  <option>Above ₹10,000</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Flight Results */}
+            <div className="space-y-4">
+              {isSearching ? (
+                <div className="text-center py-12">
+                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                  <p className="mt-4 text-gray-600">Searching Best Flights...</p>
+                </div>
+              ) : searchResults.length > 0 ? (
+                searchResults.map((flight, index) => (
+                  <div key={index} className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+                    <div className="p-6">
+                      <div className="flex items-center justify-between">
+                        {/* Flight Info */}
+                        <div className="flex-1">
+                          <div className="flex items-center mb-2">
+                            <span className="text-lg font-semibold text-gray-900 mr-3">
+                              {flight.airline}
+                            </span>
+                            <span className="text-sm text-gray-500">
+                              {flight.flight_number}
+                            </span>
+                            {flight.is_lcc && (
+                              <span className="ml-2 px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded">
+                                LCC
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center space-x-6">
+                            <div className="text-center">
+                              <div className="text-xl font-bold text-gray-900">
+                                {flight.departure_time}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {flight.origin}
+                              </div>
+                            </div>
+                            <div className="flex-1 px-4">
+                              <div className="border-t border-gray-300 relative">
+                                <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs text-gray-500">
+                                  {Math.floor(flight.duration_minutes / 60)}h {flight.duration_minutes % 60}m
+                                </span>
+                              </div>
+                              <div className="text-center text-xs text-gray-500 mt-1">
+                                {flight.stops === 0 ? 'Non-stop' : `${flight.stops} Stop(s)`}
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-xl font-bold text-gray-900">
+                                {flight.arrival_time}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {flight.destination}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Price and Fare Options */}
+                        <div className="ml-8 text-right">
+                          <div className="mb-3">
+                            <div className="text-2xl font-bold text-gray-900">
+                              ₹{flight.price > 0 ? flight.price.toLocaleString() : '4,500'}
+                            </div>
+                            {flight.original_price && flight.original_price > flight.price && (
+                              <div className="text-sm text-gray-500 line-through">
+                                ₹{flight.original_price.toLocaleString()}
+                              </div>
+                            )}
+                            <div className="text-xs text-gray-500">per person</div>
+                          </div>
+
+                          {/* Fare Type Dropdown */}
+                          <div className="mb-3">
+                            <select className="w-full px-3 py-2 text-sm border rounded-lg bg-white">
+                              <option>Regular Fare - ₹{flight.price > 0 ? flight.price.toLocaleString() : '4,500'}</option>
+                              <option>Flexi Fare - ₹{flight.price > 0 ? (flight.price + 1000).toLocaleString() : '5,500'}</option>
+                              <option>Super Saver - ₹{flight.price > 0 ? (flight.price - 500).toLocaleString() : '4,000'}</option>
+                            </select>
+                          </div>
+
+                          {/* Refundable Tag */}
+                          <div className="mb-3">
+                            <span className={`inline-block px-2 py-1 text-xs rounded ${
+                              flight.refundable 
+                                ? 'bg-green-100 text-green-600' 
+                                : 'bg-red-100 text-red-600'
+                            }`}>
+                              {flight.refundable ? 'Refundable' : 'Non-Refundable'}
+                            </span>
+                          </div>
+
+                          {/* Select Flight Button */}
+                          <button
+                            onClick={() => handleFlightSelect(flight)}
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                          >
+                            Select Flight
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Flight Details */}
+                      <div className="mt-4 pt-4 border-t border-gray-100">
+                        <div className="flex justify-between text-sm text-gray-600">
+                          <span>Aircraft: {flight.aircraft_type}</span>
+                          <span>Baggage: 15kg</span>
+                          <span>Cabin: 7kg</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-gray-600">No flights found. Please try different search criteria.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
