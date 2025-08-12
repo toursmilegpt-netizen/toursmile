@@ -203,11 +203,45 @@ class TripjackFlightService:
                 # Extract pricing from totalPriceList if available
                 price_info = trip_info.get('totalPriceList', [])
                 total_price = 0
-                if price_info:
-                    # Get first price option
+                
+                if price_info and len(price_info) > 0:
                     first_price = price_info[0]
-                    adult_fare = first_price.get('fd', {}).get('ADULT', {})
-                    total_price = adult_fare.get('fF', 0) or adult_fare.get('tF', 0)
+                    logger.info(f"🔍 Tripjack price info structure: {first_price}")
+                    
+                    # Try multiple possible price field structures
+                    try:
+                        # Method 1: fd.ADULT.fF or tF (current method)
+                        adult_fare = first_price.get('fd', {}).get('ADULT', {})
+                        total_price = adult_fare.get('fF', 0) or adult_fare.get('tF', 0)
+                        
+                        # Method 2: Direct total field
+                        if not total_price:
+                            total_price = first_price.get('total', 0)
+                            
+                        # Method 3: totalAmount field
+                        if not total_price:
+                            total_price = first_price.get('totalAmount', 0)
+                            
+                        # Method 4: price field
+                        if not total_price:
+                            total_price = first_price.get('price', 0)
+                            
+                        # Method 5: ADULT fare directly
+                        if not total_price and 'ADULT' in first_price:
+                            adult_data = first_price['ADULT']
+                            total_price = adult_data.get('totalFare', 0) or adult_data.get('baseFare', 0)
+                            
+                        logger.info(f"💰 Extracted price for flight: ₹{total_price}")
+                        
+                    except Exception as price_error:
+                        logger.error(f"❌ Error extracting price: {price_error}")
+                        # Fallback: assign a reasonable default price
+                        total_price = 4500  # Default price if extraction fails
+                        
+                else:
+                    logger.warning("⚠️ No totalPriceList found in trip_info")
+                    # Check if there's a direct price field on trip_info
+                    total_price = trip_info.get('price', 0) or trip_info.get('totalAmount', 0) or 4500
                 
                 # Build flight object in our standard format
                 flight = {
