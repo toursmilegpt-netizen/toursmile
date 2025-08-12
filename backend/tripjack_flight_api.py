@@ -208,30 +208,41 @@ class TripjackFlightService:
                     first_price = price_info[0]
                     logger.info(f"🔍 Tripjack price info structure: {first_price}")
                     
-                    # Try multiple possible price field structures
+                    # Try multiple possible price field structures - UPDATED FOR CORRECT TRIPJACK FORMAT
                     try:
-                        # Method 1: fd.ADULT.fF or tF (current method)
+                        # Method 1: fd.ADULT.fC.TF (Total Fare) - CORRECT TRIPJACK FORMAT
                         adult_fare = first_price.get('fd', {}).get('ADULT', {})
-                        total_price = adult_fare.get('fF', 0) or adult_fare.get('tF', 0)
+                        fare_components = adult_fare.get('fC', {})
+                        total_price = fare_components.get('TF', 0)  # TF = Total Fare
                         
-                        # Method 2: Direct total field
+                        # Method 2: fd.ADULT.fC.NF (Net Fare) as backup
+                        if not total_price:
+                            total_price = fare_components.get('NF', 0)  # NF = Net Fare
+                            
+                        # Method 3: fd.ADULT.fC.BF (Base Fare) as backup
+                        if not total_price:
+                            total_price = fare_components.get('BF', 0)  # BF = Base Fare
+                            
+                        # Method 4: Legacy methods for backward compatibility
+                        if not total_price:
+                            total_price = adult_fare.get('fF', 0) or adult_fare.get('tF', 0)
+                        
+                        # Method 5: Direct total field
                         if not total_price:
                             total_price = first_price.get('total', 0)
                             
-                        # Method 3: totalAmount field
+                        # Method 6: totalAmount field
                         if not total_price:
                             total_price = first_price.get('totalAmount', 0)
                             
-                        # Method 4: price field
+                        # Method 7: price field
                         if not total_price:
                             total_price = first_price.get('price', 0)
                             
-                        # Method 5: ADULT fare directly
-                        if not total_price and 'ADULT' in first_price:
-                            adult_data = first_price['ADULT']
-                            total_price = adult_data.get('totalFare', 0) or adult_data.get('baseFare', 0)
+                        # Convert to integer for consistency
+                        total_price = int(total_price) if total_price else 0
                             
-                        logger.info(f"💰 Extracted price for flight: ₹{total_price}")
+                        logger.info(f"💰 Extracted price for flight: ₹{total_price} (from TF: {fare_components.get('TF', 0)})")
                         
                     except Exception as price_error:
                         logger.error(f"❌ Error extracting price: {price_error}")
