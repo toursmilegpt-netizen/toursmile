@@ -462,6 +462,8 @@ agent_communication:
     message: "Tripjack API backend integration confirmed working with 64 real flights returned."
   - agent: "testing"
     message: "🚨 URGENT: Multiple critical flight booking issues identified that match user complaints exactly. Frontend gets stuck on loading screen, all prices show ₹0, Select Flight buttons missing, fare dropdowns missing, filters not accessible. Backend API works but frontend-backend integration is completely broken. This explains why users cannot complete flight bookings. Immediate fixes needed for: 1) Frontend results display logic 2) Price data handling 3) Select Flight button implementation 4) Fare type options 5) Filter functionality. All issues are high-priority UX blockers preventing any flight bookings."
+  - agent: "testing"
+    message: "🚨 CRITICAL FORM VALIDATION BLOCKER IDENTIFIED! Comprehensive testing of main agent's flight search fixes reveals fundamental issue: Search button remains disabled despite proper form completion (Delhi → Mumbai, tomorrow, 1 passenger, Economy). Root cause appears to be form validation logic preventing search execution. The sophisticated UI components (FlightResults with filters, FlightSelection, PassengerInfo, Payment, BookingConfirmation) are well-implemented, but users cannot execute searches due to this validation blocker. URGENT: Debug canSearch() function and form state management to enable search button when form is properly completed. This is blocking the entire flight search functionality at the form level."
 
   - task: "Waitlist Subscription Functionality"
     implemented: true
