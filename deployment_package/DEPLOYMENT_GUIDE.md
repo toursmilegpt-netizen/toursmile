@@ -7,7 +7,7 @@
 
 Current frontend configuration points to Emergent platform:
 ```
-REACT_APP_BACKEND_URL=https://5b821b1a-5736-4b3a-9ce6-e24fa07ffc8c.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://flightsearch-2.preview.emergentagent.com
 ```
 
 **This needs to be changed to your Interserver domain before deployment.**
