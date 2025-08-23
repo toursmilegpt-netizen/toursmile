@@ -3,7 +3,7 @@ Database configuration and models for TourSmile
 PostgreSQL + Redis setup with SQLAlchemy
 """
 from sqlalchemy import create_engine, Column, String, DateTime, Integer, Float, Boolean, Text, JSON, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
