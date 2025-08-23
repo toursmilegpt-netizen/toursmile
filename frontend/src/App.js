@@ -545,12 +545,11 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
 
   // Only update local inputValue if parent value changes and is different
   useEffect(() => {
-    // Only update if the parent value is different from our local value
-    // and only if we're not currently showing suggestions (user is not actively typing/selecting)
-    if (value !== inputValue && !showSuggestions) {
+    // Simple condition to prevent race conditions
+    if (value !== inputValue) {
       setInputValue(value || '');
     }
-  }, [value, showSuggestions]);
+  }, [value]);
 
   useEffect(() => {
     if (autoFocus && ref?.current) {
