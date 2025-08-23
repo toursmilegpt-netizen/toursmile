@@ -379,7 +379,16 @@ const FlightFilters = ({ filters, onFilterChange, flights }) => {
       <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center">
         🔧 Filters
         <button 
-          onClick={() => onFilterChange({sortBy: 'price', priceRange: [0, 50000], airlines: [], stops: []})}
+          onClick={() => onFilterChange({
+            sortBy: 'price', 
+            priceRange: [0, 50000], 
+            airlines: [], 
+            stops: [],
+            departureTime: [],
+            flightDuration: [],
+            services: [],
+            refundPolicy: []
+          })}
           className="ml-auto text-sm text-blue-600 hover:text-blue-800"
         >
           Clear All
