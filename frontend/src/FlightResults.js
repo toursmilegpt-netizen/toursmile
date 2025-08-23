@@ -933,6 +933,87 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
         if (!filters.timeSlots.includes(timeSlot)) return false;
       }
 
+      // Enhanced Departure Time Filter
+      if (filters.departureTime.length > 0) {
+        const hour = parseInt((flight.departure_time || '12:00').split(':')[0]);
+        let matchesTimeFilter = false;
+        
+        filters.departureTime.forEach(timeFilter => {
+          switch(timeFilter) {
+            case 'early-morning':
+              if (hour >= 6 && hour < 12) matchesTimeFilter = true;
+              break;
+            case 'afternoon':
+              if (hour >= 12 && hour < 18) matchesTimeFilter = true;
+              break;
+            case 'evening':
+              if (hour >= 18 && hour < 24) matchesTimeFilter = true;
+              break;
+            case 'night':
+              if (hour >= 0 && hour < 6) matchesTimeFilter = true;
+              break;
+          }
+        });
+        
+        if (!matchesTimeFilter) return false;
+      }
+
+      // Flight Duration Filter
+      if (filters.flightDuration.length > 0) {
+        const durationMinutes = flight.duration_minutes || 0;
+        const hours = durationMinutes / 60;
+        let matchesDurationFilter = false;
+        
+        filters.flightDuration.forEach(duration => {
+          switch(duration) {
+            case 'short':
+              if (hours < 2) matchesDurationFilter = true;
+              break;
+            case 'medium':
+              if (hours >= 2 && hours < 4) matchesDurationFilter = true;
+              break;
+            case 'long':
+              if (hours >= 4 && hours < 6) matchesDurationFilter = true;
+              break;
+            case 'very-long':
+              if (hours >= 6) matchesDurationFilter = true;
+              break;
+          }
+        });
+        
+        if (!matchesDurationFilter) return false;
+      }
+
+      // Services Filter (mock implementation)
+      if (filters.services.length > 0) {
+        // In a real implementation, this would check flight.services or similar
+        // For now, we'll simulate some flights having these services
+        const flightServices = [];
+        if (flight.price > 5000) flightServices.push('free-baggage');
+        if (flight.airline && ['Air India', 'Vistara', 'Emirates'].includes(flight.airline)) {
+          flightServices.push('meal-included', 'entertainment');
+        }
+        if (flight.airline && ['Emirates', 'Qatar Airways', 'Singapore Airlines'].includes(flight.airline)) {
+          flightServices.push('wifi');
+        }
+        
+        const hasRequiredServices = filters.services.some(service => 
+          flightServices.includes(service)
+        );
+        
+        if (!hasRequiredServices) return false;
+      }
+
+      // Refund Policy Filter (mock implementation)
+      if (filters.refundPolicy.length > 0) {
+        // In a real implementation, this would check flight.refundable or similar
+        let flightRefundPolicy = 'non-refundable';
+        if (flight.refundable) flightRefundPolicy = 'refundable';
+        else if (flight.price > 7000) flightRefundPolicy = 'partially-refundable';
+        
+        if (!filters.refundPolicy.includes(flightRefundPolicy)) return false;
+      }
+
       return true;
     });
 
