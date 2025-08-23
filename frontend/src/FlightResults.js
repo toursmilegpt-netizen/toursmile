@@ -158,9 +158,45 @@ const FlightFilters = ({ filters, onFilterChange, flights }) => {
   );
 };
 
-// Individual Flight Card Component
+// Individual Flight Card Component with Fare Options
 const FlightCard = ({ flight, onSelect, isSelected }) => {
   const airlineInfo = AIRLINE_INFO[flight.airline] || AIRLINE_INFO["Default"];
+  const [showFares, setShowFares] = useState(false);
+  
+  // Generate fare options for this flight
+  const baseFare = flight.price || 5000;
+  const fareOptions = [
+    {
+      id: 'saver',
+      name: 'Saver',
+      type: 'Non-Refundable',
+      price: baseFare,
+      originalPrice: baseFare + Math.round(baseFare * 0.05),
+      features: ['❌ Non-refundable', '7kg cabin bag'],
+      popular: false,
+      savings: Math.round(baseFare * 0.05)
+    },
+    {
+      id: 'flexi', 
+      name: 'Flexi',
+      type: 'Partially Refundable',
+      price: baseFare + Math.round(baseFare * 0.15),
+      originalPrice: baseFare + Math.round(baseFare * 0.20),
+      features: ['✅ Refund with charges', '15kg checked bag', '1 free change'],
+      popular: true,
+      savings: Math.round(baseFare * 0.05)
+    },
+    {
+      id: 'business',
+      name: 'Business',
+      type: 'Fully Refundable', 
+      price: baseFare + Math.round(baseFare * 0.35),
+      originalPrice: baseFare + Math.round(baseFare * 0.45),
+      features: ['✅ Full refund', '25kg checked bag', 'Priority boarding'],
+      popular: false,
+      savings: Math.round(baseFare * 0.10)
+    }
+  ];
   
   // Parse departure time to determine time slot
   const getDepartureIcon = (time) => {
@@ -186,97 +222,160 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
     return `${stops} stops`;
   };
 
+  const handleFareSelect = (fare) => {
+    const flightWithFare = {
+      ...flight,
+      selectedFare: fare,
+      finalPrice: fare.price
+    };
+    onSelect(flightWithFare);
+  };
+
   return (
-    <div className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border-2 ${
+    <div className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 mb-4 border-2 ${
       isSelected ? 'border-blue-500 bg-blue-50' : 'border-transparent hover:border-gray-200'
     }`}>
-      <div className="flex items-center justify-between">
-        {/* Left: Airline and Flight Info */}
-        <div className="flex items-center space-x-4 flex-1">
-          {/* Airline Logo */}
-          <div className={`${airlineInfo.color} ${airlineInfo.textColor} w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-lg shadow-lg`}>
-            {airlineInfo.logo}
-          </div>
-          
-          {/* Flight Details */}
-          <div className="flex-1">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="font-bold text-lg text-gray-900">{flight.airline}</div>
-              {flight.is_lcc && (
-                <span className="px-3 py-1 bg-orange-100 text-orange-600 text-xs font-medium rounded-full">
-                  💰 Low Cost
-                </span>
-              )}
-              {flight.refundable && (
-                <span className="px-3 py-1 bg-green-100 text-green-600 text-xs font-medium rounded-full">
-                  ✅ Refundable
-                </span>
-              )}
+      {/* Main Flight Info */}
+      <div className="p-6">
+        <div className="flex items-center justify-between">
+          {/* Left: Airline and Flight Info */}
+          <div className="flex items-center space-x-4 flex-1">
+            {/* Airline Logo */}
+            <div className={`${airlineInfo.color} ${airlineInfo.textColor} w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-lg shadow-lg`}>
+              {airlineInfo.logo}
             </div>
             
-            {/* Time and Route */}
-            <div className="flex items-center space-x-6">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">{flight.departure_time}</div>
-                <div className="text-sm text-gray-500">{flight.origin}</div>
+            {/* Flight Details */}
+            <div className="flex-1">
+              <div className="flex items-center space-x-2 mb-2">
+                <div className="font-bold text-lg text-gray-900">{flight.airline}</div>
+                {flight.is_lcc && (
+                  <span className="px-3 py-1 bg-orange-100 text-orange-600 text-xs font-medium rounded-full">
+                    💰 Low Cost
+                  </span>
+                )}
+                {flight.refundable && (
+                  <span className="px-3 py-1 bg-green-100 text-green-600 text-xs font-medium rounded-full">
+                    ✅ Refundable
+                  </span>
+                )}
               </div>
               
-              <div className="flex-1 flex items-center justify-center">
+              {/* Time and Route */}
+              <div className="flex items-center space-x-6">
                 <div className="text-center">
-                  <div className="text-sm text-gray-500 mb-1">{formatDuration(flight.duration_minutes)}</div>
-                  <div className="flex items-center">
-                    <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
-                    <div className={`flex-1 h-0.5 ${flight.stops === 0 ? 'bg-green-400' : 'bg-orange-400'} mx-2`}></div>
-                    <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
+                  <div className="text-2xl font-bold text-gray-900">{flight.departure_time}</div>
+                  <div className="text-sm text-gray-500">{flight.origin}</div>
+                </div>
+                
+                <div className="flex-1 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-sm text-gray-500 mb-1">{formatDuration(flight.duration_minutes)}</div>
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
+                      <div className={`flex-1 h-0.5 ${flight.stops === 0 ? 'bg-green-400' : 'bg-orange-400'} mx-2`}></div>
+                      <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">{getStopText(flight.stops)}</div>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">{getStopText(flight.stops)}</div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-gray-900">{flight.arrival_time}</div>
+                  <div className="text-sm text-gray-500">{flight.destination}</div>
                 </div>
               </div>
               
-              <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">{flight.arrival_time}</div>
-                <div className="text-sm text-gray-500">{flight.destination}</div>
+              {/* Additional Info */}
+              <div className="flex items-center space-x-4 mt-3 text-xs text-gray-500">
+                <span className="flex items-center">
+                  {getDepartureIcon(flight.departure_time)} Departure
+                </span>
+                <span>Flight {flight.flight_number || 'N/A'}</span>
+                <span>{flight.aircraft_type || 'Aircraft'}</span>
               </div>
+            </div>
+          </div>
+
+          {/* Right: Price and Action */}
+          <div className="text-right ml-6">
+            <div className="mb-4">
+              <div className="text-sm text-gray-500">Starting from</div>
+              <div className="text-3xl font-bold text-blue-600">₹{(flight.price || 0).toLocaleString()}</div>
+              <div className="text-sm text-gray-500">per person</div>
             </div>
             
-            {/* Additional Info */}
-            <div className="flex items-center space-x-4 mt-3 text-xs text-gray-500">
-              <span className="flex items-center">
-                {getDepartureIcon(flight.departure_time)} Departure
-              </span>
-              <span>Flight {flight.flight_number || 'N/A'}</span>
-              <span>{flight.aircraft_type || 'Aircraft'}</span>
-            </div>
+            <button
+              onClick={() => setShowFares(!showFares)}
+              className={`px-6 py-2 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl mb-2 block w-full ${
+                showFares
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800'
+              }`}
+            >
+              {showFares ? 'Hide Fares' : 'View Fares'}
+            </button>
           </div>
-        </div>
-
-        {/* Right: Price and Action */}
-        <div className="text-right ml-6">
-          <div className="mb-4">
-            {flight.original_price && flight.original_price > flight.price && (
-              <div className="text-sm text-gray-500 line-through">₹{flight.original_price.toLocaleString()}</div>
-            )}
-            <div className="text-3xl font-bold text-blue-600">₹{(flight.price || 0).toLocaleString()}</div>
-            <div className="text-sm text-gray-500">per person</div>
-            {flight.total_price && (
-              <div className="text-sm font-medium text-gray-700 mt-1">
-                Total: ₹{flight.total_price.toLocaleString()}
-              </div>
-            )}
-          </div>
-          
-          <button
-            onClick={() => onSelect(flight)}
-            className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl ${
-              isSelected
-                ? 'bg-blue-600 text-white'
-                : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800'
-            }`}
-          >
-            {isSelected ? '✓ Selected' : 'Select Flight'}
-          </button>
         </div>
       </div>
+
+      {/* Fare Options Panel */}
+      {showFares && (
+        <div className="border-t border-gray-200 bg-gray-50 px-6 py-4">
+          <div className="mb-3">
+            <h4 className="text-lg font-semibold text-gray-800">Select Fare Type</h4>
+            <p className="text-sm text-gray-600">Choose the fare that suits your needs</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {fareOptions.map((fare) => (
+              <div
+                key={fare.id}
+                className={`relative p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                  fare.popular ? 'border-green-400 bg-green-50' : 'border-gray-200 bg-white hover:border-blue-300'
+                }`}
+                onClick={() => handleFareSelect(fare)}
+              >
+                {fare.popular && (
+                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-green-500 text-white text-xs px-3 py-1 rounded-full font-medium">
+                      POPULAR
+                    </span>
+                  </div>
+                )}
+                
+                <div className="text-center mb-3">
+                  <h5 className="font-bold text-gray-900">{fare.name}</h5>
+                  <p className="text-xs text-gray-600">{fare.type}</p>
+                </div>
+                
+                <div className="text-center mb-3">
+                  {fare.originalPrice > fare.price && (
+                    <div className="text-sm text-gray-500 line-through">₹{fare.originalPrice.toLocaleString()}</div>
+                  )}
+                  <div className="text-2xl font-bold text-blue-600">₹{fare.price.toLocaleString()}</div>
+                  {fare.savings > 0 && (
+                    <div className="text-xs text-green-600 font-medium">Save ₹{fare.savings}</div>
+                  )}
+                </div>
+                
+                <div className="space-y-1">
+                  {fare.features.map((feature, idx) => (
+                    <div key={idx} className="text-xs text-gray-700 flex items-center">
+                      <span className="mr-2">•</span>
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+                
+                <button className="w-full mt-3 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+                  Select {fare.name}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
