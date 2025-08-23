@@ -159,6 +159,212 @@ const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChan
     </>
   );
 };
+// Modify Search Modal with Guided Experience
+const ModifySearchModal = ({ searchData, onClose, onModify }) => {
+  const [formData, setFormData] = useState({
+    origin: searchData?.segments?.[0]?.origin || '',
+    destination: searchData?.segments?.[0]?.destination || '',
+    departureDate: searchData?.segments?.[0]?.departureDate || '',
+    passengers: searchData?.passengers || { adults: 1, children: 0, infants: 0 },
+    class: searchData?.class || 'economy',
+    tripType: searchData?.tripType || 'one-way'
+  });
+  
+  const [step, setStep] = useState(1);
+  
+  const canProceed = (stepNum) => {
+    switch(stepNum) {
+      case 1: return formData.origin.length > 2;
+      case 2: return formData.destination.length > 2;
+      case 3: return formData.departureDate;
+      case 4: return true;
+      default: return false;
+    }
+  };
+
+  const handleSearch = () => {
+    const modifiedData = {
+      ...searchData,
+      segments: [{
+        origin: formData.origin,
+        destination: formData.destination,
+        departureDate: formData.departureDate
+      }],
+      passengers: formData.passengers,
+      class: formData.class,
+      tripType: formData.tripType
+    };
+    onModify(modifiedData);
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Modal Header */}
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-gray-900">Modify Your Search</h2>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 text-2xl"
+            >
+              ×
+            </button>
+          </div>
+          <p className="text-gray-600 mt-2">Update your travel preferences and search again</p>
+        </div>
+
+        {/* Progress Indicator */}
+        <div className="px-6 py-4 bg-gray-50">
+          <div className="flex items-center justify-between text-sm">
+            {[1, 2, 3, 4].map((stepNum) => (
+              <div key={stepNum} className={`flex items-center ${stepNum < 4 ? 'flex-1' : ''}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                  canProceed(stepNum) ? 'bg-green-500 text-white' : 
+                  step === stepNum ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-400'
+                }`}>
+                  {canProceed(stepNum) ? '✓' : stepNum}
+                </div>
+                {stepNum < 4 && <div className={`flex-1 h-1 mx-2 ${canProceed(stepNum) ? 'bg-green-500' : 'bg-gray-200'}`}></div>}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Form Content */}
+        <div className="p-6 space-y-6">
+          {/* Step 1: Origin */}
+          <div className={step >= 1 ? 'opacity-100' : 'opacity-50 pointer-events-none'}>
+            <label className="block text-sm font-medium text-gray-700 mb-2">From</label>
+            <input
+              type="text"
+              value={formData.origin}
+              onChange={(e) => {setFormData({...formData, origin: e.target.value}); setStep(2);}}
+              placeholder="Departure city"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            />
+            {step === 1 && !formData.origin && (
+              <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-xl">
+                <div className="flex items-center text-blue-700">
+                  <span className="text-xl mr-2">👆</span>
+                  <span className="text-sm font-medium">Start by entering your departure city</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Step 2: Destination */}
+          <div className={step >= 2 ? 'opacity-100' : 'opacity-50 pointer-events-none'}>
+            <label className="block text-sm font-medium text-gray-700 mb-2">To</label>
+            <input
+              type="text"
+              value={formData.destination}
+              onChange={(e) => {setFormData({...formData, destination: e.target.value}); setStep(3);}}
+              placeholder="Arrival city"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            />
+            {step === 2 && !formData.destination && (
+              <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-xl">
+                <div className="flex items-center text-green-700">
+                  <span className="text-xl mr-2">✈️</span>
+                  <span className="text-sm font-medium">Great! Now enter your destination</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Step 3: Date */}
+          <div className={step >= 3 ? 'opacity-100' : 'opacity-50 pointer-events-none'}>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Departure Date</label>
+            <input
+              type="date"
+              value={formData.departureDate}
+              onChange={(e) => {setFormData({...formData, departureDate: e.target.value}); setStep(4);}}
+              min={new Date().toISOString().split('T')[0]}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            />
+            {step === 3 && !formData.departureDate && (
+              <div className="mt-2 p-3 bg-purple-50 border border-purple-200 rounded-xl">
+                <div className="flex items-center text-purple-700">
+                  <span className="text-xl mr-2">📅</span>
+                  <span className="text-sm font-medium">Perfect! When would you like to travel?</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Step 4: Passengers & Class */}
+          <div className={step >= 4 ? 'opacity-100' : 'opacity-50 pointer-events-none'}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
+                <div className="flex items-center space-x-4 p-3 border-2 border-gray-200 rounded-xl">
+                  <span className="text-sm text-gray-600">Adults:</span>
+                  <button 
+                    onClick={() => setFormData({...formData, passengers: {...formData.passengers, adults: Math.max(1, formData.passengers.adults - 1)}})}
+                    className="w-8 h-8 bg-gray-100 rounded-full"
+                  >-</button>
+                  <span className="font-bold">{formData.passengers.adults}</span>
+                  <button 
+                    onClick={() => setFormData({...formData, passengers: {...formData.passengers, adults: formData.passengers.adults + 1}})}
+                    className="w-8 h-8 bg-gray-100 rounded-full"
+                  >+</button>
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Class</label>
+                <select
+                  value={formData.class}
+                  onChange={(e) => setFormData({...formData, class: e.target.value})}
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                >
+                  <option value="economy">Economy</option>
+                  <option value="premium-economy">Premium Economy</option>
+                  <option value="business">Business</option>
+                  <option value="first">First Class</option>
+                </select>
+              </div>
+            </div>
+            
+            {step === 4 && (
+              <div className="mt-2 p-3 bg-orange-50 border border-orange-200 rounded-xl">
+                <div className="flex items-center text-orange-700">
+                  <span className="text-xl mr-2">👥</span>
+                  <span className="text-sm font-medium">Almost done! Review your passenger and class preferences</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Modal Footer */}
+        <div className="p-6 border-t border-gray-200 bg-gray-50">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={onClose}
+              className="px-6 py-2 text-gray-600 hover:text-gray-800 font-medium"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSearch}
+              disabled={!canProceed(4)}
+              className={`px-8 py-3 font-semibold rounded-xl transition-all ${
+                canProceed(4)
+                  ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              🚀 Search Modified Flights
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 const FlightFilters = ({ filters, onFilterChange, flights }) => {
   // Extract unique airlines from flights
   const airlines = [...new Set(flights.map(f => f.airline))];
