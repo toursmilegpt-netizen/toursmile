@@ -970,6 +970,22 @@ function App() {
     setBookingData(null);
   };
 
+  const handleModifySearch = (newSearchData) => {
+    setSearchData(newSearchData);
+    handleSearch(newSearchData);
+  };
+
+  const handleDateChange = (newDate) => {
+    const updatedSearchData = {
+      ...searchData,
+      segments: searchData.segments.map((segment, index) => 
+        index === 0 ? { ...segment, departureDate: newDate } : segment
+      )
+    };
+    setSearchData(updatedSearchData);
+    handleSearch(updatedSearchData);
+  };
+
   const handleFlightSelectionNext = (selectionData) => {
     console.log('Flight selection completed:', selectionData);
     setBookingData(selectionData);
