@@ -305,6 +305,24 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
     }
   };
 
+  const addSegment = () => {
+    if (searchData.segments.length < 6) {
+      setSearchData({
+        ...searchData,
+        segments: [...searchData.segments, { origin: '', destination: '', departureDate: '' }]
+      });
+    }
+  };
+
+  const removeSegment = (index) => {
+    if (searchData.segments.length > 1) {
+      setSearchData({
+        ...searchData,
+        segments: searchData.segments.filter((_, i) => i !== index)
+      });
+    }
+  };
+
   const canSearch = () => {
     if (!searchData || !searchData.segments || !searchData.segments[0]) {
       return false;
