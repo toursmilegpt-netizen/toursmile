@@ -306,19 +306,10 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
     }
     
     const segment = searchData.segments[0];
-    const hasValidSegment = segment.origin && segment.origin.trim().length > 2 && 
-                           segment.destination && segment.destination.trim().length > 2 && 
-                           segment.origin !== segment.destination &&
-                           segment.departureDate && segment.departureDate.length > 0;
-    
-    console.log('🔍 DEBUG: canSearch check:', {
-      origin: segment.origin,
-      destination: segment.destination, 
-      departureDate: segment.departureDate,
-      canSearch: hasValidSegment
-    });
-    
-    return hasValidSegment;
+    return segment.origin && segment.origin.trim().length > 2 && 
+           segment.destination && segment.destination.trim().length > 2 && 
+           segment.origin !== segment.destination &&
+           segment.departureDate && segment.departureDate.length > 0;
   };
 
   return (
