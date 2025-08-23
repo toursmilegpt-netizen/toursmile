@@ -445,15 +445,17 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   />
                 </div>
 
-                {/* Date - Inline for Multicity */}
-                <div>
-                  <SimpleDatePicker
-                    value={segment.departureDate}
-                    onChange={(date) => updateSegment(index, 'departureDate', date)}
-                    label={searchData.tripType === 'multi-city' ? `Date ${index + 1}` : 'Date'}
-                    minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
-                  />
-                </div>
+                {/* Date - Only for Multicity */}
+                {searchData.tripType === 'multi-city' && (
+                  <div>
+                    <SimpleDatePicker
+                      value={segment.departureDate}
+                      onChange={(date) => updateSegment(index, 'departureDate', date)}
+                      label={`Date ${index + 1}`}
+                      minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
+                    />
+                  </div>
+                )}
               </div>
 
         {/* Date Selection - Smart Logic Based on Trip Type */}
