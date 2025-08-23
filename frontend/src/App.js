@@ -719,9 +719,10 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   );
 };
 
-// Simple, Stable Date Picker Component
+// Proper Calendar Date Picker Component
 const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
   const [showCalendar, setShowCalendar] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const calendarRef = useRef(null);
 
   useEffect(() => {
@@ -747,36 +748,74 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
     });
   };
 
-  const handleDateClick = (days) => {
-    const today = new Date();
-    const selectedDate = new Date(today);
-    selectedDate.setDate(today.getDate() + days);
-    const dateStr = selectedDate.toISOString().split('T')[0];
+  const handleDateClick = (date) => {
+    const dateStr = date.toISOString().split('T')[0];
     onChange(dateStr);
     setShowCalendar(false);
   };
 
-  const generateDateOptions = () => {
-    const options = [];
-    const today = new Date();
+  const generateCalendarDays = () => {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
     
-    for (let i = 0; i < 30; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      options.push({
-        date: date.toISOString().split('T')[0],
-        display: date.toLocaleDateString('en-US', { 
-          weekday: 'short', 
-          day: 'numeric', 
-          month: 'short' 
-        }),
+    // First day of the month
+    const firstDay = new Date(year, month, 1);
+    // Last day of the month  
+    const lastDay = new Date(year, month + 1, 0);
+    
+    // Start from the first day of the week that contains the first day of the month
+    const startDate = new Date(firstDay);
+    startDate.setDate(firstDay.getDate() - firstDay.getDay());
+    
+    const days = [];
+    const today = new Date();
+    const minDateTime = minDate ? new Date(minDate) : new Date();
+    
+    // Generate 42 days (6 weeks)
+    for (let i = 0; i < 42; i++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+      
+      const isCurrentMonth = date.getMonth() === month;
+      const isToday = date.toDateString() === today.toDateString();
+      const isPast = date < minDateTime;
+      const isSelected = value && date.toISOString().split('T')[0] === value;
+      
+      days.push({
+        date: date,
         day: date.getDate(),
-        isToday: i === 0
+        isCurrentMonth,
+        isToday,
+        isPast,
+        isSelected
       });
     }
     
-    return options;
+    return days;
   };
+
+  const previousMonth = () => {
+    setCurrentMonth(prev => {
+      const newMonth = new Date(prev);
+      newMonth.setMonth(prev.getMonth() - 1);
+      return newMonth;
+    });
+  };
+
+  const nextMonth = () => {
+    setCurrentMonth(prev => {
+      const newMonth = new Date(prev);
+      newMonth.setMonth(prev.getMonth() + 1);
+      return newMonth;
+    });
+  };
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   return (
     <div className="relative" ref={calendarRef}>
@@ -796,31 +835,60 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
         <div className="text-2xl">📅</div>
       </button>
 
-      {/* Simple Calendar Popup */}
+      {/* Proper Calendar Popup */}
       {showCalendar && (
-        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border-2 border-blue-200 rounded-2xl shadow-2xl p-4 max-h-80 overflow-y-auto">
-          <div className="mb-3">
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">Select Travel Date</h3>
-            <p className="text-sm text-gray-600">Choose your preferred departure date</p>
+        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border-2 border-blue-200 rounded-2xl shadow-2xl p-4">
+          {/* Calendar Header */}
+          <div className="flex items-center justify-between mb-4">
+            <button
+              type="button"
+              onClick={previousMonth}
+              className="p-2 rounded-lg hover:bg-gray-100 text-gray-600"
+            >
+              ←
+            </button>
+            <h3 className="text-lg font-semibold text-gray-900">
+              {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+            </h3>
+            <button
+              type="button"
+              onClick={nextMonth}
+              className="p-2 rounded-lg hover:bg-gray-100 text-gray-600"
+            >
+              →
+            </button>
           </div>
-          
-          <div className="grid grid-cols-2 gap-2">
-            {generateDateOptions().slice(0, 14).map((option, index) => (
+
+          {/* Day Headers */}
+          <div className="grid grid-cols-7 gap-1 mb-2">
+            {dayNames.map(day => (
+              <div key={day} className="text-center text-xs font-medium text-gray-500 p-2">
+                {day}
+              </div>
+            ))}
+          </div>
+
+          {/* Calendar Days */}
+          <div className="grid grid-cols-7 gap-1">
+            {generateCalendarDays().map((day, index) => (
               <button
                 key={index}
                 type="button"
-                onClick={() => handleDateClick(index)}
-                className={`p-3 text-center rounded-xl transition-all duration-200 ${
-                  option.date === value
+                onClick={() => !day.isPast && handleDateClick(day.date)}
+                disabled={day.isPast}
+                className={`p-2 text-center rounded-lg transition-all duration-200 ${
+                  day.isSelected
                     ? 'bg-blue-600 text-white font-bold shadow-lg'
-                    : option.isToday
+                    : day.isToday
                       ? 'bg-blue-100 text-blue-600 font-semibold hover:bg-blue-200'
-                      : 'bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                      : day.isCurrentMonth
+                        ? day.isPast
+                          ? 'text-gray-300 cursor-not-allowed'
+                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                        : 'text-gray-300'
                 }`}
               >
-                <div className="text-xs font-medium">{option.display.split(' ')[0]}</div>
-                <div className="text-lg font-bold">{option.day}</div>
-                <div className="text-xs">{option.display.split(' ')[1]} {option.display.split(' ')[2]}</div>
+                {day.day}
               </button>
             ))}
           </div>
