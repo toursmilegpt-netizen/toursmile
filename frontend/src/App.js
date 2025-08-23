@@ -1155,7 +1155,7 @@ function App() {
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
-                <span className="text-lg font-semibold text-gray-900">Best Prices</span>
+                <span className="text-lg font-semibold text-gray-900">Secure Booking</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
