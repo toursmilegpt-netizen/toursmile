@@ -436,7 +436,7 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Departure Date */}
               <div className={`transition-all duration-500 ${currentStep >= 3 || isStepComplete(3) ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                <CustomDatePicker
+                <SimpleDatePicker
                   value={segment.departureDate}
                   onChange={(date) => updateSegment(index, 'departureDate', date)}
                   minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
