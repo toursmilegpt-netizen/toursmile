@@ -816,34 +816,13 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Results Header - Compact & Modern */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                {filteredFlights.length} Flight{filteredFlights.length !== 1 ? 's' : ''} Found
-              </h2>
-              <p className="text-gray-600 mt-1">
-                {searchData?.origin} → {searchData?.destination} • {searchData?.departureDate}
-              </p>
-            </div>
-            
-            {/* Quick Sort - Mobile Friendly */}
-            <div className="flex items-center space-x-4">
-              <select
-                value={filters.sortBy}
-                onChange={(e) => setFilters({...filters, sortBy: e.target.value})}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-              >
-                <option value="price">💰 Price (Low to High)</option>
-                <option value="duration">⏱️ Duration (Shortest)</option>
-                <option value="departure">🛫 Departure Time</option>
-                <option value="arrival">🛬 Arrival Time</option>
-                <option value="stops">✈️ Stops (Fewest)</option>
-              </select>
-            </div>
-          </div>
-        </div>
+        {/* Enhanced Results Header */}
+        <ResultsHeader 
+          searchData={searchData}
+          filteredFlights={filteredFlights}
+          onModifySearch={onModifySearch}
+          onDateChange={onDateChange}
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Filters Sidebar - Collapsible on Mobile */}
