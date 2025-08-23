@@ -510,6 +510,22 @@ def parse_query_fallback(query):
 async def search_flights(request: FlightSearchRequest):
     """Search for flights with Tripjack API integration and AI recommendations"""
     try:
+        # Log enhanced parameters for verification
+        enhanced_params = {}
+        if request.timePreference:
+            enhanced_params['timePreference'] = request.timePreference
+        if request.flexibleDates is not None:
+            enhanced_params['flexibleDates'] = request.flexibleDates
+        if request.nearbyAirports is not None:
+            enhanced_params['nearbyAirports'] = request.nearbyAirports
+        if request.corporateBooking is not None:
+            enhanced_params['corporateBooking'] = request.corporateBooking
+        if request.budgetRange:
+            enhanced_params['budgetRange'] = request.budgetRange
+        
+        if enhanced_params:
+            logging.info(f"🚀 Enhanced search parameters received: {enhanced_params}")
+        
         # Save search query (PostgreSQL will be handled by the new routes)
         search = FlightSearch(**request.dict())
         
