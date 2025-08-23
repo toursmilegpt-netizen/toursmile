@@ -583,11 +583,22 @@ async def search_flights(request: FlightSearchRequest):
             
             # Filter by time preference (basic implementation)
             if request.timePreference and request.timePreference != 'any':
+                def extract_hour_from_time(time_str):
+                    """Extract hour from time string, handling both ISO format and simple time format"""
+                    try:
+                        if 'T' in time_str:  # ISO format like "2025-08-24T06:00"
+                            time_part = time_str.split('T')[1]
+                            return int(time_part.split(':')[0])
+                        else:  # Simple format like "06:00"
+                            return int(time_str.split(':')[0])
+                    except (ValueError, IndexError):
+                        return 12  # Default to noon if parsing fails
+                
                 time_filters = {
-                    'morning': lambda t: 5 <= int(t.split(':')[0]) < 12,
-                    'afternoon': lambda t: 12 <= int(t.split(':')[0]) < 17, 
-                    'evening': lambda t: 17 <= int(t.split(':')[0]) < 21,
-                    'night': lambda t: 21 <= int(t.split(':')[0]) or int(t.split(':')[0]) < 5
+                    'morning': lambda t: 5 <= extract_hour_from_time(t) < 12,
+                    'afternoon': lambda t: 12 <= extract_hour_from_time(t) < 17, 
+                    'evening': lambda t: 17 <= extract_hour_from_time(t) < 21,
+                    'night': lambda t: extract_hour_from_time(t) >= 21 or extract_hour_from_time(t) < 5
                 }
                 
                 if request.timePreference in time_filters:
