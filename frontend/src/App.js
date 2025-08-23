@@ -1224,20 +1224,37 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Flight Booking Made
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"> Simple</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            No complex forms. No hidden fees. No confusion. 
-            <br />Just tell us where you want to go, and we'll handle the rest.
-          </p>
-          <div className="mt-6 flex items-center justify-center space-x-8 text-sm text-gray-500">
-            <span className="flex items-center"><span className="text-green-500 mr-1">✓</span> Instant Search</span>
-            <span className="flex items-center"><span className="text-green-500 mr-1">✓</span> Best Prices</span>
-            <span className="flex items-center"><span className="text-green-500 mr-1">✓</span> Easy Booking</span>
+        {/* Hero Section - Key Features */}
+        <div className="text-center mb-16">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+              {/* Instant Search */}
+              <div className="flex flex-col items-center group">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
+                  <span className="text-white text-2xl font-bold">✓</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Instant Search</h3>
+                <p className="text-gray-600 text-lg leading-relaxed">Lightning-fast flight results in seconds</p>
+              </div>
+
+              {/* Best Prices */}
+              <div className="flex flex-col items-center group">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
+                  <span className="text-white text-2xl font-bold">✓</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Best Prices</h3>
+                <p className="text-gray-600 text-lg leading-relaxed">No hidden fees, just transparent pricing</p>
+              </div>
+
+              {/* Easy Booking */}
+              <div className="flex flex-col items-center group">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
+                  <span className="text-white text-2xl font-bold">✓</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Easy Booking</h3>
+                <p className="text-gray-600 text-lg leading-relaxed">Simple steps, secure payment, instant confirmation</p>
+              </div>
+            </div>
           </div>
         </div>
 
