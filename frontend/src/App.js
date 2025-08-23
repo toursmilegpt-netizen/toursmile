@@ -950,6 +950,11 @@ function App() {
   };
 
   // Show booking flow if user has searched
+  console.log('🔍 DEBUG: Render check - showResults:', showResults);
+  console.log('🔍 DEBUG: Render check - bookingStep:', bookingStep);
+  console.log('🔍 DEBUG: Render check - searchResults length:', searchResults?.length);
+  console.log('🔍 DEBUG: Render check - isSearching:', isSearching);
+  
   if (showResults) {
     // Booking Confirmation Step
     if (bookingStep === 'confirmation' && bookingData) {
