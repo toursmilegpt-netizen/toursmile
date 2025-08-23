@@ -610,13 +610,19 @@ async def search_flights(request: FlightSearchRequest):
         ai_prompt = f"Provide a brief travel tip for flying from {request.origin} to {request.destination} on {request.departure_date}"
         ai_tip = await get_ai_response(ai_prompt, str(uuid.uuid4()))
         
-        return {
+        response_data = {
             "flights": real_flights,
             "search_id": search.id,
             "ai_recommendation": ai_tip,
             "data_source": "real_api" if use_real_api else "mock",
             "total_found": len(real_flights)
         }
+        
+        # Include enhanced parameters in response for verification
+        if enhanced_params:
+            response_data["enhanced_parameters"] = enhanced_params
+        
+        return response_data
         
     except Exception as e:
         logging.error(f"Flight search error: {str(e)}")
