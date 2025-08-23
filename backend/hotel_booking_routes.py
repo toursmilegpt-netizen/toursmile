@@ -97,7 +97,7 @@ async def search_hotels(request: HotelSearchRequest):
             raise HTTPException(status_code=400, detail="Check-out date must be after check-in date")
         
         # Search hotels via TripJack
-        hotels = await tripjack_hotel_service.search_hotels(
+        hotels = tripjack_hotel_service.search_hotels(
             location=request.destination,
             checkin_date=request.check_in_date,
             checkout_date=request.check_out_date,
