@@ -97,16 +97,23 @@ async def search_hotels(request: HotelSearchRequest):
             raise HTTPException(status_code=400, detail="Check-out date must be after check-in date")
         
         # Search hotels via TripJack
-        hotels = tripjack_hotel_service.search_hotels(
-            location=request.destination,
-            checkin_date=request.check_in_date,
-            checkout_date=request.check_out_date,
-            guests=request.adults,
-            rooms=request.rooms,
-            star_rating=request.star_rating,
-            min_price=request.min_price,
-            max_price=request.max_price
-        )
+        hotels = []
+        try:
+            hotels = tripjack_hotel_service.search_hotels(
+                location=request.destination,
+                checkin_date=request.check_in_date,
+                checkout_date=request.check_out_date,
+                guests=request.adults,
+                rooms=request.rooms,
+                **{k: v for k, v in {
+                    "star_rating": request.star_rating,
+                    "min_price": request.min_price,
+                    "max_price": request.max_price
+                }.items() if v is not None}
+            )
+        except Exception as e:
+            logging.warning(f"TripJack hotel search failed: {e}")
+            hotels = []
         
         if not hotels:
             # Fallback to mock data if no real results
