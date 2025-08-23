@@ -728,6 +728,9 @@ app.include_router(waitlist_router, prefix="/api", tags=["waitlist"])
 # Include the booking router
 app.include_router(booking_router, prefix="/api/bookings", tags=["bookings"])
 
+# Include the tourbuilder router
+app.include_router(tourbuilder_router, prefix="/api", tags=["tourbuilder"])
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
