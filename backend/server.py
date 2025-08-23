@@ -114,6 +114,12 @@ class FlightSearchRequest(BaseModel):
     return_date: Optional[str] = None
     passengers: int = 1
     class_type: str = "economy"
+    # Enhanced search parameters from Phase 1 implementation
+    timePreference: Optional[str] = None  # morning, afternoon, evening, night, any
+    flexibleDates: Optional[bool] = None  # ±3 days search
+    nearbyAirports: Optional[bool] = None  # include nearby airports
+    corporateBooking: Optional[bool] = None  # corporate booking rates
+    budgetRange: Optional[List[int]] = None  # [min, max] price range
 
 class HotelSearchRequest(BaseModel):
     location: str
