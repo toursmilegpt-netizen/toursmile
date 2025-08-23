@@ -221,7 +221,7 @@ const AIRPORTS_DATABASE = [
 ];
 
 // Guided Search Form Component with Progressive Disclosure
-const GuidedSearchForm = ({ onSearch, isSearching }) => {
+const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [searchData, setSearchData] = useState({
     tripType: 'oneway',
