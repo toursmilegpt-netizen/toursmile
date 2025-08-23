@@ -554,6 +554,51 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           )}
         </div>
 
+        {/* Multicity Passengers & Options */}
+        {searchData.tripType === 'multi-city' && (
+          <div className="mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Passengers */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
+                <div className="flex items-center justify-between px-4 py-3 border-2 border-gray-200 rounded-xl bg-white">
+                  <div className="flex items-center space-x-3">
+                    <button 
+                      type="button"
+                      onClick={() => setSearchData({...searchData, passengers: {...searchData.passengers, adults: Math.max(1, searchData.passengers.adults - 1)}})}
+                      className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200"
+                    >-</button>
+                    <div className="text-center">
+                      <div className="font-bold">{searchData.passengers.adults}</div>
+                      <div className="text-xs text-gray-500">Adults</div>
+                    </div>
+                    <button 
+                      type="button"
+                      onClick={() => setSearchData({...searchData, passengers: {...searchData.passengers, adults: searchData.passengers.adults + 1}})}
+                      className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200"
+                    >+</button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Class */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Class</label>
+                <select
+                  value={searchData.class}
+                  onChange={(e) => setSearchData({...searchData, class: e.target.value})}
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="economy">Economy</option>
+                  <option value="premium-economy">Premium Economy</option>
+                  <option value="business">Business</option>
+                  <option value="first">First Class</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Passengers and Class - Compact Grid for remaining space */}
         <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-2'} gap-4 ${compact ? 'mb-4' : 'mb-6'}`}>
           {/* Passengers - Compact */}
