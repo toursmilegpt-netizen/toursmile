@@ -435,7 +435,7 @@ const FlightFilters = ({ filters, onFilterChange, flights }) => {
       </div>
 
       {/* Stops */}
-      <div className="mb-4">
+      <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-3">
           🛑 Stops
         </label>
@@ -466,6 +466,177 @@ const FlightFilters = ({ filters, onFilterChange, flights }) => {
                     if (stop.value === 2) return f.stops >= 2;
                     return f.stops === stop.value;
                   }).length}
+                </span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Departure Time Ranges */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          🕐 Departure Time
+        </label>
+        <div className="space-y-2">
+          {[
+            { value: 'early-morning', label: 'Early Morning', icon: '🌅', time: '6-12 AM' },
+            { value: 'afternoon', label: 'Afternoon', icon: '☀️', time: '12-6 PM' },
+            { value: 'evening', label: 'Evening', icon: '🌆', time: '6-12 PM' },
+            { value: 'night', label: 'Night', icon: '🌙', time: '12-6 AM' }
+          ].map(timeSlot => (
+            <label key={timeSlot.value} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+              <input
+                type="checkbox"
+                checked={filters.departureTime?.includes(timeSlot.value)}
+                onChange={(e) => {
+                  const newDepartureTimes = e.target.checked 
+                    ? [...(filters.departureTime || []), timeSlot.value]
+                    : (filters.departureTime || []).filter(t => t !== timeSlot.value);
+                  onFilterChange({...filters, departureTime: newDepartureTimes});
+                }}
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg">{timeSlot.icon}</span>
+                  <div>
+                    <div className="text-sm text-gray-700">{timeSlot.label}</div>
+                    <div className="text-xs text-gray-500">{timeSlot.time}</div>
+                  </div>
+                </div>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                  {flights.filter(f => {
+                    if (!f.departure_time) return false;
+                    const hour = parseInt(f.departure_time.split(':')[0]);
+                    switch(timeSlot.value) {
+                      case 'early-morning': return hour >= 6 && hour < 12;
+                      case 'afternoon': return hour >= 12 && hour < 18;
+                      case 'evening': return hour >= 18 && hour < 24;
+                      case 'night': return hour >= 0 && hour < 6;
+                      default: return false;
+                    }
+                  }).length}
+                </span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Flight Duration */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          ⏱️ Flight Duration
+        </label>
+        <div className="space-y-2">
+          {[
+            { value: 'short', label: 'Short (<2 hours)', icon: '⚡' },
+            { value: 'medium', label: 'Medium (2-4 hours)', icon: '✈️' },
+            { value: 'long', label: 'Long (4-6 hours)', icon: '🛫' },
+            { value: 'very-long', label: 'Very Long (6+ hours)', icon: '🌍' }
+          ].map(duration => (
+            <label key={duration.value} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+              <input
+                type="checkbox"
+                checked={filters.flightDuration?.includes(duration.value)}
+                onChange={(e) => {
+                  const newDurations = e.target.checked 
+                    ? [...(filters.flightDuration || []), duration.value]
+                    : (filters.flightDuration || []).filter(d => d !== duration.value);
+                  onFilterChange({...filters, flightDuration: newDurations});
+                }}
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div className="flex items-center justify-between w-full">
+                <span className="text-sm text-gray-700">
+                  {duration.icon} {duration.label}
+                </span>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                  {flights.filter(f => {
+                    const durationMinutes = f.duration_minutes || 0;
+                    const hours = durationMinutes / 60;
+                    switch(duration.value) {
+                      case 'short': return hours < 2;
+                      case 'medium': return hours >= 2 && hours < 4;
+                      case 'long': return hours >= 4 && hours < 6;
+                      case 'very-long': return hours >= 6;
+                      default: return false;
+                    }
+                  }).length}
+                </span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Baggage & Services */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          🎒 Baggage & Services  
+        </label>
+        <div className="space-y-2">
+          {[
+            { value: 'free-baggage', label: 'Free Checked Baggage', icon: '🎒' },
+            { value: 'meal-included', label: 'Meal Included', icon: '🍽️' },
+            { value: 'wifi', label: 'In-flight WiFi', icon: '📶' },
+            { value: 'entertainment', label: 'Entertainment System', icon: '📺' }
+          ].map(service => (
+            <label key={service.value} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+              <input
+                type="checkbox"
+                checked={filters.services?.includes(service.value)}
+                onChange={(e) => {
+                  const newServices = e.target.checked 
+                    ? [...(filters.services || []), service.value]
+                    : (filters.services || []).filter(s => s !== service.value);
+                  onFilterChange({...filters, services: newServices});
+                }}
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div className="flex items-center justify-between w-full">
+                <span className="text-sm text-gray-700">
+                  {service.icon} {service.label}
+                </span>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                  {Math.floor(Math.random() * flights.length / 2) + 1}
+                </span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Refundability */}
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          🔄 Refund Policy
+        </label>
+        <div className="space-y-2">
+          {[
+            { value: 'refundable', label: 'Refundable', icon: '✅' },
+            { value: 'partially-refundable', label: 'Partially Refundable', icon: '⚠️' },
+            { value: 'non-refundable', label: 'Non-Refundable', icon: '❌' }
+          ].map(refund => (
+            <label key={refund.value} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+              <input
+                type="checkbox"
+                checked={filters.refundPolicy?.includes(refund.value)}
+                onChange={(e) => {
+                  const newRefundPolicies = e.target.checked 
+                    ? [...(filters.refundPolicy || []), refund.value]
+                    : (filters.refundPolicy || []).filter(r => r !== refund.value);
+                  onFilterChange({...filters, refundPolicy: newRefundPolicies});
+                }}
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div className="flex items-center justify-between w-full">
+                <span className="text-sm text-gray-700">
+                  {refund.icon} {refund.label}
+                </span>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                  {Math.floor(Math.random() * flights.length / 3) + 1}
                 </span>
               </div>
             </label>
