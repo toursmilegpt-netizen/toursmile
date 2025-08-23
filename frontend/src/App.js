@@ -1169,16 +1169,8 @@ function App() {
                 <img
                   src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
                   alt="TourSmile"
-                  className="h-12 mr-2"
+                  className="h-16"
                 />
-              </div>
-              <div className="ml-4 flex items-center space-x-2">
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                  World-Class Travel
-                </span>
-                <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
-                  Simplified
-                </span>
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-6">
