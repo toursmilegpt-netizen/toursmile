@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Backend API Testing Suite for TourSmile AI Travel Platform
-Tests all backend endpoints with focus on AeroDataBox flight API integration
+Focus: Flight Search Backend Functionality Testing as per Review Request
 """
 
 import requests
@@ -11,7 +11,7 @@ import os
 import sys
 from datetime import datetime, timedelta
 
-# Add backend to path for importing AeroDataBox service
+# Add backend to path for importing services
 sys.path.append('/app/backend')
 
 # Load backend URL from frontend .env
@@ -31,7 +31,9 @@ if not BACKEND_URL:
     exit(1)
 
 API_BASE = f"{BACKEND_URL}/api"
+print(f"🎯 FLIGHT SEARCH BACKEND TESTING")
 print(f"Testing backend at: {API_BASE}")
+print("=" * 80)
 
 class BackendTester:
     def __init__(self):
