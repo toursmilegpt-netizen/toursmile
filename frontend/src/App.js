@@ -301,9 +301,14 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
   };
 
   const canSearch = () => {
+    if (!searchData || !searchData.segments || !searchData.segments[0]) {
+      return false;
+    }
+    
     const segment = searchData.segments[0];
-    const hasValidSegment = segment.origin && segment.origin.trim().length > 0 && 
-                           segment.destination && segment.destination.trim().length > 0 && 
+    const hasValidSegment = segment.origin && segment.origin.trim().length > 2 && 
+                           segment.destination && segment.destination.trim().length > 2 && 
+                           segment.origin !== segment.destination &&
                            segment.departureDate && segment.departureDate.length > 0;
     
     console.log('canSearch check:', {
