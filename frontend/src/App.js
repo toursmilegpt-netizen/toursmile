@@ -226,10 +226,15 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
   const [searchData, setSearchData] = useState({
     tripType: 'oneway',
     segments: [
-      { origin: '', destination: '', departureDate: '' }
+      { origin: 'Mumbai', destination: 'Delhi', departureDate: '' }
     ],
     passengers: { adults: 1, children: 0, infants: 0 },
-    class: 'economy'
+    class: 'economy',
+    preferences: {
+      nonStop: false,
+      student: false,
+      seniorCitizen: false
+    }
   });
 
   // Auto-focus refs
