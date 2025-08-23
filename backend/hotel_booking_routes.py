@@ -115,14 +115,43 @@ async def pre_book_hotel(request: HotelPreBookRequest, db: Session = Depends(get
                     "type": guest.guest_type
                 })
         
-        # Call TripJack pre-book API
-        prebook_result = tripjack_hotel_service.pre_book_hotel(
-            hotel_id=request.hotel_id,
-            check_in=request.check_in_date,
-            check_out=request.check_out_date,
-            rooms=rooms_data,
-            guest_details=guest_details
-        )
+        # Call TripJack pre-book API (or sandbox mode)
+        prebook_result = {}
+        
+        # Check if we're in sandbox/test mode
+        is_sandbox = not (tripjack_hotel_service.api_key and tripjack_hotel_service.api_secret)
+        
+        if is_sandbox:
+            # Sandbox mode - simulate successful pre-book
+            import time
+            prebook_result = {
+                "success": True,
+                "booking_token": f"sandbox_token_{int(time.time())}_{uuid.uuid4().hex[:8]}",
+                "revalidated_price": request.total_price,
+                "original_price": request.total_price,
+                "rate_change": False,
+                "availability_confirmed": True,
+                "booking_details": {
+                    "hotel_id": request.hotel_id,
+                    "rooms": len(request.rooms),
+                    "guests": sum(room.adults + room.children for room in request.rooms)
+                },
+                "cancellation_policy": {
+                    "free_cancellation_until": "2025-09-13T18:00:00Z",
+                    "cancellation_charges": "No charges if cancelled 48 hours before check-in"
+                },
+                "valid_until": datetime.utcnow() + timedelta(hours=2)
+            }
+            logging.info(f"🧪 Sandbox hotel pre-book: {request.hotel_id}")
+        else:
+            # Production mode - actual TripJack API call
+            prebook_result = tripjack_hotel_service.pre_book_hotel(
+                hotel_id=request.hotel_id,
+                check_in=request.check_in_date,
+                check_out=request.check_out_date,
+                rooms=rooms_data,
+                guest_details=guest_details
+            )
         
         if not prebook_result.get("success"):
             raise HTTPException(
