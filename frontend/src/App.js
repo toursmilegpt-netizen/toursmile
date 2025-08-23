@@ -316,7 +316,7 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
                            segment.origin !== segment.destination &&
                            segment.departureDate && segment.departureDate.length > 0;
     
-    console.log('canSearch check:', {
+    console.log('🔍 DEBUG: canSearch check:', {
       origin: segment.origin,
       destination: segment.destination, 
       departureDate: segment.departureDate,
