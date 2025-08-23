@@ -999,6 +999,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
           value={inputValue}
           onChange={handleInputChange}
           onFocus={handleFocus}
+          onClick={handleInputClick}
           onBlur={handleBlur}
           className="w-full pl-14 pr-4 py-4 text-lg border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm hover:shadow-md"
         />
