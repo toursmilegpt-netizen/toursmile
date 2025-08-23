@@ -466,20 +466,22 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
               </button>
             </div>
           )}
+
+          {/* Return Date for Round Trip */}
+          {searchData.tripType === 'return' && (
+            <div className="mt-4">
+              <SimpleDatePicker
+                value={searchData.returnDate}
+                onChange={(date) => setSearchData({...searchData, returnDate: date})}
+                label="Return Date"
+                minDate={searchData.segments[0]?.departureDate}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Return Date for Round Trip */}
-        {searchData.tripType === 'return' && (
-          <div className="mb-4">
-            <SimpleDatePicker
-              value={searchData.returnDate}
-              onChange={(date) => setSearchData({...searchData, returnDate: date})}
-              label="Return Date"
-              minDate={searchData.segments[0]?.departureDate}
-            />
-          </div>
-        )}
-
+        {/* Passengers and Class - Compact Grid for remaining space */}
+        <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-2'} gap-4 ${compact ? 'mb-4' : 'mb-6'}`}>
           {/* Passengers - Compact */}
           <div className={compact ? 'md:col-span-1' : ''}>
             <label className="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
