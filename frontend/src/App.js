@@ -599,143 +599,53 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           </div>
         )}
 
-        {/* Passengers and Class - Compact Grid for remaining space */}
-        <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-2'} gap-4 ${compact ? 'mb-4' : 'mb-6'}`}>
-          {/* Passengers - Compact */}
-          <div className={compact ? 'md:col-span-1' : ''}>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
-            <div className="flex items-center space-x-4 px-4 py-4 border-2 border-gray-200 rounded-2xl">
-              <button 
-                type="button"
-                onClick={() => setSearchData({...searchData, passengers: {...searchData.passengers, adults: Math.max(1, searchData.passengers.adults - 1)}})}
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200"
-              >-</button>
-              <div className="text-center">
-                <div className="font-bold text-lg">{searchData.passengers.adults}</div>
-                <div className="text-xs text-gray-500">Adults</div>
+        {/* Flight Preferences - Smart and Compact */}
+        <div className="mb-4">
+          <div className="text-sm font-medium text-gray-700 mb-2">Quick Options</div>
+          <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-xl">
+            {/* Non-Stop */}
+            <label className="flex items-center cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={searchData.preferences.nonStop}
+                onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, nonStop: e.target.checked}})}
+                className="mr-2 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div className="flex items-center space-x-1">
+                <span className="text-lg">🚀</span>
+                <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600">Non-Stop</span>
               </div>
-              <button 
-                type="button"
-                onClick={() => setSearchData({...searchData, passengers: {...searchData.passengers, adults: searchData.passengers.adults + 1}})}
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200"
-              >+</button>
-            </div>
-          </div>
+            </label>
 
-          {/* Class - Compact */}
-          {compact && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Class</label>
-              <select
-                value={searchData.class}
-                onChange={(e) => setSearchData({...searchData, class: e.target.value})}
-                className="w-full px-4 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="economy">Economy</option>
-                <option value="premium-economy">Premium Economy</option>
-                <option value="business">Business</option>
-                <option value="first">First Class</option>
-              </select>
-            </div>
-          )}
+            {/* Student */}
+            <label className="flex items-center cursor-pointer group">
+              <input
+                type="checkbox" 
+                checked={searchData.preferences.student}
+                onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, student: e.target.checked}})}
+                className="mr-2 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div className="flex items-center space-x-1">
+                <span className="text-lg">🎓</span>
+                <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600">Student</span>
+              </div>
+            </label>
+
+            {/* Senior Citizen */}
+            <label className="flex items-center cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={searchData.preferences.seniorCitizen}
+                onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, seniorCitizen: e.target.checked}})}
+                className="mr-2 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div className="flex items-center space-x-1">
+                <span className="text-lg">👴</span>
+                <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600">Senior 60+</span>
+              </div>
+            </label>
+          </div>
         </div>
-
-        {/* Flight Preferences - Compact */}
-        {!compact && (
-          <div className="mt-6 mb-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-3">Flight Preferences</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={searchData.preferences.nonStop}
-                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, nonStop: e.target.checked}})}
-                  className="mr-3 w-4 h-4 text-blue-600 rounded"
-                />
-                <div>
-                  <div className="text-sm font-medium">Non-Stop</div>
-                  <div className="text-xs text-gray-500">Direct flights</div>
-                </div>
-              </label>
-              <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={searchData.preferences.student}
-                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, student: e.target.checked}})}
-                  className="mr-3 w-4 h-4 text-blue-600 rounded"
-                />
-                <div>
-                  <div className="text-sm font-medium">Student</div>
-                  <div className="text-xs text-gray-500">Save with student fare</div>
-                </div>
-              </label>
-              <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={searchData.preferences.seniorCitizen}
-                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, seniorCitizen: e.target.checked}})}
-                  className="mr-3 w-4 h-4 text-blue-600 rounded"
-                />
-                <div>
-                  <div className="text-sm font-medium">Senior</div>
-                  <div className="text-xs text-gray-500">60+ discount</div>
-                </div>
-              </label>
-            </div>
-          </div>
-        )}
-
-        {/* Compact Flight Preferences - Creative Integration */}
-        {compact && (
-          <div className={`${compact ? 'mb-4' : 'mb-6'}`}>
-            <div className="flex items-center justify-between">
-              <div className="text-sm font-medium text-gray-700 mb-2">Quick Options</div>
-            </div>
-            <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-xl">
-              {/* Non-Stop */}
-              <label className="flex items-center cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={searchData.preferences.nonStop}
-                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, nonStop: e.target.checked}})}
-                  className="mr-2 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                />
-                <div className="flex items-center space-x-1">
-                  <span className="text-lg">🚀</span>
-                  <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600">Non-Stop</span>
-                </div>
-              </label>
-
-              {/* Student */}
-              <label className="flex items-center cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={searchData.preferences.student}
-                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, student: e.target.checked}})}
-                  className="mr-2 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                />
-                <div className="flex items-center space-x-1">
-                  <span className="text-lg">🎓</span>
-                  <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600">Student</span>
-                </div>
-              </label>
-
-              {/* Senior Citizen */}
-              <label className="flex items-center cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={searchData.preferences.seniorCitizen}
-                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, seniorCitizen: e.target.checked}})}
-                  className="mr-2 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                />
-                <div className="flex items-center space-x-1">
-                  <span className="text-lg">👴</span>
-                  <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600">Senior 60+</span>
-                </div>
-              </label>
-            </div>
-          </div>
-        )}
 
         {/* Search Button - Compact */}
         <button
