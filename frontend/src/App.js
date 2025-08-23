@@ -318,304 +318,177 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-8">
-      {/* Progress Indicator */}
-      <div className="flex items-center justify-center mb-8">
-        {[1, 2, 3, 4].map((step) => (
-          <div key={step} className="flex items-center">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
-              currentStep >= step 
-                ? 'bg-blue-600 text-white shadow-lg' 
-                : isStepComplete(step)
-                ? 'bg-green-600 text-white shadow-lg'
-                : 'bg-gray-200 text-gray-500'
-            }`}>
-              {isStepComplete(step) && currentStep > step ? '✓' : step}
-            </div>
-            {step < 4 && (
-              <div className={`w-12 h-1 mx-2 rounded transition-all duration-300 ${
-                currentStep > step ? 'bg-green-600' : currentStep === step ? 'bg-blue-600' : 'bg-gray-200'
-              }`} />
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Step Labels */}
-      <div className="grid grid-cols-4 gap-4 mb-8 text-center">
-        <div className={`text-sm font-medium transition-colors ${currentStep >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
-          From Where?
-        </div>
-        <div className={`text-sm font-medium transition-colors ${currentStep >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
-          To Where?
-        </div>
-        <div className={`text-sm font-medium transition-colors ${currentStep >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
-          When?
-        </div>
-        <div className={`text-sm font-medium transition-colors ${currentStep >= 4 ? 'text-blue-600' : 'text-gray-400'}`}>
-          Details
-        </div>
-      </div>
-
-      {/* Trip Type Selection */}
-      <div className="mb-6">
-        <div className="flex items-center justify-center space-x-2">
-          {['oneway', 'return', 'multicity'].map((type) => (
+    <div className={`${compact ? 'max-w-none' : 'max-w-4xl'} mx-auto`}>
+      <div className={`bg-white rounded-3xl shadow-2xl p-6 ${compact ? 'md:p-6' : 'md:p-8'} backdrop-blur-md border border-gray-100`}>
+        {/* Trip Type Toggle - Compact Version */}
+        <div className={`flex items-center justify-center ${compact ? 'mb-4' : 'mb-6'}`}>
+          <div className="bg-gray-100 rounded-2xl p-1 flex">
             <button
-              key={type}
-              type="button"
-              onClick={() => setSearchData({...searchData, tripType: type})}
-              className={`px-6 py-2 rounded-full font-medium transition-all capitalize ${
-                searchData.tripType === type
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
+              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
+                searchData.tripType === 'one-way' 
+                  ? 'bg-white text-gray-900 shadow-md' 
+                  : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              {type === 'oneway' ? 'One Way' : type === 'return' ? 'Round Trip' : 'Multi-City'}
+              One Way
             </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Dynamic Form Fields */}
-      <div className="space-y-6">
-        {searchData.segments.map((segment, index) => (
-          <div key={index} className="space-y-4">
-            {/* Origin & Destination Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Origin */}
-              <div className={`transition-all duration-500 ${currentStep >= 1 || isStepComplete(1) ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                <CityAutocomplete
-                  ref={index === 0 ? originRef : null}
-                  label={index === 0 ? "From" : `From (${index + 1})`}
-                  placeholder="Departure city"
-                  value={segment.origin}
-                  onChange={(value) => updateSegment(index, 'origin', value)}
-                  icon="✈️"
-                  autoFocus={index === 0 && currentStep === 1}
-                  airports={AIRPORTS_DATABASE}
-                />
-                {currentStep === 1 && index === 0 && !segment.origin && (
-                  <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-xl">
-                    <div className="flex items-center text-blue-700">
-                      <span className="text-2xl mr-2 guide-pulse">👆</span>
-                      <div>
-                        <div className="text-sm">Click here and choose your departure city</div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Destination */}
-              <div className={`transition-all duration-500 ${currentStep >= 2 || isStepComplete(2) ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                <CityAutocomplete
-                  ref={index === 0 ? destinationRef : null}
-                  label={index === 0 ? "To" : `To (${index + 1})`}
-                  placeholder="Arrival city"
-                  value={segment.destination}
-                  onChange={(value) => updateSegment(index, 'destination', value)}
-                  icon="📍"
-                  airports={AIRPORTS_DATABASE}
-                  excludeCity={segment.origin}
-                />
-                {currentStep === 2 && index === 0 && !segment.destination && (
-                  <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-xl">
-                    <div className="flex items-center text-green-700">
-                      <span className="text-2xl mr-2 guide-pulse">✈️</span>
-                      <div>
-                        <div className="text-sm">Great! Now choose your destination city</div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Date & Multi-city Controls */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Departure Date */}
-              <div className={`transition-all duration-500 ${currentStep >= 3 || isStepComplete(3) ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                <SimpleDatePicker
-                  value={segment.departureDate}
-                  onChange={(date) => updateSegment(index, 'departureDate', date)}
-                  minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
-                  label={index === 0 ? "Departure Date" : `Date (${index + 1})`}
-                  className={currentStep === 3 ? 'guide-pulse' : ''}
-                />
-                {currentStep === 3 && index === 0 && !segment.departureDate && (
-                  <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-xl">
-                    <div className="flex items-center text-purple-700">
-                      <span className="text-2xl mr-2 guide-pulse">📅</span>
-                      <div>
-                        <div className="text-sm">Perfect! When would you like to travel? Click on the date field</div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Multi-city Controls */}
-              {searchData.tripType === 'multicity' && (
-                <div className="flex items-end space-x-2">
-                  {index === searchData.segments.length - 1 && searchData.segments.length < 6 && (
-                    <button
-                      type="button"
-                      onClick={addCitySegment}
-                      className="px-4 py-4 bg-blue-100 text-blue-600 rounded-2xl hover:bg-blue-200 transition-colors font-medium"
-                    >
-                      + Add City
-                    </button>
-                  )}
-                  {index > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => removeCitySegment(index)}
-                      className="px-4 py-4 bg-red-100 text-red-600 rounded-2xl hover:bg-red-200 transition-colors"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Return Date for Round Trip */}
-            {searchData.tripType === 'return' && index === 0 && (
-              <div className={`transition-all duration-500 ${currentStep >= 3 ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Return Date</label>
-                <input
-                  type="date"
-                  value={searchData.returnDate || ''}
-                  onChange={(e) => setSearchData({...searchData, returnDate: e.target.value})}
-                  min={segment.departureDate}
-                  className="w-full px-4 py-4 text-lg border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                />
-              </div>
-            )}
+            <button
+              onClick={() => setSearchData({...searchData, tripType: 'return'})}
+              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
+                searchData.tripType === 'return' 
+                  ? 'bg-white text-gray-900 shadow-md' 
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Round Trip
+            </button>
           </div>
-        ))}
+        </div>
 
-        {/* Passengers & Class - Step 4 */}
-        <div className={`transition-all duration-500 ${currentStep >= 4 ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-          {currentStep === 4 && (
-            <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-xl">
-              <div className="flex items-center text-orange-700">
-                <span className="text-2xl mr-2 guide-pulse">👥</span>
-                <div>
-                  <div className="text-sm">Almost there! Select passengers and travel class</div>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <PassengerSelector
-              passengers={searchData.passengers}
-              onChange={(passengers) => setSearchData({...searchData, passengers})}
+        {/* Route Selection - Compact Grid */}
+        <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2'} gap-4 ${compact ? 'mb-4' : 'mb-6'}`}>
+          {/* From */}
+          <div>
+            <CityAutocomplete
+              label="From"
+              placeholder="Departure city"
+              value={searchData.segments[0].origin}
+              onChange={(city) => updateSegment(0, 'origin', city)}
+              airports={AIRPORTS_DATABASE}
+              excludeCity={searchData.segments[0].destination}
+              autoFocus={true}
             />
-            
+          </div>
+
+          {/* To */}
+          <div>
+            <CityAutocomplete
+              label="To"
+              placeholder="Arrival city"
+              value={searchData.segments[0].destination}
+              onChange={(city) => updateSegment(0, 'destination', city)}
+              airports={AIRPORTS_DATABASE}
+              excludeCity={searchData.segments[0].origin}
+            />
+          </div>
+        </div>
+
+        {/* Date and Passengers - Compact Grid */}
+        <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-2'} gap-4 ${compact ? 'mb-4' : 'mb-6'}`}>
+          {/* Date */}
+          <div className={compact ? 'md:col-span-1' : ''}>
+            <SimpleDatePicker
+              value={searchData.segments[0].departureDate}
+              onChange={(date) => updateSegment(0, 'departureDate', date)}
+              label="Departure Date"
+            />
+          </div>
+
+          {/* Passengers - Compact */}
+          <div className={compact ? 'md:col-span-1' : ''}>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
+            <div className="flex items-center space-x-4 px-4 py-4 border-2 border-gray-200 rounded-2xl">
+              <button 
+                type="button"
+                onClick={() => setSearchData({...searchData, passengers: {...searchData.passengers, adults: Math.max(1, searchData.passengers.adults - 1)}})}
+                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200"
+              >-</button>
+              <div className="text-center">
+                <div className="font-bold text-lg">{searchData.passengers.adults}</div>
+                <div className="text-xs text-gray-500">Adults</div>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setSearchData({...searchData, passengers: {...searchData.passengers, adults: searchData.passengers.adults + 1}})}
+                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200"
+              >+</button>
+            </div>
+          </div>
+
+          {/* Class - Compact */}
+          {compact && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Class</label>
               <select
                 value={searchData.class}
                 onChange={(e) => setSearchData({...searchData, class: e.target.value})}
-                className="w-full px-4 py-4 text-lg border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
+                className="w-full px-4 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="economy">Economy</option>
-                <option value="premium_economy">Premium Economy</option>
+                <option value="premium-economy">Premium Economy</option>
                 <option value="business">Business</option>
                 <option value="first">First Class</option>
               </select>
             </div>
-          </div>
-
-          {currentStep === 4 && (
-            <div className="mt-4 text-sm text-green-600 animate-pulse">
-              ✅ Excellent! All set - ready to search for flights?
-            </div>
           )}
         </div>
 
-        {/* Flight Preferences */}
-        <div className={`mt-6 transition-all duration-500 ${currentStep >= 4 ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Flight Preferences</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Non-Stop Flights */}
-            <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors">
-              <input
-                type="checkbox"
-                checked={searchData.preferences.nonStop}
-                onChange={(e) => setSearchData({
-                  ...searchData,
-                  preferences: {...searchData.preferences, nonStop: e.target.checked}
-                })}
-                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-              />
-              <div>
-                <div className="text-sm font-medium text-gray-900">Non-Stop Flights</div>
-                <div className="text-xs text-gray-500">Direct flights only</div>
-              </div>
-            </label>
-
-            {/* Student Discount */}
-            <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors">
-              <input
-                type="checkbox"
-                checked={searchData.preferences.student}
-                onChange={(e) => setSearchData({
-                  ...searchData,
-                  preferences: {...searchData.preferences, student: e.target.checked}
-                })}
-                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-              />
-              <div>
-                <div className="text-sm font-medium text-gray-900">Student Discount</div>
-                <div className="text-xs text-gray-500">Save with student fare</div>
-              </div>
-            </label>
-
-            {/* Senior Citizen */}
-            <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors">
-              <input
-                type="checkbox"
-                checked={searchData.preferences.seniorCitizen}
-                onChange={(e) => setSearchData({
-                  ...searchData,
-                  preferences: {...searchData.preferences, seniorCitizen: e.target.checked}
-                })}
-                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-              />
-              <div>
-                <div className="text-sm font-medium text-gray-900">Senior Citizen</div>
-                <div className="text-xs text-gray-500">60+ years discount</div>
-              </div>
-            </label>
+        {/* Flight Preferences - Compact */}
+        {!compact && (
+          <div className="mt-6 mb-6">
+            <h3 className="text-sm font-medium text-gray-700 mb-3">Flight Preferences</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={searchData.preferences.nonStop}
+                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, nonStop: e.target.checked}})}
+                  className="mr-3 w-4 h-4 text-blue-600 rounded"
+                />
+                <div>
+                  <div className="text-sm font-medium">Non-Stop</div>
+                  <div className="text-xs text-gray-500">Direct flights</div>
+                </div>
+              </label>
+              <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={searchData.preferences.student}
+                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, student: e.target.checked}})}
+                  className="mr-3 w-4 h-4 text-blue-600 rounded"
+                />
+                <div>
+                  <div className="text-sm font-medium">Student</div>
+                  <div className="text-xs text-gray-500">Save with student fare</div>
+                </div>
+              </label>
+              <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={searchData.preferences.seniorCitizen}
+                  onChange={(e) => setSearchData({...searchData, preferences: {...searchData.preferences, seniorCitizen: e.target.checked}})}
+                  className="mr-3 w-4 h-4 text-blue-600 rounded"
+                />
+                <div>
+                  <div className="text-sm font-medium">Senior</div>
+                  <div className="text-xs text-gray-500">60+ discount</div>
+                </div>
+              </label>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Search Button - Enhanced with Glow Effect */}
-        <div className={`pt-6 transition-all duration-500 ${canSearch() ? 'opacity-100' : 'opacity-50'}`}>
-          <button
-            type="submit"
-            disabled={!canSearch() || isSearching}
-            onClick={() => onSearch(searchData)}
-            className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-5 px-8 rounded-2xl text-xl font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ${canSearch() && !isSearching ? 'search-ready-glow' : ''}`}
-          >
-            {isSearching ? (
-              <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                Searching Best Flights...
-              </div>
-            ) : (
-              <div className="flex items-center justify-center">
-                <span className="mr-3">🚀</span>
-                Search Flights
-                <span className="ml-3">✈️</span>
-              </div>
-            )}
-          </button>
-        </div>
+        {/* Search Button - Compact */}
+        <button
+          type="submit"
+          disabled={!canSearch() || isSearching}
+          onClick={() => onSearch(searchData)}
+          className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white ${compact ? 'py-4 px-6' : 'py-5 px-8'} rounded-2xl ${compact ? 'text-lg' : 'text-xl'} font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ${canSearch() && !isSearching ? 'search-ready-glow' : ''}`}
+        >
+          {isSearching ? (
+            <div className="flex items-center justify-center">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
+              Searching Best Flights...
+            </div>
+          ) : (
+            <div className="flex items-center justify-center">
+              <span className="mr-3">🚀</span>
+              Search Flights
+              <span className="ml-3">✈️</span>
+            </div>
+          )}
+        </button>
       </div>
     </div>
   );
