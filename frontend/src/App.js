@@ -515,13 +515,13 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
           )}
         </div>
 
-        {/* Search Button */}
+        {/* Search Button - Enhanced with Glow Effect */}
         <div className={`pt-6 transition-all duration-500 ${canSearch() ? 'opacity-100' : 'opacity-50'}`}>
           <button
             type="submit"
             disabled={!canSearch() || isSearching}
             onClick={() => onSearch(searchData)}
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-5 px-8 rounded-2xl text-xl font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-5 px-8 rounded-2xl text-xl font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ${canSearch() && !isSearching ? 'search-ready-glow' : ''}`}
           >
             {isSearching ? (
               <div className="flex items-center justify-center">
@@ -536,6 +536,15 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
               </div>
             )}
           </button>
+          
+          {/* User Guidance for Search Button */}
+          {canSearch() && !isSearching && (
+            <div className="mt-3 text-center">
+              <div className="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-xl text-sm font-medium guide-pulse">
+                ✨ Perfect! Click the glowing button to search flights
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
