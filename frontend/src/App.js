@@ -615,15 +615,6 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
               </div>
             )}
           </button>
-          
-          {/* User Guidance for Search Button */}
-          {canSearch() && !isSearching && (
-            <div className="mt-3 text-center">
-              <div className="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-xl text-sm font-medium guide-pulse">
-                ✨ Perfect! Click the glowing button to search flights
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
