@@ -774,127 +774,25 @@ function App() {
     setShowResults(true);
     
     try {
-      console.log('🔍 DEBUG: Starting search with:', formData);
-      console.log('🔍 DEBUG: showResults set to:', true);
-      console.log('🔍 DEBUG: isSearching set to:', true);
-      
       // Convert to backend format
       const searchPayload = {
         tripType: formData.tripType,
         origin: formData.segments[0].origin,
         destination: formData.segments[0].destination,
-        departure_date: formData.segments[0].departureDate, // Fixed: use snake_case
-        return_date: formData.returnDate, // Fixed: use snake_case
+        departure_date: formData.segments[0].departureDate,
+        return_date: formData.returnDate,
         passengers: formData.passengers.adults + formData.passengers.children + formData.passengers.infants,
         class: formData.class,
         segments: formData.segments
       };
       
-      console.log('🔍 DEBUG: API payload:', searchPayload);
-      
       const response = await axios.post(`${API}/flights/search`, searchPayload);
-      
-      console.log('🔍 DEBUG: API response status:', response.status);
-      console.log('🔍 DEBUG: API response data:', response.data);
-      console.log('🔍 DEBUG: Flights in response:', response.data.flights);
-      console.log('🔍 DEBUG: Number of flights:', response.data.flights ? response.data.flights.length : 0);
-      
       const flights = response.data.flights || [];
       setSearchResults(flights);
-      console.log('🔍 DEBUG: setSearchResults called with:', flights.length, 'flights');
-      
-      if (flights.length > 0) {
-        console.log('✅ Successfully loaded', flights.length, 'flights');
-      } else {
-        console.log('❌ No flights returned from API');
-      }
       
     } catch (error) {
-      console.error('Search error:', error);
-      console.log('Using sample flight data for demo');
-      
-      // For demo purposes, show sample flights if API fails
-      const sampleFlights = [
-        {
-          airline: "IndiGo",
-          flight_number: "6E-2031",
-          departure_time: "06:30",
-          arrival_time: "08:45",
-          origin: formData.segments[0].origin,
-          destination: formData.segments[0].destination,
-          duration_minutes: 135,
-          stops: 0,
-          price: 4500,
-          original_price: 5200,
-          total_price: 4500,
-          is_lcc: true,
-          refundable: false,
-          aircraft_type: "A320"
-        },
-        {
-          airline: "Air India",
-          flight_number: "AI-131",
-          departure_time: "09:15",
-          arrival_time: "11:30",
-          origin: formData.segments[0].origin,
-          destination: formData.segments[0].destination,
-          duration_minutes: 135,
-          stops: 0,
-          price: 6200,
-          total_price: 6200,
-          is_lcc: false,
-          refundable: true,
-          aircraft_type: "A321"
-        },
-        {
-          airline: "Vistara",
-          flight_number: "UK-955",
-          departure_time: "14:20",
-          arrival_time: "16:45",
-          origin: formData.segments[0].origin,
-          destination: formData.segments[0].destination,
-          duration_minutes: 145,
-          stops: 0,
-          price: 7800,
-          total_price: 7800,
-          is_lcc: false,
-          refundable: true,
-          aircraft_type: "A320neo"
-        },
-        {
-          airline: "SpiceJet",
-          flight_number: "SG-8709",
-          departure_time: "18:50",
-          arrival_time: "21:15",
-          origin: formData.segments[0].origin,
-          destination: formData.segments[0].destination,
-          duration_minutes: 145,
-          stops: 0,
-          price: 3900,
-          total_price: 3900,
-          is_lcc: true,
-          refundable: false,
-          aircraft_type: "B737"
-        },
-        {
-          airline: "Emirates",
-          flight_number: "EK-512",
-          departure_time: "23:30",
-          arrival_time: "08:15+1",
-          origin: formData.segments[0].origin,
-          destination: formData.segments[0].destination,
-          duration_minutes: 525,
-          stops: 1,
-          price: 28500,
-          total_price: 28500,
-          is_lcc: false,
-          refundable: true,
-          aircraft_type: "B777"
-        }
-      ];
-      
-      setSearchResults(sampleFlights);
-      console.log('Using sample flight data for demo');
+      console.error('Flight search error:', error);
+      setSearchResults([]);
     } finally {
       setIsSearching(false);
     }
