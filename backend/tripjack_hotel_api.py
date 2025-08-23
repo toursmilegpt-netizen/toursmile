@@ -295,6 +295,261 @@ class TripjackHotelService:
             logger.error(f"❌ Error transforming hotel data: {str(e)}")
             return []
 
+    def pre_book_hotel(self, hotel_id: str, check_in: str, check_out: str, rooms: List[Dict], guest_details: List[Dict]) -> Dict:
+        """
+        TripJack Hotel Pre-Book API for rate revalidation
+        Mandatory step before payment to confirm rates and availability
+        
+        Args:
+            hotel_id (str): TripJack hotel ID
+            check_in (str): Check-in date YYYY-MM-DD
+            check_out (str): Check-out date YYYY-MM-DD  
+            rooms (List[Dict]): Room details with adult/child counts
+            guest_details (List[Dict]): Guest information
+            
+        Returns:
+            Dict: Pre-booking response with revalidated rates and booking token
+        """
+        try:
+            if not self.authenticate():
+                logger.error("❌ Failed to authenticate for hotel pre-book")
+                return {"success": False, "error": "Authentication failed"}
+
+            logger.info(f"🔄 TripJack hotel pre-book: {hotel_id}")
+            
+            # Pre-book endpoint
+            prebook_url = f"{self.base_url}/hms/v1/hotel/prebook"
+            
+            # Pre-book request payload
+            prebook_payload = {
+                "hotelId": hotel_id,
+                "checkInDate": check_in,
+                "checkOutDate": check_out,
+                "rooms": rooms,
+                "guestDetails": guest_details,
+                "options": {
+                    "currency": "INR",
+                    "revalidateRates": True,
+                    "includeBookingToken": True
+                }
+            }
+
+            headers = self.get_headers()
+            
+            response = requests.post(prebook_url, json=prebook_payload, headers=headers, timeout=60)
+            logger.info(f"📊 Pre-book API Response Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                logger.info("✅ Hotel pre-book successful!")
+                
+                return {
+                    "success": True,
+                    "booking_token": data.get("bookingToken"),
+                    "revalidated_price": data.get("totalPrice"),
+                    "original_price": data.get("originalPrice"),
+                    "rate_change": data.get("rateChanged", False),
+                    "availability_confirmed": data.get("availabilityConfirmed", True),
+                    "booking_details": data.get("bookingDetails", {}),
+                    "cancellation_policy": data.get("cancellationPolicy", {}),
+                    "valid_until": data.get("validUntil"),
+                    "raw_response": data
+                }
+                    
+            else:
+                error_data = response.json() if response.content else {}
+                logger.error(f"❌ Hotel pre-book failed: {response.status_code}")
+                return {
+                    "success": False, 
+                    "error": error_data.get("message", "Pre-book failed"),
+                    "error_code": error_data.get("code"),
+                    "status_code": response.status_code
+                }
+                
+        except Exception as e:
+            logger.error(f"❌ Hotel pre-book error: {str(e)}")
+            return {"success": False, "error": str(e)}
+
+    def confirm_hotel_booking(self, booking_token: str, payment_details: Dict, customer_details: Dict) -> Dict:
+        """
+        Confirm hotel booking after successful payment
+        Generates TripJack booking ID and confirmation
+        
+        Args:
+            booking_token (str): Token from pre-book response
+            payment_details (Dict): Payment information
+            customer_details (Dict): Customer contact details
+            
+        Returns:
+            Dict: Booking confirmation with TripJack booking ID
+        """
+        try:
+            if not self.authenticate():
+                logger.error("❌ Failed to authenticate for hotel booking")
+                return {"success": False, "error": "Authentication failed"}
+
+            logger.info(f"✅ Confirming hotel booking with token: {booking_token[:20]}...")
+            
+            # Booking confirmation endpoint
+            booking_url = f"{self.base_url}/hms/v1/hotel/book"
+            
+            # Booking confirmation payload
+            booking_payload = {
+                "bookingToken": booking_token,
+                "paymentDetails": {
+                    "paymentId": payment_details.get("payment_id"),
+                    "paymentMethod": payment_details.get("method", "card"),
+                    "amount": payment_details.get("amount"),
+                    "currency": payment_details.get("currency", "INR"),
+                    "transactionId": payment_details.get("transaction_id")
+                },
+                "customerDetails": customer_details,
+                "options": {
+                    "sendConfirmationEmail": True,
+                    "generateVoucher": True
+                }
+            }
+
+            headers = self.get_headers()
+            
+            response = requests.post(booking_url, json=booking_payload, headers=headers, timeout=60)
+            logger.info(f"📊 Booking API Response Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                logger.info("✅ Hotel booking confirmed!")
+                
+                return {
+                    "success": True,
+                    "tripjack_booking_id": data.get("bookingId"),
+                    "booking_reference": data.get("bookingReference"), 
+                    "confirmation_number": data.get("confirmationNumber"),
+                    "status": data.get("status", "confirmed"),
+                    "hotel_details": data.get("hotelDetails", {}),
+                    "guest_details": data.get("guestDetails", []),
+                    "total_amount": data.get("totalAmount"),
+                    "check_in_date": data.get("checkInDate"),
+                    "check_out_date": data.get("checkOutDate"),
+                    "voucher_url": data.get("voucherUrl"),
+                    "cancellation_policy": data.get("cancellationPolicy", {}),
+                    "contact_details": data.get("hotelContactDetails", {}),
+                    "raw_response": data
+                }
+                    
+            else:
+                error_data = response.json() if response.content else {}
+                logger.error(f"❌ Hotel booking failed: {response.status_code}")
+                return {
+                    "success": False, 
+                    "error": error_data.get("message", "Booking failed"),
+                    "error_code": error_data.get("code"),
+                    "status_code": response.status_code
+                }
+                
+        except Exception as e:
+            logger.error(f"❌ Hotel booking confirmation error: {str(e)}")
+            return {"success": False, "error": str(e)}
+
+    def get_booking_details(self, tripjack_booking_id: str) -> Dict:
+        """
+        Retrieve booking details from TripJack
+        
+        Args:
+            tripjack_booking_id (str): TripJack booking ID
+            
+        Returns:
+            Dict: Booking details and status
+        """
+        try:
+            if not self.authenticate():
+                logger.error("❌ Failed to authenticate for booking details")
+                return {"success": False, "error": "Authentication failed"}
+
+            logger.info(f"📋 Getting booking details: {tripjack_booking_id}")
+            
+            # Booking details endpoint
+            details_url = f"{self.base_url}/hms/v1/hotel/booking/{tripjack_booking_id}"
+
+            headers = self.get_headers()
+            
+            response = requests.get(details_url, headers=headers, timeout=30)
+            logger.info(f"📊 Booking Details Response Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                logger.info("✅ Booking details retrieved!")
+                
+                return {
+                    "success": True,
+                    "booking_details": data
+                }
+                    
+            else:
+                logger.error(f"❌ Failed to get booking details: {response.status_code}")
+                return {"success": False, "error": "Failed to retrieve booking"}
+                
+        except Exception as e:
+            logger.error(f"❌ Get booking details error: {str(e)}")
+            return {"success": False, "error": str(e)}
+
+    def cancel_hotel_booking(self, tripjack_booking_id: str, cancellation_reason: str = "Customer request") -> Dict:
+        """
+        Cancel hotel booking through TripJack API
+        
+        Args:
+            tripjack_booking_id (str): TripJack booking ID
+            cancellation_reason (str): Reason for cancellation
+            
+        Returns:
+            Dict: Cancellation status and refund details
+        """
+        try:
+            if not self.authenticate():
+                logger.error("❌ Failed to authenticate for cancellation")
+                return {"success": False, "error": "Authentication failed"}
+
+            logger.info(f"❌ Cancelling hotel booking: {tripjack_booking_id}")
+            
+            # Cancellation endpoint
+            cancel_url = f"{self.base_url}/hms/v1/hotel/cancel"
+            
+            cancel_payload = {
+                "bookingId": tripjack_booking_id,
+                "reason": cancellation_reason
+            }
+
+            headers = self.get_headers()
+            
+            response = requests.post(cancel_url, json=cancel_payload, headers=headers, timeout=60)
+            logger.info(f"📊 Cancellation Response Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                logger.info("✅ Booking cancelled!")
+                
+                return {
+                    "success": True,
+                    "cancellation_id": data.get("cancellationId"),
+                    "refund_amount": data.get("refundAmount"),
+                    "cancellation_charges": data.get("cancellationCharges"),
+                    "refund_timeline": data.get("refundTimeline"),
+                    "status": data.get("status"),
+                    "raw_response": data
+                }
+                    
+            else:
+                error_data = response.json() if response.content else {}
+                logger.error(f"❌ Cancellation failed: {response.status_code}")
+                return {
+                    "success": False, 
+                    "error": error_data.get("message", "Cancellation failed"),
+                    "error_code": error_data.get("code")
+                }
+                
+        except Exception as e:
+            logger.error(f"❌ Cancellation error: {str(e)}")
+            return {"success": False, "error": str(e)}
+
     def get_price_range(self, price: float) -> str:
         """Categorize hotel by price range"""
         if price < 2000:
