@@ -264,7 +264,7 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
               {/* Time and Route */}
               <div className="flex items-center space-x-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">{flight.departure_time}</div>
+                  <div className="text-xl font-bold text-gray-900">{flight.departure_time}</div>
                   <div className="text-sm text-gray-500">{flight.origin}</div>
                 </div>
                 
@@ -281,7 +281,7 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
                 </div>
                 
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">{flight.arrival_time}</div>
+                  <div className="text-xl font-bold text-gray-900">{flight.arrival_time}</div>
                   <div className="text-sm text-gray-500">{flight.destination}</div>
                 </div>
               </div>
