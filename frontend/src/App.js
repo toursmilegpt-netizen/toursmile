@@ -506,6 +506,18 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
 
         {/* Passengers & Class - Step 4 */}
         <div className={`transition-all duration-500 ${currentStep >= 4 ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
+          {currentStep === 4 && (
+            <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-xl">
+              <div className="flex items-center text-orange-700">
+                <span className="text-2xl mr-2 guide-pulse">👥</span>
+                <div>
+                  <div className="font-semibold text-sm">Step 4 of 4</div>
+                  <div className="text-sm">Almost there! Select passengers and travel class</div>
+                </div>
+              </div>
+            </div>
+          )}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <PassengerSelector
               passengers={searchData.passengers}
