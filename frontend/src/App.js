@@ -604,12 +604,12 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           </div>
         )}
 
-        {/* Flight Preferences - Enhanced with More Options */}
+        {/* Flight Preferences - Basic Options Only */}
         <div className="mb-4">
           <div className="text-sm font-medium text-gray-700 mb-3">Flight Preferences</div>
           
-          {/* Row 1: Quick Options */}
-          <div className="flex items-center flex-wrap gap-3 p-3 bg-gray-50 rounded-xl mb-3">
+          {/* Basic Quick Options Only */}
+          <div className="flex items-center flex-wrap gap-3 p-3 bg-gray-50 rounded-xl">
             {/* Non-Stop */}
             <label className="flex items-center cursor-pointer group">
               <input
@@ -693,98 +693,6 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600">Corporate</span>
               </div>
             </label>
-          </div>
-
-          {/* Row 2: Time Preferences */}
-          <div className="mb-3">
-            <label className="block text-sm font-medium text-gray-600 mb-2">Departure Time Preference</label>
-            <div className="grid grid-cols-5 gap-2">
-              {[
-                { value: 'any', label: 'Any Time', icon: '🕒' },
-                { value: 'morning', label: 'Morning', icon: '🌅', time: '6-12 AM' },
-                { value: 'afternoon', label: 'Afternoon', icon: '☀️', time: '12-6 PM' },
-                { value: 'evening', label: 'Evening', icon: '🌆', time: '6-12 PM' },
-                { value: 'night', label: 'Night', icon: '🌙', time: '12-6 AM' }
-              ].map((time) => (
-                <button
-                  key={time.value}
-                  type="button"
-                  onClick={() => setSearchData({...searchData, preferences: {...searchData.preferences, timePreference: time.value}})}
-                  className={`p-3 rounded-xl border text-center transition-all duration-200 time-preference-btn ${
-                    searchData.preferences.timePreference === time.value
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-lg active'
-                      : 'bg-white border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-blue-50'
-                  }`}
-                >
-                  <div className="text-lg mb-1">{time.icon}</div>
-                  <div className="text-xs font-medium">{time.label}</div>
-                  {time.time && (
-                    <div className="text-xs opacity-75 mt-1">{time.time}</div>
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Row 3: Budget Range */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Budget Range: ₹{searchData.preferences.budgetRange[0].toLocaleString()} - ₹{searchData.preferences.budgetRange[1].toLocaleString()}
-            </label>
-            <div className="px-4 py-3 bg-white border border-gray-200 rounded-xl">
-              <div className="flex items-center space-x-4">
-                <div className="flex-1">
-                  <input
-                    type="range"
-                    min="0"
-                    max="50000"
-                    step="1000"
-                    value={searchData.preferences.budgetRange[0]}
-                    onChange={(e) => {
-                      const minValue = parseInt(e.target.value);
-                      const maxValue = Math.max(minValue + 1000, searchData.preferences.budgetRange[1]);
-                      setSearchData({
-                        ...searchData, 
-                        preferences: {
-                          ...searchData.preferences, 
-                          budgetRange: [minValue, maxValue]
-                        }
-                      });
-                    }}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider-thumb"
-                  />
-                </div>
-                <span className="text-sm text-gray-500">to</span>
-                <div className="flex-1">
-                  <input
-                    type="range"
-                    min="1000"
-                    max="100000"
-                    step="1000"
-                    value={searchData.preferences.budgetRange[1]}
-                    onChange={(e) => {
-                      const maxValue = parseInt(e.target.value);
-                      const minValue = Math.min(searchData.preferences.budgetRange[0], maxValue - 1000);
-                      setSearchData({
-                        ...searchData, 
-                        preferences: {
-                          ...searchData.preferences, 
-                          budgetRange: [minValue, maxValue]
-                        }
-                      });
-                    }}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider-thumb"
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between text-xs text-gray-500 mt-2">
-                <span>₹0</span>
-                <span>₹25K</span>
-                <span>₹50K</span>
-                <span>₹75K</span>
-                <span>₹1L+</span>
-              </div>
-            </div>
           </div>
         </div>
 
