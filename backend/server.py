@@ -49,11 +49,14 @@ load_dotenv(ROOT_DIR / '.env')
 
 # Initialize database on startup
 print("🔄 Initializing PostgreSQL database...")
-if test_connection():
-    create_tables()
-    print("✅ PostgreSQL database initialized successfully!")
-else:
-    print("❌ Database initialization failed!")
+try:
+    if test_connection():
+        create_tables()
+        print("✅ PostgreSQL database initialized successfully!")
+    else:
+        print("❌ Database initialization failed! Continuing without database...")
+except Exception as e:
+    print(f"❌ Database initialization error: {e}. Continuing without database...")
 
 # OpenAI API Key
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
