@@ -693,6 +693,203 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   );
 };
 
+// Passenger Selector Component with Adults, Children, Infants
+const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassChange }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showDropdown]);
+
+  const updatePassengerCount = (type, increment) => {
+    const newPassengers = { ...passengers };
+    
+    if (increment) {
+      newPassengers[type] = (newPassengers[type] || 0) + 1;
+    } else {
+      if (type === 'adults') {
+        newPassengers[type] = Math.max(1, (newPassengers[type] || 1) - 1);
+      } else {
+        newPassengers[type] = Math.max(0, (newPassengers[type] || 0) - 1);
+      }
+    }
+    
+    onPassengerChange(newPassengers);
+  };
+
+  const getTotalPassengers = () => {
+    return (passengers.adults || 1) + (passengers.children || 0) + (passengers.infants || 0);
+  };
+
+  const getPassengerSummary = () => {
+    const total = getTotalPassengers();
+    const parts = [];
+    
+    if (passengers.adults || 1) parts.push(`${passengers.adults || 1} Adult${(passengers.adults || 1) > 1 ? 's' : ''}`);
+    if (passengers.children) parts.push(`${passengers.children} Child${passengers.children > 1 ? 'ren' : ''}`);
+    if (passengers.infants) parts.push(`${passengers.infants} Infant${passengers.infants > 1 ? 's' : ''}`);
+    
+    return parts.join(', ');
+  };
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <label className="block text-sm font-medium text-gray-700 mb-2">Passengers & Class</label>
+      
+      {/* Passenger Display Button */}
+      <button
+        type="button"
+        onClick={() => setShowDropdown(!showDropdown)}
+        className={`w-full px-4 py-4 text-lg border-2 rounded-2xl transition-all duration-200 flex items-center justify-between text-left ${
+          showDropdown ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
+        }`}
+      >
+        <div>
+          <div className="font-medium text-gray-900">{getPassengerSummary()}</div>
+          <div className="text-sm text-gray-600 capitalize">{classType} Class</div>
+        </div>
+        <div className="text-2xl">👥</div>
+      </button>
+
+      {/* Passenger Selection Dropdown */}
+      {showDropdown && (
+        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border-2 border-blue-200 rounded-2xl shadow-2xl p-4">
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Select Passengers</h3>
+            <p className="text-sm text-gray-600">Choose number of travelers</p>
+          </div>
+
+          {/* Adults */}
+          <div className="flex items-center justify-between py-3 border-b border-gray-100">
+            <div>
+              <div className="font-medium text-gray-900">Adults</div>
+              <div className="text-sm text-gray-600">12+ years</div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <button
+                type="button"
+                onClick={() => updatePassengerCount('adults', false)}
+                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
+                disabled={(passengers.adults || 1) <= 1}
+              >
+                -
+              </button>
+              <span className="w-8 text-center font-medium">{passengers.adults || 1}</span>
+              <button
+                type="button"
+                onClick={() => updatePassengerCount('adults', true)}
+                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {/* Children */}
+          <div className="flex items-center justify-between py-3 border-b border-gray-100">
+            <div>
+              <div className="font-medium text-gray-900">Children</div>
+              <div className="text-sm text-gray-600">2-12 years</div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <button
+                type="button"
+                onClick={() => updatePassengerCount('children', false)}
+                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
+                disabled={(passengers.children || 0) <= 0}
+              >
+                -
+              </button>
+              <span className="w-8 text-center font-medium">{passengers.children || 0}</span>
+              <button
+                type="button"
+                onClick={() => updatePassengerCount('children', true)}
+                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {/* Infants */}
+          <div className="flex items-center justify-between py-3 border-b border-gray-100">
+            <div>
+              <div className="font-medium text-gray-900">Infants</div>
+              <div className="text-sm text-gray-600">Under 2 years</div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <button
+                type="button"
+                onClick={() => updatePassengerCount('infants', false)}
+                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
+                disabled={(passengers.infants || 0) <= 0}
+              >
+                -
+              </button>
+              <span className="w-8 text-center font-medium">{passengers.infants || 0}</span>
+              <button
+                type="button"
+                onClick={() => updatePassengerCount('infants', true)}
+                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {/* Class Selection */}
+          <div className="pt-4">
+            <div className="font-medium text-gray-900 mb-3">Travel Class</div>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: 'economy', label: 'Economy', icon: '🪑' },
+                { value: 'premium-economy', label: 'Premium', icon: '✨' },
+                { value: 'business', label: 'Business', icon: '💼' },
+                { value: 'first', label: 'First', icon: '👑' }
+              ].map((cls) => (
+                <button
+                  key={cls.value}
+                  type="button"
+                  onClick={() => onClassChange(cls.value)}
+                  className={`p-3 rounded-xl border text-center transition-all duration-200 ${
+                    classType === cls.value
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
+                      : 'bg-white border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-blue-50'
+                  }`}
+                >
+                  <div className="text-lg mb-1">{cls.icon}</div>
+                  <div className="text-sm font-medium">{cls.label}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Apply Button */}
+          <div className="pt-4">
+            <button
+              type="button"
+              onClick={() => setShowDropdown(false)}
+              className="w-full bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Proper Calendar Date Picker Component
 const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
   const [showCalendar, setShowCalendar] = useState(false);
