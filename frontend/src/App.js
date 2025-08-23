@@ -414,7 +414,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 </div>
               )}
               
-              <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
+              <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-3'} gap-4`}>
                 {/* From */}
                 <div>
                   <CityAutocomplete
@@ -437,6 +437,16 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     onChange={(city) => updateSegment(index, 'destination', city)}
                     airports={AIRPORTS_DATABASE}
                     excludeCity={segment.origin}
+                  />
+                </div>
+
+                {/* Date - Inline for Multicity */}
+                <div>
+                  <SimpleDatePicker
+                    value={segment.departureDate}
+                    onChange={(date) => updateSegment(index, 'departureDate', date)}
+                    label={searchData.tripType === 'multi-city' ? `Date ${index + 1}` : 'Date'}
+                    minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
                   />
                 </div>
               </div>
