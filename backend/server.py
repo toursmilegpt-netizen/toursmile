@@ -37,6 +37,10 @@ from otp_service import router as auth_router
 # Complete Hotel Booking System - TripJack integration with pre-book API
 from hotel_booking_routes import router as hotel_router
 
+# Admin Authentication and Dashboard System
+from admin_auth import router as admin_auth_router
+from admin_dashboard import router as admin_dashboard_router
+
 # Database configuration
 from database import create_tables, test_connection
 
