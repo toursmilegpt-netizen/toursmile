@@ -582,7 +582,124 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
   );
 };
 
-// Enhanced City Autocomplete with comprehensive airport data
+// Custom Date Picker Component
+const CustomDatePicker = ({ value, onChange, minDate, label, className }) => {
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(value || '');
+  const calendarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+        setShowCalendar(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const formatDisplayDate = (dateStr) => {
+    if (!dateStr) return 'Select Date';
+    const date = new Date(dateStr);
+    const options = { 
+      weekday: 'short', 
+      day: 'numeric', 
+      month: 'short', 
+      year: 'numeric' 
+    };
+    return date.toLocaleDateString('en-US', options);
+  };
+
+  const handleDateSelect = (date) => {
+    const dateStr = date.toISOString().split('T')[0];
+    setSelectedDate(dateStr);
+    onChange(dateStr);
+    setShowCalendar(false); // Calendar disappears after selection
+  };
+
+  const generateCalendar = () => {
+    const today = new Date();
+    const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    
+    const days = [];
+    
+    // Generate days for current and next month
+    for (let i = 0; i < 60; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      days.push(date);
+    }
+
+    return days;
+  };
+
+  return (
+    <div className="relative" ref={calendarRef}>
+      <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
+      
+      {/* Date Input Display */}
+      <div
+        onClick={() => setShowCalendar(!showCalendar)}
+        className={`w-full px-4 py-4 text-lg border-2 rounded-2xl cursor-pointer transition-all duration-200 flex items-center justify-between ${
+          showCalendar ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
+        } ${className}`}
+      >
+        <span className={selectedDate ? 'text-gray-900' : 'text-gray-500'}>
+          {formatDisplayDate(selectedDate)}
+        </span>
+        <div className="text-2xl">📅</div>
+      </div>
+
+      {/* Custom Calendar Popup */}
+      {showCalendar && (
+        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border-2 border-blue-200 rounded-2xl shadow-2xl p-6 max-h-80 overflow-y-auto">
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Select Travel Date</h3>
+            <p className="text-sm text-gray-600">Choose your preferred departure date</p>
+          </div>
+          
+          <div className="grid grid-cols-7 gap-2 text-center mb-4">
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+              <div key={day} className="text-xs font-medium text-gray-500 py-2">{day}</div>
+            ))}
+          </div>
+          
+          <div className="grid grid-cols-7 gap-2">
+            {generateCalendar().slice(0, 42).map((date, index) => {
+              const dateStr = date.toISOString().split('T')[0];
+              const isSelected = dateStr === selectedDate;
+              const isToday = dateStr === new Date().toISOString().split('T')[0];
+              const isDisabled = date < new Date(minDate);
+              
+              return (
+                <button
+                  key={index}
+                  onClick={() => !isDisabled && handleDateSelect(date)}
+                  disabled={isDisabled}
+                  className={`
+                    w-10 h-10 text-sm rounded-xl transition-all duration-200
+                    ${isSelected 
+                      ? 'bg-blue-600 text-white font-bold shadow-lg' 
+                      : isToday 
+                        ? 'bg-blue-100 text-blue-600 font-semibold' 
+                        : isDisabled
+                          ? 'text-gray-300 cursor-not-allowed'
+                          : 'hover:bg-blue-50 text-gray-700 hover:text-blue-600'
+                    }
+                  `}
+                >
+                  {date.getDate()}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange, icon, autoFocus, airports, excludeCity }, ref) => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
