@@ -719,6 +719,8 @@ const CustomDatePicker = ({ value, onChange, minDate, label, className }) => {
               const dateStr = date.toISOString().split('T')[0];
               const isSelected = dateStr === selectedDate;
               const isToday = dateStr === new Date().toISOString().split('T')[0];
+              const isDisabled = minDate ? dateStr < minDate : false;
+              
               return (
                 <button
                   key={index}
