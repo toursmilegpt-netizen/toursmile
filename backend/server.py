@@ -753,6 +753,12 @@ app.include_router(auth_router, prefix="/api", tags=["auth"])
 # Include the hotel router
 app.include_router(hotel_router, prefix="/api", tags=["hotels"])
 
+# Include the admin authentication router
+app.include_router(admin_auth_router, prefix="/api", tags=["admin-auth"])
+
+# Include the admin dashboard router
+app.include_router(admin_dashboard_router, prefix="/api", tags=["admin-dashboard"])
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
