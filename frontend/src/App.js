@@ -503,7 +503,6 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
               <div className="flex items-center text-orange-700">
                 <span className="text-2xl mr-2 guide-pulse">👥</span>
                 <div>
-                  <div className="font-semibold text-sm">Step 4 of 4</div>
                   <div className="text-sm">Almost there! Select passengers and travel class</div>
                 </div>
               </div>
