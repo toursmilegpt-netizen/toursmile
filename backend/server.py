@@ -738,11 +738,11 @@ app.include_router(popular_trips_router, prefix="/api", tags=["popular-trips"])
 # Include the destinations router
 app.include_router(destinations_router, prefix="/api", tags=["destinations"])
 
-# Include the waitlist router
-app.include_router(waitlist_router, prefix="/api", tags=["waitlist"])
+# Include the waitlist router (commented out for testing)
+# app.include_router(waitlist_router, prefix="/api", tags=["waitlist"])
 
-# Include the booking router
-app.include_router(booking_router, prefix="/api/bookings", tags=["bookings"])
+# Include the booking router (commented out for testing)
+# app.include_router(booking_router, prefix="/api/bookings", tags=["bookings"])
 
 # Include the tourbuilder router
 app.include_router(tourbuilder_router, prefix="/api", tags=["tourbuilder"])
