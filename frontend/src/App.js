@@ -970,10 +970,19 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
   };
 
   const handleFocus = () => {
-    // Only show suggestions when user actually types, not on initial focus
-    if (inputValue.length > 0) {
+    // Show popular airports immediately when clicked/focused
+    if (inputValue.length === 0) {
+      const popular = airports.filter(airport => airport.popular && airport.name !== excludeCity).slice(0, 6);
+      setSuggestions(popular);
+      setShowSuggestions(true);
+    } else {
       setShowSuggestions(suggestions.length > 0);
     }
+  };
+
+  const handleInputClick = () => {
+    // Same as focus - show dropdown on click
+    handleFocus();
   };
 
   return (
