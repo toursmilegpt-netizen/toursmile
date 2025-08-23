@@ -433,22 +433,12 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Departure Date */}
               <div className={`transition-all duration-500 ${currentStep >= 3 || isStepComplete(3) ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {index === 0 ? "Departure Date" : `Date (${index + 1})`}
-                </label>
-                <input
-                  ref={index === 0 ? dateRef : null}
-                  type="date"
+                <CustomDatePicker
                   value={segment.departureDate}
-                  onChange={(e) => updateSegment(index, 'departureDate', e.target.value)}
-                  min={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
-                  className={`w-full px-4 py-4 text-lg border-2 rounded-2xl focus:ring-4 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 date-picker-enhanced ${currentStep === 3 ? 'border-purple-400 bg-purple-50 guide-pulse' : 'border-gray-200'}`}
-                  style={{
-                    WebkitAppearance: 'none',
-                    MozAppearance: 'none',
-                    appearance: 'none',
-                    fontSize: '18px'
-                  }}
+                  onChange={(date) => updateSegment(index, 'departureDate', date)}
+                  minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
+                  label={index === 0 ? "Departure Date" : `Date (${index + 1})`}
+                  className={currentStep === 3 ? 'guide-pulse' : ''}
                 />
                 {currentStep === 3 && index === 0 && !segment.departureDate && (
                   <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-xl">
@@ -456,7 +446,7 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
                       <span className="text-2xl mr-2 guide-pulse">📅</span>
                       <div>
                         <div className="font-semibold text-sm">Step 3 of 4</div>
-                        <div className="text-sm">Perfect! When would you like to travel? Click on the calendar icon</div>
+                        <div className="text-sm">Perfect! When would you like to travel? Click on the date field</div>
                       </div>
                     </div>
                   </div>
