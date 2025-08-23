@@ -233,7 +233,12 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
     preferences: {
       nonStop: false,
       student: false,
-      seniorCitizen: false
+      seniorCitizen: false,
+      timePreference: 'any', // morning, afternoon, evening, night, any
+      flexibleDates: false,
+      nearbyAirports: false,
+      budgetRange: [0, 50000],
+      corporateBooking: false
     }
   });
 
