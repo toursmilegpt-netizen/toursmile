@@ -350,6 +350,9 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
                 <div className="text-center mb-3">
                   <h5 className="font-bold text-gray-900">{fare.name}</h5>
                   <p className="text-xs text-gray-600">{fare.type}</p>
+                  <p className="text-xs text-orange-600 font-medium mt-1">
+                    📋 {fare.cancellationCharges}
+                  </p>
                 </div>
                 
                 <div className="text-center mb-3">
