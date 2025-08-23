@@ -163,7 +163,7 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
   const airlineInfo = AIRLINE_INFO[flight.airline] || AIRLINE_INFO["Default"];
   const [showFares, setShowFares] = useState(false);
   
-  // Generate fare options for this flight
+  // Generate fare options for this flight with cancellation charges
   const baseFare = flight.price || 5000;
   const fareOptions = [
     {
@@ -173,6 +173,7 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
       price: baseFare,
       originalPrice: baseFare + Math.round(baseFare * 0.05),
       features: ['❌ Non-refundable', '7kg cabin bag'],
+      cancellationCharges: 'No refund allowed',
       popular: false,
       savings: Math.round(baseFare * 0.05)
     },
@@ -183,6 +184,7 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
       price: baseFare + Math.round(baseFare * 0.15),
       originalPrice: baseFare + Math.round(baseFare * 0.20),
       features: ['✅ Refund with charges', '15kg checked bag', '1 free change'],
+      cancellationCharges: 'Starting from ₹2,500',
       popular: true,
       savings: Math.round(baseFare * 0.05)
     },
@@ -193,6 +195,7 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
       price: baseFare + Math.round(baseFare * 0.35),
       originalPrice: baseFare + Math.round(baseFare * 0.45),
       features: ['✅ Full refund', '25kg checked bag', 'Priority boarding'],
+      cancellationCharges: 'Starting from ₹1,000',
       popular: false,
       savings: Math.round(baseFare * 0.10)
     }
