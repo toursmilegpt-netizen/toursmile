@@ -320,12 +320,12 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   return (
     <div className={`${compact ? 'max-w-none' : 'max-w-4xl'} mx-auto`}>
       <div className={`bg-white rounded-3xl shadow-2xl p-6 ${compact ? 'md:p-6' : 'md:p-8'} backdrop-blur-md border border-gray-100`}>
-        {/* Trip Type Toggle - Compact Version */}
+        {/* Trip Type Toggle - With Multicity */}
         <div className={`flex items-center justify-center ${compact ? 'mb-4' : 'mb-6'}`}>
           <div className="bg-gray-100 rounded-2xl p-1 flex">
             <button
               onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
+              className={`px-4 py-3 rounded-xl font-semibold transition-all duration-200 text-sm ${
                 searchData.tripType === 'one-way' 
                   ? 'bg-white text-gray-900 shadow-md' 
                   : 'text-gray-500 hover:text-gray-700'
@@ -335,13 +335,30 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             </button>
             <button
               onClick={() => setSearchData({...searchData, tripType: 'return'})}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
+              className={`px-4 py-3 rounded-xl font-semibold transition-all duration-200 text-sm ${
                 searchData.tripType === 'return' 
                   ? 'bg-white text-gray-900 shadow-md' 
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
               Round Trip
+            </button>
+            <button
+              onClick={() => setSearchData({
+                ...searchData, 
+                tripType: 'multi-city',
+                segments: searchData.segments.length === 1 ? [
+                  ...searchData.segments,
+                  { origin: '', destination: '', departureDate: '' }
+                ] : searchData.segments
+              })}
+              className={`px-4 py-3 rounded-xl font-semibold transition-all duration-200 text-sm ${
+                searchData.tripType === 'multi-city' 
+                  ? 'bg-white text-gray-900 shadow-md' 
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Multi-City
             </button>
           </div>
         </div>
