@@ -392,44 +392,93 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           </div>
         </div>
 
-        {/* Route Selection - Compact Grid */}
-        <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2'} gap-4 ${compact ? 'mb-4' : 'mb-6'}`}>
-          {/* From */}
-          <div>
-            <CityAutocomplete
-              label="From"
-              placeholder="Departure city"
-              value={searchData.segments[0].origin}
-              onChange={(city) => updateSegment(0, 'origin', city)}
-              airports={AIRPORTS_DATABASE}
-              excludeCity={searchData.segments[0].destination}
-              autoFocus={true}
-            />
-          </div>
+        {/* Route Selection - Dynamic for Multicity */}
+        <div className="space-y-4 mb-4">
+          {searchData.segments.map((segment, index) => (
+            <div key={index} className={`${searchData.tripType === 'multi-city' && index > 0 ? 'border-t border-gray-200 pt-4' : ''}`}>
+              {/* Segment Header for Multi-city */}
+              {searchData.tripType === 'multi-city' && (
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-medium text-gray-700">
+                    Flight {index + 1} {index === 0 ? '(Departure)' : index === searchData.segments.length - 1 ? '(Final)' : '(Connecting)'}
+                  </h4>
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => removeSegment(index)}
+                      className="text-red-500 hover:text-red-700 text-sm font-medium"
+                    >
+                      ✕ Remove
+                    </button>
+                  )}
+                </div>
+              )}
+              
+              <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
+                {/* From */}
+                <div>
+                  <CityAutocomplete
+                    label={searchData.tripType === 'multi-city' ? 'From' : 'From'}
+                    placeholder="Departure city"
+                    value={segment.origin}
+                    onChange={(city) => updateSegment(index, 'origin', city)}
+                    airports={AIRPORTS_DATABASE}
+                    excludeCity={segment.destination}
+                    autoFocus={index === 0}
+                  />
+                </div>
 
-          {/* To */}
-          <div>
-            <CityAutocomplete
-              label="To"
-              placeholder="Arrival city"
-              value={searchData.segments[0].destination}
-              onChange={(city) => updateSegment(0, 'destination', city)}
-              airports={AIRPORTS_DATABASE}
-              excludeCity={searchData.segments[0].origin}
-            />
-          </div>
+                {/* To */}
+                <div>
+                  <CityAutocomplete
+                    label={searchData.tripType === 'multi-city' ? 'To' : 'To'}
+                    placeholder="Arrival city"
+                    value={segment.destination}
+                    onChange={(city) => updateSegment(index, 'destination', city)}
+                    airports={AIRPORTS_DATABASE}
+                    excludeCity={segment.origin}
+                  />
+                </div>
+              </div>
+
+              {/* Date for this segment */}
+              <div className="mt-4">
+                <SimpleDatePicker
+                  value={segment.departureDate}
+                  onChange={(date) => updateSegment(index, 'departureDate', date)}
+                  label={searchData.tripType === 'multi-city' ? `Departure Date ${index + 1}` : 'Departure Date'}
+                  minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
+                />
+              </div>
+            </div>
+          ))}
+
+          {/* Add City Button for Multi-city */}
+          {searchData.tripType === 'multi-city' && searchData.segments.length < 6 && (
+            <div className="pt-3">
+              <button
+                type="button"
+                onClick={addSegment}
+                className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+              >
+                <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs">+</span>
+                <span>Add Another City (Max 6 flights)</span>
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Date and Passengers - Compact Grid */}
-        <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-2'} gap-4 ${compact ? 'mb-4' : 'mb-6'}`}>
-          {/* Date */}
-          <div className={compact ? 'md:col-span-1' : ''}>
+        {/* Return Date for Round Trip */}
+        {searchData.tripType === 'return' && (
+          <div className="mb-4">
             <SimpleDatePicker
-              value={searchData.segments[0].departureDate}
-              onChange={(date) => updateSegment(0, 'departureDate', date)}
-              label="Departure Date"
+              value={searchData.returnDate}
+              onChange={(date) => setSearchData({...searchData, returnDate: date})}
+              label="Return Date"
+              minDate={searchData.segments[0]?.departureDate}
             />
           </div>
+        )}
 
           {/* Passengers - Compact */}
           <div className={compact ? 'md:col-span-1' : ''}>
