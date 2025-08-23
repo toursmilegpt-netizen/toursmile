@@ -721,3 +721,78 @@ input[type="checkbox"]:focus {
   ring-color: #3B82F6;
   ring-offset-width: 2px;
 }
+
+/* Budget Range Slider Styling */
+.slider-thumb::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #3B82F6, #2563EB);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 2px solid white;
+  transition: all 0.2s ease;
+}
+
+.slider-thumb::-webkit-slider-thumb:hover {
+  background: linear-gradient(45deg, #2563EB, #1d4ed8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+.slider-thumb::-webkit-slider-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #E5E7EB 0%, #E5E7EB 100%);
+  border: none;
+}
+
+.slider-thumb::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #3B82F6, #2563EB);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.slider-thumb::-moz-range-thumb:hover {
+  background: linear-gradient(45deg, #2563EB, #1d4ed8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+.slider-thumb::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+  background: #E5E7EB;
+  border: none;
+}
+
+/* Time Preference Button Animations */
+.time-preference-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.time-preference-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.time-preference-btn.active {
+  animation: pulse-selection 0.6s ease-out;
+}
+
+@keyframes pulse-selection {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
