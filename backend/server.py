@@ -28,6 +28,9 @@ from booking_routes_pg import router as booking_router
 # TourBuilder - Auto package generator
 from tourbuilder import router as tourbuilder_router
 
+# Payment processing - Razorpay integration
+from payment_service import router as payment_router
+
 # Database configuration
 from database import create_tables, test_connection
 
