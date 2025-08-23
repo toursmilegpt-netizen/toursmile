@@ -630,10 +630,9 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
   );
 };
 
-// Custom Date Picker Component
-const CustomDatePicker = ({ value, onChange, minDate, label, className }) => {
+// Simple, Stable Date Picker Component
+const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(value || '');
   const calendarRef = useRef(null);
 
   useEffect(() => {
@@ -643,44 +642,51 @@ const CustomDatePicker = ({ value, onChange, minDate, label, className }) => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    if (showCalendar) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showCalendar]);
 
   const formatDisplayDate = (dateStr) => {
     if (!dateStr) return 'Select Date';
     const date = new Date(dateStr);
-    const options = { 
+    return date.toLocaleDateString('en-US', { 
       weekday: 'short', 
       day: 'numeric', 
-      month: 'short', 
-      year: 'numeric' 
-    };
-    return date.toLocaleDateString('en-US', options);
+      month: 'short' 
+    });
   };
 
-  const handleDateSelect = (date) => {
-    const dateStr = date.toISOString().split('T')[0];
-    setSelectedDate(dateStr);
-    onChange(dateStr);
-    setShowCalendar(false); // Calendar disappears after selection
-  };
-
-  const generateCalendar = () => {
+  const handleDateClick = (days) => {
     const today = new Date();
-    const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    const selectedDate = new Date(today);
+    selectedDate.setDate(today.getDate() + days);
+    const dateStr = selectedDate.toISOString().split('T')[0];
+    onChange(dateStr);
+    setShowCalendar(false);
+  };
+
+  const generateDateOptions = () => {
+    const options = [];
+    const today = new Date();
     
-    const days = [];
-    
-    // Generate days for current and next month
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 30; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
-      days.push(date);
+      options.push({
+        date: date.toISOString().split('T')[0],
+        display: date.toLocaleDateString('en-US', { 
+          weekday: 'short', 
+          day: 'numeric', 
+          month: 'short' 
+        }),
+        day: date.getDate(),
+        isToday: i === 0
+      });
     }
-
-    return days;
+    
+    return options;
   };
 
   return (
@@ -688,60 +694,46 @@ const CustomDatePicker = ({ value, onChange, minDate, label, className }) => {
       <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
       
       {/* Date Input Display */}
-      <div
+      <button
+        type="button"
         onClick={() => setShowCalendar(!showCalendar)}
-        className={`w-full px-4 py-4 text-lg border-2 rounded-2xl cursor-pointer transition-all duration-200 flex items-center justify-between ${
+        className={`w-full px-4 py-4 text-lg border-2 rounded-2xl transition-all duration-200 flex items-center justify-between text-left ${
           showCalendar ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
         } ${className}`}
       >
-        <span className={selectedDate ? 'text-gray-900' : 'text-gray-500'}>
-          {formatDisplayDate(selectedDate)}
+        <span className={value ? 'text-gray-900' : 'text-gray-500'}>
+          {formatDisplayDate(value)}
         </span>
         <div className="text-2xl">📅</div>
-      </div>
+      </button>
 
-      {/* Custom Calendar Popup */}
+      {/* Simple Calendar Popup */}
       {showCalendar && (
-        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border-2 border-blue-200 rounded-2xl shadow-2xl p-6 max-h-80 overflow-y-auto">
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Select Travel Date</h3>
+        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border-2 border-blue-200 rounded-2xl shadow-2xl p-4 max-h-80 overflow-y-auto">
+          <div className="mb-3">
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Select Travel Date</h3>
             <p className="text-sm text-gray-600">Choose your preferred departure date</p>
           </div>
           
-          <div className="grid grid-cols-7 gap-2 text-center mb-4">
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-              <div key={day} className="text-xs font-medium text-gray-500 py-2">{day}</div>
+          <div className="grid grid-cols-2 gap-2">
+            {generateDateOptions().slice(0, 14).map((option, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handleDateClick(index)}
+                className={`p-3 text-center rounded-xl transition-all duration-200 ${
+                  option.date === value
+                    ? 'bg-blue-600 text-white font-bold shadow-lg'
+                    : option.isToday
+                      ? 'bg-blue-100 text-blue-600 font-semibold hover:bg-blue-200'
+                      : 'bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                }`}
+              >
+                <div className="text-xs font-medium">{option.display.split(' ')[0]}</div>
+                <div className="text-lg font-bold">{option.day}</div>
+                <div className="text-xs">{option.display.split(' ')[1]} {option.display.split(' ')[2]}</div>
+              </button>
             ))}
-          </div>
-          
-          <div className="grid grid-cols-7 gap-2">
-            {generateCalendar().slice(0, 42).map((date, index) => {
-              const dateStr = date.toISOString().split('T')[0];
-              const isSelected = dateStr === selectedDate;
-              const isToday = dateStr === new Date().toISOString().split('T')[0];
-              const isDisabled = minDate ? dateStr < minDate : false;
-              
-              return (
-                <button
-                  key={index}
-                  onClick={() => !isDisabled && handleDateSelect(date)}
-                  disabled={isDisabled}
-                  className={`
-                    w-10 h-10 text-sm rounded-xl transition-all duration-200
-                    ${isSelected 
-                      ? 'bg-blue-600 text-white font-bold shadow-lg' 
-                      : isToday 
-                        ? 'bg-blue-100 text-blue-600 font-semibold' 
-                        : isDisabled
-                          ? 'text-gray-300 cursor-not-allowed'
-                          : 'hover:bg-blue-50 text-gray-700 hover:text-blue-600'
-                    }
-                  `}
-                >
-                  {date.getDate()}
-                </button>
-              );
-            })}
           </div>
         </div>
       )}
