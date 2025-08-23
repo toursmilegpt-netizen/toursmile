@@ -28,127 +28,98 @@ const FlightFilters = ({ filters, onFilterChange, flights }) => {
   const maxPrice = Math.max(...prices);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-      <h3 className="text-lg font-bold text-gray-900 mb-4">Filters</h3>
-      
-      {/* Sort By */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
-        <select
-          value={filters.sortBy}
-          onChange={(e) => onFilterChange({...filters, sortBy: e.target.value})}
-          className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    <div className="bg-white rounded-xl shadow-sm p-6">
+      <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center">
+        🔧 Filters
+        <button 
+          onClick={() => onFilterChange({sortBy: 'price', priceRange: [0, 50000], airlines: [], stops: []})}
+          className="ml-auto text-sm text-blue-600 hover:text-blue-800"
         >
-          <option value="price">Price (Low to High)</option>
-          <option value="duration">Duration (Shortest)</option>
-          <option value="departure">Departure Time</option>
-          <option value="arrival">Arrival Time</option>
-          <option value="stops">Stops (Fewest)</option>
-        </select>
-      </div>
-
+          Clear All
+        </button>
+      </h3>
+      
       {/* Price Range */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Price Range: ₹{filters.priceRange[0].toLocaleString()} - ₹{filters.priceRange[1].toLocaleString()}
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          💰 Price Range
         </label>
-        <div className="flex items-center space-x-4">
-          <input
-            type="range"
-            min={minPrice}
-            max={maxPrice}
-            value={filters.priceRange[0]}
-            onChange={(e) => onFilterChange({
-              ...filters, 
-              priceRange: [parseInt(e.target.value), filters.priceRange[1]]
-            })}
-            className="flex-1"
-          />
-          <input
-            type="range"
-            min={minPrice}
-            max={maxPrice}
-            value={filters.priceRange[1]}
-            onChange={(e) => onFilterChange({
-              ...filters, 
-              priceRange: [filters.priceRange[0], parseInt(e.target.value)]
-            })}
-            className="flex-1"
-          />
+        <div className="px-3 py-2 bg-gray-50 rounded-lg text-sm text-gray-600 mb-2">
+          ₹{filters.priceRange[0].toLocaleString()} - ₹{filters.priceRange[1].toLocaleString()}
         </div>
+        <input
+          type="range"
+          min={minPrice}
+          max={maxPrice}
+          value={filters.priceRange[1]}
+          onChange={(e) => onFilterChange({...filters, priceRange: [minPrice, parseInt(e.target.value)]})}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+        />
       </div>
 
       {/* Airlines */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Airlines</label>
-        <div className="space-y-2 max-h-40 overflow-y-auto">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          ✈️ Airlines
+        </label>
+        <div className="space-y-2 max-h-48 overflow-y-auto">
           {airlines.map(airline => (
-            <label key={airline} className="flex items-center">
+            <label key={airline} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
               <input
                 type="checkbox"
                 checked={filters.airlines.includes(airline)}
                 onChange={(e) => {
-                  const newAirlines = e.target.checked
+                  const newAirlines = e.target.checked 
                     ? [...filters.airlines, airline]
                     : filters.airlines.filter(a => a !== airline);
                   onFilterChange({...filters, airlines: newAirlines});
                 }}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
               />
-              <span className="ml-2 text-sm text-gray-700">{airline}</span>
+              <div className="flex items-center justify-between w-full">
+                <span className="text-sm text-gray-700">{airline}</span>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                  {flights.filter(f => f.airline === airline).length}
+                </span>
+              </div>
             </label>
           ))}
         </div>
       </div>
 
       {/* Stops */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Stops</label>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          🛑 Stops
+        </label>
         <div className="space-y-2">
-          {['Non-stop', '1 stop', '2+ stops'].map((stop, index) => (
-            <label key={stop} className="flex items-center">
+          {[
+            { value: 0, label: 'Non-stop', icon: '🟢' },
+            { value: 1, label: '1 Stop', icon: '🟡' },
+            { value: 2, label: '2+ Stops', icon: '🔴' }
+          ].map(stop => (
+            <label key={stop.value} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
               <input
                 type="checkbox"
-                checked={filters.stops.includes(index)}
+                checked={filters.stops.includes(stop.value)}
                 onChange={(e) => {
-                  const newStops = e.target.checked
-                    ? [...filters.stops, index]
-                    : filters.stops.filter(s => s !== index);
+                  const newStops = e.target.checked 
+                    ? [...filters.stops, stop.value]
+                    : filters.stops.filter(s => s !== stop.value);
                   onFilterChange({...filters, stops: newStops});
                 }}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
               />
-              <span className="ml-2 text-sm text-gray-700">{stop}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Departure Time */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Departure Time</label>
-        <div className="grid grid-cols-2 gap-2">
-          {[
-            { label: 'Early Morning', value: 'early', time: '6AM-12PM' },
-            { label: 'Afternoon', value: 'afternoon', time: '12PM-6PM' },
-            { label: 'Evening', value: 'evening', time: '6PM-12AM' },
-            { label: 'Night', value: 'night', time: '12AM-6AM' }
-          ].map(timeSlot => (
-            <label key={timeSlot.value} className="flex items-center p-2 border rounded-lg hover:bg-gray-50">
-              <input
-                type="checkbox"
-                checked={filters.timeSlots.includes(timeSlot.value)}
-                onChange={(e) => {
-                  const newTimeSlots = e.target.checked
-                    ? [...filters.timeSlots, timeSlot.value]
-                    : filters.timeSlots.filter(t => t !== timeSlot.value);
-                  onFilterChange({...filters, timeSlots: newTimeSlots});
-                }}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              />
-              <div className="ml-2">
-                <div className="text-xs font-medium text-gray-900">{timeSlot.label}</div>
-                <div className="text-xs text-gray-500">{timeSlot.time}</div>
+              <div className="flex items-center justify-between w-full">
+                <span className="text-sm text-gray-700">
+                  {stop.icon} {stop.label}
+                </span>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                  {flights.filter(f => {
+                    if (stop.value === 2) return f.stops >= 2;
+                    return f.stops === stop.value;
+                  }).length}
+                </span>
               </div>
             </label>
           ))}
