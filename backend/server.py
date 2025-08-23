@@ -568,6 +568,44 @@ async def search_flights(request: FlightSearchRequest):
             # Use mock data in the same format as real API
             real_flights = filtered_flights
         
+        # Apply enhanced search filters to results
+        if enhanced_params:
+            logging.info(f"🔍 Applying enhanced filters to {len(real_flights)} flights")
+            
+            # Filter by budget range if provided
+            if request.budgetRange and len(request.budgetRange) == 2:
+                min_budget, max_budget = request.budgetRange
+                real_flights = [
+                    flight for flight in real_flights 
+                    if min_budget <= flight.get('price', 0) <= max_budget
+                ]
+                logging.info(f"💰 Budget filter applied: ₹{min_budget}-₹{max_budget}, {len(real_flights)} flights remaining")
+            
+            # Filter by time preference (basic implementation)
+            if request.timePreference and request.timePreference != 'any':
+                time_filters = {
+                    'morning': lambda t: 5 <= int(t.split(':')[0]) < 12,
+                    'afternoon': lambda t: 12 <= int(t.split(':')[0]) < 17, 
+                    'evening': lambda t: 17 <= int(t.split(':')[0]) < 21,
+                    'night': lambda t: 21 <= int(t.split(':')[0]) or int(t.split(':')[0]) < 5
+                }
+                
+                if request.timePreference in time_filters:
+                    filter_func = time_filters[request.timePreference]
+                    real_flights = [
+                        flight for flight in real_flights 
+                        if filter_func(flight.get('departure_time', '12:00'))
+                    ]
+                    logging.info(f"🕐 Time preference filter applied: {request.timePreference}, {len(real_flights)} flights remaining")
+            
+            # Future implementation placeholders for other enhanced features
+            if request.flexibleDates:
+                logging.info("📅 Flexible dates option enabled (future implementation)")
+            if request.nearbyAirports:
+                logging.info("✈️ Nearby airports option enabled (future implementation)")
+            if request.corporateBooking:
+                logging.info("💼 Corporate booking rates enabled (future implementation)")
+        
         # Get AI recommendations
         ai_prompt = f"Provide a brief travel tip for flying from {request.origin} to {request.destination} on {request.departure_date}"
         ai_tip = await get_ai_response(ai_prompt, str(uuid.uuid4()))
