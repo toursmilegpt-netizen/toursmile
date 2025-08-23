@@ -555,10 +555,13 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
 const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange, icon, autoFocus, airports, excludeCity }, ref) => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(value || '');
 
+  // Only update local inputValue if parent value changes and is different
   useEffect(() => {
-    setInputValue(value);
+    if (value !== inputValue) {
+      setInputValue(value || '');
+    }
   }, [value]);
 
   useEffect(() => {
@@ -569,8 +572,8 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
 
   const handleInputChange = (e) => {
     const input = e.target.value;
-    console.log('🔍 DEBUG: handleInputChange called with:', input);
     setInputValue(input);
+    // Call onChange immediately for manual typing
     onChange(input);
 
     if (input.length > 0) {
@@ -607,12 +610,11 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
   };
 
   const selectCity = (airport) => {
-    console.log('🔍 DEBUG: selectCity called with airport:', airport);
-    setInputValue(airport.name);
-    console.log('🔍 DEBUG: About to call onChange with value:', airport.name);
-    onChange(airport.name);
+    const cityName = airport.name;
+    setInputValue(cityName);
+    // Immediately call onChange with the selected city
+    onChange(cityName);
     setShowSuggestions(false);
-    console.log('🔍 DEBUG: selectCity completed');
   };
 
   const handleBlur = () => {
