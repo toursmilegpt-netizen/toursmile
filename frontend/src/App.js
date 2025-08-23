@@ -1215,43 +1215,126 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section - Key Features */}
-        <div className="text-center mb-16">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-              {/* Instant Search */}
-              <div className="flex flex-col items-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
-                  <span className="text-white text-2xl font-bold">✓</span>
+        {/* Hero Section - Compact Multi-Product Layout */}
+        <div className="mb-8">
+          {/* Key Features - Compact Version */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center space-x-8 md:space-x-12">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">✓</span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Instant Search</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">Lightning-fast flight results in seconds</p>
+                <span className="text-lg font-semibold text-gray-900">Instant Search</span>
               </div>
-
-              {/* Best Prices */}
-              <div className="flex flex-col items-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
-                  <span className="text-white text-2xl font-bold">✓</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">✓</span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Best Prices</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">No hidden fees, just transparent pricing</p>
+                <span className="text-lg font-semibold text-gray-900">Best Prices</span>
               </div>
-
-              {/* Easy Booking */}
-              <div className="flex flex-col items-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
-                  <span className="text-white text-2xl font-bold">✓</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">✓</span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Easy Booking</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">Simple steps, secure payment, instant confirmation</p>
+                <span className="text-lg font-semibold text-gray-900">Easy Booking</span>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Guided Search Form */}
-        <div className="mb-12">
-          <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Side - Search Form (Compact) */}
+            <div className="lg:col-span-2">
+              <div className="bg-white rounded-2xl shadow-xl p-6">
+                {/* Product Tabs */}
+                <div className="flex items-center space-x-1 mb-6 bg-gray-100 rounded-xl p-1">
+                  <div className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-center py-3 rounded-xl font-semibold">
+                    ✈️ Flights
+                  </div>
+                  <div className="flex-1 text-gray-600 text-center py-3 rounded-xl font-medium hover:bg-gray-200 cursor-pointer">
+                    🏨 Hotels
+                  </div>
+                  <div className="flex-1 text-gray-600 text-center py-3 rounded-xl font-medium hover:bg-gray-200 cursor-pointer">
+                    🎯 Activities
+                  </div>
+                </div>
+
+                {/* Compact Search Form */}
+                <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} compact={true} />
+              </div>
+            </div>
+
+            {/* Right Side - Additional Content */}
+            <div className="lg:col-span-1 space-y-6">
+              {/* Popular Destinations */}
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">🔥 Popular Destinations</h3>
+                <div className="space-y-3">
+                  {[
+                    { city: "Goa", price: "₹3,200", image: "🏖️" },
+                    { city: "Dubai", price: "₹8,500", image: "🏙️" },
+                    { city: "Bangkok", price: "₹12,400", image: "🛕" },
+                    { city: "Singapore", price: "₹15,600", image: "🌆" }
+                  ].map((dest, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl hover:bg-blue-50 cursor-pointer transition-colors">
+                      <div className="flex items-center space-x-3">
+                        <span className="text-2xl">{dest.image}</span>
+                        <div>
+                          <div className="font-semibold text-gray-900">{dest.city}</div>
+                          <div className="text-sm text-gray-600">Starting from</div>
+                        </div>
+                      </div>
+                      <div className="text-lg font-bold text-blue-600">{dest.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Current Deals */}
+              <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-lg p-6 text-white">
+                <h3 className="text-lg font-bold mb-3">⚡ Limited Time Offer</h3>
+                <div className="text-2xl font-bold mb-2">Save up to 25%</div>
+                <div className="text-orange-100 text-sm mb-4">On domestic flights • Valid till Dec 31</div>
+                <button className="bg-white text-orange-600 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-orange-50 transition-colors">
+                  Grab Deal
+                </button>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">✨ Why Choose Us</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                      <span className="text-green-600 font-bold">2M+</span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">Happy Travelers</div>
+                      <div className="text-sm text-gray-600">Booked with us</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                      <span className="text-blue-600 font-bold">50K+</span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">Routes Covered</div>
+                      <div className="text-sm text-gray-600">Worldwide</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                      <span className="text-orange-600 font-bold">24/7</span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">Support</div>
+                      <div className="text-sm text-gray-600">Always here to help</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Flight Results Section */}
