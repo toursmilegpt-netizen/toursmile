@@ -979,7 +979,9 @@ function App() {
   const handleSearch = async (formData) => {
     setIsSearching(true);
     setSearchData(formData);
-    setShowResults(true);
+    
+    // Clear previous results first
+    setSearchResults([]);
     
     try {
       // Convert to backend format
@@ -996,11 +998,15 @@ function App() {
       
       const response = await axios.post(`${API}/flights/search`, searchPayload);
       const flights = response.data.flights || [];
+      
+      // Update state synchronously
       setSearchResults(flights);
+      setShowResults(true);
       
     } catch (error) {
       console.error('Flight search error:', error);
       setSearchResults([]);
+      setShowResults(false);
     } finally {
       setIsSearching(false);
     }
