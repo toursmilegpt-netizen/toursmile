@@ -1098,6 +1098,8 @@ function App() {
           flights={searchResults}
           onFlightSelect={handleFlightSelect}
           isLoading={isSearching}
+          onModifySearch={handleModifySearch}
+          onDateChange={handleDateChange}
         />
       </div>
     );
