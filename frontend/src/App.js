@@ -324,10 +324,21 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   };
 
   const canSearch = () => {
-    if (!searchData || !searchData.segments || !searchData.segments[0]) {
+    if (!searchData || !searchData.segments || searchData.segments.length === 0) {
       return false;
     }
     
+    // For multi-city, check all segments
+    if (searchData.tripType === 'multi-city') {
+      return searchData.segments.every(segment => 
+        segment.origin && segment.origin.trim().length > 2 && 
+        segment.destination && segment.destination.trim().length > 2 && 
+        segment.origin !== segment.destination &&
+        segment.departureDate && segment.departureDate.length > 0
+      );
+    }
+    
+    // For one-way and return, check first segment
     const segment = searchData.segments[0];
     return segment.origin && segment.origin.trim().length > 2 && 
            segment.destination && segment.destination.trim().length > 2 && 
