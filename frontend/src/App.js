@@ -569,6 +569,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
 
   const handleInputChange = (e) => {
     const input = e.target.value;
+    console.log('🔍 DEBUG: handleInputChange called with:', input);
     setInputValue(input);
     onChange(input);
 
