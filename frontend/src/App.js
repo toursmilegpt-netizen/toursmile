@@ -416,8 +416,14 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
                   excludeCity={segment.origin}
                 />
                 {currentStep === 2 && index === 0 && !segment.destination && (
-                  <div className="mt-2 text-sm text-green-600 animate-pulse">
-                    ✅ Great! Now choose your destination
+                  <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-xl">
+                    <div className="flex items-center text-green-700">
+                      <span className="text-2xl mr-2 guide-pulse">✈️</span>
+                      <div>
+                        <div className="font-semibold text-sm">Step 2 of 4</div>
+                        <div className="text-sm">Great! Now choose your destination city</div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
