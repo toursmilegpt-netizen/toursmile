@@ -601,10 +601,8 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
     setShowSuggestions(false);
     setInputValue(cityName);
     
-    // Call onChange immediately but ensure it happens after the state update
-    requestAnimationFrame(() => {
-      onChange(cityName);
-    });
+    // Call onChange directly with complete city name - no race condition
+    onChange(cityName);
   };
 
   const handleBlur = () => {
