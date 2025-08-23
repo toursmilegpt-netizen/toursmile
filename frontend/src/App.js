@@ -397,12 +397,13 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           </div>
         </div>
 
-        {/* Route Selection - Dynamic for Multicity */}
+        {/* Route Selection - Different Logic for Each Trip Type */}
         <div className="space-y-4 mb-4">
-          {searchData.segments.map((segment, index) => (
-            <div key={index} className={`${searchData.tripType === 'multi-city' && index > 0 ? 'border-t border-gray-200 pt-4' : ''}`}>
-              {/* Segment Header for Multi-city */}
-              {searchData.tripType === 'multi-city' && (
+          {searchData.tripType === 'multi-city' ? (
+            // Multi-city: Show all segments with inline dates
+            searchData.segments.map((segment, index) => (
+              <div key={index} className={`${index > 0 ? 'border-t border-gray-200 pt-4' : ''}`}>
+                {/* Segment Header for Multi-city */}
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="text-sm font-medium text-gray-700">
                     Flight {index + 1} {index === 0 ? '(Departure)' : index === searchData.segments.length - 1 ? '(Final)' : '(Connecting)'}
@@ -417,36 +418,34 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     </button>
                   )}
                 </div>
-              )}
-              
-              <div className={`grid ${compact ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-3'} gap-4`}>
-                {/* From */}
-                <div>
-                  <CityAutocomplete
-                    label={searchData.tripType === 'multi-city' ? 'From' : 'From'}
-                    placeholder="Departure city"
-                    value={segment.origin}
-                    onChange={(city) => updateSegment(index, 'origin', city)}
-                    airports={AIRPORTS_DATABASE}
-                    excludeCity={segment.destination}
-                    autoFocus={index === 0}
-                  />
-                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* From */}
+                  <div>
+                    <CityAutocomplete
+                      label="From"
+                      placeholder="Departure city"
+                      value={segment.origin}
+                      onChange={(city) => updateSegment(index, 'origin', city)}
+                      airports={AIRPORTS_DATABASE}
+                      excludeCity={segment.destination}
+                      autoFocus={index === 0}
+                    />
+                  </div>
 
-                {/* To */}
-                <div>
-                  <CityAutocomplete
-                    label={searchData.tripType === 'multi-city' ? 'To' : 'To'}
-                    placeholder="Arrival city"
-                    value={segment.destination}
-                    onChange={(city) => updateSegment(index, 'destination', city)}
-                    airports={AIRPORTS_DATABASE}
-                    excludeCity={segment.origin}
-                  />
-                </div>
+                  {/* To */}
+                  <div>
+                    <CityAutocomplete
+                      label="To"
+                      placeholder="Arrival city"
+                      value={segment.destination}
+                      onChange={(city) => updateSegment(index, 'destination', city)}
+                      airports={AIRPORTS_DATABASE}
+                      excludeCity={segment.origin}
+                    />
+                  </div>
 
-                {/* Date - Only for Multicity */}
-                {searchData.tripType === 'multi-city' && (
+                  {/* Date - Inline for Multi-city */}
                   <div>
                     <SimpleDatePicker
                       value={segment.departureDate}
@@ -455,54 +454,40 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                       minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
                     />
                   </div>
-                )}
+                </div>
               </div>
-
-        {/* Date Selection - Smart Logic Based on Trip Type */}
-        <div className={`grid ${
-          searchData.tripType === 'return' 
-            ? 'grid-cols-1 md:grid-cols-2' 
-            : 'grid-cols-1'
-        } gap-4 mb-4`}>
-          
-          {/* Departure Date - Always Present */}
-          {searchData.tripType !== 'multi-city' && (
+            ))
+          ) : (
+            // One-way & Round-trip: Show only first segment for cities (dates handled separately)
             <div>
-              <SimpleDatePicker
-                value={searchData.segments[0]?.departureDate || ''}
-                onChange={(date) => updateSegment(0, 'departureDate', date)}
-                label="Departure Date"
-                minDate={new Date().toISOString().split('T')[0]}
-              />
-            </div>
-          )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* From */}
+                <div>
+                  <CityAutocomplete
+                    label="From"
+                    placeholder="Departure city"
+                    value={searchData.segments[0]?.origin || ''}
+                    onChange={(city) => updateSegment(0, 'origin', city)}
+                    airports={AIRPORTS_DATABASE}
+                    excludeCity={searchData.segments[0]?.destination}
+                    autoFocus={true}
+                  />
+                </div>
 
-          {/* Return Date - Only for Round Trip */}
-          {searchData.tripType === 'return' && (
-            <div>
-              <SimpleDatePicker
-                value={searchData.returnDate}
-                onChange={(date) => setSearchData({...searchData, returnDate: date})}
-                label="Return Date" 
-                minDate={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
-              />
+                {/* To */}
+                <div>
+                  <CityAutocomplete
+                    label="To"
+                    placeholder="Arrival city"
+                    value={searchData.segments[0]?.destination || ''}
+                    onChange={(city) => updateSegment(0, 'destination', city)}
+                    airports={AIRPORTS_DATABASE}
+                    excludeCity={searchData.segments[0]?.origin}
+                  />
+                </div>
+              </div>
             </div>
           )}
-
-          {/* Passengers & Class Selection */}
-          {searchData.tripType !== 'multi-city' && (
-            <div className={searchData.tripType === 'return' ? 'md:col-span-2' : ''}>
-              <PassengerSelector 
-                passengers={searchData.passengers}
-                classType={searchData.class}
-                onPassengerChange={(passengers) => setSearchData({...searchData, passengers})}
-                onClassChange={(classType) => setSearchData({...searchData, class: classType})}
-              />
-            </div>
-          )}
-        </div>
-            </div>
-          ))}
 
           {/* Add City Button for Multi-city */}
           {searchData.tripType === 'multi-city' && searchData.segments.length < 6 && (
