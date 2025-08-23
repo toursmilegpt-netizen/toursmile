@@ -561,8 +561,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
   const handleInputChange = (e) => {
     const input = e.target.value;
     setInputValue(input);
-    // Call onChange immediately for manual typing
-    onChange(input);
+    // Remove onChange(input) call - only call onChange when city is selected from dropdown
 
     if (input.length > 0) {
       const filtered = airports
