@@ -25,6 +25,9 @@ from destinations_routes import router as destinations_router
 from waitlist_routes_pg import router as waitlist_router
 from booking_routes_pg import router as booking_router
 
+# TourBuilder - Auto package generator
+from tourbuilder import router as tourbuilder_router
+
 # Database configuration
 from database import create_tables, test_connection
 
