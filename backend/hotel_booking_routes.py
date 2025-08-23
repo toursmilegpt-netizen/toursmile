@@ -85,62 +85,8 @@ class HotelBookingResponse(BaseModel):
     hotel_details: Optional[Dict] = None
     total_amount: Optional[float] = None
 
-@router.post("/search")
-async def search_hotels(request: HotelSearchRequest):
-    """Search hotels using TripJack API"""
-    try:
-        # Validate dates
-        check_in = datetime.strptime(request.check_in_date, '%Y-%m-%d').date()
-        check_out = datetime.strptime(request.check_out_date, '%Y-%m-%d').date()
-        
-        if check_in <= date.today():
-            raise HTTPException(status_code=400, detail="Check-in date must be in the future")
-        
-        if check_out <= check_in:
-            raise HTTPException(status_code=400, detail="Check-out date must be after check-in date")
-        
-        # Search hotels via TripJack
-        hotels = []
-        try:
-            hotels = tripjack_hotel_service.search_hotels(
-                location=request.destination,
-                checkin_date=request.check_in_date,
-                checkout_date=request.check_out_date,
-                guests=request.adults,
-                rooms=request.rooms,
-                **{k: v for k, v in {
-                    "star_rating": request.star_rating,
-                    "min_price": request.min_price,
-                    "max_price": request.max_price
-                }.items() if v is not None}
-            )
-        except Exception as e:
-            logging.warning(f"TripJack hotel search failed: {e}")
-            hotels = []
-        
-        if not hotels:
-            # Fallback to mock data if no real results
-            hotels = get_mock_hotel_data(request.destination)
-        
-        return {
-            "success": True,
-            "hotels": hotels,
-            "search_params": {
-                "destination": request.destination,
-                "check_in": request.check_in_date,
-                "check_out": request.check_out_date,
-                "rooms": request.rooms,
-                "guests": request.adults + request.children
-            },
-            "total_hotels": len(hotels),
-            "data_source": "tripjack_api" if hotels and 'tripjack_id' in hotels[0] else "mock_data"
-        }
-        
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Invalid date format: {str(e)}")
-    except Exception as e:
-        logging.error(f"Hotel search error: {e}")
-        raise HTTPException(status_code=500, detail="Hotel search failed")
+# Remove the search endpoint to avoid conflict with server.py
+# The main hotel search is already handled in server.py at /api/hotels/search
 
 @router.post("/pre-book")
 async def pre_book_hotel(request: HotelPreBookRequest, db: Session = Depends(get_db)):
