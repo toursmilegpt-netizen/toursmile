@@ -14,10 +14,13 @@ from database import get_db, Booking, User
 from tripjack_hotel_api import TripjackHotelService
 from payment_service import PaymentOrderRequest, PaymentOrderResponse
 
-router = APIRouter(prefix="/hotels")
+router = APIRouter(prefix="/hotel-booking")
 
 # Initialize TripJack Hotel Service
 tripjack_hotel_service = TripjackHotelService()
+
+# Remove the search endpoint since it conflicts with the existing one in server.py
+# Focus on pre-booking, confirmation, and management endpoints
 
 # Pydantic models for hotel booking
 class HotelSearchRequest(BaseModel):
