@@ -10,6 +10,27 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Enhanced Date Picker Styling */
+.date-picker-enhanced::-webkit-calendar-picker-indicator {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.date-picker-enhanced::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Make date picker calendar larger on desktop */
+@media (min-width: 768px) {
+  .date-picker-enhanced::-webkit-calendar-picker-indicator {
+    width: 28px;
+    height: 28px;
+  }
+}
+
 /* Command Bar Glow Animation */
 @keyframes glow {
   0%, 100% {
