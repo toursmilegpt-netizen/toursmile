@@ -10,35 +10,66 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Enhanced Date Picker Styling */
+/* Enhanced Date Picker Styling - Force Larger Calendar */
 .date-picker-enhanced::-webkit-calendar-picker-indicator {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.2s;
+  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>') no-repeat;
+  background-size: 24px 24px;
 }
 
 .date-picker-enhanced::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
+  transform: scale(1.1);
 }
 
-/* Make date picker calendar larger on desktop */
+/* Force larger date picker popup on desktop */
 @media (min-width: 768px) {
-  .date-picker-enhanced::-webkit-calendar-picker-indicator {
-    width: 28px;
-    height: 28px;
+  .date-picker-enhanced {
+    position: relative;
+  }
+  
+  .date-picker-enhanced::-webkit-datetime-edit {
+    padding: 8px 12px;
+  }
+  
+  .date-picker-enhanced:focus::-webkit-calendar-picker-indicator {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-radius: 4px;
   }
 }
 
-/* Command Bar Glow Animation */
-@keyframes glow {
+/* Glowing Search Button Animation */
+@keyframes searchGlow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(251, 146, 60, 0.3), 0 0 10px rgba(251, 146, 60, 0.2), 0 0 15px rgba(251, 146, 60, 0.1);
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.5), 0 0 20px rgba(37, 99, 235, 0.3), 0 0 35px rgba(37, 99, 235, 0.1);
   }
   50% {
-    box-shadow: 0 0 10px rgba(251, 146, 60, 0.4), 0 0 20px rgba(251, 146, 60, 0.3), 0 0 30px rgba(251, 146, 60, 0.2);
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.8), 0 0 30px rgba(37, 99, 235, 0.5), 0 0 50px rgba(37, 99, 235, 0.2);
   }
+}
+
+.search-ready-glow {
+  animation: searchGlow 2s ease-in-out infinite;
+}
+
+/* Pulse animation for next step guidance */
+@keyframes guidePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.guide-pulse {
+  animation: guidePulse 1.5s ease-in-out infinite;
 }
 
 .animate-glow {
