@@ -766,11 +766,8 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
   };
 
   const handleFocus = () => {
-    if (inputValue.length === 0) {
-      const popular = airports.filter(airport => airport.popular && airport.name !== excludeCity).slice(0, 6);
-      setSuggestions(popular);
-      setShowSuggestions(true);
-    } else {
+    // Only show suggestions when user actually types, not on initial focus
+    if (inputValue.length > 0) {
       setShowSuggestions(suggestions.length > 0);
     }
   };
