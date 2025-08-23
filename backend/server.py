@@ -746,6 +746,9 @@ app.include_router(payment_router, prefix="/api", tags=["payments"])
 # Include the auth router
 app.include_router(auth_router, prefix="/api", tags=["auth"])
 
+# Include the hotel router
+app.include_router(hotel_router, prefix="/api", tags=["hotels"])
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
