@@ -460,9 +460,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
         <div className={`grid ${
           searchData.tripType === 'return' 
             ? 'grid-cols-1 md:grid-cols-2' 
-            : searchData.tripType === 'multi-city' 
-              ? 'grid-cols-1' 
-              : 'grid-cols-1 md:grid-cols-2'
+            : 'grid-cols-1'
         } gap-4 mb-4`}>
           
           {/* Departure Date - Always Present */}
@@ -477,7 +475,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             </div>
           )}
 
-          {/* Return Date - Automatically appears for Round Trip */}
+          {/* Return Date - Only for Round Trip */}
           {searchData.tripType === 'return' && (
             <div>
               <SimpleDatePicker
