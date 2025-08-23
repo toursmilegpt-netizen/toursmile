@@ -1173,10 +1173,36 @@ function App() {
                 />
               </div>
             </div>
-            <div className="hidden md:flex items-center space-x-6">
-              <span className="text-blue-600 font-semibold">Flights</span>
-              <span className="text-gray-400 hover:text-gray-600 cursor-pointer">Hotels</span>
-              <span className="text-gray-400 hover:text-gray-600 cursor-pointer">Activities</span>
+            <div className="hidden md:flex items-center space-x-4">
+              {/* Flight Button - Active */}
+              <div className="relative group">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg">✈️</span>
+                    <span>Flights</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Hotels Button */}
+              <div className="relative group">
+                <div className="bg-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold text-base hover:border-orange-300 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 hover:text-orange-700 shadow-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg">🏨</span>
+                    <span>Hotels</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Activities Button */}
+              <div className="relative group">
+                <div className="bg-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold text-base hover:border-green-300 hover:bg-gradient-to-r hover:from-green-50 hover:to-green-100 hover:text-green-700 shadow-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg">🎯</span>
+                    <span>Activities</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
