@@ -710,9 +710,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   key={time.value}
                   type="button"
                   onClick={() => setSearchData({...searchData, preferences: {...searchData.preferences, timePreference: time.value}})}
-                  className={`p-3 rounded-xl border text-center transition-all duration-200 ${
+                  className={`p-3 rounded-xl border text-center transition-all duration-200 time-preference-btn ${
                     searchData.preferences.timePreference === time.value
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-lg active'
                       : 'bg-white border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-blue-50'
                   }`}
                 >
