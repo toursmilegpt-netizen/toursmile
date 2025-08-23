@@ -450,8 +450,14 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
                   }}
                 />
                 {currentStep === 3 && index === 0 && !segment.departureDate && (
-                  <div className="mt-2 text-sm text-green-600 animate-pulse">
-                    ✅ Perfect! When would you like to travel?
+                  <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-xl">
+                    <div className="flex items-center text-purple-700">
+                      <span className="text-2xl mr-2 guide-pulse">📅</span>
+                      <div>
+                        <div className="font-semibold text-sm">Step 3 of 4</div>
+                        <div className="text-sm">Perfect! When would you like to travel? Click on the calendar icon</div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
