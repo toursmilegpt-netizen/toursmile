@@ -740,6 +740,9 @@ app.include_router(tourbuilder_router, prefix="/api", tags=["tourbuilder"])
 # Include the payment router
 app.include_router(payment_router, prefix="/api", tags=["payments"])
 
+# Include the auth router
+app.include_router(auth_router, prefix="/api", tags=["auth"])
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
