@@ -1,7 +1,6 @@
 from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
 
 # Import the real APIs
 from real_hotel_api import hotel_api_service
@@ -21,16 +20,24 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 from popular_trips_routes import router as popular_trips_router
 from enhanced_chat_service import ExpertTravelConsultantChat
 from destinations_routes import router as destinations_router
-from waitlist_routes import router as waitlist_router
-from booking_routes import router as booking_router
+
+# PostgreSQL routes instead of MongoDB
+from waitlist_routes_pg import router as waitlist_router
+from booking_routes_pg import router as booking_router
+
+# Database configuration
+from database import create_tables, test_connection
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# Initialize database on startup
+print("🔄 Initializing PostgreSQL database...")
+if test_connection():
+    create_tables()
+    print("✅ PostgreSQL database initialized successfully!")
+else:
+    print("❌ Database initialization failed!")
 
 # OpenAI API Key
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
