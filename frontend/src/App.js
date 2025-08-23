@@ -606,9 +606,12 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
   };
 
   const selectCity = (airport) => {
+    console.log('🔍 DEBUG: selectCity called with airport:', airport);
     setInputValue(airport.name);
+    console.log('🔍 DEBUG: About to call onChange with value:', airport.name);
     onChange(airport.name);
     setShowSuggestions(false);
+    console.log('🔍 DEBUG: selectCity completed');
   };
 
   const handleBlur = () => {
