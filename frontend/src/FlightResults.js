@@ -882,7 +882,11 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
     priceRange: [0, 100000],
     airlines: [],
     stops: [0, 1, 2], // Show all by default
-    timeSlots: ['early', 'afternoon', 'evening', 'night']
+    timeSlots: ['early', 'afternoon', 'evening', 'night'],
+    departureTime: [], // New enhanced filters
+    flightDuration: [],
+    services: [],
+    refundPolicy: []
   });
   
   const [selectedFlight, setSelectedFlight] = useState(null);
