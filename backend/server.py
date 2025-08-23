@@ -31,6 +31,9 @@ from tourbuilder import router as tourbuilder_router
 # Payment processing - Razorpay integration
 from payment_service import router as payment_router
 
+# OTP Authentication - MSG91 integration (sandbox ready)
+from otp_service import router as auth_router
+
 # Database configuration
 from database import create_tables, test_connection
 
