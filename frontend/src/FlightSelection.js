@@ -7,8 +7,10 @@ const FlightSelection = ({ selectedFlight, searchParams, onNext, onBack }) => {
   const [fareDetails, setFareDetails] = useState(null);
 
   // Mock fare types with realistic Indian LCC pricing
-  const generateFareTypes = (basePrice) => {
-    const base = parseInt(basePrice.replace('₹', '').replace(',', ''));
+  const generateFareTypes = (basePriceNum) => {
+    const base = typeof basePriceNum === 'string' 
+      ? parseInt(basePriceNum.replace(/[₹,]/g, '')) 
+      : basePriceNum || 5000;
     
     return [
       {
@@ -17,6 +19,7 @@ const FlightSelection = ({ selectedFlight, searchParams, onNext, onBack }) => {
         type: 'Non-Refundable',
         price: base,
         savings: 0,
+        originalPrice: base,
         features: {
           cancellation: '❌ Non-refundable',
           changes: '❌ Non-changeable', 
@@ -33,6 +36,7 @@ const FlightSelection = ({ selectedFlight, searchParams, onNext, onBack }) => {
         type: 'Partially Refundable',
         price: base + Math.round(base * 0.15),
         savings: Math.round(base * 0.05),
+        originalPrice: base + Math.round(base * 0.20),
         features: {
           cancellation: '✅ Refund with charges',
           changes: '✅ 1 free change allowed',
@@ -49,6 +53,7 @@ const FlightSelection = ({ selectedFlight, searchParams, onNext, onBack }) => {
         type: 'Fully Refundable',
         price: base + Math.round(base * 0.35),
         savings: Math.round(base * 0.10),
+        originalPrice: base + Math.round(base * 0.45),
         features: {
           cancellation: '✅ Full refund available',
           changes: '✅ Unlimited free changes',
