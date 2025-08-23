@@ -264,12 +264,17 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
   };
 
   const updateSegment = (index, field, value) => {
-    setSearchData(prev => ({
-      ...prev,
-      segments: prev.segments.map((segment, i) => 
-        i === index ? { ...segment, [field]: value } : segment
-      )
-    }));
+    console.log('🔍 DEBUG: updateSegment called with:', { index, field, value });
+    setSearchData(prev => {
+      const newData = {
+        ...prev,
+        segments: prev.segments.map((segment, i) => 
+          i === index ? { ...segment, [field]: value } : segment
+        )
+      };
+      console.log('🔍 DEBUG: Updated searchData:', newData);
+      return newData;
+    });
   };
 
   const handleStepProgression = () => {
