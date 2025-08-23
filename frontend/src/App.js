@@ -441,15 +441,79 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 </div>
               </div>
 
-              {/* Date for this segment */}
-              <div className="mt-4">
-                <SimpleDatePicker
-                  value={segment.departureDate}
-                  onChange={(date) => updateSegment(index, 'departureDate', date)}
-                  label={searchData.tripType === 'multi-city' ? `Departure Date ${index + 1}` : 'Departure Date'}
-                  minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
-                />
+        {/* Date Selection - Smart Logic Based on Trip Type */}
+        <div className={`grid ${
+          searchData.tripType === 'return' 
+            ? 'grid-cols-1 md:grid-cols-2' 
+            : searchData.tripType === 'multi-city' 
+              ? 'grid-cols-1' 
+              : 'grid-cols-1 md:grid-cols-2'
+        } gap-4 mb-4`}>
+          
+          {/* Departure Date - Always Present */}
+          {searchData.tripType !== 'multi-city' && (
+            <div>
+              <SimpleDatePicker
+                value={searchData.segments[0]?.departureDate || ''}
+                onChange={(date) => updateSegment(0, 'departureDate', date)}
+                label="Departure Date"
+                minDate={new Date().toISOString().split('T')[0]}
+              />
+            </div>
+          )}
+
+          {/* Return Date - Automatically appears for Round Trip */}
+          {searchData.tripType === 'return' && (
+            <div>
+              <SimpleDatePicker
+                value={searchData.returnDate}
+                onChange={(date) => setSearchData({...searchData, returnDate: date})}
+                label="Return Date" 
+                minDate={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
+              />
+            </div>
+          )}
+
+          {/* Passengers - Compact and Proportional */}
+          {searchData.tripType !== 'multi-city' && (
+            <div className={searchData.tripType === 'return' ? 'md:col-span-2' : ''}>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
+              <div className="flex items-center justify-between px-4 py-3 border-2 border-gray-200 rounded-xl bg-white">
+                <div className="flex items-center space-x-4">
+                  <button 
+                    type="button"
+                    onClick={() => setSearchData({...searchData, passengers: {...searchData.passengers, adults: Math.max(1, searchData.passengers.adults - 1)}})}
+                    className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
+                  >-</button>
+                  <div className="text-center">
+                    <div className="font-bold text-lg">{searchData.passengers.adults}</div>
+                    <div className="text-xs text-gray-500">Adults</div>
+                  </div>
+                  <button 
+                    type="button"
+                    onClick={() => setSearchData({...searchData, passengers: {...searchData.passengers, adults: searchData.passengers.adults + 1}})}
+                    className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
+                  >+</button>
+                </div>
+
+                {/* Class Selection - Inline */}
+                <div className="flex items-center space-x-3">
+                  <div className="text-sm text-gray-600">Class:</div>
+                  <select
+                    value={searchData.class}
+                    onChange={(e) => setSearchData({...searchData, class: e.target.value})}
+                    className="text-sm border-none bg-transparent font-medium text-gray-900 focus:ring-0"
+                  >
+                    <option value="economy">Economy</option>
+                    <option value="premium-economy">Premium</option>
+                    <option value="business">Business</option>
+                    <option value="first">First</option>
+                  </select>
+                </div>
               </div>
+            </div>
+          )}
+        </div>
             </div>
           ))}
 
