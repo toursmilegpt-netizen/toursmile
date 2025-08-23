@@ -540,9 +540,8 @@ async def search_flights(request: FlightSearchRequest):
 async def search_hotels(request: HotelSearchRequest):
     """Search for hotels with real API integration and AI recommendations"""
     try:
-        # Save search query
+        # Save search query (PostgreSQL will be handled by the new routes)
         search = HotelSearch(**request.dict())
-        await db.hotel_searches.insert_one(search.dict())
         
         # Try to get real hotel data first
         real_hotels = []
