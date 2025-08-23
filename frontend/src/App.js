@@ -430,7 +430,12 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
                   value={segment.departureDate}
                   onChange={(e) => updateSegment(index, 'departureDate', e.target.value)}
                   min={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
-                  className="w-full px-4 py-4 text-lg border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  className="w-full px-4 py-4 text-lg border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 date-picker-enhanced"
+                  style={{
+                    WebkitAppearance: 'none',
+                    MozAppearance: 'none',
+                    appearance: 'none'
+                  }}
                 />
                 {currentStep === 3 && index === 0 && !segment.departureDate && (
                   <div className="mt-2 text-sm text-green-600 animate-pulse">
