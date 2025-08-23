@@ -537,6 +537,63 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
           )}
         </div>
 
+        {/* Flight Preferences */}
+        <div className={`mt-6 transition-all duration-500 ${currentStep >= 4 ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
+          <h3 className="text-sm font-medium text-gray-700 mb-3">Flight Preferences</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Non-Stop Flights */}
+            <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors">
+              <input
+                type="checkbox"
+                checked={searchData.preferences.nonStop}
+                onChange={(e) => setSearchData({
+                  ...searchData,
+                  preferences: {...searchData.preferences, nonStop: e.target.checked}
+                })}
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div>
+                <div className="text-sm font-medium text-gray-900">Non-Stop Flights</div>
+                <div className="text-xs text-gray-500">Direct flights only</div>
+              </div>
+            </label>
+
+            {/* Student Discount */}
+            <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors">
+              <input
+                type="checkbox"
+                checked={searchData.preferences.student}
+                onChange={(e) => setSearchData({
+                  ...searchData,
+                  preferences: {...searchData.preferences, student: e.target.checked}
+                })}
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div>
+                <div className="text-sm font-medium text-gray-900">Student Discount</div>
+                <div className="text-xs text-gray-500">Save with student fare</div>
+              </div>
+            </label>
+
+            {/* Senior Citizen */}
+            <label className="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors">
+              <input
+                type="checkbox"
+                checked={searchData.preferences.seniorCitizen}
+                onChange={(e) => setSearchData({
+                  ...searchData,
+                  preferences: {...searchData.preferences, seniorCitizen: e.target.checked}
+                })}
+                className="mr-3 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <div>
+                <div className="text-sm font-medium text-gray-900">Senior Citizen</div>
+                <div className="text-xs text-gray-500">60+ years discount</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
         {/* Search Button - Enhanced with Glow Effect */}
         <div className={`pt-6 transition-all duration-500 ${canSearch() ? 'opacity-100' : 'opacity-50'}`}>
           <button
