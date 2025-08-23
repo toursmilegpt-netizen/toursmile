@@ -391,8 +391,14 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
                   airports={AIRPORTS_DATABASE}
                 />
                 {currentStep === 1 && index === 0 && !segment.origin && (
-                  <div className="mt-2 text-sm text-blue-600 animate-pulse">
-                    👆 Start by selecting your departure city
+                  <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-xl">
+                    <div className="flex items-center text-blue-700">
+                      <span className="text-2xl mr-2 guide-pulse">👆</span>
+                      <div>
+                        <div className="font-semibold text-sm">Step 1 of 4</div>
+                        <div className="text-sm">Click here and choose your departure city</div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
