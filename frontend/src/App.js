@@ -597,9 +597,15 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
 
   const selectCity = (airport) => {
     const cityName = airport.name;
+    console.log('selectCity called:', { airportName: airport.name, cityName });
     setInputValue(cityName);
-    // Immediately call onChange with the selected city
-    onChange(cityName);
+    
+    // Add a small delay to ensure state is updated
+    setTimeout(() => {
+      onChange(cityName);
+      console.log('onChange called with:', cityName);
+    }, 0);
+    
     setShowSuggestions(false);
   };
 
