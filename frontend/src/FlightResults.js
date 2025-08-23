@@ -17,7 +17,148 @@ const AIRLINE_INFO = {
   "Default": { logo: "✈️", color: "bg-gray-600", textColor: "text-white" }
 };
 
-// Flight Results Filter Component
+// Enhanced Results Header with Modify and Date Navigation
+const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChange }) => {
+  const [showModifyModal, setShowModifyModal] = useState(false);
+  
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', { 
+      weekday: 'short', 
+      day: 'numeric', 
+      month: 'short' 
+    });
+  };
+
+  const generateDateOptions = () => {
+    const today = new Date();
+    const dates = [];
+    
+    // Generate 7 days from today
+    for (let i = -3; i <= 3; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      dates.push({
+        date: date.toISOString().split('T')[0],
+        display: formatDate(date.toISOString().split('T')[0]),
+        day: date.getDate(),
+        price: Math.floor(Math.random() * 5000) + 2000 // Mock price variation
+      });
+    }
+    
+    return dates;
+  };
+
+  const dateOptions = generateDateOptions();
+  const currentDate = searchData?.segments?.[0]?.departureDate;
+
+  return (
+    <>
+      {/* Main Results Header */}
+      <div className="bg-white rounded-xl shadow-sm mb-6">
+        {/* Search Summary Bar */}
+        <div className="p-6 border-b border-gray-100">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center space-x-6">
+              {/* Route Info */}
+              <div className="flex items-center space-x-3">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-gray-900">{searchData?.segments?.[0]?.origin || 'Origin'}</div>
+                  <div className="text-sm text-gray-500">From</div>
+                </div>
+                <div className="text-2xl text-blue-600">✈️</div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-gray-900">{searchData?.segments?.[0]?.destination || 'Destination'}</div>
+                  <div className="text-sm text-gray-500">To</div>
+                </div>
+              </div>
+              
+              {/* Travel Details */}
+              <div className="hidden md:flex items-center space-x-6 text-sm text-gray-600">
+                <div className="flex items-center space-x-2">
+                  <span>📅</span>
+                  <span>{formatDate(currentDate)} • {searchData?.tripType === 'return' ? 'Round Trip' : 'One Way'}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span>👥</span>
+                  <span>{(searchData?.passengers?.adults || 1) + (searchData?.passengers?.children || 0)} Passenger{((searchData?.passengers?.adults || 1) + (searchData?.passengers?.children || 0)) > 1 ? 's' : ''}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span>🎫</span>
+                  <span className="capitalize">{searchData?.class || 'Economy'}</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Modify Button */}
+            <button
+              onClick={() => setShowModifyModal(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            >
+              <span>✏️</span>
+              <span>Modify Search</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Date Navigation Bar */}
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-lg font-semibold text-gray-900">
+              {filteredFlights.length} Flight{filteredFlights.length !== 1 ? 's' : ''} Found
+            </h3>
+            <div className="text-sm text-gray-600">
+              Compare prices for different dates
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-2 overflow-x-auto pb-2">
+            <button className="flex-shrink-0 p-2 text-gray-400 hover:text-gray-600">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            {dateOptions.map((dateOption) => {
+              const isSelected = dateOption.date === currentDate;
+              return (
+                <button
+                  key={dateOption.date}
+                  onClick={() => onDateChange && onDateChange(dateOption.date)}
+                  className={`flex-shrink-0 p-3 rounded-xl text-center min-w-[80px] transition-all ${
+                    isSelected 
+                      ? 'bg-blue-600 text-white shadow-lg' 
+                      : 'bg-gray-50 text-gray-700 hover:bg-blue-50'
+                  }`}
+                >
+                  <div className="text-xs font-medium">{dateOption.display.split(' ')[0]}</div>
+                  <div className="text-lg font-bold">{dateOption.day}</div>
+                  <div className="text-xs">₹{dateOption.price.toLocaleString()}</div>
+                </button>
+              );
+            })}
+            
+            <button className="flex-shrink-0 p-2 text-gray-400 hover:text-gray-600">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Modify Search Modal */}
+      {showModifyModal && (
+        <ModifySearchModal 
+          searchData={searchData}
+          onClose={() => setShowModifyModal(false)}
+          onModify={onModifySearch}
+        />
+      )}
+    </>
+  );
+};
 const FlightFilters = ({ filters, onFilterChange, flights }) => {
   // Extract unique airlines from flights
   const airlines = [...new Set(flights.map(f => f.airline))];
