@@ -448,7 +448,6 @@ const GuidedSearchForm = ({ onSearch, isSearching }) => {
                     <div className="flex items-center text-purple-700">
                       <span className="text-2xl mr-2 guide-pulse">📅</span>
                       <div>
-                        <div className="font-semibold text-sm">Step 3 of 4</div>
                         <div className="text-sm">Perfect! When would you like to travel? Click on the date field</div>
                       </div>
                     </div>
