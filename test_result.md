@@ -564,8 +564,7 @@ test_plan:
     - "Flight Search UI"
     - "Flight Results Display"
     - "Flight Selection Flow"
-  stuck_tasks:
-    - "Flight Search UI"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
