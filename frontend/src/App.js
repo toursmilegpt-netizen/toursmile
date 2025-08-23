@@ -503,17 +503,6 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             </div>
           )}
 
-          {/* Return Date for Round Trip */}
-          {searchData.tripType === 'return' && (
-            <div className="mt-4">
-              <SimpleDatePicker
-                value={searchData.returnDate}
-                onChange={(date) => setSearchData({...searchData, returnDate: date})}
-                label="Return Date"
-                minDate={searchData.segments[0]?.departureDate}
-              />
-            </div>
-          )}
         </div>
 
         {/* Date Selection - Smart Logic Based on Trip Type */}
