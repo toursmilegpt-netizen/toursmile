@@ -478,9 +478,8 @@ def parse_query_fallback(query):
 async def search_flights(request: FlightSearchRequest):
     """Search for flights with Tripjack API integration and AI recommendations"""
     try:
-        # Save search query
+        # Save search query (PostgreSQL will be handled by the new routes)
         search = FlightSearch(**request.dict())
-        await db.flight_searches.insert_one(search.dict())
         
         # Try to get real flight data first
         real_flights = []
