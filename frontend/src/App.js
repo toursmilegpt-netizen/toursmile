@@ -1173,6 +1173,7 @@ function App() {
                 />
               </div>
             </div>
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-4">
               {/* Flight Button - Active */}
               <div className="relative group">
@@ -1202,6 +1203,19 @@ function App() {
                     <span>Activities</span>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Mobile Navigation */}
+            <div className="md:hidden flex items-center space-x-2">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg font-medium text-sm">
+                ✈️ Flights
+              </div>
+              <div className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-medium text-sm">
+                🏨 Hotels
+              </div>
+              <div className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-medium text-sm">
+                🎯 Activities
               </div>
             </div>
           </div>
