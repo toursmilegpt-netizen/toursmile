@@ -777,7 +777,9 @@ function App() {
     setShowResults(true);
     
     try {
-      console.log('Searching with:', formData);
+      console.log('🔍 DEBUG: Starting search with:', formData);
+      console.log('🔍 DEBUG: showResults set to:', true);
+      console.log('🔍 DEBUG: isSearching set to:', true);
       
       // Convert to backend format
       const searchPayload = {
@@ -791,16 +793,18 @@ function App() {
         segments: formData.segments
       };
       
-      console.log('API payload:', searchPayload);
+      console.log('🔍 DEBUG: API payload:', searchPayload);
       
       const response = await axios.post(`${API}/flights/search`, searchPayload);
       
-      console.log('API response:', response.data);
-      console.log('Flights in response:', response.data.flights);
-      console.log('Number of flights:', response.data.flights ? response.data.flights.length : 0);
+      console.log('🔍 DEBUG: API response status:', response.status);
+      console.log('🔍 DEBUG: API response data:', response.data);
+      console.log('🔍 DEBUG: Flights in response:', response.data.flights);
+      console.log('🔍 DEBUG: Number of flights:', response.data.flights ? response.data.flights.length : 0);
       
       const flights = response.data.flights || [];
       setSearchResults(flights);
+      console.log('🔍 DEBUG: setSearchResults called with:', flights.length, 'flights');
       
       if (flights.length > 0) {
         console.log('✅ Successfully loaded', flights.length, 'flights');
