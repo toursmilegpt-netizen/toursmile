@@ -34,6 +34,9 @@ from payment_service import router as payment_router
 # OTP Authentication - MSG91 integration (sandbox ready)
 from otp_service import router as auth_router
 
+# Complete Hotel Booking System - TripJack integration with pre-book API
+from hotel_booking_routes import router as hotel_router
+
 # Database configuration
 from database import create_tables, test_connection
 
