@@ -1125,6 +1125,8 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
           filteredFlights={filteredFlights}
           onModifySearch={onModifySearch}
           onDateChange={onDateChange}
+          onSetSort={(key) => setFilters(prev => ({ ...prev, sortBy: key }))}
+          activeSort={filters.sortBy}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
