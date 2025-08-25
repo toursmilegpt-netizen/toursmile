@@ -639,6 +639,108 @@ async def search_flights(request: FlightSearchRequest):
         logging.error(f"Flight search error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to search flights")
 
+# Booking Confirmation Models
+class BookingConfirmationRequest(BaseModel):
+    bookingData: dict
+    payment: dict 
+    promo: Optional[dict] = None
+    finalPrice: float
+
+@api_router.post("/bookings/confirm")
+async def confirm_booking(request: BookingConfirmationRequest):
+    """Confirm booking, generate PNR, and send email confirmation"""
+    try:
+        import random
+        import string
+        from email_service import email_service
+        
+        # Generate PNR
+        pnr = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+        booking_reference = f"TS{int(datetime.now().timestamp())}"
+        
+        # Create booking record in database
+        booking_data = {
+            'pnr': pnr,
+            'booking_reference': booking_reference,
+            'flight_data': request.bookingData,
+            'payment_data': request.payment,
+            'promo_data': request.promo,
+            'final_price': request.finalPrice,
+            'status': 'confirmed',
+            'created_at': datetime.now(),
+            'passenger_email': request.bookingData.get('contactInfo', {}).get('email'),
+            'passenger_phone': request.bookingData.get('contactInfo', {}).get('mobile')
+        }
+        
+        # Save to database (mock for now - would use PostgreSQL)
+        logging.info(f"Booking confirmed: PNR={pnr}, Reference={booking_reference}")
+        
+        # Generate e-ticket content
+        e_ticket_content = generate_eticket_content(request.bookingData, pnr, booking_reference, request.finalPrice)
+        
+        # Send confirmation email
+        email_sent = False
+        passenger_email = request.bookingData.get('contactInfo', {}).get('email')
+        
+        if passenger_email:
+            try:
+                email_result = await email_service.send_booking_confirmation(
+                    to_email=passenger_email,
+                    pnr=pnr,
+                    booking_reference=booking_reference,
+                    booking_details=request.bookingData,
+                    e_ticket_content=e_ticket_content
+                )
+                email_sent = email_result.get('success', False)
+                logging.info(f"Email confirmation sent: {email_sent}")
+            except Exception as email_error:
+                logging.error(f"Email sending failed: {str(email_error)}")
+                email_sent = False
+        
+        return {
+            "success": True,
+            "pnr": pnr,
+            "bookingReference": booking_reference,
+            "eTicket": e_ticket_content,
+            "emailSent": email_sent,
+            "message": "Booking confirmed successfully"
+        }
+        
+    except Exception as e:
+        logging.error(f"Booking confirmation error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to confirm booking")
+
+def generate_eticket_content(booking_data, pnr, booking_reference, final_price):
+    """Generate e-ticket content"""
+    flight = booking_data.get('flight', {})
+    contact_info = booking_data.get('contactInfo', {})
+    
+    return {
+        'pnr': pnr,
+        'booking_reference': booking_reference,
+        'passenger_name': contact_info.get('name', 'Passenger'),
+        'passenger_email': contact_info.get('email'),
+        'passenger_phone': contact_info.get('mobile'),
+        'flight_number': flight.get('flightNumber', 'N/A'),
+        'airline': flight.get('airline', 'N/A'),
+        'departure': {
+            'city': flight.get('origin', 'N/A'),
+            'airport': flight.get('departure', {}).get('airport', 'N/A'),
+            'time': flight.get('departure', {}).get('time', 'N/A'),
+            'date': booking_data.get('departureDate', 'N/A')
+        },
+        'arrival': {
+            'city': flight.get('destination', 'N/A'),
+            'airport': flight.get('arrival', {}).get('airport', 'N/A'),
+            'time': flight.get('arrival', {}).get('time', 'N/A')
+        },
+        'duration': flight.get('duration', 'N/A'),
+        'class': booking_data.get('class', 'Economy'),
+        'total_amount': final_price,
+        'booking_status': 'Confirmed',
+        'issued_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    }
+
 @api_router.post("/hotels/search")
 async def search_hotels(request: HotelSearchRequest):
     """Search for hotels with real API integration and AI recommendations"""
