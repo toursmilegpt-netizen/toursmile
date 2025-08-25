@@ -89,7 +89,7 @@ const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChan
                 </div>
                 <div className="text-2xl text-blue-600">✈️</div>
                 <div className="text-center">
-                  <div className="text-xl font-bold text-gray-900">{searchData?.segments?.[0]?.destination || 'Destination'}</div>
+                  <div className="text-xl font-bold text-gray-900">{prettyCity(searchData?.segments?.[0]?.destination) || 'Destination'}</div>
                   <div className="text-sm text-gray-500">To</div>
                 </div>
               </div>
