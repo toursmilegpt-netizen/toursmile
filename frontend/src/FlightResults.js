@@ -110,12 +110,6 @@ const SimpleDatePicker = ({ value, onChange, minDate, highlight = false, inputRe
   const nextWeekend = () => {
     const d = new Date();
     const diff = (6 - d.getDay() + 7) % 7;
-  const toRef = useRef(null);
-  const dateOpen = () => {
-    const panel = document.getElementById('mobileQuickPanel');
-    if (panel) panel.scrollTop = 0;
-  };
-
     d.setDate(d.getDate() + diff + 7);
     return fmt(d);
   };
