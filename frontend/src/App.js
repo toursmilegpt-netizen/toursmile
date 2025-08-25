@@ -977,7 +977,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
           </div>
 
           {/* Calendar Days */}
-          <div className="grid grid-cols-7 gap-1">
+          <div className="grid grid-cols-7 gap-0.5">
             {generateCalendarDays().map((day, index) => (
               <button
                 key={index}
