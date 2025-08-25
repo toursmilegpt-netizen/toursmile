@@ -816,12 +816,6 @@ async def verify_otp_simple(request: OTPVerifyRequest):
         raise HTTPException(status_code=500, detail="Failed to verify OTP")
 
 # Simple payment endpoints without PostgreSQL dependency
-class PaymentOrderRequest(BaseModel):
-    amount: float
-    currency: str = "INR"
-    receipt: Optional[str] = None
-    bookingData: Optional[dict] = None
-
 @api_router.get("/payments/config")
 async def get_payment_config_simple():
     """Get payment configuration (sandbox mode)"""
