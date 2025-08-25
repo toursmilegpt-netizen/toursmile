@@ -210,6 +210,8 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   const originRef = useRef(null);
   const destinationRef = useRef(null);
   const dateRef = useRef(null);
+  const departButtonRef = useRef(null);
+  const returnButtonRef = useRef(null);
 
   useEffect(() => {
     // Set tomorrow as default departure date
