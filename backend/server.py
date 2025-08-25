@@ -1031,6 +1031,11 @@ async def root():
 # Include the router in the main app
 app.include_router(api_router)
 
+# Simple test endpoint
+@app.get("/test")
+async def test_endpoint():
+    return {"message": "Test endpoint working"}
+
 # Direct endpoints for testing (simple auth and payment without database dependencies)
 @app.post("/api/auth/send-otp")
 async def send_otp_direct(request: OTPSendRequest):
