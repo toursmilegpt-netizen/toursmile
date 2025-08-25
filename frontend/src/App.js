@@ -940,6 +940,13 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
   };
 
 
+      useEffect(() => {
+        // Auto-focus button when highlight becomes true (to "take me" to next step)
+        if (highlight && buttonRef && buttonRef.current) {
+          try { buttonRef.current.focus(); } catch (e) {}
+        }
+      }, [highlight]);
+
   const formatDisplayDate = (dateStr) => {
     if (!dateStr) return 'Select Date';
     const date = new Date(dateStr);
