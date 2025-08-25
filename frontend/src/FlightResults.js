@@ -1,5 +1,25 @@
 import React, { useState, useEffect } from "react";
 
+// Friendly labels for multi-airport cities (layman-friendly display)
+const MULTI_AIRPORT_LABELS = {
+  NYC: 'New York - All Airports',
+  LON: 'London - All Airports',
+  PAR: 'Paris - All Airports',
+  MIL: 'Milan - All Airports',
+  IST: 'Istanbul - All Airports',
+  BKK: 'Bangkok - All Airports',
+  CHI: 'Chicago - All Airports',
+  TPE: 'Taipei - All Airports',
+  DXB: 'Dubai - All Airports'
+};
+
+const prettyCity = (val) => {
+  if (!val) return '';
+  const v = String(val).trim().toUpperCase();
+  if (MULTI_AIRPORT_LABELS[v]) return MULTI_AIRPORT_LABELS[v];
+  return String(val);
+};
+
 // Airline logos and brand colors
 const AIRLINE_INFO = {
   "IndiGo": { logo: "6E", color: "bg-indigo-600", textColor: "text-white" },
