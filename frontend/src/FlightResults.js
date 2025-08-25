@@ -920,7 +920,7 @@ const FlightCard = ({ flight, onSelect, isSelected }) => {
 };
 
 // Main Flight Results Component
-const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModifySearch, onDateChange }) => {
+const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModifySearch, onDateChange, airports }) => {
   const [filters, setFilters] = useState({
     sortBy: 'price',
     priceRange: [0, 100000],
