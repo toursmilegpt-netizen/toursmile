@@ -954,6 +954,20 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
           } catch (e) {}
         }
       }, [highlight, showCalendar]);
+      useEffect(() => {
+        // Retry open with slight delay for stubborn browsers/environments
+        if (highlight && buttonRef && buttonRef.current && !showCalendar) {
+          const t = setTimeout(() => {
+            try {
+              if (!showCalendar) {
+                buttonRef.current.click();
+              }
+            } catch (e) {}
+          }, 120);
+          return () => clearTimeout(t);
+        }
+      }, [highlight]);
+
 
     return picks;
   };
