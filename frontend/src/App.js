@@ -847,6 +847,7 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
 // Proper Calendar Date Picker Component
 const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeSelect, enableRangeChips = false, highlight = false, buttonRef = null }) => {
   const [showCalendar, setShowCalendar] = useState(false);
+  const [autoOpened, setAutoOpened] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const calendarRef = useRef(null);
 
