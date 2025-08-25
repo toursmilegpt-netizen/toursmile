@@ -188,7 +188,16 @@ const FlightSelection = ({ selectedFlight, searchParams, onNext, onBack }) => {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Passengers</span>
-                  <span className="font-medium">{searchParams.passengers} Adult(s)</span>
+                  <span className="font-medium">
+                    {typeof searchParams.passengers === 'object' 
+                      ? `${searchParams.passengers.adults || 1} Adult(s)${
+                          searchParams.passengers.children > 0 ? `, ${searchParams.passengers.children} Child(ren)` : ''
+                        }${
+                          searchParams.passengers.infants > 0 ? `, ${searchParams.passengers.infants} Infant(s)` : ''
+                        }`
+                      : `${searchParams.passengers} Adult(s)`
+                    }
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Class</span>
