@@ -945,6 +945,16 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
       return score(a) - score(b);
     });
 
+      useEffect(() => {
+        // Programmatic open-on-highlight fallback (when browsers ignore focus-only)
+        if (highlight && buttonRef && buttonRef.current && !showCalendar && !autoOpened) {
+          try {
+            setAutoOpened(true);
+            buttonRef.current.click();
+          } catch (e) {}
+        }
+      }, [highlight, showCalendar]);
+
     return picks;
   };
 
