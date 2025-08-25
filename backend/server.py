@@ -741,6 +741,112 @@ def generate_eticket_content(booking_data, pnr, booking_reference, final_price):
         'issued_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
+# Simple OTP endpoints without PostgreSQL dependency
+@api_router.post("/auth/send-otp")
+async def send_otp_simple(request: dict):
+    """Send OTP (sandbox mode - no real SMS)"""
+    try:
+        mobile = request.get('mobile', '')
+        if not mobile or len(mobile) < 10:
+            raise HTTPException(status_code=400, detail="Invalid mobile number")
+        
+        # Generate 6-digit OTP
+        import random
+        otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+        
+        # In sandbox mode, log the OTP for testing
+        logging.info(f"📱 OTP for {mobile}: {otp}")
+        
+        # Store OTP in memory/cache for verification (simple implementation)
+        # In production, this would be stored in database with expiry
+        
+        return {
+            "success": True,
+            "message": "OTP sent successfully",
+            "mobile": mobile,
+            "sandbox_otp": otp,  # For testing purposes
+            "note": "This is a sandbox environment. Use any 6-digit number as OTP."
+        }
+        
+    except Exception as e:
+        logging.error(f"OTP sending error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to send OTP")
+
+@api_router.post("/auth/verify-otp")
+async def verify_otp_simple(request: dict):
+    """Verify OTP (sandbox mode - accept any 6-digit code)"""
+    try:
+        mobile = request.get('mobile', '')
+        otp = request.get('otp', '')
+        
+        if not mobile or not otp:
+            raise HTTPException(status_code=400, detail="Mobile and OTP required")
+        
+        if len(otp) != 6 or not otp.isdigit():
+            raise HTTPException(status_code=400, detail="Invalid OTP format")
+        
+        # In sandbox mode, accept any 6-digit OTP
+        logging.info(f"📱 OTP verification for {mobile}: {otp}")
+        
+        return {
+            "success": True,
+            "message": "OTP verified successfully",
+            "mobile": mobile,
+            "verified": True,
+            "user_id": f"user_{mobile[-4:]}",  # Mock user ID
+            "note": "Sandbox mode - any 6-digit OTP is accepted"
+        }
+        
+    except Exception as e:
+        logging.error(f"OTP verification error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to verify OTP")
+
+# Simple payment endpoints without PostgreSQL dependency  
+@api_router.get("/payments/config")
+async def get_payment_config_simple():
+    """Get payment configuration (sandbox mode)"""
+    return {
+        "success": True,
+        "razorpay_key_id": "rzp_test_sandbox_key",
+        "currency": "INR",
+        "sandbox_mode": True,
+        "test_cards": [
+            {"number": "4111111111111111", "type": "Visa"},
+            {"number": "5555555555554444", "type": "Mastercard"}
+        ],
+        "note": "Sandbox environment - test payments only"
+    }
+
+@api_router.post("/payments/create-order")
+async def create_payment_order_simple(request: dict):
+    """Create payment order (sandbox mode)"""
+    try:
+        amount = request.get('amount', 0)
+        currency = request.get('currency', 'INR')
+        
+        if amount <= 0:
+            raise HTTPException(status_code=400, detail="Invalid amount")
+        
+        # Generate mock order
+        order_id = f"order_{int(datetime.now().timestamp())}"
+        
+        return {
+            "success": True,
+            "order": {
+                "id": order_id,
+                "amount": amount * 100,  # Razorpay expects paise
+                "currency": currency,
+                "key_id": "rzp_test_sandbox_key",
+                "status": "created"
+            },
+            "message": "Payment order created successfully",
+            "note": "Sandbox mode - test order created"
+        }
+        
+    except Exception as e:
+        logging.error(f"Payment order creation error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to create payment order")
+
 @api_router.post("/hotels/search")
 async def search_hotels(request: HotelSearchRequest):
     """Search for hotels with real API integration and AI recommendations"""
