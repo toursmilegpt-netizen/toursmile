@@ -412,6 +412,17 @@ backend:
         comment: "🎉 TRIP DETAILS FUNCTIONALITY TESTING COMPLETED (100% SUCCESS RATE)! Tested all requested functionality for Phase 1 Popular Trips issues: 1) Trip Details API - All 5 specific trip IDs (RAJ001, KER001, SEA001, GOA001, HP001) found with complete data including basic details (id, title, duration, destinations, price_from, theme, image) and extended details (itinerary, inclusions, best_time, highlights). 2) Popular Trips API with limit=50 - Returns all 17 trips correctly (10 domestic, 7 international). 3) Featured Trips API with limit=6 - Returns 6 featured trips properly. 4) Error Handling - Proper 404 response for invalid trip IDs. CRITICAL FINDING: Backend APIs are 100% functional and ready for frontend trip detail modals. All required data structures are present and complete. The issue is NOT in backend - frontend can now safely open trip detail modals with complete trip information."
 
 frontend:
+  - task: "Multi-Airport City Autocomplete (All Airports)"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Implemented support for multi-airport city options in CityAutocomplete: dynamically generates three variants per city (NYC - All Airports, New York - All Airports, NYC (All Airports)), ensures they appear above individual airports, de-duplicates entries, and when selected passes the IATA city code (e.g., NYC) to backend while displaying the human-friendly label in the input."
   - task: "Travel Website UI"
     implemented: true
     working: true
