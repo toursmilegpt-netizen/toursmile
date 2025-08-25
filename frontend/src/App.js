@@ -1624,6 +1624,7 @@ function App() {
           isLoading={isSearching}
           onModifySearch={handleModifySearch}
           onDateChange={handleDateChange}
+          airports={AIRPORTS_DATABASE}
         />
       </div>
     );
