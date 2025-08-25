@@ -1065,18 +1065,33 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
     // Remove onChange(input) call - only call onChange when city is selected from dropdown
 
     if (input.length > 0) {
-      const filtered = airports
+      // Build a combined pool including airports plus multi-airport city variants
+      const pool = [
+        ...airports,
+        ...Object.keys(MULTI_AIRPORT_CITIES).flatMap(code => buildAllAirportsVariants(MULTI_AIRPORT_CITIES[code]))
+      ];
+
+      const filtered = pool
         .filter(airport => 
           (airport.name.toLowerCase().includes(input.toLowerCase()) ||
            airport.fullName.toLowerCase().includes(input.toLowerCase()) ||
-           airport.code.toLowerCase().includes(input.toLowerCase()) ||
-           airport.country.toLowerCase().includes(input.toLowerCase())) &&
+           (airport.code && airport.code.toLowerCase().includes(input.toLowerCase())) ||
+           (airport.country && airport.country.toLowerCase().includes(input.toLowerCase()))) &&
            airport.name !== excludeCity
         )
+        // de-duplicate by name+code to avoid triple entries colliding with actual airport items
+        .filter((item, idx, arr) => arr.findIndex(x => `${x.name}|${x.code}` === `${item.name}|${item.code}`) === idx)
         .sort((a, b) => {
-          // Prioritize popular airports
+          // Ensure All Airports appear above individual airports when relevant
+          const aAll = a.__type === 'all_airports';
+          const bAll = b.__type === 'all_airports';
+          if (aAll && !bAll) return -1;
+          if (!aAll && bAll) return 1;
+
+          // Prioritize popular items
           if (a.popular && !b.popular) return -1;
           if (!a.popular && b.popular) return 1;
+          
           // Then by exact name match
           if (a.name.toLowerCase() === input.toLowerCase()) return -1;
           if (b.name.toLowerCase() === input.toLowerCase()) return 1;
@@ -1086,7 +1101,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
           return 0;
         })
         .slice(0, 8);
-      
+
       setSuggestions(filtered);
       setShowSuggestions(true);
     } else {
