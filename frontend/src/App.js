@@ -1105,8 +1105,21 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
       setSuggestions(filtered);
       setShowSuggestions(true);
     } else {
-      // Show popular airports when empty
-      const popular = airports.filter(airport => airport.popular && airport.name !== excludeCity).slice(0, 6);
+      // Show popular with All Airports variants when empty
+      const pool = [
+        ...airports,
+        ...Object.keys(MULTI_AIRPORT_CITIES).flatMap(code => buildAllAirportsVariants(MULTI_AIRPORT_CITIES[code]))
+      ];
+      const popular = pool.filter(item => item.popular && item.name !== excludeCity)
+        // Ensure All Airports show first in the empty state too
+        .sort((a, b) => {
+          const aAll = a.__type === 'all_airports';
+          const bAll = b.__type === 'all_airports';
+          if (aAll && !bAll) return -1;
+          if (!aAll && bAll) return 1;
+          return 0;
+        })
+        .slice(0, 6);
       setSuggestions(popular);
       setShowSuggestions(input.length === 0);
     }
