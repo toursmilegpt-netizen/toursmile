@@ -1006,6 +1006,41 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
   );
 };
 const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange, icon, autoFocus, airports, excludeCity }, ref) => {
+  // Build "All Airports" suggestion variants for multi-airport cities
+  const buildAllAirportsVariants = (cityRecord) => {
+    const code = cityRecord.cityCode;
+    const name = cityRecord.cityName;
+    const country = cityRecord.country;
+    const airportsList = cityRecord.airports.join(', ');
+    const baseFull = `${name} (${code}) • Includes: ${airportsList}`;
+    return [
+      {
+        code, // important: send city code when selected
+        name: `${code} - All Airports`,
+        fullName: baseFull,
+        country,
+        popular: true,
+        __type: 'all_airports',
+      },
+      {
+        code,
+        name: `${name} - All Airports`,
+        fullName: baseFull,
+        country,
+        popular: true,
+        __type: 'all_airports',
+      },
+      {
+        code,
+        name: `${code} (All Airports)`,
+        fullName: baseFull,
+        country,
+        popular: true,
+        __type: 'all_airports',
+      },
+    ];
+  };
+
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [inputValue, setInputValue] = useState(value || '');
