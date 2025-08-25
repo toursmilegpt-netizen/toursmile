@@ -1126,72 +1126,167 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
 
   return (
     <>
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Enhanced Results Header */}
-        <ResultsHeader 
-          searchData={searchData}
-          filteredFlights={filteredFlights}
-          onModifySearch={onModifySearch}
-          onDateChange={onDateChange}
-          onSetSort={(key) => setFilters(prev => ({ ...prev, sortBy: key }))}
-          activeSort={filters.sortBy}
-        />
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          {/* Enhanced Results Header */}
+          <ResultsHeader 
+            searchData={searchData}
+            filteredFlights={filteredFlights}
+            onModifySearch={onModifySearch}
+            onDateChange={onDateChange}
+            onSetSort={(key) => setFilters(prev => ({ ...prev, sortBy: key }))}
+            activeSort={filters.sortBy}
+          />
 
-        {/* Mobile Quick Change Search Button */}
-        <div className="md:hidden sticky top-14 z-30 mb-3">
-          <div className="flex justify-center">
-            <button
-              onClick={() => setShowMobileModify(true)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 text-sm"
-            >
-              ✏️ Change Search
-            </button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Filters Sidebar - Collapsible on Mobile */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-6">
-              <FlightFilters 
-                filters={filters}
-                onFilterChange={setFilters}
-                flights={flights}
-              />
+          {/* Mobile Quick Change Search Button */}
+          <div className="md:hidden sticky top-14 z-30 mb-3">
+            <div className="flex justify-center">
+              <button
+                onClick={() => setShowMobileModify(true)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 text-sm"
+              >
+                ✏️ Change Search
+              </button>
             </div>
           </div>
 
-          {/* Flight Results - Enhanced Layout */}
-          <div className="lg:col-span-3">
-            <div className="space-y-3">
-              {filteredFlights.map((flight, index) => (
-                <FlightCard
-                  key={index}
-                  flight={flight}
-                  onSelect={handleFlightSelect}
-                  isSelected={selectedFlight === flight}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Filters Sidebar - Collapsible on Mobile */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-6">
+                <FlightFilters 
+                  filters={filters}
+                  onFilterChange={setFilters}
+                  flights={flights}
                 />
-              ))}
-            </div>
-            
-            {filteredFlights.length === 0 && flights.length > 0 && (
-              <div className="bg-white rounded-xl shadow-sm p-12 text-center">
-                <div className="text-4xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No flights match your filters</h3>
-                <p className="text-gray-600">Try removing some filters to see more results</p>
-                <button 
-                  onClick={() => setFilters({sortBy: 'price', priceRange: [0, 50000], airlines: [], stops: []})}
-                  className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Clear All Filters
-                </button>
               </div>
-            )}
+            </div>
+
+            {/* Flight Results - Enhanced Layout */}
+            <div className="lg:col-span-3">
+              <div className="space-y-3">
+                {filteredFlights.map((flight, index) => (
+                  <FlightCard
+                    key={index}
+                    flight={flight}
+                    onSelect={handleFlightSelect}
+                    isSelected={selectedFlight === flight}
+                  />
+                ))}
+              </div>
+              
+              {filteredFlights.length === 0 && flights.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-12 text-center">
+                  <div className="text-4xl mb-4">🔍</div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No flights match your filters</h3>
+                  <p className="text-gray-600">Try removing some filters to see more results</p>
+                  <button 
+                    onClick={() => setFilters({sortBy: 'price', priceRange: [0, 50000], airlines: [], stops: []})}
+                    className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Clear All Filters
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Mobile Quick Modify Panel */}
+      {showMobileModify && (
+        <div className="fixed inset-0 bg-black/50 z-50 md:hidden" role="dialog" aria-modal="true">
+          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl p-4 max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-semibold">Change Search</h3>
+              <button onClick={() => setShowMobileModify(false)} className="text-2xl text-gray-400 hover:text-gray-600">×</button>
+            </div>
+            <div className="text-sm text-gray-600 mb-4">Update your trip details and search again</div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">From</label>
+                <input
+                  type="text"
+                  value={mobileForm.origin}
+                  onChange={(e) => setMobileForm(prev => ({ ...prev, origin: e.target.value }))}
+                  className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Departure city"
+                />
+              </div>
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">To</label>
+                  <input
+                    type="text"
+                    value={mobileForm.destination}
+                    onChange={(e) => setMobileForm(prev => ({ ...prev, destination: e.target.value }))}
+                    className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Arrival city"
+                  />
+                </div>
+                <button
+                  onClick={() => setMobileForm(prev => ({ ...prev, origin: prev.destination, destination: prev.origin }))}
+                  className="px-3 py-2 border rounded-xl text-sm text-gray-700 hover:bg-gray-50"
+                  aria-label="Swap From and To"
+                >
+                  ⇄ Swap
+                </button>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Departure Date</label>
+                <input
+                  type="date"
+                  value={mobileForm.departureDate}
+                  min={new Date().toISOString().split('T')[0]}
+                  onChange={(e) => setMobileForm(prev => ({ ...prev, departureDate: e.target.value }))}
+                  className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              {mobileForm.tripType === 'return' && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Return Date</label>
+                  <input
+                    type="date"
+                    value={mobileForm.returnDate}
+                    min={mobileForm.departureDate || new Date().toISOString().split('T')[0]}
+                    onChange={(e) => setMobileForm(prev => ({ ...prev, returnDate: e.target.value }))}
+                    className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+              )}
+
+              <div className="flex items-center justify-between gap-3 pt-2">
+                <button
+                  onClick={() => setShowMobileModify(false)}
+                  className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-xl"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    const canSearch = mobileForm.origin?.length > 2 && mobileForm.destination?.length > 2 && mobileForm.departureDate && (mobileForm.tripType !== 'return' || (mobileForm.returnDate && mobileForm.returnDate >= mobileForm.departureDate));
+                    if (!canSearch) return;
+                    const modifiedData = {
+                      ...searchData,
+                      segments: [{ ...searchData.segments[0], origin: mobileForm.origin, destination: mobileForm.destination, departureDate: mobileForm.departureDate }],
+                      returnDate: mobileForm.returnDate,
+                      tripType: mobileForm.tripType
+                    };
+                    onModifySearch && onModifySearch(modifiedData);
+                    setShowMobileModify(false);
+                  }}
+                  className="flex-1 py-2 bg-blue-600 text-white rounded-xl shadow-md disabled:opacity-50"
+                  disabled={!(mobileForm.origin?.length > 2 && mobileForm.destination?.length > 2 && mobileForm.departureDate && (mobileForm.tripType !== 'return' || (mobileForm.returnDate && mobileForm.returnDate >= mobileForm.departureDate)))}
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
