@@ -128,6 +128,20 @@ class HotelSearchRequest(BaseModel):
     guests: int = 1
     rooms: int = 1
 
+# OTP and Payment models for sandbox endpoints
+class OTPSendRequest(BaseModel):
+    mobile: str
+
+class OTPVerifyRequest(BaseModel):
+    mobile: str
+    otp: str
+
+class PaymentOrderRequest(BaseModel):
+    amount: float
+    currency: str = "INR"
+    receipt: Optional[str] = None
+    bookingData: Optional[dict] = None
+
 # Mock data for flights
 MOCK_FLIGHTS = [
     {
