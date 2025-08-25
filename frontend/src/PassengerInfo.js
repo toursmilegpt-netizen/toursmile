@@ -78,10 +78,10 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
       errors.email = 'Please enter a valid email address';
     }
 
-    if (!contactInfo.phone.trim()) {
-      errors.phone = 'Phone number is required';
-    } else if (!/^\d{10}$/.test(contactInfo.phone)) {
-      errors.phone = 'Please enter a valid 10-digit phone number';
+    if (!contactInfo.mobile.trim()) {
+      errors.mobile = 'Phone number is required';
+    } else if (!/^\d{10}$/.test(contactInfo.mobile)) {
+      errors.mobile = 'Please enter a valid 10-digit phone number';
     }
 
     return errors;
