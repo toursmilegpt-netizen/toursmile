@@ -1108,6 +1108,10 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
       if (filters.stops.length > 0) {
         const stops = flight.stops || 0;
         const stopCategory = stops === 0 ? 0 : stops === 1 ? 1 : 2;
+        {/* refs to auto-open date picker */}
+        const depButtonRef = useRef(null);
+        const retButtonRef = useRef(null);
+
         if (!filters.stops.includes(stopCategory)) return false;
       }
 
