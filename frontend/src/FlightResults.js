@@ -1210,7 +1210,23 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
               <h3 className="text-lg font-semibold">Change Search</h3>
               <button onClick={() => setShowMobileModify(false)} className="text-2xl text-gray-400 hover:text-gray-600">×</button>
             </div>
-            <div className="text-sm text-gray-600 mb-4">Update your trip details and search again</div>
+            <div className="text-sm text-gray-600 mb-4 flex items-center gap-2">
+              <div className="inline-flex bg-gray-100 rounded-full p-1">
+                <button
+                  className={`px-3 py-1 text-xs rounded-full ${mobileForm.tripType !== 'return' ? 'bg-white shadow-sm' : ''}`}
+                  onClick={() => setMobileForm(prev => ({ ...prev, tripType: 'one-way', returnDate: '' }))}
+                >
+                  One-way
+                </button>
+                <button
+                  className={`px-3 py-1 text-xs rounded-full ${mobileForm.tripType === 'return' ? 'bg-white shadow-sm' : ''}`}
+                  onClick={() => setMobileForm(prev => ({ ...prev, tripType: 'return' }))}
+                >
+                  Return
+                </button>
+              </div>
+              <span className="text-gray-500">Update your trip details and search again</span>
+            </div>
 
             <div className="space-y-3">
               <div>
