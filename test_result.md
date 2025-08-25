@@ -616,10 +616,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Flight Search UI"
-    - "Flight Results Display"
-    - "Flight Selection Flow"
-  stuck_tasks: []
+    - "Flight Search UI - Complete Booking Flow Implementation"
+    - "OTP Authentication Integration in Booking Flow"
+    - "Payment Gateway Integration (Razorpay)"
+    - "Ticket Generation and Email Delivery System"
+  stuck_tasks:
+    - "Flight Search UI - Booking Flow Progression"
   test_all: false
   test_priority: "high_first"
 
