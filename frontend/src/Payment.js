@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 // Payment Component - Step 3 of Booking Flow
 const Payment = ({ bookingData, onNext, onBack }) => {
