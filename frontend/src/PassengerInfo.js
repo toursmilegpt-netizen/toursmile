@@ -256,9 +256,9 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
                     </select>
                     <input
                       type="tel"
-                      value={contactInfo.phone}
-                      onChange={(e) => updateContactInfo('phone', e.target.value.replace(/\D/g, ''))}
-                      className={`flex-1 px-4 py-3 border rounded-r-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.phone ? 'border-red-500 error-field' : 'border-gray-300'}`}
+                      value={contactInfo.mobile}
+                      onChange={(e) => updateContactInfo('mobile', e.target.value.replace(/\D/g, ''))}
+                      className={`flex-1 px-4 py-3 border rounded-r-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.mobile ? 'border-red-500 error-field' : 'border-gray-300'}`}
                       placeholder="9876543210"
                       maxLength={10}
                     />
