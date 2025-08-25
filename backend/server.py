@@ -756,13 +756,6 @@ def generate_eticket_content(booking_data, pnr, booking_reference, final_price):
     }
 
 # Simple OTP endpoints without PostgreSQL dependency
-class OTPSendRequest(BaseModel):
-    mobile: str
-
-class OTPVerifyRequest(BaseModel):
-    mobile: str
-    otp: str
-
 @api_router.post("/auth/send-otp")
 async def send_otp_simple(request: OTPSendRequest):
     """Send OTP (sandbox mode - no real SMS)"""
