@@ -124,17 +124,15 @@ const SimpleDatePicker = ({ value, onChange, minDate, highlight = false, inputRe
   const disabled = (d) => (d < min);
 
   useEffect(() => {
-    if (autoOpen && inputRef && inputRef.current) {
+    if (autoOpenToken > 0 && inputRef && inputRef.current) {
       try { inputRef.current.focus(); } catch(e) {}
-      // Fire click to open pickers that need it (some mobile browsers)
       try { inputRef.current.click(); } catch(e) {}
-      // Retry after a short delay for Safari/Chrome timing
       const t = setTimeout(() => {
         try { inputRef.current.click(); } catch(e) {}
       }, 120);
       return () => clearTimeout(t);
     }
-  }, [autoOpen, inputRef]);
+  }, [autoOpenToken, inputRef]);
 
   return (
     <div>
