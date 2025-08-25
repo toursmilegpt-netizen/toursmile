@@ -636,6 +636,7 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Multi-Airport City Autocomplete (All Airports variants)"
     - "Flight Search UI - Complete Booking Flow Implementation"
     - "OTP Authentication Integration in Booking Flow"
     - "Payment Gateway Integration (Razorpay)"
