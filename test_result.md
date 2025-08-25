@@ -450,6 +450,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ COMPREHENSIVE TESTING COMPLETED! Travel website UI is working excellently. All navigation tabs functional (Home, Flights, Hotels, Activities, AI Planner), beautiful responsive design with gradient backgrounds, proper logo display, and smooth transitions. Mobile responsiveness tested and working perfectly with mobile menu and adaptive layout."
+      - working: true
+        agent: "testing"
+        comment: "🎯 HOMEPAGE FLIGHTS SEARCH FORM GUIDANCE CROSS-BROWSER TESTING COMPLETED! Comprehensive testing across Chrome/Chromium, Safari/WebKit, and Firefox browsers with both desktop and mobile viewports shows 88.9% success rate. All core guidance features working: From field initial glow, popular cities dropdown (5/6 cities), To field glow after From selection, search button glow when valid. Missing features identified: date picker auto-opening, quick-pick chips, return date visibility in Round Trip mode, passengers section highlighting. Zero console errors across all browsers. Excellent cross-browser compatibility achieved with consistent user experience."
 
   - task: "Popular Trips Frontend UI"
     implemented: true
