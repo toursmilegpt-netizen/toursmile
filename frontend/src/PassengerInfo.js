@@ -6,9 +6,14 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
   const [passengers, setPassengers] = useState([]);
   const [contactInfo, setContactInfo] = useState({
     email: '',
-    phone: '',
-    countryCode: '+91'
+    countryCode: '+91',
+    mobile: '',
+    isVerified: false
   });
+  const [otpStep, setOtpStep] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [verificationLoading, setVerificationLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
