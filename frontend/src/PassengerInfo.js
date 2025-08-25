@@ -263,8 +263,8 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
                       maxLength={10}
                     />
                   </div>
-                  {errors.phone && (
-                    <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+                  {errors.mobile && (
+                    <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>
                   )}
                 </div>
               </div>
