@@ -46,6 +46,77 @@ const Payment = ({ bookingData, onNext, onBack }) => {
     }).format(price);
   };
 
+  // Process booking confirmation with PNR generation and email sending
+  const processBookingConfirmation = async (paymentResponse) => {
+    try {
+      // Call backend to generate PNR and send confirmation email
+      const confirmationResponse = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/bookings/confirm`, {
+        bookingData: bookingData,
+        payment: {
+          id: paymentResponse.razorpay_payment_id,
+          orderId: paymentResponse.razorpay_order_id,
+          signature: paymentResponse.razorpay_signature,
+          amount: total,
+          currency: 'INR',
+          status: 'completed',
+          method: paymentMethod,
+          timestamp: new Date().toISOString()
+        },
+        promo: promoApplied,
+        finalPrice: total
+      });
+
+      if (confirmationResponse.data.success) {
+        return {
+          ...bookingData,
+          payment: {
+            id: paymentResponse.razorpay_payment_id,
+            orderId: paymentResponse.razorpay_order_id,
+            signature: paymentResponse.razorpay_signature,
+            amount: total,
+            currency: 'INR',
+            status: 'completed',
+            method: paymentMethod,
+            timestamp: new Date().toISOString()
+          },
+          promo: promoApplied,
+          finalPrice: total,
+          pnr: confirmationResponse.data.pnr,
+          bookingReference: confirmationResponse.data.bookingReference,
+          eTicket: confirmationResponse.data.eTicket,
+          emailSent: confirmationResponse.data.emailSent,
+          step: 'booking-confirmed'
+        };
+      } else {
+        throw new Error('Booking confirmation failed');
+      }
+    } catch (error) {
+      console.error('Booking confirmation error:', error);
+      // Generate fallback data
+      return {
+        ...bookingData,
+        payment: {
+          id: paymentResponse.razorpay_payment_id,
+          orderId: paymentResponse.razorpay_order_id,
+          signature: paymentResponse.razorpay_signature,
+          amount: total,
+          currency: 'INR',
+          status: 'completed',
+          method: paymentMethod,
+          timestamp: new Date().toISOString()
+        },
+        promo: promoApplied,
+        finalPrice: total,
+        pnr: `TS${Date.now().toString().slice(-6)}`, // Fallback PNR
+        bookingReference: `TS${Date.now()}`,
+        eTicket: null,
+        emailSent: false,
+        step: 'booking-confirmed',
+        confirmationError: true
+      };
+    }
+  };
+
   const applyPromoCode = () => {
     const code = promoCode.toUpperCase();
     if (validPromoCodes[code]) {
