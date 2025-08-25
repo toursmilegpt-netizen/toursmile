@@ -1445,9 +1445,18 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
                 <label className="block text-sm font-medium text-gray-700 mb-1">Departure Date</label>
                 <SimpleDatePicker
                   value={mobileForm.departureDate}
-                  onChange={(date) => setMobileForm(prev => ({ ...prev, departureDate: date }))}
+                  onChange={(date) => {
+                    setMobileForm(prev => ({ ...prev, departureDate: date }));
+                    if (mobileForm.tripType === 'return') {
+                      setTimeout(() => setRetAutoOpenToken(t => t + 1), 0);
+                    } else {
+                      // auto-focus passengers next
+                      setTimeout(() => passengersRef.current?.focus?.(), 0);
+                    }
+                  }}
                   minDate={new Date().toISOString().split('T')[0]}
                   highlight={mobileForm.origin && mobileForm.destination && !mobileForm.departureDate}
+                  autoOpenToken={depAutoOpenToken}
                 />
               </div>
               {mobileForm.tripType === 'return' && (
