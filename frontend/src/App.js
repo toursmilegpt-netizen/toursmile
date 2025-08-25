@@ -1268,9 +1268,11 @@ function App() {
   };
 
   const handleFlightSelect = (flight) => {
-    console.log('Selected flight:', flight);
+    console.log('🔍 handleFlightSelect called with:', flight);
+    console.log('🔍 Current bookingStep:', bookingStep);
     setSelectedFlight(flight);
     setBookingStep('flight-selection');
+    console.log('🔍 Set bookingStep to: flight-selection');
   };
 
   const handleBackToResults = () => {
