@@ -17,6 +17,61 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
+  // OTP functionality
+  const sendOTP = async () => {
+    if (!contactInfo.mobile || contactInfo.mobile.length !== 10) {
+      setErrors({...errors, mobile: 'Please enter a valid 10-digit mobile number'});
+      return;
+    }
+
+    setOtpLoading(true);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/otp/send`, {
+        mobile: contactInfo.countryCode + contactInfo.mobile
+      });
+      
+      if (response.data.success) {
+        setOtpStep(true);
+        setErrors({...errors, mobile: ''});
+      } else {
+        setErrors({...errors, mobile: 'Failed to send OTP. Please try again.'});
+      }
+    } catch (error) {
+      console.error('OTP sending error:', error);
+      setErrors({...errors, mobile: 'Failed to send OTP. Please try again.'});
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const verifyOTP = async () => {
+    if (!otp || otp.length !== 6) {
+      setErrors({...errors, otp: 'Please enter a valid 6-digit OTP'});
+      return;
+    }
+
+    setVerificationLoading(true);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/otp/verify`, {
+        mobile: contactInfo.countryCode + contactInfo.mobile,
+        otp: otp
+      });
+      
+      if (response.data.success) {
+        setContactInfo({...contactInfo, isVerified: true});
+        setOtpStep(false);
+        setErrors({...errors, otp: ''});
+      } else {
+        setErrors({...errors, otp: 'Invalid OTP. Please try again.'});
+      }
+    } catch (error) {
+      console.error('OTP verification error:', error);
+      setErrors({...errors, otp: 'Invalid OTP. Please try again.'});
+    } finally {
+      setVerificationLoading(false);
+    }
+  };
+
   // Initialize passengers based on booking data
   React.useEffect(() => {
     if (bookingData) {
