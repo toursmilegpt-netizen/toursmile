@@ -455,6 +455,10 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     excludeCity={searchData.segments[0]?.origin}
                     highlight={searchData.segments[0]?.origin && !searchData.segments[0]?.destination}
                   />
+                  {/* Auto-focus date after destination chosen */}
+                  {searchData.segments[0]?.origin && searchData.segments[0]?.destination && (
+                    <span className="sr-only" aria-live="polite">Next: Departure Date</span>
+                  )}
                 </div>
               </div>
             </div>
