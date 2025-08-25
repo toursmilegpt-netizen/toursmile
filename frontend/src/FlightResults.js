@@ -99,6 +99,15 @@ const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChan
                 <div className="flex items-center space-x-2">
                   <span>📅</span>
                   <span>{formatDate(currentDate)} • {searchData?.tripType === 'return' ? 'Round Trip' : 'One Way'}</span>
+            <div className="md:hidden">
+              <button
+                onClick={() => setShowModifyModal(true)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
+              >
+                ✏️ Change Search
+              </button>
+            </div>
+
                 </div>
                 <div className="flex items-center space-x-2">
                   <span>👥</span>
