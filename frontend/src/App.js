@@ -1112,18 +1112,43 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
   };
 
   const handleFocus = () => {
-    // Show popular airports immediately when clicked/focused
+    // Always show suggestions on focus/click
     if (inputValue.length === 0) {
+      // Show popular airports when empty
       const popular = airports.filter(airport => airport.popular && airport.name !== excludeCity).slice(0, 6);
       setSuggestions(popular);
       setShowSuggestions(true);
     } else {
-      setShowSuggestions(suggestions.length > 0);
+      // Show filtered suggestions based on current input
+      const filtered = airports
+        .filter(airport => 
+          (airport.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+           airport.fullName.toLowerCase().includes(inputValue.toLowerCase()) ||
+           airport.code.toLowerCase().includes(inputValue.toLowerCase()) ||
+           airport.country.toLowerCase().includes(inputValue.toLowerCase())) &&
+           airport.name !== excludeCity
+        )
+        .sort((a, b) => {
+          // Prioritize popular airports
+          if (a.popular && !b.popular) return -1;
+          if (!a.popular && b.popular) return 1;
+          // Then by exact name match
+          if (a.name.toLowerCase() === inputValue.toLowerCase()) return -1;
+          if (b.name.toLowerCase() === inputValue.toLowerCase()) return 1;
+          // Then by name starts with
+          if (a.name.toLowerCase().startsWith(inputValue.toLowerCase())) return -1;
+          if (b.name.toLowerCase().startsWith(inputValue.toLowerCase())) return 1;
+          return 0;
+        })
+        .slice(0, 8);
+      
+      setSuggestions(filtered);
+      setShowSuggestions(true);
     }
   };
 
   const handleInputClick = () => {
-    // Same as focus - show dropdown on click
+    // Same as focus - always show dropdown on click
     handleFocus();
   };
 
