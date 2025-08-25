@@ -503,6 +503,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   minDate={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
                   enableRangeChips={true}
                   onRangeSelect={(start, end) => setSearchData({ ...searchData, segments: [{ ...searchData.segments[0], departureDate: start }], returnDate: end })}
+                  highlight={searchData.segments[0]?.departureDate && !searchData.returnDate}
                 />
               </div>
             )}
