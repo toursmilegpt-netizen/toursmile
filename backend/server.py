@@ -660,20 +660,6 @@ class BookingConfirmationRequest(BaseModel):
     promo: Optional[dict] = None
     finalPrice: float
 
-# Simple OTP and Payment models for sandbox endpoints
-class OTPSendRequest(BaseModel):
-    mobile: str
-
-class OTPVerifyRequest(BaseModel):
-    mobile: str
-    otp: str
-
-class PaymentOrderRequest(BaseModel):
-    amount: float
-    currency: str = "INR"
-    receipt: Optional[str] = None
-    bookingData: Optional[dict] = None
-
 @api_router.post("/bookings/confirm")
 async def confirm_booking(request: BookingConfirmationRequest):
     """Confirm booking, generate PNR, and send email confirmation"""
