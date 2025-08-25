@@ -84,7 +84,7 @@ const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChan
               {/* Route Info */}
               <div className="flex items-center space-x-3">
                 <div className="text-center">
-                  <div className="text-xl font-bold text-gray-900">{searchData?.segments?.[0]?.origin || 'Origin'}</div>
+                  <div className="text-xl font-bold text-gray-900">{prettyCity(searchData?.segments?.[0]?.origin) || 'Origin'}</div>
                   <div className="text-sm text-gray-500">From</div>
                 </div>
                 <div className="text-2xl text-blue-600">✈️</div>
