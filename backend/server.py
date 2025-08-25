@@ -21,28 +21,28 @@ from popular_trips_routes import router as popular_trips_router
 from enhanced_chat_service import ExpertTravelConsultantChat
 from destinations_routes import router as destinations_router
 
-# PostgreSQL routes instead of MongoDB (commented out for testing)
-# from waitlist_routes_pg import router as waitlist_router
-# from booking_routes_pg import router as booking_router
+# Waitlist and Booking Management - PostgreSQL
+from waitlist_routes_pg import router as waitlist_router
+from booking_routes_pg import router as booking_router
 
-# TourBuilder - Auto package generator (commented out for testing)
-# from tourbuilder import router as tourbuilder_router
+# TourBuilder - Auto package generator
+from tourbuilder import router as tourbuilder_router
 
-# Payment processing - Razorpay integration (commented out for testing)
-# from payment_service import router as payment_router
+# Payment processing - Razorpay integration
+from payment_service import router as payment_router
 
-# OTP Authentication - MSG91 integration (commented out for testing)
-# from otp_service import router as auth_router
+# OTP Authentication - MSG91 integration
+from otp_service import router as auth_router
 
-# Complete Hotel Booking System - TripJack integration with pre-book API (commented out for testing)
-# from hotel_booking_routes import router as hotel_router
+# Complete Hotel Booking System - TripJack integration with pre-book API
+from hotel_booking_routes import router as hotel_router
 
-# Admin Authentication and Dashboard System (commented out for testing)
-# from admin_auth import router as admin_auth_router
-# from admin_dashboard import router as admin_dashboard_router
+# Admin Authentication and Dashboard System
+from admin_auth import router as admin_auth_router
+from admin_dashboard import router as admin_dashboard_router
 
 # Database configuration
-# from database import create_tables, test_connection
+from database import create_tables, test_connection
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
