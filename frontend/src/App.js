@@ -418,6 +418,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                       onChange={(date) => updateSegment(index, 'departureDate', date)}
                       label={`Date ${index + 1}`}
                       minDate={index === 0 ? new Date().toISOString().split('T')[0] : searchData.segments[index-1]?.departureDate}
+                      highlight={segment.origin && segment.destination && !segment.departureDate}
                     />
                   </div>
                 </div>
