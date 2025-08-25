@@ -160,7 +160,7 @@ const FlightSelection = ({ selectedFlight, searchParams, onNext, onBack }) => {
                 <div className="flex items-center justify-between">
                   <div className="text-center">
                     <p className="text-lg font-bold text-gray-900">{selectedFlight.departure?.time}</p>
-                    <p className="text-sm text-gray-500">{searchParams.origin}</p>
+                    <p className="text-sm text-gray-500">{searchParams.segments?.[0]?.origin || searchParams.origin}</p>
                   </div>
                   <div className="flex-1 flex items-center justify-center px-4">
                     <div className="flex items-center">
@@ -173,14 +173,14 @@ const FlightSelection = ({ selectedFlight, searchParams, onNext, onBack }) => {
                   </div>
                   <div className="text-center">
                     <p className="text-lg font-bold text-gray-900">{selectedFlight.arrival?.time}</p>
-                    <p className="text-sm text-gray-500">{searchParams.destination}</p>
+                    <p className="text-sm text-gray-500">{searchParams.segments?.[0]?.destination || searchParams.destination}</p>
                   </div>
                 </div>
 
                 {/* Duration and Date */}
                 <div className="mt-4 flex justify-between text-sm text-gray-500">
                   <span>{selectedFlight.duration}</span>
-                  <span>{searchParams.departureDate}</span>
+                  <span>{searchParams.segments?.[0]?.departureDate || searchParams.departureDate}</span>
                 </div>
               </div>
 
