@@ -1357,12 +1357,12 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
                 <div className="flex-1">
                   <label className="block text-sm font-medium text-gray-700 mb-1">To</label>
                   <CityAutocomplete
-                    label=""
                     placeholder="Arrival city"
                     value={mobileForm.destination}
                     onChange={(city) => setMobileForm(prev => ({ ...prev, destination: city }))}
                     airports={airports}
                     excludeCity={mobileForm.origin}
+                    highlight={mobileForm.origin && !mobileForm.destination}
                   />
                 </div>
                 <button
