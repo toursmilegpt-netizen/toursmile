@@ -475,11 +475,11 @@ frontend:
 
   - task: "Flight Search UI"
     implemented: true
-    working: true
+    working: false
     file: "/app/frontend/src/App.js"
-    stuck_count: 7
+    stuck_count: 8
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
