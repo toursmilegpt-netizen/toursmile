@@ -1023,29 +1023,29 @@ app.include_router(popular_trips_router, prefix="/api", tags=["popular-trips"])
 # Include the destinations router
 app.include_router(destinations_router, prefix="/api", tags=["destinations"])
 
-# Include the waitlist router
-app.include_router(waitlist_router, prefix="/api", tags=["waitlist"])
+# Include the waitlist router (disabled - using MongoDB environment)
+# app.include_router(waitlist_router, prefix="/api", tags=["waitlist"])
 
-# Include the booking router
-app.include_router(booking_router, prefix="/api/bookings", tags=["bookings"])
+# Include the booking router (disabled - using MongoDB environment)
+# app.include_router(booking_router, prefix="/api/bookings", tags=["bookings"])
 
-# Include the tourbuilder router
-app.include_router(tourbuilder_router, prefix="/api", tags=["tourbuilder"])
+# Include the tourbuilder router (disabled - database dependency)
+# app.include_router(tourbuilder_router, prefix="/api", tags=["tourbuilder"])
 
-# Include the payment router
-app.include_router(payment_router, prefix="/api", tags=["payments"])
+# Include the payment router (disabled - using simple endpoints above)
+# app.include_router(payment_router, prefix="/api", tags=["payments"])
 
-# Include the auth router
-app.include_router(auth_router, prefix="/api", tags=["auth"])
+# Include the auth router (disabled - using simple endpoints above)
+# app.include_router(auth_router, prefix="/api", tags=["auth"])
 
-# Include the hotel router
-app.include_router(hotel_router, prefix="/api", tags=["hotels"])
+# Include the hotel router (disabled - database dependency)
+# app.include_router(hotel_router, prefix="/api", tags=["hotels"])
 
-# Include the admin authentication router
-app.include_router(admin_auth_router, prefix="/api", tags=["admin-auth"])
+# Include the admin authentication router (disabled - database dependency)
+# app.include_router(admin_auth_router, prefix="/api", tags=["admin-auth"])
 
-# Include the admin dashboard router
-app.include_router(admin_dashboard_router, prefix="/api", tags=["admin-dashboard"])
+# Include the admin dashboard router (disabled - database dependency)
+# app.include_router(admin_dashboard_router, prefix="/api", tags=["admin-dashboard"])
 
 app.add_middleware(
     CORSMiddleware,
