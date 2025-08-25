@@ -652,11 +652,10 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Compact Month Calendar (desktop+mobile)"
+    - "Restore Guidance Experience (Step indicators: dots + helper text)"
     - "Multi-Airport City Autocomplete (All Airports variants)"
     - "Flight Search UI - Complete Booking Flow Implementation"
-    - "OTP Authentication Integration in Booking Flow"
-    - "Payment Gateway Integration (Razorpay)"
-    - "Ticket Generation and Email Delivery System"
   stuck_tasks:
     - "Flight Search UI - Booking Flow Progression"
   test_all: false
