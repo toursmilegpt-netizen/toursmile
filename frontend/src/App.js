@@ -926,7 +926,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   return (
-    <div className="relative" ref={calendarRef}>
+    <div className="relative date-picker-compact" ref={calendarRef}>
       <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
       
       {/* Date Input Display */}
