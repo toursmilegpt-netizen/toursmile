@@ -114,30 +114,39 @@ const Payment = ({ bookingData, onNext, onBack }) => {
         description: `Flight Booking - ${bookingData.flight.flightNumber}`,
         image: 'https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png',
         order_id: order.id,
-        handler: function (response) {
+        handler: async function (response) {
           // Payment successful
           console.log('Payment successful:', response);
           
-          const paymentData = {
-            ...bookingData,
-            payment: {
-              id: response.razorpay_payment_id,
-              orderId: response.razorpay_order_id,
-              signature: response.razorpay_signature,
-              amount: total,
-              currency: 'INR',
-              status: 'completed',
-              method: paymentMethod,
-              timestamp: new Date().toISOString()
-            },
-            promo: promoApplied,
-            finalPrice: total,
-            bookingReference: `TS${Date.now()}`,
-            step: 'payment-completed'
-          };
-          
-          setLoading(false);
-          onNext(paymentData);
+          try {
+            // Generate PNR and send confirmation email
+            const bookingConfirmationData = await processBookingConfirmation(response);
+            setLoading(false);
+            onNext(bookingConfirmationData);
+          } catch (error) {
+            console.error('Post-payment processing failed:', error);
+            // Still proceed to confirmation but with error flag
+            const paymentData = {
+              ...bookingData,
+              payment: {
+                id: response.razorpay_payment_id,
+                orderId: response.razorpay_order_id,
+                signature: response.razorpay_signature,
+                amount: total,
+                currency: 'INR',
+                status: 'completed',
+                method: paymentMethod,
+                timestamp: new Date().toISOString()
+              },
+              promo: promoApplied,
+              finalPrice: total,
+              bookingReference: `TS${Date.now()}`,
+              step: 'payment-completed',
+              postPaymentError: true
+            };
+            setLoading(false);
+            onNext(paymentData);
+          }
         },
         prefill: {
           name: `${bookingData.passengers[0]?.firstName} ${bookingData.passengers[0]?.lastName}`,
