@@ -1111,7 +1111,12 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
     setTimeout(() => setShowSuggestions(false), 200);
   };
 
-  const handleFocus = () => {
+  const handleFocus = (e) => {
+    // Select all text when user focuses on the field for easy replacement
+    if (e && e.target) {
+      e.target.select();
+    }
+    
     // Always show suggestions on focus/click
     if (inputValue.length === 0) {
       // Show popular airports when empty
@@ -1147,9 +1152,9 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
     }
   };
 
-  const handleInputClick = () => {
-    // Same as focus - always show dropdown on click
-    handleFocus();
+  const handleInputClick = (e) => {
+    // Same as focus - always show dropdown on click and select text
+    handleFocus(e);
   };
 
   return (
