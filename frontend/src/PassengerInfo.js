@@ -303,6 +303,7 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
                       value={contactInfo.countryCode}
                       onChange={(e) => updateContactInfo('countryCode', e.target.value)}
                       className="px-3 py-3 border border-r-0 border-gray-300 rounded-l-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      disabled={contactInfo.isVerified}
                     >
                       <option value="+91">🇮🇳 +91</option>
                       <option value="+1">🇺🇸 +1</option>
@@ -313,13 +314,98 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
                       type="tel"
                       value={contactInfo.mobile}
                       onChange={(e) => updateContactInfo('mobile', e.target.value.replace(/\D/g, ''))}
-                      className={`flex-1 px-4 py-3 border rounded-r-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.mobile ? 'border-red-500 error-field' : 'border-gray-300'}`}
+                      className={`flex-1 px-4 py-3 border focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                        contactInfo.isVerified ? 'border-green-500 bg-green-50' : 
+                        errors.mobile ? 'border-red-500 error-field' : 'border-gray-300'
+                      } ${!contactInfo.isVerified ? 'rounded-r-xl' : ''}`}
                       placeholder="9876543210"
                       maxLength={10}
+                      disabled={contactInfo.isVerified}
                     />
+                    {!contactInfo.isVerified && (
+                      <button
+                        type="button"
+                        onClick={sendOTP}
+                        disabled={otpLoading || !contactInfo.mobile || contactInfo.mobile.length !== 10}
+                        className={`px-4 py-3 rounded-r-xl font-medium text-sm transition-colors ${
+                          otpLoading || !contactInfo.mobile || contactInfo.mobile.length !== 10
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'bg-blue-600 text-white hover:bg-blue-700'
+                        }`}
+                      >
+                        {otpLoading ? 'Sending...' : 'Send OTP'}
+                      </button>
+                    )}
+                    {contactInfo.isVerified && (
+                      <div className="px-4 py-3 bg-green-100 border border-l-0 border-green-500 rounded-r-xl flex items-center">
+                        <span className="text-green-600 font-medium text-sm">✅ Verified</span>
+                      </div>
+                    )}
                   </div>
                   {errors.mobile && (
                     <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>
+                  )}
+                  
+                  {/* OTP Verification Modal */}
+                  {otpStep && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                      <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-4">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">Verify Mobile Number</h3>
+                        <p className="text-gray-600 mb-4">
+                          Enter the 6-digit OTP sent to {contactInfo.countryCode} {contactInfo.mobile}
+                        </p>
+                        <input
+                          type="text"
+                          value={otp}
+                          onChange={(e) => {
+                            setOtp(e.target.value.replace(/\D/g, ''));
+                            setErrors({...errors, otp: ''});
+                          }}
+                          className={`w-full px-4 py-3 border rounded-xl text-center text-lg font-bold tracking-wider focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                            errors.otp ? 'border-red-500' : 'border-gray-300'
+                          }`}
+                          placeholder="123456"
+                          maxLength={6}
+                          autoFocus
+                        />
+                        {errors.otp && (
+                          <p className="mt-1 text-sm text-red-600">{errors.otp}</p>
+                        )}
+                        <div className="flex space-x-3 mt-4">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setOtpStep(false);
+                              setOtp('');
+                              setErrors({...errors, otp: ''});
+                            }}
+                            className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            onClick={verifyOTP}
+                            disabled={verificationLoading || otp.length !== 6}
+                            className={`flex-1 px-4 py-3 rounded-xl font-medium transition-colors ${
+                              verificationLoading || otp.length !== 6
+                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                : 'bg-blue-600 text-white hover:bg-blue-700'
+                            }`}
+                          >
+                            {verificationLoading ? 'Verifying...' : 'Verify OTP'}
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={sendOTP}
+                          disabled={otpLoading}
+                          className="w-full mt-3 text-sm text-blue-600 hover:text-blue-800"
+                        >
+                          {otpLoading ? 'Sending...' : 'Resend OTP'}
+                        </button>
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
