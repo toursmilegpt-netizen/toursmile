@@ -42,6 +42,16 @@ const CityAutocomplete = ({ placeholder, value, onChange, airports = [], exclude
 
   useEffect(() => { filter(inputValue); }, [inputValue]);
 
+  // Show top suggestions on focus if empty (e.g., Mumbai/Delhi)
+  useEffect(() => {
+    if (open && (!inputValue || inputValue.length < 2) && airports?.length) {
+      const popular = airports
+        .filter(a => a.popular)
+        .slice(0, 6);
+      setSuggestions(popular);
+    }
+  }, [open, inputValue, airports]);
+
   return (
     <div className="relative">
       <input
