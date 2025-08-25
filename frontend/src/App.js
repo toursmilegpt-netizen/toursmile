@@ -961,7 +961,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
             <button
               type="button"
               onClick={nextMonth}
-              className="p-2 rounded-lg hover:bg-gray-100 text-gray-600"
+              className="p-1.5 rounded-md hover:bg-gray-100 text-gray-600"
             >
               →
             </button>
