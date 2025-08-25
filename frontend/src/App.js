@@ -394,6 +394,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                       airports={AIRPORTS_DATABASE}
                       excludeCity={segment.destination}
                       autoFocus={index === 0}
+                      highlight={!segment.origin}
                     />
                   </div>
 
