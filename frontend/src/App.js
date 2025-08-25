@@ -1367,6 +1367,7 @@ function App() {
 
     // Flight Selection Step
     if (bookingStep === 'flight-selection' && selectedFlight) {
+      console.log('🎯 Rendering FlightSelection component with:', selectedFlight);
       return (
         <FlightSelection
           selectedFlight={selectedFlight}
