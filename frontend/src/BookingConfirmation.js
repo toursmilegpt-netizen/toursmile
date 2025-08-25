@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 
 // Booking Confirmation Component - Step 4 of Booking Flow
 const BookingConfirmation = ({ bookingData, onStartOver }) => {
-  const [emailSent, setEmailSent] = useState(false);
   const [downloadingTicket, setDownloadingTicket] = useState(false);
-
-  useEffect(() => {
-    // Simulate sending confirmation email
-    setTimeout(() => {
-      setEmailSent(true);
-    }, 2000);
-  }, []);
+  
+  // Use actual email status from booking data, with fallback simulation
+  const emailSent = bookingData.emailSent !== undefined ? bookingData.emailSent : false;
+  const pnr = bookingData.pnr || bookingData.bookingReference || `TS${Date.now().toString().slice(-6)}`;
+  const hasConfirmationError = bookingData.confirmationError || bookingData.postPaymentError;
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-IN', {
