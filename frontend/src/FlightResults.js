@@ -1420,6 +1420,11 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
                     airports={airports}
                     excludeCity={mobileForm.origin}
                     highlight={mobileForm.origin && !mobileForm.destination}
+                    inputRef={toRef}
+                    autoAdvance={() => {
+                      // After selecting destination, focus/open date
+                      dateOpen();
+                    }}
                   />
                 </div>
                 <button
