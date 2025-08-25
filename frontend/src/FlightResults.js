@@ -71,9 +71,13 @@ const CityAutocomplete = ({ placeholder, value, onChange, airports = [], exclude
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => {
                 const isAll = (a.name || '').toLowerCase().includes('all airports');
-                onChange(isAll ? (a.code || inputValue) : (a.name || inputValue));
+                const dispatched = isAll ? (a.code || inputValue) : (a.name || inputValue);
+                onChange(dispatched);
                 setInputValue(isAll ? (a.name || a.code || '') : (a.name || ''));
                 setOpen(false);
+                if (typeof autoAdvance === 'function') {
+                  setTimeout(() => autoAdvance(dispatched), 50);
+                }
               }}
               className="px-3 py-2 hover:bg-blue-50 cursor-pointer border-b last:border-b-0 text-sm"
             >
