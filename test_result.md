@@ -455,7 +455,7 @@ frontend:
 
   - task: "Flight Search UI"
     implemented: true
-    working: false
+    working: true
     file: "/app/frontend/src/App.js"
     stuck_count: 7
     priority: "high"
