@@ -450,6 +450,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     onChange={(city) => updateSegment(0, 'destination', city)}
                     airports={AIRPORTS_DATABASE}
                     excludeCity={searchData.segments[0]?.origin}
+                    highlight={searchData.segments[0]?.origin && !searchData.segments[0]?.destination}
                   />
                 </div>
               </div>
