@@ -1088,8 +1088,14 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
     destination: searchData?.segments?.[0]?.destination || '',
     departureDate: searchData?.segments?.[0]?.departureDate || '',
     returnDate: searchData?.returnDate || '',
-    tripType: searchData?.tripType || 'one-way'
+    tripType: searchData?.tripType || 'one-way',
+    passengers: searchData?.passengers || { adults: 1, children: 0, infants: 0 },
+    class: searchData?.class || 'economy'
   });
+  const [depAutoOpenToken, setDepAutoOpenToken] = useState(0);
+  const [retAutoOpenToken, setRetAutoOpenToken] = useState(0);
+  const passengersRef = React.useRef(null);
+  const classRef = React.useRef(null);
 
   // Update price range when flights change
   useEffect(() => {
