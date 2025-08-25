@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 // Passenger Information Component - Step 2 of Booking Flow  
 const PassengerInfo = ({ bookingData, onNext, onBack }) => {
