@@ -945,7 +945,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
 
       {/* Proper Calendar Popup */}
       {showCalendar && (
-        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border-2 border-blue-200 rounded-2xl shadow-2xl p-4">
+        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-blue-200 rounded-xl shadow-xl p-3 max-w-md sm:max-w-lg md:max-w-xl">
           {/* Calendar Header */}
           <div className="flex items-center justify-between mb-4">
             <button
