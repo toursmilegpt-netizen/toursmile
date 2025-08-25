@@ -1,4 +1,9 @@
 @tailwind base;
+/* Compact date picker tweaks for consistent sizing on desktop and mobile */
+.date-picker-compact .date-picker-header { font-size: 0.95rem; }
+.date-picker-compact .calendar-container { max-width: 22rem; }
+.date-picker-compact .day-cell { min-width: 2rem; min-height: 2rem; }
+
 @tailwind components;
 @tailwind utilities;
 
