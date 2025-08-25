@@ -1212,7 +1212,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
             )}
             {suggestions.map((airport) => (
               <div
-                key={airport.code}
+                key={`${airport.code}-${airport.name}`}
                 onClick={() => selectCity(airport)}
                 className="px-4 py-4 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-all duration-150"
               >
