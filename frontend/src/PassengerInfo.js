@@ -52,7 +52,7 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
 
     setVerificationLoading(true);
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/otp/verify`, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/verify-otp`, {
         mobile: contactInfo.countryCode + contactInfo.mobile,
         otp: otp
       });
