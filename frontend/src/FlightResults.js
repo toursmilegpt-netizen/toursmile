@@ -1423,7 +1423,11 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
                   <CityAutocomplete
                     placeholder="Arrival city"
                     value={mobileForm.destination}
-                    onChange={(city) => setMobileForm(prev => ({ ...prev, destination: city }))}
+                    onChange={(city) => {
+                      setMobileForm(prev => ({ ...prev, destination: city }));
+                      // trigger auto-open of Departure Date
+                      setTimeout(() => setDepAutoOpenToken(t => t + 1), 0);
+                    }}
                     airports={airports}
                     excludeCity={mobileForm.origin}
                     highlight={mobileForm.origin && !mobileForm.destination}
