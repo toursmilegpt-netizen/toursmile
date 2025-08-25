@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // Friendly labels for multi-airport cities (layman-friendly display)
 const MULTI_AIRPORT_LABELS = {
