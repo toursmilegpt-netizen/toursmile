@@ -92,7 +92,7 @@ const CityAutocomplete = ({ placeholder, value, onChange, airports = [], exclude
   );
 };
 
-const SimpleDatePicker = ({ value, onChange, minDate, highlight = false }) => {
+const SimpleDatePicker = ({ value, onChange, minDate, highlight = false, inputRef = null, autoOpen = false }) => {
   const today = new Date();
   const fmt = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).toISOString().split('T')[0];
   const min = minDate || fmt(today);
