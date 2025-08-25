@@ -1158,15 +1158,26 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
       setShowSuggestions(true);
     } else {
       // Show filtered suggestions based on current input
-      const filtered = airports
+      const pool = [
+        ...airports,
+        ...Object.keys(MULTI_AIRPORT_CITIES).flatMap(code => buildAllAirportsVariants(MULTI_AIRPORT_CITIES[code]))
+      ];
+
+      const filtered = pool
         .filter(airport => 
           (airport.name.toLowerCase().includes(inputValue.toLowerCase()) ||
            airport.fullName.toLowerCase().includes(inputValue.toLowerCase()) ||
-           airport.code.toLowerCase().includes(inputValue.toLowerCase()) ||
-           airport.country.toLowerCase().includes(inputValue.toLowerCase())) &&
+           (airport.code && airport.code.toLowerCase().includes(inputValue.toLowerCase())) ||
+           (airport.country && airport.country.toLowerCase().includes(inputValue.toLowerCase()))) &&
            airport.name !== excludeCity
         )
+        .filter((item, idx, arr) => arr.findIndex(x => `${x.name}|${x.code}` === `${item.name}|${item.code}`) === idx)
         .sort((a, b) => {
+          const aAll = a.__type === 'all_airports';
+          const bAll = b.__type === 'all_airports';
+          if (aAll && !bAll) return -1;
+          if (!aAll && bAll) return 1;
+
           // Prioritize popular airports
           if (a.popular && !b.popular) return -1;
           if (!a.popular && b.popular) return 1;
