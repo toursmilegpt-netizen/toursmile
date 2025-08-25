@@ -137,6 +137,8 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
       errors.mobile = 'Phone number is required';
     } else if (!/^\d{10}$/.test(contactInfo.mobile)) {
       errors.mobile = 'Please enter a valid 10-digit phone number';
+    } else if (!contactInfo.isVerified) {
+      errors.mobile = 'Please verify your mobile number with OTP';
     }
 
     return errors;
