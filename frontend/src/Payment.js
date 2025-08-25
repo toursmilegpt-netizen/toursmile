@@ -155,17 +155,19 @@ const Payment = ({ bookingData, onNext, onBack }) => {
         throw new Error('Razorpay SDK failed to load');
       }
 
-      // Create order on backend (mock for now)
-      const orderData = {
-        amount: total * 100, // Razorpay expects amount in paise
+      // Create order on backend
+      const orderResponse = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/payments/create-order`, {
+        amount: total,
         currency: 'INR',
         receipt: `receipt_${Date.now()}`,
-        notes: {
-          flight: bookingData.flight.flightNumber,
-          passengers: bookingData.passengers.length,
-          route: `${bookingData.flight.origin} → ${bookingData.flight.destination}`
-        }
-      };
+        bookingData: bookingData
+      });
+
+      if (!orderResponse.data.success) {
+        throw new Error('Failed to create payment order');
+      }
+
+      const orderData = orderResponse.data.order;
 
       // Mock API call to create order
       console.log('Creating order:', orderData);
