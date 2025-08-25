@@ -1129,8 +1129,14 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
     const cityName = airport.name;
     setShowSuggestions(false);
     setInputValue(cityName);
+
+    // When selecting an "All Airports" option, pass the city IATA code instead of the label
+    if (airport.__type === 'all_airports' && airport.code) {
+      onChange(airport.code);
+      return;
+    }
     
-    // Call onChange directly with complete city name - no race condition
+    // For regular airports, pass the human-friendly name as before
     onChange(cityName);
   };
 
