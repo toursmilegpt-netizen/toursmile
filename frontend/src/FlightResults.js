@@ -21,7 +21,7 @@ const prettyCity = (val) => {
 };
 
 // Lightweight mobile-friendly inputs for the quick panel
-const CityAutocomplete = ({ placeholder, value, onChange, airports = [], excludeCity, highlight = false, autoAdvance = null }) => {
+const CityAutocomplete = ({ placeholder, value, onChange, airports = [], excludeCity, highlight = false, autoAdvance = null, inputRef = null }) => {
   const [inputValue, setInputValue] = useState(value || '');
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
