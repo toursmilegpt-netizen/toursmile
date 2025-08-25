@@ -488,6 +488,13 @@ frontend:
     stuck_count: 8
     priority: "high"
     needs_retesting: false
+  - task: "Homepage Flights Search Form Guidance"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
