@@ -1318,7 +1318,7 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
       {/* Mobile Quick Modify Panel */}
       {showMobileModify && (
         <div className="fixed inset-0 bg-black/50 z-50 md:hidden" role="dialog" aria-modal="true">
-          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl p-4 max-h-[85vh] overflow-y-auto">
+          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl p-4 pb-24 max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-semibold">Change Search</h3>
               <button onClick={() => setShowMobileModify(false)} className="text-2xl text-gray-400 hover:text-gray-600">×</button>
