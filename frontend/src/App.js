@@ -1116,7 +1116,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
     </div>
   );
 };
-const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange, icon, autoFocus, airports, excludeCity }, ref) => {
+const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange, icon, autoFocus, airports, excludeCity, highlight = false }, ref) => {
   // Build "All Airports" suggestion variants for multi-airport cities
   const buildAllAirportsVariants = (cityRecord) => {
     const code = cityRecord.cityCode;
