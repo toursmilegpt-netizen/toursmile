@@ -20,6 +20,119 @@ const prettyCity = (val) => {
   return String(val);
 };
 
+// Lightweight mobile-friendly inputs for the quick panel
+const CityAutocomplete = ({ placeholder, value, onChange, airports = [], excludeCity, highlight = false }) => {
+  const [inputValue, setInputValue] = useState(value || '');
+  const [open, setOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+
+  const filter = (q) => {
+    const term = (q || '').toLowerCase();
+    const pool = airports || [];
+    const filtered = pool.filter(a => {
+      const n = (a.name || '').toLowerCase();
+      const f = (a.fullName || '').toLowerCase();
+      const c = (a.code || '').toLowerCase();
+      const country = (a.country || '').toLowerCase();
+      if (excludeCity && a.name === excludeCity) return false;
+      return n.includes(term) || f.includes(term) || c.includes(term) || country.includes(term);
+    }).slice(0, 8);
+    setSuggestions(filtered);
+  };
+
+  useEffect(() => { filter(inputValue); }, [inputValue]);
+
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={inputValue}
+        onFocus={() => { setOpen(true); filter(inputValue); }}
+        onChange={(e) => setInputValue(e.target.value)}
+        onBlur={() => setTimeout(() => setOpen(false), 150)}
+        className={`w-full px-3 py-2 border rounded-xl focus:ring-2 transition-all ${highlight ? 'border-blue-400 ring-2 ring-blue-200 animate-soft-pulse' : 'border-gray-200 focus:ring-blue-500 focus:border-blue-500'}`}
+      />
+      {open && suggestions.length > 0 && (
+        <div className="absolute z-50 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-auto">
+          {suggestions.map((a, idx) => (
+            <div
+              key={`${a.code || a.name}-${idx}`}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => {
+                const isAll = (a.name || '').toLowerCase().includes('all airports');
+                onChange(isAll ? (a.code || inputValue) : (a.name || inputValue));
+                setInputValue(isAll ? (a.name || a.code || '') : (a.name || ''));
+                setOpen(false);
+              }}
+              className="px-3 py-2 hover:bg-blue-50 cursor-pointer border-b last:border-b-0 text-sm"
+            >
+              <div className="font-medium text-gray-800">{a.name} {a.code ? `(${a.code})` : ''}</div>
+              {a.fullName && <div className="text-xs text-gray-500">{a.fullName}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const SimpleDatePicker = ({ value, onChange, minDate, highlight = false }) => {
+  const today = new Date();
+  const fmt = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).toISOString().split('T')[0];
+  const min = minDate || fmt(today);
+  const addDays = (n) => {
+    const d = new Date();
+    d.setDate(d.getDate() + n);
+    return fmt(d);
+  };
+  const nextSaturday = () => {
+    const d = new Date();
+    const diff = (6 - d.getDay() + 7) % 7;
+    d.setDate(d.getDate() + diff);
+    return fmt(d);
+  };
+  const nextWeekend = () => {
+    const d = new Date();
+    const diff = (6 - d.getDay() + 7) % 7;
+    d.setDate(d.getDate() + diff + 7);
+    return fmt(d);
+  };
+
+  const chips = [
+    { label: 'Today', date: fmt(today) },
+    { label: 'Tomorrow', date: addDays(1) },
+    { label: 'This Weekend', date: nextSaturday() },
+    { label: 'Next Weekend', date: nextWeekend() },
+  ];
+
+  const disabled = (d) => (d < min);
+
+  return (
+    <div>
+      <div className="flex gap-2 overflow-x-auto no-scrollbar mb-2">
+        {chips.map((c) => (
+          <button
+            key={c.label}
+            disabled={disabled(c.date)}
+            onClick={() => onChange(c.date)}
+            className={`px-2.5 py-1.5 rounded-full text-xs border ${disabled(c.date) ? 'border-gray-200 text-gray-300' : 'border-blue-200 text-blue-700 hover:bg-blue-50'}`}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
+      <input
+        type="date"
+        value={value || ''}
+        min={min}
+        onChange={(e) => onChange(e.target.value)}
+        className={`w-full px-3 py-2 border rounded-xl focus:ring-2 transition-all ${highlight ? 'border-blue-400 ring-2 ring-blue-200 animate-soft-pulse' : 'border-gray-200 focus:ring-blue-500 focus:border-blue-500'}`}
+      />
+    </div>
+  );
+};
+
 // Airline logos and brand colors
 const AIRLINE_INFO = {
   "IndiGo": { logo: "6E", color: "bg-indigo-600", textColor: "text-white" },
