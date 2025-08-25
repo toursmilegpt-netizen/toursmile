@@ -890,8 +890,8 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
     sortBy: 'price',
     priceRange: [0, 100000],
     airlines: [],
-    stops: [0, 1, 2], // Show all by default
-    timeSlots: ['early', 'afternoon', 'evening', 'night'],
+    stops: [], // No filters selected by default - show all flights
+    timeSlots: [], // No time filters selected by default
     departureTime: [], // New enhanced filters
     flightDuration: [],
     services: [],
