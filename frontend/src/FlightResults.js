@@ -55,6 +55,7 @@ const CityAutocomplete = ({ placeholder, value, onChange, airports = [], exclude
   return (
     <div className="relative">
       <input
+        ref={inputRef}
         type="text"
         placeholder={placeholder}
         value={inputValue}
