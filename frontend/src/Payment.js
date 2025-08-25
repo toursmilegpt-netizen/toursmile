@@ -169,25 +169,14 @@ const Payment = ({ bookingData, onNext, onBack }) => {
 
       const orderData = orderResponse.data.order;
 
-      // Mock API call to create order
-      console.log('Creating order:', orderData);
-      
-      // Simulate API response
-      const order = {
-        id: `order_${Date.now()}`,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        status: 'created'
-      };
-
       const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_1234567890', // Test key
-        amount: order.amount,
-        currency: order.currency,
+        key: orderData.key_id || process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_1234567890',
+        amount: orderData.amount, // Backend already provides amount in paise
+        currency: orderData.currency,
         name: 'TourSmile',
-        description: `Flight Booking - ${bookingData.flight.flightNumber}`,
+        description: `Flight Booking - ${bookingData.flight?.flightNumber || 'Flight'}`,
         image: 'https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png',
-        order_id: order.id,
+        order_id: orderData.id,
         handler: async function (response) {
           // Payment successful
           console.log('Payment successful:', response);
