@@ -986,7 +986,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
                 disabled={day.isPast}
                 className={`p-1.5 text-center rounded-lg transition-all duration-200 text-[12px] ${
                   day.isSelected
-                    ? 'bg-blue-600 text-white font-bold shadow-lg'
+                    ? 'bg-blue-600 text-white font-semibold shadow-md'
                     : day.isToday
                       ? 'bg-blue-100 text-blue-600 font-semibold hover:bg-blue-200'
                       : day.isCurrentMonth
