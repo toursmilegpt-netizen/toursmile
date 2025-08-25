@@ -934,6 +934,7 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
   });
   
   const [selectedFlight, setSelectedFlight] = useState(null);
+  const [showMobileModify, setShowMobileModify] = useState(false);
 
   // Update price range when flights change
   useEffect(() => {
