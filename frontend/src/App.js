@@ -1344,7 +1344,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
           onFocus={handleFocus}
           onClick={handleInputClick}
           onBlur={handleBlur}
-          className={`w-full pl-14 pr-4 py-4 text-lg border rounded-2xl transition-all duration-200 bg-white shadow-sm hover:shadow-md ${highlight ? 'border-blue-400 ring-2 ring-blue-200 animate-soft-pulse' : 'border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}`}
+          className={`w-full pl-14 pr-4 py-4 text-lg border rounded-2xl transition-all duration-200 bg-white shadow-sm hover:shadow-md ${highlight ? 'border-blue-400 ring-2 ring-blue-200 animate-bounce-glow' : 'border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}`}
         />
         
         {showSuggestions && suggestions.length > 0 && (
