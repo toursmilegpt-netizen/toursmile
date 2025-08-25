@@ -1246,23 +1246,21 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Departure Date</label>
-                <input
-                  type="date"
+                <SimpleDatePicker
                   value={mobileForm.departureDate}
-                  min={new Date().toISOString().split('T')[0]}
-                  onChange={(e) => setMobileForm(prev => ({ ...prev, departureDate: e.target.value }))}
-                  className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={(date) => setMobileForm(prev => ({ ...prev, departureDate: date }))}
+                  label=""
+                  minDate={new Date().toISOString().split('T')[0]}
                 />
               </div>
               {mobileForm.tripType === 'return' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Return Date</label>
-                  <input
-                    type="date"
+                  <SimpleDatePicker
                     value={mobileForm.returnDate}
-                    min={mobileForm.departureDate || new Date().toISOString().split('T')[0]}
-                    onChange={(e) => setMobileForm(prev => ({ ...prev, returnDate: e.target.value }))}
-                    className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    onChange={(date) => setMobileForm(prev => ({ ...prev, returnDate: date }))}
+                    label=""
+                    minDate={mobileForm.departureDate || new Date().toISOString().split('T')[0]}
                   />
                 </div>
               )}
