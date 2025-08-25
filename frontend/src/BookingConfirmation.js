@@ -116,28 +116,49 @@ For support: support@toursmile.com | +91-9876543210
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Booking Confirmed! 🎉</h1>
           <p className="text-xl text-gray-600 mb-4">Your flight has been successfully booked</p>
           
-          {/* Booking Reference */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 max-w-md mx-auto">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">Booking Reference</h2>
-            <div className="text-3xl font-bold text-blue-600 tracking-wider">
-              {bookingData.bookingReference}
+          {/* PNR/Booking Reference */}
+          <div className="text-center mb-6">
+            <div className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl">
+              <p className="text-sm font-medium opacity-90">PNR / Booking Reference</p>
+              <p className="text-3xl font-bold tracking-wider">{pnr}</p>
             </div>
             <p className="text-sm text-gray-500 mt-2">Save this reference number for future use</p>
+            {hasConfirmationError && (
+              <div className="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-xl">
+                <p className="text-sm text-yellow-700">
+                  ⚠️ There was an issue with email delivery, but your booking is confirmed. 
+                  Please save your PNR: <strong>{pnr}</strong>
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Email Status */}
           <div className="flex items-center justify-center space-x-3 mb-8">
-            <div className={`w-6 h-6 rounded-full flex items-center justify-center ${emailSent ? 'bg-green-500' : 'bg-yellow-500'}`}>
+            <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+              emailSent ? 'bg-green-500' : hasConfirmationError ? 'bg-red-500' : 'bg-yellow-500'
+            }`}>
               {emailSent ? (
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              ) : hasConfirmationError ? (
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
               ) : (
                 <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
               )}
             </div>
-            <span className={`text-sm font-medium ${emailSent ? 'text-green-600' : 'text-yellow-600'}`}>
-              {emailSent ? 'Confirmation email sent' : 'Sending confirmation email...'}
+            <span className={`text-sm font-medium ${
+              emailSent ? 'text-green-600' : hasConfirmationError ? 'text-red-600' : 'text-yellow-600'
+            }`}>
+              {emailSent 
+                ? 'Confirmation email sent successfully' 
+                : hasConfirmationError 
+                  ? 'Email delivery failed - Please save your PNR'
+                  : 'Sending confirmation email...'
+              }
             </span>
           </div>
         </div>
