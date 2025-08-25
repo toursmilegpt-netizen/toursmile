@@ -676,12 +676,12 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Homepage Guidance + Date Picker (Flights)"
     - "Compact Month Calendar (desktop+mobile)"
     - "Restore Guidance Experience (Step indicators: dots + helper text)"
     - "Multi-Airport City Autocomplete (All Airports variants)"
-    - "Flight Search UI - Complete Booking Flow Implementation"
   stuck_tasks:
-    - "Flight Search UI - Booking Flow Progression"
+    - "Homepage date picker auto-open reliability"
   test_all: false
   test_priority: "high_first"
 
