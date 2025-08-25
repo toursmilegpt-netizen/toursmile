@@ -1378,8 +1378,8 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
                 <SimpleDatePicker
                   value={mobileForm.departureDate}
                   onChange={(date) => setMobileForm(prev => ({ ...prev, departureDate: date }))}
-                  label=""
                   minDate={new Date().toISOString().split('T')[0]}
+                  highlight={mobileForm.origin && mobileForm.destination && !mobileForm.departureDate}
                 />
               </div>
               {mobileForm.tripType === 'return' && (
