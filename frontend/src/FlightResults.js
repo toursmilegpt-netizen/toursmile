@@ -1052,6 +1052,7 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
   const filteredFlights = getFilteredFlights();
 
   const handleFlightSelect = (flight) => {
+    console.log('🔍 FlightResults handleFlightSelect called with:', flight);
     setSelectedFlight(flight);
     onFlightSelect(flight);
   };
