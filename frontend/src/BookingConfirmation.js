@@ -37,40 +37,97 @@ const BookingConfirmation = ({ bookingData, onStartOver }) => {
   const downloadTicket = () => {
     setDownloadingTicket(true);
     
-    // Simulate ticket download
-    setTimeout(() => {
-      // Create a simple ticket content
-      const ticketContent = `
+    // Use actual e-ticket data if available, otherwise generate ticket content
+    const eTicketData = bookingData.eTicket;
+    let ticketContent;
+    
+    if (eTicketData) {
+      // Use backend-generated e-ticket
+      ticketContent = `
 TOURSMILE E-TICKET
 ==================
 
-Booking Reference: ${bookingData.bookingReference}
-Flight: ${bookingData.flight.airline} ${bookingData.flight.flightNumber}
-Route: ${bookingData.flight.origin} → ${bookingData.flight.destination}
-Date: ${bookingData.flight.date}
-Time: ${bookingData.flight.departure?.time} - ${bookingData.flight.arrival?.time}
+PNR: ${eTicketData.pnr}
+Booking Reference: ${eTicketData.booking_reference}
 
-Passengers:
-${bookingData.passengers.map(p => `- ${p.title} ${p.firstName} ${p.lastName}`).join('\n')}
+PASSENGER DETAILS
+-----------------
+Name: ${eTicketData.passenger_name}
+Email: ${eTicketData.passenger_email}
+Phone: ${eTicketData.passenger_phone}
 
-Total Paid: ${formatPrice(bookingData.finalPrice)}
-Payment ID: ${bookingData.payment.id}
+FLIGHT DETAILS
+--------------
+Flight: ${eTicketData.flight_number} (${eTicketData.airline})
+From: ${eTicketData.departure.city} (${eTicketData.departure.airport})
+To: ${eTicketData.arrival.city} (${eTicketData.arrival.airport})
+Date: ${eTicketData.departure.date}
+Departure: ${eTicketData.departure.time}
+Arrival: ${eTicketData.arrival.time}
+Duration: ${eTicketData.duration}
+Class: ${eTicketData.class}
 
-Contact: ${bookingData.contactInfo.email}
-Phone: ${bookingData.contactInfo.countryCode} ${bookingData.contactInfo.phone}
+BOOKING INFORMATION
+-------------------
+Total Amount: ₹${eTicketData.total_amount.toLocaleString()}
+Status: ${eTicketData.booking_status}
+Issued: ${eTicketData.issued_at}
 
 Important: Please carry valid ID for travel.
 For support: support@toursmile.com | +91-9876543210
-      `;
 
-      // Create and download file
-      const element = document.createElement('a');
-      const file = new Blob([ticketContent], { type: 'text/plain' });
-      element.href = URL.createObjectURL(file);
-      element.download = `TourSmile-Ticket-${bookingData.bookingReference}.txt`;
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
+This is an electronic ticket. Please save this document.
+      `;
+    } else {
+      // Fallback ticket content
+      const contactInfo = bookingData.contactInfo || {};
+      const flight = bookingData.flight || {};
+      
+      ticketContent = `
+TOURSMILE E-TICKET
+==================
+
+PNR: ${pnr}
+Booking Reference: ${bookingData.bookingReference}
+
+PASSENGER DETAILS
+-----------------
+Email: ${contactInfo.email}
+Phone: ${contactInfo.countryCode} ${contactInfo.mobile}
+
+FLIGHT DETAILS
+--------------
+Flight: ${flight.flightNumber} (${flight.airline})
+From: ${flight.origin} → ${flight.destination}
+Date: ${bookingData.departureDate}
+Departure: ${flight.departure?.time}
+Arrival: ${flight.arrival?.time}
+Duration: ${flight.duration}
+
+PAYMENT INFORMATION
+-------------------
+Total Paid: ${formatPrice(bookingData.finalPrice)}
+Payment ID: ${bookingData.payment.id}
+
+Important: Please carry valid ID for travel.
+For support: support@toursmile.com | +91-9876543210
+
+This is an electronic ticket. Please save this document.
+      `;
+    }
+    
+    // Simulate ticket download
+    setTimeout(() => {
+      const blob = new Blob([ticketContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `TourSmile_Ticket_${pnr}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
       
       setDownloadingTicket(false);
     }, 1500);
