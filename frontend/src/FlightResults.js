@@ -38,7 +38,7 @@ const AIRLINE_INFO = {
 };
 
 // Enhanced Results Header with Modify and Date Navigation
-const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChange }) => {
+const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChange, onSetSort, activeSort }) => {
   const [showModifyModal, setShowModifyModal] = useState(false);
   
   const formatDate = (dateStr) => {
