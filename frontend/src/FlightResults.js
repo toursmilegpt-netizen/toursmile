@@ -1149,6 +1149,38 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
               if (hours >= 2 && hours < 4) matchesDurationFilter = true;
               break;
             case 'long':
+        {/* Sticky action bar for mobile accessibility */}
+        {showMobileModify && (
+          <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-gray-200 p-3 z-50">
+            <div className="max-w-7xl mx-auto px-4 flex items-center gap-3">
+              <button
+                onClick={() => setShowMobileModify(false)}
+                className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-xl"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  const canSearch = mobileForm.origin?.length > 2 && mobileForm.destination?.length > 2 && mobileForm.departureDate && (mobileForm.tripType !== 'return' || (mobileForm.returnDate && mobileForm.returnDate >= mobileForm.departureDate));
+                  if (!canSearch) return;
+                  const modifiedData = {
+                    ...searchData,
+                    segments: [{ ...searchData.segments[0], origin: mobileForm.origin, destination: mobileForm.destination, departureDate: mobileForm.departureDate }],
+                    returnDate: mobileForm.returnDate,
+                    tripType: mobileForm.tripType
+                  };
+                  onModifySearch && onModifySearch(modifiedData);
+                  setShowMobileModify(false);
+                }}
+                className="flex-1 py-2 bg-blue-600 text-white rounded-xl shadow-md disabled:opacity-50"
+                disabled={!(mobileForm.origin?.length > 2 && mobileForm.destination?.length > 2 && mobileForm.departureDate && (mobileForm.tripType !== 'return' || (mobileForm.returnDate && mobileForm.returnDate >= mobileForm.departureDate)))}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        )}
+
               if (hours >= 4 && hours < 6) matchesDurationFilter = true;
               break;
             case 'very-long':
