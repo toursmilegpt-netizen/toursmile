@@ -1451,6 +1451,32 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
                       setTimeout(() => setRetAutoOpenToken(t => t + 1), 0);
                     } else {
                       // auto-focus passengers next
+                {/* Passengers & Class - compact row with guidance */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Passengers</label>
+                    <div className={`flex items-center justify-between px-3 py-2 border rounded-xl ${(!mobileForm.passengers || mobileForm.passengers.adults < 1) ? 'border-blue-400 ring-2 ring-blue-200 animate-soft-pulse' : 'border-gray-200'}`}>
+                      <button onClick={() => setMobileForm(prev => ({ ...prev, passengers: { ...prev.passengers, adults: Math.max(1, (prev.passengers?.adults || 1) - 1) } }))} className="w-8 h-8 bg-gray-100 rounded-full">-</button>
+                      <div className="text-sm font-medium">{(mobileForm.passengers?.adults || 1)} Adult{(mobileForm.passengers?.adults || 1) > 1 ? 's' : ''}</div>
+                      <button onClick={() => setMobileForm(prev => ({ ...prev, passengers: { ...prev.passengers, adults: (prev.passengers?.adults || 1) + 1 } }))} className="w-8 h-8 bg-gray-100 rounded-full">+</button>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Class</label>
+                    <select
+                      ref={classRef}
+                      value={mobileForm.class}
+                      onChange={(e) => setMobileForm(prev => ({ ...prev, class: e.target.value }))}
+                      className={`w-full px-3 py-2 border rounded-xl ${mobileForm.passengers && mobileForm.departureDate && (mobileForm.tripType !== 'return' || mobileForm.returnDate) ? 'border-gray-200' : 'border-blue-400 ring-2 ring-blue-200 animate-soft-pulse'}`}
+                    >
+                      <option value="economy">Economy</option>
+                      <option value="premium-economy">Premium Economy</option>
+                      <option value="business">Business</option>
+                      <option value="first">First</option>
+                    </select>
+                  </div>
+                </div>
+
                       setTimeout(() => passengersRef.current?.focus?.(), 0);
                     }
                   }}
