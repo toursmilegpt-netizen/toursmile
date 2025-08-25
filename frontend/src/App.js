@@ -955,7 +955,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className }) => {
             >
               ←
             </button>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-base font-semibold text-gray-900">
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
             </h3>
             <button
