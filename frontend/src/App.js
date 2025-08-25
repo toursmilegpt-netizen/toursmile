@@ -845,6 +845,91 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [showCalendar]);
+  // Helpers for quick-pick chips (Phase 1 - essentials + optional range chips)
+  const normalize = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const fmt = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).toISOString().split('T')[0];
+  const today = normalize(new Date());
+  const minDT = minDate ? normalize(new Date(minDate)) : today;
+
+  const nextSaturday = (base) => {
+    const d = new Date(base);
+    const day = d.getDay(); // 0 Sun .. 6 Sat
+    const diff = (6 - day + 7) % 7; // days to Saturday (0..6)
+    d.setDate(d.getDate() + diff);
+    return normalize(d);
+  };
+  const nextWeekend = (base) => {
+    const sat = nextSaturday(base);
+    const next = new Date(sat); next.setDate(sat.getDate() + 7);
+    return normalize(next);
+  };
+  const addDays = (base, n) => { const d = new Date(base); d.setDate(d.getDate() + n); return normalize(d); };
+  const sameOrAfter = (a, b) => normalize(a) >= normalize(b);
+
+  const buildQuickPicks = () => {
+    const picks = [];
+    // Essentials
+    const tdy = today;
+    const tmr = addDays(today, 1);
+    const thisSat = nextSaturday(today);
+    const nxtSat = nextWeekend(today);
+
+    picks.push({ key: 'today', label: 'Today', date: tdy, disabled: !sameOrAfter(tdy, minDT) });
+    picks.push({ key: 'tomorrow', label: 'Tomorrow', date: tmr, disabled: !sameOrAfter(tmr, minDT) });
+
+    // This Weekend: if today is Sat/Sun and >= minDT, use today (Sat) or tomorrow (Sun); else upcoming Sat
+    const day = today.getDay();
+    let thisWeekendDate = thisSat;
+    if (day === 6) thisWeekendDate = today; // Sat
+    if (day === 0) thisWeekendDate = today; // Sun (we’ll still allow picking today if >= minDT)
+    picks.push({ key: 'this_weekend', label: 'This Weekend', date: thisWeekendDate, disabled: !sameOrAfter(thisWeekendDate, minDT) });
+
+    picks.push({ key: 'next_weekend', label: 'Next Weekend', date: nxtSat, disabled: !sameOrAfter(nxtSat, minDT) });
+    const plus3 = addDays(today, 3);
+    const plus7 = addDays(today, 7);
+    picks.push({ key: '+3d', label: '+3 days', date: plus3, disabled: !sameOrAfter(plus3, minDT) });
+    picks.push({ key: '+7d', label: '+7 days', date: plus7, disabled: !sameOrAfter(plus7, minDT) });
+
+    // Next Month chip: jump to same day next month if valid else first valid day of next month
+    const nm = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    const nextMonthFirst = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    const nmValid = sameOrAfter(nm, minDT) ? nm : (sameOrAfter(nextMonthFirst, minDT) ? nextMonthFirst : null);
+    if (nmValid) picks.push({ key: 'next_month', label: 'Next Month', date: nmValid, disabled: !sameOrAfter(nmValid, minDT) });
+
+    // Optional: Range chips for round-trip via onRangeSelect
+    if (enableRangeChips && typeof onRangeSelect === 'function') {
+      // Weekend Getaway: Fri → Sun from nearest upcoming Fri that is >= minDT
+      const nextFri = (() => { const d = new Date(today); const diff = (5 - d.getDay() + 7) % 7; d.setDate(d.getDate() + diff); return normalize(d); })();
+      const fri = sameOrAfter(nextFri, minDT) ? nextFri : addDays(minDT, (5 - minDT.getDay() + 7) % 7);
+      const sun = addDays(fri, 2);
+      if (sameOrAfter(sun, minDT)) picks.push({ key: 'weekend_getaway', label: 'Weekend Getaway (Fri–Sun)', range: [fri, sun], type: 'range' });
+
+      // 3N/4D: Thu → Sun
+      const nextThu = (() => { const d = new Date(today); const diff = (4 - d.getDay() + 7) % 7; d.setDate(d.getDate() + diff); return normalize(d); })();
+      const thu = sameOrAfter(nextThu, minDT) ? nextThu : addDays(minDT, (4 - minDT.getDay() + 7) % 7);
+      const sun2 = addDays(thu, 3);
+      if (sameOrAfter(sun2, minDT)) picks.push({ key: '3n4d', label: '3N/4D (Thu–Sun)', range: [thu, sun2], type: 'range' });
+    }
+
+    // Context-aware ordering
+    const weekday = today.getDay();
+    picks.sort((a, b) => {
+      const score = (p) => {
+        let s = 0;
+        if (p.key === 'today') s += 5;
+        if (p.key === 'tomorrow') s += 4;
+        if (p.key === 'this_weekend') s += (weekday <= 3 ? 6 : 3);
+        if (p.key === 'next_weekend') s += (weekday >= 4 ? 6 : 2);
+        if (p.key === 'next_month') s += 1;
+        if (p.type === 'range') s += 7;
+        return -s;
+      };
+      return score(a) - score(b);
+    });
+
+    return picks;
+  };
+
 
   const formatDisplayDate = (dateStr) => {
     if (!dateStr) return 'Select Date';
