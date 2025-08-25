@@ -224,9 +224,9 @@ const AIRPORTS_DATABASE = [
 const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [searchData, setSearchData] = useState({
-    tripType: 'oneway',
+    tripType: 'one-way',
     segments: [
-      { origin: 'Mumbai', destination: 'Delhi', departureDate: '' }
+      { origin: '', destination: '', departureDate: '' }
     ],
     passengers: { adults: 1, children: 0, infants: 0 },
     class: 'economy',
