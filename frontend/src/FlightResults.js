@@ -1215,23 +1215,25 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">From</label>
-                <input
-                  type="text"
-                  value={mobileForm.origin}
-                  onChange={(e) => setMobileForm(prev => ({ ...prev, origin: e.target.value }))}
-                  className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                <CityAutocomplete
+                  label=""
                   placeholder="Departure city"
+                  value={mobileForm.origin}
+                  onChange={(city) => setMobileForm(prev => ({ ...prev, origin: city }))}
+                  airports={airports}
+                  excludeCity={mobileForm.destination}
                 />
               </div>
               <div className="flex items-end gap-2">
                 <div className="flex-1">
                   <label className="block text-sm font-medium text-gray-700 mb-1">To</label>
-                  <input
-                    type="text"
-                    value={mobileForm.destination}
-                    onChange={(e) => setMobileForm(prev => ({ ...prev, destination: e.target.value }))}
-                    className="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  <CityAutocomplete
+                    label=""
                     placeholder="Arrival city"
+                    value={mobileForm.destination}
+                    onChange={(city) => setMobileForm(prev => ({ ...prev, destination: city }))}
+                    airports={airports}
+                    excludeCity={mobileForm.origin}
                   />
                 </div>
                 <button
