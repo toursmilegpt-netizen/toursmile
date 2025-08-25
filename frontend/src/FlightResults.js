@@ -925,10 +925,12 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
       // Airline filter
       if (filters.airlines.length > 0 && !filters.airlines.includes(flight.airline)) return false;
 
-      // Stops filter
-      const stops = flight.stops || 0;
-      const stopCategory = stops === 0 ? 0 : stops === 1 ? 1 : 2;
-      if (!filters.stops.includes(stopCategory)) return false;
+      // Stops filter - show all if no filter selected
+      if (filters.stops.length > 0) {
+        const stops = flight.stops || 0;
+        const stopCategory = stops === 0 ? 0 : stops === 1 ? 1 : 2;
+        if (!filters.stops.includes(stopCategory)) return false;
+      }
 
       // Time slot filter
       if (filters.timeSlots.length > 0) {
