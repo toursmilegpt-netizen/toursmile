@@ -1321,7 +1321,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
 
   return (
     <div className="relative">
-      <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
+      <label className={`block text-sm font-medium mb-2 ${highlight ? 'text-blue-700' : 'text-gray-700'}`}>{label}</label>
       <div className="relative">
         <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
           {icon}
