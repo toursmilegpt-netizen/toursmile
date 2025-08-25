@@ -76,7 +76,7 @@ const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChan
   return (
     <>
       {/* Main Results Header */}
-      <div className="bg-white rounded-xl shadow-sm mb-6">
+      <div className="bg-white rounded-xl shadow-sm mb-6 sticky top-0 z-40">
         {/* Search Summary Bar */}
         <div className="p-6 border-b border-gray-100">
           <div className="flex items-center justify-between flex-wrap gap-4">
