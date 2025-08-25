@@ -122,24 +122,40 @@ const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChan
           </div>
         </div>
 
-        {/* Date Navigation Bar */}
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-semibold text-gray-900">
+        {/* Simple Sort Buttons for layman-friendliness */}
+        <div className="p-3 border-b border-gray-100">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-900">
               {filteredFlights.length} Flight{filteredFlights.length !== 1 ? 's' : ''} Found
             </h3>
-            <div className="text-sm text-gray-600">
-              Compare prices for different dates
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-gray-500 mr-1">Sort:</span>
+              {[
+                { key: 'price', label: 'Cheapest' },
+                { key: 'departure', label: 'Earliest' },
+                { key: 'duration', label: 'Fastest' }
+              ].map(opt => (
+                <button
+                  key={opt.key}
+                  onClick={() => onSetSort && onSetSort(opt.key)}
+                  className={`px-3 py-1.5 rounded-full border ${activeSort === opt.key ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-200 hover:bg-blue-50'}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
             </div>
           </div>
-          
+        </div>
+
+        {/* Date Navigation Bar */}
+        <div className="p-4">
+          <div className="text-sm text-gray-600 mb-2">Compare prices for different dates</div>
           <div className="flex items-center space-x-2 overflow-x-auto pb-2">
             <button className="flex-shrink-0 p-2 text-gray-400 hover:text-gray-600">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            
             {dateOptions.map((dateOption) => {
               const isSelected = dateOption.date === currentDate;
               return (
@@ -158,7 +174,6 @@ const ResultsHeader = ({ searchData, filteredFlights, onModifySearch, onDateChan
                 </button>
               );
             })}
-            
             <button className="flex-shrink-0 p-2 text-gray-400 hover:text-gray-600">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
