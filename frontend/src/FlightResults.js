@@ -935,6 +935,13 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
   
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [showMobileModify, setShowMobileModify] = useState(false);
+  const [mobileForm, setMobileForm] = useState({
+    origin: searchData?.segments?.[0]?.origin || '',
+    destination: searchData?.segments?.[0]?.destination || '',
+    departureDate: searchData?.segments?.[0]?.departureDate || '',
+    returnDate: searchData?.returnDate || '',
+    tripType: searchData?.tripType || 'one-way'
+  });
 
   // Update price range when flights change
   useEffect(() => {
