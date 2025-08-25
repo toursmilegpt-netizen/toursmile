@@ -1130,6 +1130,18 @@ const FlightResults = ({ searchData, flights, onFlightSelect, isLoading, onModif
           activeSort={filters.sortBy}
         />
 
+        {/* Mobile Quick Change Search Button */}
+        <div className="md:hidden sticky top-14 z-30 mb-3">
+          <div className="flex justify-center">
+            <button
+              onClick={() => setShowMobileModify(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 text-sm"
+            >
+              ✏️ Change Search
+            </button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Filters Sidebar - Collapsible on Mobile */}
           <div className="lg:col-span-1">
