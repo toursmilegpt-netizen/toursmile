@@ -26,7 +26,7 @@ const PassengerInfo = ({ bookingData, onNext, onBack }) => {
 
     setOtpLoading(true);
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/otp/send`, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/send-otp`, {
         mobile: contactInfo.countryCode + contactInfo.mobile
       });
       
