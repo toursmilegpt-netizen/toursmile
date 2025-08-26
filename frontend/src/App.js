@@ -1342,11 +1342,18 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
     // When selecting an "All Airports" option, pass the city IATA code instead of the label
     if (airport.__type === 'all_airports' && airport.code) {
       onChange(airport.code);
-      return;
+    } else {
+      // For regular airports, pass the human-friendly name as before
+      onChange(cityName);
     }
     
-    // For regular airports, pass the human-friendly name as before
-    onChange(cityName);
+    // Immediately trigger next step in guidance flow
+    setTimeout(() => {
+      const nextInput = document.querySelector(`input[placeholder*="${label === 'From' ? 'destination' : 'departure'}"]`);
+      if (nextInput && label === 'From') {
+        nextInput.focus();
+      }
+    }, 100);
   };
 
   const handleBlur = () => {
