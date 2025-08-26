@@ -211,6 +211,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   const destinationRef = useRef(null);
   const [depAutoOpenToken, setDepAutoOpenToken] = useState(0);
   const [retAutoOpenToken, setRetAutoOpenToken] = useState(0);
+  const [passengersAutoOpenToken, setPassengersAutoOpenToken] = useState(0);
 
   const dateRef = useRef(null);
   const departButtonRef = useRef(null);
