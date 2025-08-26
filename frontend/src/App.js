@@ -233,15 +233,15 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
     const dep = searchData.segments?.[0]?.departureDate;
     
     // Single trigger for return date in round trip mode
-    if (searchData.tripType === 'return' && dep && !searchData.returnDate) {
+    if (searchData.tripType === 'return' && dep && !searchData.returnDate && !isInitialLoad) {
       setTimeout(() => setRetAutoOpenToken(t => t + 1), 800);
     }
     
-    // Single trigger for passengers in one-way mode (only after user interaction)
-    if (searchData.tripType === 'one-way' && dep && searchData.segments?.[0]?.origin && searchData.segments?.[0]?.destination) {
+    // Single trigger for passengers in one-way mode (only after user interaction, not initial load)
+    if (searchData.tripType === 'one-way' && dep && searchData.segments?.[0]?.origin && searchData.segments?.[0]?.destination && !isInitialLoad) {
       setTimeout(() => setPassengersAutoOpenToken(t => t + 1), 1000);
     }
-  }, [searchData.segments?.[0]?.departureDate, searchData.tripType]);
+  }, [searchData.segments?.[0]?.departureDate, searchData.tripType, isInitialLoad]);
 
   // Trigger passengers after return date in round trip mode
   useEffect(() => {
