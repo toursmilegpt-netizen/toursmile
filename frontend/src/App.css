@@ -3,19 +3,39 @@
 @media (max-width: 768px) {
   .mobile-search-sticky { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(6px); background: rgba(255,255,255,0.85); }
   
-  /* Ultra-compact mobile form */
-  .bg-white.rounded-3xl.shadow-2xl { padding: 0.75rem !important; margin-bottom: 0.5rem !important; }
+  /* Hide header elements on mobile to save space */
+  .bg-gradient-to-br.from-blue-50.to-purple-50 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
   
-  /* Reduce calendar popup size on mobile */
-  .calendar-container { max-width: 20rem !important; max-height: 18rem !important; overflow-y: auto; }
+  /* Ultra-compact mobile form */
+  .bg-white.rounded-3xl.shadow-2xl { padding: 0.5rem !important; margin-bottom: 0.25rem !important; border-radius: 1rem !important; }
+  
+  /* Reduce calendar popup size on mobile and make it overlay */
+  .calendar-container { 
+    max-width: 18rem !important; 
+    max-height: 12rem !important; 
+    overflow-y: auto;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 9999 !important;
+  }
   
   /* Compact mobile text and spacing */
-  .text-sm { font-size: 0.75rem !important; }
-  .text-base { font-size: 0.875rem !important; }
-  .py-3 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+  .text-sm { font-size: 0.75rem !important; line-height: 1rem !important; }
+  .text-base { font-size: 0.875rem !important; line-height: 1.25rem !important; }
+  .py-3 { padding-top: 0.375rem !important; padding-bottom: 0.375rem !important; }
   .py-2 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
-  .mb-3 { margin-bottom: 0.5rem !important; }
+  .mb-3 { margin-bottom: 0.375rem !important; }
   .mb-2 { margin-bottom: 0.25rem !important; }
+  .gap-2 { gap: 0.25rem !important; }
+  .p-2 { padding: 0.25rem !important; }
+  
+  /* Hide non-essential elements on mobile */
+  .bg-gray-50.rounded-xl { padding: 0.25rem !important; margin-bottom: 0.25rem !important; }
+  
+  /* Compact search button */
+  .w-full.bg-gradient-to-r { padding: 0.5rem 1rem !important; font-size: 0.875rem !important; margin-top: 0.25rem !important; }
 }
 
 /* Compact date picker tweaks for consistent sizing on desktop and mobile */
