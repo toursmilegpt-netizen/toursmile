@@ -1,4 +1,9 @@
 @tailwind base;
+/* Mobile-first compact layout for top search form */
+@media (max-width: 768px) {
+  .mobile-search-sticky { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(6px); background: rgba(255,255,255,0.85); }
+}
+
 /* Compact date picker tweaks for consistent sizing on desktop and mobile */
 .date-picker-compact .date-picker-header { font-size: 0.95rem; }
 .date-picker-compact .calendar-container { max-width: 22rem; }
