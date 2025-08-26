@@ -560,7 +560,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           <div className="text-sm font-medium text-gray-700 mb-2">Flight Preferences</div>
           
           {/* Basic Quick Options Only */}
-          <div className="flex items-center flex-wrap gap-3 p-3 bg-gray-50 rounded-xl">
+          <div className="flex items-center flex-wrap gap-2 p-2 bg-gray-50 rounded-xl">
             {/* Non-Stop */}
             <label className="flex items-center cursor-pointer group">
               <input
