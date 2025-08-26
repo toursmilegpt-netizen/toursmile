@@ -797,7 +797,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                       </div>
                       <button
                         onClick={() => returnButtonRef.current?.click()}
-                        className="text-xs bg-blue-600 text-white px-3 py-1 rounded-md font-medium
+                        className="return-date-cta text-xs bg-blue-600 text-white px-3 py-1 rounded-md font-medium
                                  hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300
                                  transition-all duration-200"
                       >
