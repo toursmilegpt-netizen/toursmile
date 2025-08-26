@@ -251,6 +251,8 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   }, [searchData.returnDate, searchData.tripType]);
 
 
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
   useEffect(() => {
     // Set tomorrow as default departure date
     const tomorrow = new Date();
@@ -259,6 +261,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
       ...prev,
       segments: [{ ...prev.segments[0], departureDate: tomorrow.toISOString().split('T')[0] }]
     }));
+    
+    // Mark initial load as complete after setting default date
+    setTimeout(() => setIsInitialLoad(false), 1000);
   }, []);
 
   const addCitySegment = () => {
