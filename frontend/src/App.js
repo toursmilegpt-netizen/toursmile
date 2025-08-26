@@ -902,6 +902,12 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
 // Proper Calendar Date Picker Component
 const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeSelect, enableRangeChips = false, highlight = false, buttonRef = null, autoOpenToken = 0 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
+  
+  // Debug wrapper for setShowCalendar
+  const setShowCalendarDebug = (value) => {
+    console.log(`🔍 setShowCalendar(${value}) called from:`, new Error().stack.split('\n')[2]);
+    setShowCalendar(value);
+  };
   const [autoOpened, setAutoOpened] = useState(false);
   const [manuallyClosing, setManuallyClosing] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
