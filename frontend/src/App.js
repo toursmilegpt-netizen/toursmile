@@ -507,7 +507,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             searchData.tripType === 'return' 
               ? 'grid-cols-2' 
               : 'grid-cols-2'
-          } gap-3 mb-3 md:grid-cols-2`}>
+          } gap-2 mb-2 md:grid-cols-2`}>
             
             {/* Departure Date - Always Present for One-Way and Round-Trip */}
             <div>
