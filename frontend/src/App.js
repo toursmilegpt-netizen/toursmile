@@ -1219,6 +1219,32 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
             </button>
           </div>
 
+          {/* Quick Pick Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 mb-2 -mt-1">
+            {buildQuickPicks().map((p) => (
+              <button
+                key={p.key}
+                type="button"
+                disabled={p.disabled}
+                onClick={() => {
+                  if (p.type === 'range' && typeof onRangeSelect === 'function') {
+                    const [d1, d2] = p.range;
+                    onRangeSelect(fmt(d1), fmt(d2));
+                    setShowCalendar(false);
+                  } else if (p.date) {
+                    onChange(fmt(p.date));
+                    setShowCalendar(false);
+                  }
+                }}
+                className={`whitespace-nowrap px-2.5 py-1.5 rounded-full text-xs border transition-colors ${
+                  p.disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-blue-200 text-blue-700 hover:bg-blue-50'
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+
           {/* Day Headers */}
           <div className="grid grid-cols-7 gap-0.5 mb-1">
             {dayNames.map(day => (
