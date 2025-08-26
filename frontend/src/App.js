@@ -906,7 +906,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   <button
                     key={index}
                     onClick={() => handleTrendingRouteClick(route)}
-                    className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 
+                    className="trending-route w-full bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 
                              rounded-2xl p-4 border border-blue-100 hover:border-blue-200
                              transition-all duration-200 hover:shadow-lg hover:scale-105
                              focus:outline-none focus:ring-4 focus:ring-blue-300"
