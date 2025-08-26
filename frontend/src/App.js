@@ -187,6 +187,7 @@ const MULTI_AIRPORT_CITIES = {
 // Guided Search Form Component with Progressive Disclosure
 const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [searchData, setSearchData] = useState({
     tripType: 'one-way',
     segments: [
