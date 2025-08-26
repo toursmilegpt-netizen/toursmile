@@ -1254,8 +1254,8 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
   );
 };
 
-// Proper Calendar Date Picker Component
-const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeSelect, enableRangeChips = false, highlight = false, buttonRef = null, autoOpenToken = 0 }) => {
+// Enhanced Flexible Calendar Date Picker Component (Priority 2 Feature)
+const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeSelect, enableRangeChips = false, highlight = false, buttonRef = null, autoOpenToken = 0, enableFlexibleDates = false, origin = '', destination = '' }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   
   // Debug wrapper for setShowCalendar
