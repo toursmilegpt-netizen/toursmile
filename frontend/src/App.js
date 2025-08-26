@@ -719,7 +719,7 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
         onClick={() => setShowDropdown(!showDropdown)}
         className={`w-full px-4 py-4 text-lg border-2 rounded-2xl transition-all duration-200 flex items-center justify-between text-left ${
           showDropdown ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
-        }`}
+        } ${highlight ? 'ring-2 ring-blue-200 animate-soft-pulse' : ''}`}
       >
         <div>
           <div className="font-medium text-gray-900">{getPassengerSummary()}</div>
