@@ -2562,5 +2562,5 @@ class BackendTester:
 
 if __name__ == "__main__":
     tester = BackendTester()
-    # Run the Location Tracking tests as requested
-    results = tester.run_location_tracking_tests()
+    # Run the Backend Health Check tests as per review request
+    results = tester.run_backend_health_check_tests()
