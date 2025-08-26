@@ -387,46 +387,148 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   return (
     <div className={`${compact ? 'max-w-none' : 'max-w-4xl'} mx-auto`}>
       <div className={`bg-white rounded-3xl shadow-2xl ${compact ? 'p-4 md:p-6' : 'p-6 md:p-8'} backdrop-blur-md border border-gray-100`}>
-        {/* Trip Type Toggle - With Multicity */}
-        <div className={`flex items-center justify-center ${compact ? 'mb-3' : 'mb-6'}`}>
-          <div className="bg-gray-100 rounded-2xl p-1 flex">
-            <button
-              onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
-              className={`px-3 py-2 rounded-xl font-semibold transition-all duration-200 text-sm ${
-                searchData.tripType === 'one-way' 
-                  ? 'bg-white text-gray-900 shadow-md' 
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              One Way
-            </button>
-            <button
-              onClick={() => setSearchData({...searchData, tripType: 'return'})}
-              className={`px-3 py-2 rounded-xl font-semibold transition-all duration-200 text-sm ${
-                searchData.tripType === 'return' 
-                  ? 'bg-white text-gray-900 shadow-md' 
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Round Trip
-            </button>
-            <button
-              onClick={() => setSearchData({
-                ...searchData, 
-                tripType: 'multi-city',
-                segments: searchData.segments.length === 1 ? [
-                  ...searchData.segments,
-                  { origin: '', destination: '', departureDate: '' }
-                ] : searchData.segments
-              })}
-              className={`px-3 py-2 rounded-xl font-semibold transition-all duration-200 text-sm ${
-                searchData.tripType === 'multi-city' 
-                  ? 'bg-white text-gray-900 shadow-md' 
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Multi-City
-            </button>
+        {/* Enhanced Trip Type Tabs - Mobile-First Design */}
+        <div className={`${compact ? 'mb-4' : 'mb-6'}`}>
+          {/* Mobile Layout */}
+          <div className="block md:hidden">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-1.5 border border-blue-100">
+              <div className="grid grid-cols-3 gap-1">
+                <button
+                  onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
+                  className={`
+                    px-3 py-4 rounded-xl font-semibold transition-all duration-300 text-sm
+                    flex flex-col items-center space-y-1 min-h-[64px] relative
+                    ${searchData.tripType === 'one-way' 
+                      ? 'bg-white text-blue-600 shadow-lg border border-blue-200 scale-105' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-white/50'
+                    }
+                  `}
+                  aria-label="Select one-way trip"
+                >
+                  <div className="text-lg">→</div>
+                  <span className="text-xs font-medium">One Way</span>
+                  {searchData.tripType === 'one-way' && (
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-blue-500 rounded-full"></div>
+                  )}
+                </button>
+                
+                <button
+                  onClick={() => setSearchData({...searchData, tripType: 'return'})}
+                  className={`
+                    px-3 py-4 rounded-xl font-semibold transition-all duration-300 text-sm
+                    flex flex-col items-center space-y-1 min-h-[64px] relative
+                    ${searchData.tripType === 'return' 
+                      ? 'bg-white text-blue-600 shadow-lg border border-blue-200 scale-105' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-white/50'
+                    }
+                  `}
+                  aria-label="Select round trip"
+                >
+                  <div className="text-lg">⇄</div>
+                  <span className="text-xs font-medium">Round Trip</span>
+                  {searchData.tripType === 'return' && (
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-blue-500 rounded-full"></div>
+                  )}
+                </button>
+                
+                <button
+                  onClick={() => setSearchData({
+                    ...searchData, 
+                    tripType: 'multi-city',
+                    segments: searchData.segments.length === 1 ? [
+                      ...searchData.segments,
+                      { origin: '', destination: '', departureDate: '' }
+                    ] : searchData.segments
+                  })}
+                  className={`
+                    px-3 py-4 rounded-xl font-semibold transition-all duration-300 text-sm
+                    flex flex-col items-center space-y-1 min-h-[64px] relative
+                    ${searchData.tripType === 'multi-city' 
+                      ? 'bg-white text-blue-600 shadow-lg border border-blue-200 scale-105' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-white/50'
+                    }
+                  `}
+                  aria-label="Select multi-city trip"
+                >
+                  <div className="text-lg">⚡</div>
+                  <span className="text-xs font-medium">Multi-City</span>
+                  {searchData.tripType === 'multi-city' && (
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-blue-500 rounded-full"></div>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden md:flex items-center justify-center">
+            <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl p-1.5 border border-gray-200">
+              <div className="flex space-x-1">
+                <button
+                  onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
+                  className={`
+                    px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm
+                    flex items-center space-x-2 relative
+                    ${searchData.tripType === 'one-way' 
+                      ? 'bg-white text-blue-600 shadow-lg border border-blue-200' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-white/70'
+                    }
+                  `}
+                  aria-label="Select one-way trip"
+                >
+                  <span className="text-lg">→</span>
+                  <span>One Way</span>
+                </button>
+                
+                <button
+                  onClick={() => setSearchData({...searchData, tripType: 'return'})}
+                  className={`
+                    px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm
+                    flex items-center space-x-2 relative
+                    ${searchData.tripType === 'return' 
+                      ? 'bg-white text-blue-600 shadow-lg border border-blue-200' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-white/70'
+                    }
+                  `}
+                  aria-label="Select round trip"
+                >
+                  <span className="text-lg">⇄</span>
+                  <span>Round Trip</span>
+                </button>
+                
+                <button
+                  onClick={() => setSearchData({
+                    ...searchData, 
+                    tripType: 'multi-city',
+                    segments: searchData.segments.length === 1 ? [
+                      ...searchData.segments,
+                      { origin: '', destination: '', departureDate: '' }
+                    ] : searchData.segments
+                  })}
+                  className={`
+                    px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm
+                    flex items-center space-x-2 relative
+                    ${searchData.tripType === 'multi-city' 
+                      ? 'bg-white text-blue-600 shadow-lg border border-blue-200' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-white/70'
+                    }
+                  `}
+                  aria-label="Select multi-city trip"
+                >
+                  <span className="text-lg">⚡</span>
+                  <span>Multi-City</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Trip Type Description - Mobile Helper Text */}
+          <div className="mt-3 text-center md:hidden">
+            <p className="text-xs text-gray-500">
+              {searchData.tripType === 'one-way' && "Single journey to your destination"}
+              {searchData.tripType === 'return' && "Round trip with return date"}
+              {searchData.tripType === 'multi-city' && "Visit multiple cities in one trip"}
+            </p>
           </div>
         </div>
 
