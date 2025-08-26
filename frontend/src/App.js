@@ -788,7 +788,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     </div>
 
                     {/* Desktop messaging */}
-                    <div className="hidden md:flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-2 border border-blue-200">
+                    <div className="return-date-incentive hidden md:flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-2 border border-blue-200">
                       <div className="flex items-center space-x-2 text-sm">
                         <span className="text-blue-600">💡</span>
                         <span className="text-blue-800 font-medium">Round trips often cost less than one-way tickets</span>
