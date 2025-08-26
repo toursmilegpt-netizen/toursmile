@@ -384,6 +384,34 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   // Check if both cities are filled for swap button
   const canSwap = searchData.segments[0]?.origin && searchData.segments[0]?.destination;
 
+  // Trending route suggestions (popular destinations)
+  const trendingRoutes = [
+    { from: "New York, NY (NYC)", to: "Dubai, AE (DXB)", price: "₹65,400", icon: "🏙️" },
+    { from: "Mumbai, IN (BOM)", to: "London, GB (LHR)", price: "₹58,200", icon: "🇬🇧" },
+    { from: "Delhi, IN (DEL)", to: "Singapore, SG (SIN)", price: "₹45,600", icon: "🌆" },
+    { from: "Bangalore, IN (BLR)", to: "San Francisco, CA (SFO)", price: "₹78,900", icon: "🌉" },
+    { from: "London, GB (LHR)", to: "Tokyo, JP (NRT)", price: "₹89,500", icon: "🗾" },
+    { from: "Paris, FR (CDG)", to: "New York, NY (JFK)", price: "₹72,300", icon: "🗽" }
+  ];
+
+  // Handle trending route click
+  const handleTrendingRouteClick = (route) => {
+    setSearchData(prevData => ({
+      ...prevData,
+      segments: [
+        {
+          ...prevData.segments[0],
+          origin: route.from,
+          destination: route.to
+        },
+        ...prevData.segments.slice(1)
+      ]
+    }));
+    
+    // Auto-focus departure date after route selection
+    setDepAutoOpenToken(t => t + 1);
+  };
+
   return (
     <div className={`${compact ? 'max-w-none' : 'max-w-4xl'} mx-auto`}>
       <div className={`bg-white rounded-3xl shadow-2xl ${compact ? 'p-4 md:p-6' : 'p-6 md:p-8'} backdrop-blur-md border border-gray-100`}>
