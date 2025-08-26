@@ -1426,6 +1426,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
           onFocus={handleFocus}
           onClick={handleInputClick}
           onBlur={handleBlur}
+          autoComplete="off"
           className={`w-full pl-14 pr-4 py-3 text-sm border rounded-2xl transition-all duration-200 bg-white shadow-sm hover:shadow-md ${highlight ? 'border-blue-400 ring-2 ring-blue-200 animate-bounce-glow' : 'border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}`}
         />
         
