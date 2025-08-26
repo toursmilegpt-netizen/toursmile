@@ -1669,7 +1669,45 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
     </div>
   );
 };
+// Smart Enhanced City Autocomplete Component (Priority 2 Feature)
 const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange, icon, autoFocus, airports, excludeCity, highlight = false }, ref) => {
+  // Recent searches management (Priority 2 Feature)
+  const [recentSearches, setRecentSearches] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('vimanpravas_recent_searches') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  const addToRecentSearches = (city) => {
+    const updated = [city, ...recentSearches.filter(item => item !== city)].slice(0, 5);
+    setRecentSearches(updated);
+    localStorage.setItem('vimanpravas_recent_searches', JSON.stringify(updated));
+  };
+
+  // Intelligent suggestions based on popular routes (Priority 2 Feature)
+  const getIntelligentSuggestions = (currentCity) => {
+    const intelligentRoutes = {
+      'Mumbai': ['Delhi', 'Bangalore', 'Dubai', 'London', 'New York JFK'],
+      'Delhi': ['Mumbai', 'Bangalore', 'Goa', 'Dubai', 'London'],
+      'Bangalore': ['Mumbai', 'Delhi', 'Chennai', 'Hyderabad', 'Singapore'],
+      'Chennai': ['Bangalore', 'Delhi', 'Mumbai', 'Dubai', 'Singapore'],
+      'Hyderabad': ['Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Dubai'],
+      'Kolkata': ['Delhi', 'Mumbai', 'Bangkok', 'Singapore', 'Dubai'],
+      'Goa': ['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Hyderabad'],
+      'Dubai': ['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'London'],
+      'London': ['Mumbai', 'Delhi', 'Dubai', 'New York JFK', 'Paris'],
+      'Singapore': ['Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Bangkok']
+    };
+
+    const suggestions = intelligentRoutes[currentCity] || [];
+    return airports.filter(airport => 
+      suggestions.some(suggestion => 
+        airport.name.includes(suggestion) || airport.fullName.includes(suggestion)
+      )
+    );
+  };
   // Build "All Airports" suggestion variants for multi-airport cities
   const buildAllAirportsVariants = (cityRecord) => {
     const code = cityRecord.cityCode;
