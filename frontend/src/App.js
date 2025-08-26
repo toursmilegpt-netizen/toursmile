@@ -926,7 +926,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-lg font-bold text-blue-600">{route.price}</div>
+                        <div className="text-lg font-bold text-blue-600 trending-price">{route.price}</div>
                         <div className="text-xs text-gray-500">onwards</div>
                       </div>
                     </div>
