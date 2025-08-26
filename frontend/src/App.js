@@ -554,7 +554,12 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           <div className="mt-3 text-center md:hidden">
             <p className="text-xs text-gray-500">
               {searchData.tripType === 'one-way' && "Single journey to your destination"}
-              {searchData.tripType === 'return' && "Round trip with return date"}
+              {searchData.tripType === 'return' && (
+                <span className="flex items-center space-x-1">
+                  <span>Round trip with return date</span>
+                  <span className="text-green-600 font-medium">• Better savings!</span>
+                </span>
+              )}
               {searchData.tripType === 'multi-city' && "Visit multiple cities in one trip"}
             </p>
           </div>
