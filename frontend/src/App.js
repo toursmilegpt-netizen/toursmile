@@ -1054,7 +1054,10 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
   const handleDateClick = (date) => {
     const dateStr = date.toISOString().split('T')[0];
     onChange(dateStr);
-    setShowCalendar(false);
+    // Use setTimeout to ensure state update happens after current event cycle
+    setTimeout(() => {
+      setShowCalendar(false);
+    }, 0);
   };
 
   const generateCalendarDays = () => {
