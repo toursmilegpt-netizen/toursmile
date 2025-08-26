@@ -889,11 +889,11 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
 
         {/* Trending Searches - Mobile First */}
         {!compact && (
-          <div className="mt-6 pt-6 border-t border-gray-100">
+          <div className="mt-6 pt-6 border-t border-gray-100 trending-section">
             {/* Trending Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
-                <span className="text-lg">🔥</span>
+                <span className="text-lg trending-icon">🔥</span>
                 <h3 className="text-lg font-semibold text-gray-800">Trending Routes</h3>
               </div>
               <span className="text-xs text-gray-500 hidden md:block">Popular destinations</span>
