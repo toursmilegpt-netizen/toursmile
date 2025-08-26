@@ -1015,12 +1015,22 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
   // Auto-open (Safari-safe) when token increments
   useEffect(() => {
     if (autoOpenToken > 0 && buttonRef && buttonRef.current) {
+      // Ensure calendar opens even if date already present (Safari-safe)
+      try { setShowCalendar(true); } catch (e) {}
       try { buttonRef.current.focus(); } catch (e) {}
       try { buttonRef.current.click(); } catch (e) {}
-      const t = setTimeout(() => {
+      const t1 = setTimeout(() => {
         try { buttonRef.current.click(); } catch (e) {}
       }, 120);
-      return () => clearTimeout(t);
+      const t2 = setTimeout(() => {
+        try { buttonRef.current.click(); } catch (e) {}
+      }, 300);
+      if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
+        window.requestAnimationFrame(() => {
+          try { buttonRef.current.click(); } catch (e) {}
+        });
+      }
+      return () => { clearTimeout(t1); clearTimeout(t2); };
     }
   }, [autoOpenToken]);
 
