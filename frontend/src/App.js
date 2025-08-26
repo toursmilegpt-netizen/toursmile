@@ -1172,7 +1172,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
           {/* Day Headers */}
           <div className="grid grid-cols-7 gap-0.5 mb-0.5">
             {dayNames.map(day => (
-              <div key={day} className="text-center text-[10px] font-medium text-gray-500 p-1.5">
+              <div key={day} className="text-center text-[9px] font-medium text-gray-500 p-1">
                 {day}
               </div>
             ))}
