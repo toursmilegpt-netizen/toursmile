@@ -652,7 +652,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           type="submit"
           disabled={!canSearch() || isSearching}
           onClick={() => onSearch(searchData)}
-          className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white ${compact ? 'py-4 px-6' : 'py-5 px-8'} rounded-2xl ${compact ? 'text-lg' : 'text-xl'} font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ${canSearch() && !isSearching ? 'search-ready-glow' : ''}`}
+          className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white ${compact ? 'py-3 px-6' : 'py-5 px-8'} rounded-2xl ${compact ? 'text-base' : 'text-xl'} font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ${canSearch() && !isSearching ? 'search-ready-glow' : ''}`}
         >
           {isSearching ? (
             <div className="flex items-center justify-center">
