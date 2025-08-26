@@ -491,36 +491,65 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           ) : (
             // One-way & Round-trip: Show only first segment for cities (dates handled separately)
             <div>
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-2">
-                {/* From */}
-                <div>
-                  <CityAutocomplete
-                    label="From"
-                    placeholder="Enter departure city"
-                    value={searchData.segments[0]?.origin || ''}
-                    onChange={(city) => updateSegment(0, 'origin', city)}
-                    airports={AIRPORTS_DATABASE}
-                    excludeCity={searchData.segments[0]?.destination}
-                    autoFocus={true}
-                    highlight={!searchData.segments[0]?.origin}
-                  />
+              <div className="relative">
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-2">
+                  {/* From */}
+                  <div>
+                    <CityAutocomplete
+                      label="From"
+                      placeholder="Enter departure city"
+                      value={searchData.segments[0]?.origin || ''}
+                      onChange={(city) => updateSegment(0, 'origin', city)}
+                      airports={AIRPORTS_DATABASE}
+                      excludeCity={searchData.segments[0]?.destination}
+                      autoFocus={true}
+                      highlight={!searchData.segments[0]?.origin}
+                    />
+                  </div>
+
+                  {/* To */}
+                  <div>
+                    <CityAutocomplete
+                      label="To"
+                      placeholder="Enter destination city"
+                      value={searchData.segments[0]?.destination || ''}
+                      onChange={(city) => { updateSegment(0, 'destination', city); setDepAutoOpenToken(t => t + 1); }}
+                      airports={AIRPORTS_DATABASE}
+                      excludeCity={searchData.segments[0]?.origin}
+                      highlight={searchData.segments[0]?.origin && !searchData.segments[0]?.destination}
+                    />
+                    {/* Auto-focus date after destination chosen */}
+                    {searchData.segments[0]?.origin && searchData.segments[0]?.destination && (
+                      <span className="sr-only" aria-live="polite">Next: Departure Date</span>
+                    )}
+                  </div>
                 </div>
 
-                {/* To */}
-                <div>
-                  <CityAutocomplete
-                    label="To"
-                    placeholder="Enter destination city"
-                    value={searchData.segments[0]?.destination || ''}
-                    onChange={(city) => { updateSegment(0, 'destination', city); setDepAutoOpenToken(t => t + 1); }}
-                    airports={AIRPORTS_DATABASE}
-                    excludeCity={searchData.segments[0]?.origin}
-                    highlight={searchData.segments[0]?.origin && !searchData.segments[0]?.destination}
-                  />
-                  {/* Auto-focus date after destination chosen */}
-                  {searchData.segments[0]?.origin && searchData.segments[0]?.destination && (
-                    <span className="sr-only" aria-live="polite">Next: Departure Date</span>
-                  )}
+                {/* Swap Button - Positioned between From/To fields */}
+                <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10">
+                  <button
+                    type="button"
+                    onClick={swapCities}
+                    disabled={!searchData.segments[0]?.origin || !searchData.segments[0]?.destination}
+                    className={`
+                      bg-white border-2 border-blue-200 rounded-full p-3 shadow-lg
+                      hover:border-blue-400 hover:shadow-xl hover:scale-110
+                      focus:outline-none focus:ring-4 focus:ring-blue-300
+                      transition-all duration-200 group
+                      ${(!searchData.segments[0]?.origin || !searchData.segments[0]?.destination) 
+                        ? 'opacity-50 cursor-not-allowed' 
+                        : 'hover:bg-blue-50 cursor-pointer'
+                      }
+                    `}
+                    title="Swap departure and destination cities"
+                  >
+                    <div className="text-blue-600 group-hover:rotate-180 transition-transform duration-300">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M7 16l3 3 3-3M14 8l-3-3-3 3"/>
+                        <path d="M10 19V5M14 5v14"/>
+                      </svg>
+                    </div>
+                  </button>
                 </div>
               </div>
             </div>
