@@ -340,9 +340,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
 
   return (
     <div className={`${compact ? 'max-w-none' : 'max-w-4xl'} mx-auto`}>
-      <div className={`bg-white rounded-3xl shadow-2xl p-6 ${compact ? 'md:p-6' : 'md:p-8'} backdrop-blur-md border border-gray-100`}>
+      <div className={`bg-white rounded-3xl shadow-2xl ${compact ? 'p-4 md:p-6' : 'p-6 md:p-8'} backdrop-blur-md border border-gray-100`}>
         {/* Trip Type Toggle - With Multicity */}
-        <div className={`flex items-center justify-center ${compact ? 'mb-4' : 'mb-6'}`}>
+        <div className={`flex items-center justify-center ${compact ? 'mb-3' : 'mb-6'}`}>
           <div className="bg-gray-100 rounded-2xl p-1 flex">
             <button
               onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
