@@ -747,12 +747,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Frontend Testing After Backend Health Check"
+    - "Critical React Hooks Error Resolution"
+    - "Homepage Guidance Fixes Implementation"
     - "Mobile Layout Optimization Verification"
     - "Auto-opening Date Picker Safari Compatibility"
-    - "Complete End-to-End User Journey Testing"
   stuck_tasks:
-    - "Homepage date picker auto-open reliability"
+    - "Critical React Hooks Error Resolution"
+    - "Homepage Guidance Fixes Implementation"
   test_all: false
   test_priority: "high_first"
 
