@@ -1846,6 +1846,13 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
 
   const selectCity = (airport) => {
     const cityName = airport.name;
+    setInputValue(cityName);
+    setShowSuggestions(false);
+    onChange(cityName);
+    
+    // Add to recent searches (Priority 2 Feature)
+    addToRecentSearches(cityName);
+  };
     setShowSuggestions(false);
     setInputValue(cityName);
 
