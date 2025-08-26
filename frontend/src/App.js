@@ -525,12 +525,14 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
 
         {/* Passengers & Class Selection */}
         {searchData.tripType !== 'multi-city' && (
-          <div className="mb-4">
+          <div className="mb-2 md:mb-4">
             <PassengerSelector 
               passengers={searchData.passengers}
               classType={searchData.class}
               onPassengerChange={(passengers) => setSearchData({...searchData, passengers})}
               onClassChange={(classType) => setSearchData({...searchData, class: classType})}
+              autoOpenToken={searchData.segments[0]?.departureDate && (searchData.tripType !== 'return' || searchData.returnDate) ? 1 : 0}
+              highlight={searchData.segments[0]?.departureDate && (searchData.tripType !== 'return' || searchData.returnDate) && !canSearch()}
             />
           </div>
         )}
