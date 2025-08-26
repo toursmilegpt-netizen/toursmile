@@ -516,6 +516,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   onRangeSelect={(start, end) => setSearchData({ ...searchData, segments: [{ ...searchData.segments[0], departureDate: start }], returnDate: end })}
                   highlight={searchData.segments[0]?.departureDate && !searchData.returnDate}
                   buttonRef={returnButtonRef}
+                  autoOpenToken={retAutoOpenToken}
                 />
               </div>
             )}
