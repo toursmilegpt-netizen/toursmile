@@ -1765,7 +1765,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
     const input = e.target.value;
     setInputValue(input);
     
-    // Debounced search to improve performance
+    // Enhanced search with intelligent suggestions (Priority 2 Feature)
     if (input.length > 0) {
       // Build a combined pool including airports plus multi-airport city variants
       const pool = [
@@ -1790,6 +1790,12 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
           if (aAll && !bAll) return -1;
           if (!aAll && bAll) return 1;
 
+          // Prioritize recent searches
+          const aRecent = recentSearches.includes(a.name);
+          const bRecent = recentSearches.includes(b.name);
+          if (aRecent && !bRecent) return -1;
+          if (!aRecent && bRecent) return 1;
+
           // Prioritize popular items
           if (a.popular && !b.popular) return -1;
           if (!a.popular && b.popular) return 1;
@@ -1807,7 +1813,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
       setSuggestions(filtered);
       setShowSuggestions(true);
     } else {
-      // Show pinned popular cities with All Airports variants when empty
+      // Enhanced empty input suggestions (Priority 2 Feature)
       const pinned = [
         'Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Kolkata'
       ];
@@ -1815,8 +1821,11 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
         ...airports,
         ...Object.keys(MULTI_AIRPORT_CITIES).flatMap(code => buildAllAirportsVariants(MULTI_AIRPORT_CITIES[code]))
       ];
-      const popular = pool
-        .filter(item => item.popular && item.name !== excludeCity)
+      
+      // Combine recent searches with popular destinations
+      const recentAirports = pool.filter(airport => recentSearches.includes(airport.name));
+      const popularAirports = pool
+        .filter(item => item.popular && item.name !== excludeCity && !recentSearches.includes(item.name))
         .sort((a, b) => {
           const aPinned = pinned.includes(a.name);
           const bPinned = pinned.includes(b.name);
@@ -1827,9 +1836,10 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
           if (aAll && !bAll) return -1;
           if (!aAll && bAll) return 1;
           return 0;
-        })
-        .slice(0, 6);
-      setSuggestions(popular);
+        });
+      
+      const combined = [...recentAirports, ...popularAirports].slice(0, 8);
+      setSuggestions(combined);
       setShowSuggestions(true); // Always show suggestions on empty input
     }
   };
