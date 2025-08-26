@@ -1062,11 +1062,15 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
     console.log('🔍 handleDateClick called, closing calendar...');
     const dateStr = date.toISOString().split('T')[0];
     onChange(dateStr);
-    setManuallyClosing(true);
-    setShowCalendarDebug(false);
-    // Reset manually closing flag after a delay
-    setTimeout(() => setManuallyClosing(false), 1000);
-    console.log('🔍 setShowCalendar(false) called');
+    
+    // Force close by triggering button click
+    if (buttonRef && buttonRef.current) {
+      buttonRef.current.click();
+    } else {
+      setShowCalendar(false);
+    }
+    
+    console.log('🔍 Calendar close triggered');
   };
 
   const generateCalendarDays = () => {
