@@ -496,7 +496,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             <div>
               <SimpleDatePicker
                 value={searchData.segments[0]?.departureDate || ''}
-                onChange={(date) => { updateSegment(0, 'departureDate', date); if (searchData.tripType === 'return') setRetAutoOpenToken(t => t + 1); }}
+                onChange={(date) => { updateSegment(0, 'departureDate', date); if (searchData.tripType === 'return') { setRetAutoOpenToken(t => t + 1); } else { setPassengersAutoOpenToken(t => t + 1); } }}
                 label="Departure Date"
                 minDate={new Date().toISOString().split('T')[0]}
                 highlight={searchData.segments[0]?.origin && searchData.segments[0]?.destination && !searchData.segments[0]?.departureDate}
