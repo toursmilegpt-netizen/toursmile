@@ -432,7 +432,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           ) : (
             // One-way & Round-trip: Show only first segment for cities (dates handled separately)
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-2">
                 {/* From */}
                 <div>
                   <CityAutocomplete
