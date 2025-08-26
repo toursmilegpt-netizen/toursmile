@@ -1059,19 +1059,9 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
   };
 
   const handleDateClick = (date) => {
-    console.log('🔍 handleDateClick called, closing calendar...');
     const dateStr = date.toISOString().split('T')[0];
     onChange(dateStr);
-    
-    // Force close with multiple approaches
     setShowCalendar(false);
-    
-    // Also try to remove the calendar from DOM temporarily
-    setTimeout(() => {
-      setShowCalendar(false);
-    }, 10);
-    
-    console.log('🔍 Multiple close attempts made');
   };
 
   const generateCalendarDays = () => {
