@@ -525,26 +525,37 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   </div>
                 </div>
 
-                {/* Swap Button - Positioned between From/To fields */}
-                <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10">
+                {/* Mobile-First Swap Button - Larger touch target for mobile */}
+                <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10 md:top-8">
                   <button
                     type="button"
                     onClick={swapCities}
                     disabled={!searchData.segments[0]?.origin || !searchData.segments[0]?.destination}
                     className={`
-                      bg-white border-2 border-blue-200 rounded-full p-3 shadow-lg
-                      hover:border-blue-400 hover:shadow-xl hover:scale-110
+                      bg-white border-2 border-blue-200 rounded-full 
+                      p-4 md:p-3 shadow-lg min-w-[48px] min-h-[48px]
+                      hover:border-blue-400 hover:shadow-xl 
+                      active:scale-95 md:hover:scale-110
                       focus:outline-none focus:ring-4 focus:ring-blue-300
                       transition-all duration-200 group
                       ${(!searchData.segments[0]?.origin || !searchData.segments[0]?.destination) 
                         ? 'opacity-50 cursor-not-allowed' 
-                        : 'hover:bg-blue-50 cursor-pointer'
+                        : 'hover:bg-blue-50 cursor-pointer active:bg-blue-100'
                       }
                     `}
-                    title="Swap departure and destination cities"
+                    title="Swap cities"
+                    aria-label="Swap departure and destination cities"
                   >
-                    <div className="text-blue-600 group-hover:rotate-180 transition-transform duration-300">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <div className="text-blue-600 group-hover:rotate-180 group-active:rotate-180 transition-transform duration-300">
+                      <svg 
+                        width="24" 
+                        height="24" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2.5"
+                        className="md:w-5 md:h-5"
+                      >
                         <path d="M7 16l3 3 3-3M14 8l-3-3-3 3"/>
                         <path d="M10 19V5M14 5v14"/>
                       </svg>
