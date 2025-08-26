@@ -912,29 +912,40 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
         try {
           if (buttonRef && buttonRef.current) {
             buttonRef.current.focus();
-            // Small delay then trigger click for Safari compatibility
+            // Multiple attempts for maximum reliability
             setTimeout(() => {
               try {
-                if (!showCalendar) {
+                if (!showCalendar && buttonRef.current) {
                   buttonRef.current.click();
                 }
               } catch (e) {}
-              // Final fallback - direct state setting
-              setTimeout(() => {
-                try {
-                  if (!showCalendar) {
-                    setShowCalendar(true);
-                  }
-                } catch (e) {}
-              }, 100);
             }, 50);
+            
+            // Second attempt for stubborn browsers
+            setTimeout(() => {
+              try {
+                if (!showCalendar && buttonRef.current) {
+                  buttonRef.current.click();
+                }
+              } catch (e) {}
+            }, 150);
+            
+            // Final fallback - direct state setting
+            setTimeout(() => {
+              try {
+                if (!showCalendar) {
+                  setShowCalendar(true);
+                }
+              } catch (e) {}
+            }, 300);
           }
         } catch (e) {}
       };
       
-      setTimeout(safariSafeOpen, 0);
+      // Immediate trigger
+      safariSafeOpen();
     }
-  }, [autoOpenToken]);
+  }, [autoOpenToken, showCalendar]);
 
   // Helpers for quick-pick chips (Phase 1 - essentials + optional range chips)
   const normalize = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
