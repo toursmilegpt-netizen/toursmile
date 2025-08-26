@@ -707,10 +707,9 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
     }
   }, [showDropdown]);
 
-  // Single-trigger passenger auto-open (no multiple attempts)
+  // Controlled passenger auto-open (only when triggered by user flow)
   useEffect(() => {
-    // Only auto-open if token is > 0 AND we're not on initial page load
-    if (autoOpenToken > 0 && (searchData.segments?.[0]?.origin || searchData.segments?.[0]?.destination)) {
+    if (autoOpenToken > 0) {
       try {
         setShowDropdown(true);
       } catch (e) {}
