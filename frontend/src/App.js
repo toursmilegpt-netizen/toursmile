@@ -535,9 +535,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   <button
                     type="button"
                     onClick={swapCities}
-                    disabled={!searchData.segments[0]?.origin || !searchData.segments[0]?.destination}
+                    disabled={!canSwap}
                     style={{
-                      visibility: (searchData.segments[0]?.origin && searchData.segments[0]?.destination) ? 'visible' : 'hidden'
+                      visibility: canSwap ? 'visible' : 'hidden'
                     }}
                     className={`
                       bg-white border-2 border-blue-200 rounded-full 
@@ -546,9 +546,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                       active:scale-95 md:hover:scale-110
                       focus:outline-none focus:ring-4 focus:ring-blue-300
                       transition-all duration-200 group
-                      ${(!searchData.segments[0]?.origin || !searchData.segments[0]?.destination) 
-                        ? 'opacity-50 cursor-not-allowed' 
-                        : 'hover:bg-blue-50 cursor-pointer active:bg-blue-100'
+                      ${!canSwap 
+                        ? 'opacity-0 cursor-not-allowed' 
+                        : 'opacity-100 hover:bg-blue-50 cursor-pointer active:bg-blue-100'
                       }
                     `}
                     title="Swap cities"
