@@ -764,6 +764,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   highlight={searchData.segments[0]?.departureDate && !searchData.returnDate}
                   buttonRef={returnButtonRef}
                   autoOpenToken={retAutoOpenToken}
+                  enableFlexibleDates={searchData.preferences.flexibleDates}
+                  origin={searchData.segments[0]?.origin}
+                  destination={searchData.segments[0]?.destination}
                 />
 
                 {/* Enhanced Return Date Messaging - Mobile First */}
