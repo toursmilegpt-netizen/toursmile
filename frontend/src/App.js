@@ -810,7 +810,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 {/* Success Message when return date is added */}
                 {searchData.returnDate && (
                   <div className="mt-2 md:mt-1">
-                    <div className="flex items-center space-x-2 text-sm">
+                    <div className="return-date-success flex items-center space-x-2 text-sm">
                       <span className="text-green-500">✅</span>
                       <span className="text-green-700 font-medium">Great! Round trip selected</span>
                       <span className="text-green-600">•</span>
