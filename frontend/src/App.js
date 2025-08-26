@@ -741,13 +741,15 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
               />
             </div>
 
-            {/* Return Date - Only for Round Trip */}
+            {/* Enhanced Return Date - MakeMyTrip Style */}
             {searchData.tripType === 'return' && (
-              <div>
+              <div className="relative">
+                {/* Return Date Picker */}
                 <SimpleDatePicker
                   value={searchData.returnDate || ''}
                   onChange={(date) => setSearchData({...searchData, returnDate: date})}
                   label="Return Date" 
+                  placeholder={searchData.returnDate ? undefined : "Tap to add return date for bigger discounts"}
                   minDate={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
                   enableRangeChips={true}
                   onRangeSelect={(start, end) => setSearchData({ ...searchData, segments: [{ ...searchData.segments[0], departureDate: start }], returnDate: end })}
@@ -755,6 +757,62 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   buttonRef={returnButtonRef}
                   autoOpenToken={retAutoOpenToken}
                 />
+
+                {/* Enhanced Return Date Messaging - Mobile First */}
+                {!searchData.returnDate && searchData.segments[0]?.departureDate && (
+                  <div className="mt-2 md:mt-1">
+                    {/* Mobile messaging */}
+                    <div className="md:hidden bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-3 border border-green-200">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg">💰</span>
+                        <div>
+                          <p className="text-sm font-semibold text-green-800">Save up to 15% with Round Trip!</p>
+                          <p className="text-xs text-green-600 mt-1">Add return date to unlock better deals</p>
+                        </div>
+                        <div className="ml-auto">
+                          <button
+                            onClick={() => returnButtonRef.current?.click()}
+                            className="text-xs bg-green-600 text-white px-3 py-1.5 rounded-full font-medium
+                                     hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300
+                                     transition-all duration-200 hover:scale-105"
+                          >
+                            Add Return
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Desktop messaging */}
+                    <div className="hidden md:flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-2 border border-blue-200">
+                      <div className="flex items-center space-x-2 text-sm">
+                        <span className="text-blue-600">💡</span>
+                        <span className="text-blue-800 font-medium">Round trips often cost less than one-way tickets</span>
+                        <span className="text-blue-600">•</span>
+                        <span className="text-green-600 font-semibold">Save up to 15%</span>
+                      </div>
+                      <button
+                        onClick={() => returnButtonRef.current?.click()}
+                        className="text-xs bg-blue-600 text-white px-3 py-1 rounded-md font-medium
+                                 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300
+                                 transition-all duration-200"
+                      >
+                        Add Return Date
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Success Message when return date is added */}
+                {searchData.returnDate && (
+                  <div className="mt-2 md:mt-1">
+                    <div className="flex items-center space-x-2 text-sm">
+                      <span className="text-green-500">✅</span>
+                      <span className="text-green-700 font-medium">Great! Round trip selected</span>
+                      <span className="text-green-600">•</span>
+                      <span className="text-green-600">Unlocking better deals...</span>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
