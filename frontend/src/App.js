@@ -1551,6 +1551,19 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
       {/* Proper Calendar Popup */}
       {showCalendar && (
         <div ref={calendarRef} className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-blue-200 rounded-xl shadow-xl p-2 max-w-sm sm:max-w-md md:max-w-lg calendar-container">
+          {/* Flexible Date Range Info (Priority 2 Feature) */}
+          {enableFlexibleDates && flexibleRange && (
+            <div className="mb-2 p-2 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+              <div className="flex items-center text-xs text-green-700">
+                <span className="mr-1">🎯</span>
+                <span className="font-medium">Flexible Dates: ±3 days</span>
+              </div>
+              <p className="text-[10px] text-green-600 mt-0.5">
+                Highlighted dates show price variations. Green = Better deals!
+              </p>
+            </div>
+          )}
+
           {/* Calendar Header */}
           <div className="flex items-center justify-between mb-1 date-picker-header">
             <button
