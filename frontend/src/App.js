@@ -767,7 +767,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 {!searchData.returnDate && searchData.segments[0]?.departureDate && (
                   <div className="mt-2 md:mt-1">
                     {/* Mobile messaging */}
-                    <div className="md:hidden bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-3 border border-green-200">
+                    <div className="return-date-incentive md:hidden bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-3 border border-green-200">
                       <div className="flex items-center space-x-2">
                         <span className="text-lg">💰</span>
                         <div>
