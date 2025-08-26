@@ -685,14 +685,6 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
     };
 
     if (showDropdown) {
-  useEffect(() => {
-    if (autoOpenToken > 0) {
-      try {
-        setShowDropdown(true);
-      } catch (e) {}
-    }
-  }, [autoOpenToken]);
-
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
