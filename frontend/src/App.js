@@ -217,17 +217,14 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   const departButtonRef = useRef(null);
   const returnButtonRef = useRef(null);
 
-  // Enhanced auto-focus/auto-open system with multiple triggers
+  // Clean, single-trigger auto-focus system (no over-triggering)
   useEffect(() => {
     const origin = searchData.segments?.[0]?.origin;
     const dest = searchData.segments?.[0]?.destination;
     const dep = searchData.segments?.[0]?.departureDate;
     
-    // Trigger date picker auto-opening after both origin and destination are set
+    // Single trigger for date picker after both origin and destination are set
     if (origin && dest && !dep) {
-      // Multiple triggers to ensure reliability
-      setTimeout(() => setDepAutoOpenToken(t => t + 1), 100);
-      setTimeout(() => setDepAutoOpenToken(t => t + 1), 300);
       setTimeout(() => setDepAutoOpenToken(t => t + 1), 500);
     }
   }, [searchData.segments?.[0]?.destination]);
@@ -235,24 +232,21 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   useEffect(() => {
     const dep = searchData.segments?.[0]?.departureDate;
     
-    // Trigger return date auto-opening for round trip
+    // Single trigger for return date in round trip mode
     if (searchData.tripType === 'return' && dep && !searchData.returnDate) {
-      setTimeout(() => setRetAutoOpenToken(t => t + 1), 200);
-      setTimeout(() => setRetAutoOpenToken(t => t + 1), 400);
+      setTimeout(() => setRetAutoOpenToken(t => t + 1), 800);
     }
     
-    // Trigger passengers auto-opening for one-way after departure date
-    if (searchData.tripType === 'one-way' && dep) {
-      setTimeout(() => setPassengersAutoOpenToken(t => t + 1), 300);
-      setTimeout(() => setPassengersAutoOpenToken(t => t + 1), 500);
+    // Single trigger for passengers in one-way mode (only after user interaction)
+    if (searchData.tripType === 'one-way' && dep && searchData.segments?.[0]?.origin && searchData.segments?.[0]?.destination) {
+      setTimeout(() => setPassengersAutoOpenToken(t => t + 1), 1000);
     }
   }, [searchData.segments?.[0]?.departureDate, searchData.tripType]);
 
-  // Trigger passengers auto-opening after return date for round trip
+  // Trigger passengers after return date in round trip mode
   useEffect(() => {
     if (searchData.tripType === 'return' && searchData.returnDate && searchData.segments?.[0]?.departureDate) {
-      setTimeout(() => setPassengersAutoOpenToken(t => t + 1), 300);
-      setTimeout(() => setPassengersAutoOpenToken(t => t + 1), 500);
+      setTimeout(() => setPassengersAutoOpenToken(t => t + 1), 1000);
     }
   }, [searchData.returnDate, searchData.tripType]);
 
