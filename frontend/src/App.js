@@ -1005,13 +1005,13 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
     return picks;
   };
 
+  // Auto-focus button when highlight becomes true (to "take me" to next step)
+  useEffect(() => {
+    if (highlight && buttonRef && buttonRef.current) {
+      try { buttonRef.current.focus(); } catch (e) {}
+    }
+  }, [highlight]);
 
-      useEffect(() => {
-        // Auto-focus button when highlight becomes true (to "take me" to next step)
-        if (highlight && buttonRef && buttonRef.current) {
-          try { buttonRef.current.focus(); } catch (e) {}
-        }
-      }, [highlight]);
   // Auto-open (Safari-safe) when token increments
   useEffect(() => {
     if (autoOpenToken > 0) {
