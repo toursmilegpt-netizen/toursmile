@@ -2185,6 +2185,128 @@ function App() {
 
                 {/* Compact Search Form */}
                 <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} compact={true} />
+
+                {/* Trending Searches Below Compact Form - Mobile Priority */}
+                <div className="mt-4 bg-white rounded-2xl shadow-lg p-4 md:p-6">
+                  <div className="trending-section">
+                    {/* Trending Header */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg trending-icon">🔥</span>
+                        <h3 className="text-base md:text-lg font-semibold text-gray-800">Trending Routes</h3>
+                      </div>
+                      <span className="text-xs text-gray-500 hidden md:block">Popular destinations</span>
+                    </div>
+
+                    {/* Mobile Trending Routes */}
+                    <div className="block md:hidden">
+                      <div className="space-y-3">
+                        {[
+                          { from: "New York, NY (NYC)", to: "Dubai, AE (DXB)", price: "₹65,400", icon: "🏙️" },
+                          { from: "Mumbai, IN (BOM)", to: "London, GB (LHR)", price: "₹58,200", icon: "🇬🇧" },
+                          { from: "Delhi, IN (DEL)", to: "Singapore, SG (SIN)", price: "₹45,600", icon: "🌆" },
+                          { from: "Bangalore, IN (BLR)", to: "San Francisco, CA (SFO)", price: "₹78,900", icon: "🌉" }
+                        ].slice(0, 4).map((route, index) => (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              // Auto-fill search form with trending route
+                              const searchEvent = {
+                                tripType: 'one-way',
+                                segments: [{
+                                  origin: route.from,
+                                  destination: route.to,
+                                  departureDate: ''
+                                }],
+                                returnDate: '',
+                                passengers: { adults: 1, children: 0, infants: 0 },
+                                preferences: { nonStop: false, student: false, senior: false, armed: false }
+                              };
+                              console.log('Trending route clicked:', route);
+                            }}
+                            className="trending-route w-full bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 
+                                     rounded-2xl p-4 border border-blue-100 hover:border-blue-200
+                                     transition-all duration-200 hover:shadow-lg hover:scale-105
+                                     focus:outline-none focus:ring-4 focus:ring-blue-300"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-3">
+                                <span className="text-2xl trending-icon">{route.icon}</span>
+                                <div className="text-left">
+                                  <div className="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                                    <span className="truncate max-w-[80px]">{route.from.split(',')[0]}</span>
+                                    <span className="text-blue-500">→</span>
+                                    <span className="truncate max-w-[80px]">{route.to.split(',')[0]}</span>
+                                  </div>
+                                  <div className="text-xs text-gray-500 mt-1">
+                                    {route.from.match(/\([^)]*\)/)?.[0]} → {route.to.match(/\([^)]*\)/)?.[0]}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-lg font-bold text-blue-600 trending-price">{route.price}</div>
+                                <div className="text-xs text-gray-500">onwards</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Desktop Trending Routes */}
+                    <div className="hidden md:block">
+                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                        {[
+                          { from: "New York, NY (NYC)", to: "Dubai, AE (DXB)", price: "₹65,400", icon: "🏙️" },
+                          { from: "Mumbai, IN (BOM)", to: "London, GB (LHR)", price: "₹58,200", icon: "🇬🇧" },
+                          { from: "Delhi, IN (DEL)", to: "Singapore, SG (SIN)", price: "₹45,600", icon: "🌆" },
+                          { from: "Bangalore, IN (BLR)", to: "San Francisco, CA (SFO)", price: "₹78,900", icon: "🌉" },
+                          { from: "London, GB (LHR)", to: "Tokyo, JP (NRT)", price: "₹89,500", icon: "🗾" },
+                          { from: "Paris, FR (CDG)", to: "New York, NY (JFK)", price: "₹72,300", icon: "🗽" }
+                        ].map((route, index) => (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              console.log('Desktop trending route clicked:', route);
+                            }}
+                            className="trending-route bg-gradient-to-r from-gray-50 to-blue-50 hover:from-blue-50 hover:to-indigo-50 
+                                     rounded-xl p-3 border border-gray-200 hover:border-blue-200
+                                     transition-all duration-200 hover:shadow-md hover:-translate-y-1
+                                     focus:outline-none focus:ring-4 focus:ring-blue-300 group"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg trending-icon group-hover:scale-110 transition-transform">{route.icon}</span>
+                                <div className="text-left">
+                                  <div className="flex items-center space-x-1 text-xs font-medium text-gray-700">
+                                    <span className="truncate max-w-[50px]">{route.from.split(',')[0]}</span>
+                                    <span className="text-blue-500 group-hover:text-blue-600">→</span>
+                                    <span className="truncate max-w-[50px]">{route.to.split(',')[0]}</span>
+                                  </div>
+                                  <div className="text-xs text-gray-500 mt-1">
+                                    {route.from.match(/\([^)]*\)/)?.[0]} → {route.to.match(/\([^)]*\)/)?.[0]}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-xs font-bold text-blue-600 trending-price group-hover:text-blue-700">{route.price}</div>
+                                <div className="text-xs text-gray-500">onwards</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* View All Destinations Link */}
+                    <div className="mt-4 text-center">
+                      <button className="text-sm text-blue-600 hover:text-blue-700 font-medium hover:underline
+                                       focus:outline-none focus:ring-2 focus:ring-blue-300 rounded px-2 py-1">
+                        View All Popular Destinations →
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
