@@ -733,10 +733,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Homepage UI/UX Guidance Fixes"
-    - "Mobile Layout Optimization"
+    - "Frontend Testing After Backend Health Check"
+    - "Mobile Layout Optimization Verification"
     - "Auto-opening Date Picker Safari Compatibility"
-    - "Passengers Auto-opening Fix"
+    - "Complete End-to-End User Journey Testing"
   stuck_tasks:
     - "Homepage date picker auto-open reliability"
   test_all: false
