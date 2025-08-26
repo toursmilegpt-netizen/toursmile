@@ -51,6 +51,21 @@ class BackendTester:
             'errors': []
         }
 
+    def log_result(self, test_name, success, message="", response_data=None):
+        """Log test result"""
+        self.results['total_tests'] += 1
+        if success:
+            self.results['passed'] += 1
+            print(f"✅ {test_name}: {message}")
+        else:
+            self.results['failed'] += 1
+            self.results['errors'].append(f"{test_name}: {message}")
+            print(f"❌ {test_name}: {message}")
+        
+        if response_data:
+            print(f"📄 Response Data: {json.dumps(response_data, indent=2)[:500]}...")
+            print("-" * 40)
+
     def test_backend_service_health(self):
         """Test 1: Backend Service Health Check - Verify all backend services are running properly"""
         print("\n🏥 TESTING BACKEND SERVICE HEALTH CHECK")
