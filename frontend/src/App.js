@@ -929,21 +929,21 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
 
   // Single-trigger auto-open system (no multiple attempts causing flickering)
   useEffect(() => {
-    if (autoOpenToken > 0) {
+    if (autoOpenToken > 0 && !manuallyClosing) {
       const safariSafeOpen = () => {
         try {
           if (buttonRef && buttonRef.current) {
             buttonRef.current.focus();
             setTimeout(() => {
               try {
-                if (!showCalendar && buttonRef.current) {
+                if (!showCalendar && !manuallyClosing && buttonRef.current) {
                   buttonRef.current.click();
                 }
               } catch (e) {}
               // Single fallback only
               setTimeout(() => {
                 try {
-                  if (!showCalendar) {
+                  if (!showCalendar && !manuallyClosing) {
                     setShowCalendar(true);
                   }
                 } catch (e) {}
@@ -955,7 +955,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
       
       safariSafeOpen();
     }
-  }, [autoOpenToken, showCalendar]);
+  }, [autoOpenToken, showCalendar, manuallyClosing]);
 
   // Helpers for quick-pick chips (Phase 1 - essentials + optional range chips)
   const normalize = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
