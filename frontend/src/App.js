@@ -1283,14 +1283,21 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
       setSuggestions(filtered);
       setShowSuggestions(true);
     } else {
-      // Show popular with All Airports variants when empty
+      // Show pinned popular cities with All Airports variants when empty
+      const pinned = [
+        'Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Kolkata'
+      ];
       const pool = [
         ...airports,
         ...Object.keys(MULTI_AIRPORT_CITIES).flatMap(code => buildAllAirportsVariants(MULTI_AIRPORT_CITIES[code]))
       ];
-      const popular = pool.filter(item => item.popular && item.name !== excludeCity)
-        // Ensure All Airports show first in the empty state too
+      const popular = pool
+        .filter(item => item.popular && item.name !== excludeCity)
         .sort((a, b) => {
+          const aPinned = pinned.includes(a.name);
+          const bPinned = pinned.includes(b.name);
+          if (aPinned && !bPinned) return -1;
+          if (!aPinned && bPinned) return 1;
           const aAll = a.__type === 'all_airports';
           const bAll = b.__type === 'all_airports';
           if (aAll && !bAll) return -1;
