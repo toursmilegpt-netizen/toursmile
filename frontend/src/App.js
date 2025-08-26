@@ -777,7 +777,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                         <div className="ml-auto">
                           <button
                             onClick={() => returnButtonRef.current?.click()}
-                            className="text-xs bg-green-600 text-white px-3 py-1.5 rounded-full font-medium
+                            className="return-date-cta text-xs bg-green-600 text-white px-3 py-1.5 rounded-full font-medium
                                      hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300
                                      transition-all duration-200 hover:scale-105"
                           >
