@@ -243,12 +243,12 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
     }
   }, [searchData.segments?.[0]?.departureDate, searchData.tripType, isInitialLoad]);
 
-  // Trigger passengers after return date in round trip mode
+  // Trigger passengers after return date in round trip mode (not on initial load)
   useEffect(() => {
-    if (searchData.tripType === 'return' && searchData.returnDate && searchData.segments?.[0]?.departureDate) {
+    if (searchData.tripType === 'return' && searchData.returnDate && searchData.segments?.[0]?.departureDate && !isInitialLoad) {
       setTimeout(() => setPassengersAutoOpenToken(t => t + 1), 1000);
     }
-  }, [searchData.returnDate, searchData.tripType]);
+  }, [searchData.returnDate, searchData.tripType, isInitialLoad]);
 
 
   const [isInitialLoad, setIsInitialLoad] = useState(true);
