@@ -453,7 +453,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     label="To"
                     placeholder="Enter destination city"
                     value={searchData.segments[0]?.destination || ''}
-                    onChange={(city) => updateSegment(0, 'destination', city)}
+                    onChange={(city) => { updateSegment(0, 'destination', city); setDepAutoOpenToken(t => t + 1); }}
                     airports={AIRPORTS_DATABASE}
                     excludeCity={searchData.segments[0]?.origin}
                     highlight={searchData.segments[0]?.origin && !searchData.segments[0]?.destination}
