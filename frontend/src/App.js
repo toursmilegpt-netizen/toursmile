@@ -252,8 +252,6 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   }, [searchData.returnDate, searchData.tripType, isInitialLoad]);
 
 
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-
   useEffect(() => {
     // Set tomorrow as default departure date
     const tomorrow = new Date();
