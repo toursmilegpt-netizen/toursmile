@@ -19,11 +19,6 @@
     max-width: 20rem !important; 
     max-height: 14rem !important; 
     overflow-y: auto;
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    z-index: 9999 !important;
   }
   
   /* Slightly compact mobile text and spacing */
