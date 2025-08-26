@@ -40,25 +40,56 @@
 .date-picker-compact .calendar-container { max-width: 20rem; max-height: 16rem; overflow-y: auto; }
 .date-picker-compact .day-cell { min-width: 1.75rem; min-height: 1.75rem; font-size: 0.75rem; }
 
-/* Swap button animations */
+/* Mobile-first swap button - larger touch target and animations */
 .swap-button {
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-width: 48px;
+  min-height: 48px;
 }
 
-.swap-button:hover {
-  transform: scale(1.1) rotate(180deg);
+/* Mobile: Active state (touch) */
+@media (max-width: 768px) {
+  .swap-button:active {
+    transform: scale(0.95);
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+  
+  .swap-button:active svg {
+    transform: rotate(180deg);
+  }
 }
 
-.swap-button:active {
-  transform: scale(0.95) rotate(180deg);
+/* Desktop: Hover states */
+@media (min-width: 769px) {
+  .swap-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .swap-button:hover svg {
+    transform: rotate(180deg);
+  }
+  
+  .swap-button:active {
+    transform: scale(0.95);
+  }
 }
 
+/* SVG icon animation */
 .swap-button svg {
   transition: transform 0.3s ease-in-out;
 }
 
-.swap-button:hover svg {
-  transform: rotate(180deg);
+/* Enhanced mobile touch feedback */
+@media (max-width: 768px) {
+  .swap-button {
+    /* Larger touch area on mobile */
+    padding: 1rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .swap-button:active {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
 }
 
 /* Mobile-specific calendar optimizations */
