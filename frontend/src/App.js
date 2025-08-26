@@ -1181,10 +1181,10 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
                   if (p.type === 'range' && typeof onRangeSelect === 'function') {
                     const [d1, d2] = p.range;
                     onRangeSelect(fmt(d1), fmt(d2));
-                    setTimeout(() => setShowCalendar(false), 0);
+                    setShowCalendar(false);
                   } else if (p.date) {
                     onChange(fmt(p.date));
-                    setTimeout(() => setShowCalendar(false), 0);
+                    setShowCalendar(false);
                   }
                 }}
                 className={`whitespace-nowrap px-2 py-1 rounded-full text-xs border transition-colors ${
