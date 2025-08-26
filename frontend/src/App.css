@@ -3,16 +3,34 @@
 @media (max-width: 768px) {
   .mobile-search-sticky { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(6px); background: rgba(255,255,255,0.85); }
   
-  /* Hide header elements on mobile to save space */
-  .bg-gradient-to-br.from-blue-50.to-purple-50 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+  /* Hide/minimize header elements on mobile to save space */
+  .bg-gradient-to-br.from-blue-50.to-purple-50 { 
+    padding-top: 0.25rem !important; 
+    padding-bottom: 0.25rem !important; 
+    min-height: auto !important;
+  }
   
-  /* Ultra-compact mobile form */
-  .bg-white.rounded-3xl.shadow-2xl { padding: 0.5rem !important; margin-bottom: 0.25rem !important; border-radius: 1rem !important; }
+  /* Hide logo and navigation on mobile - keep only essential */
+  .flex.items-center.justify-between { display: none !important; }
+  .flex.items-center.space-x-8 { display: none !important; }
+  
+  /* Ultra-compact mobile form - make it the primary content */
+  .bg-white.rounded-3xl.shadow-2xl { 
+    padding: 0.375rem !important; 
+    margin: 0.125rem !important; 
+    border-radius: 0.75rem !important; 
+    max-width: 100vw !important;
+  }
+  
+  /* Hide content below search form on mobile */
+  .mt-16 { display: none !important; }
+  .mt-12 { display: none !important; }
+  .mt-8 { display: none !important; }
   
   /* Reduce calendar popup size on mobile and make it overlay */
   .calendar-container { 
-    max-width: 18rem !important; 
-    max-height: 12rem !important; 
+    max-width: 16rem !important; 
+    max-height: 10rem !important; 
     overflow-y: auto;
     position: fixed !important;
     top: 50% !important;
@@ -21,21 +39,34 @@
     z-index: 9999 !important;
   }
   
-  /* Compact mobile text and spacing */
-  .text-sm { font-size: 0.75rem !important; line-height: 1rem !important; }
-  .text-base { font-size: 0.875rem !important; line-height: 1.25rem !important; }
-  .py-3 { padding-top: 0.375rem !important; padding-bottom: 0.375rem !important; }
-  .py-2 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
-  .mb-3 { margin-bottom: 0.375rem !important; }
-  .mb-2 { margin-bottom: 0.25rem !important; }
-  .gap-2 { gap: 0.25rem !important; }
-  .p-2 { padding: 0.25rem !important; }
+  /* Ultra-compact mobile text and spacing */
+  .text-sm { font-size: 0.625rem !important; line-height: 0.875rem !important; }
+  .text-base { font-size: 0.75rem !important; line-height: 1rem !important; }
+  .py-3 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+  .py-2 { padding-top: 0.125rem !important; padding-bottom: 0.125rem !important; }
+  .mb-3 { margin-bottom: 0.25rem !important; }
+  .mb-2 { margin-bottom: 0.125rem !important; }
+  .gap-2 { gap: 0.125rem !important; }
+  .p-2 { padding: 0.125rem !important; }
   
-  /* Hide non-essential elements on mobile */
-  .bg-gray-50.rounded-xl { padding: 0.25rem !important; margin-bottom: 0.25rem !important; }
+  /* Ultra-compact preferences section */
+  .bg-gray-50.rounded-xl { 
+    padding: 0.125rem !important; 
+    margin-bottom: 0.125rem !important; 
+    border-radius: 0.5rem !important;
+  }
   
-  /* Compact search button */
-  .w-full.bg-gradient-to-r { padding: 0.5rem 1rem !important; font-size: 0.875rem !important; margin-top: 0.25rem !important; }
+  /* Ultra-compact search button */
+  .w-full.bg-gradient-to-r { 
+    padding: 0.375rem 0.75rem !important; 
+    font-size: 0.75rem !important; 
+    margin-top: 0.125rem !important; 
+    border-radius: 0.75rem !important;
+  }
+  
+  /* Ensure mobile form takes up minimal vertical space */
+  body { overflow-x: hidden !important; }
+  .min-h-screen { min-height: 100vh !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
 }
 
 /* Compact date picker tweaks for consistent sizing on desktop and mobile */
