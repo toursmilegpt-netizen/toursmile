@@ -961,7 +961,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
       
       safariSafeOpen();
     }
-  }, [autoOpenToken, showCalendar, manuallyClosing]);
+  }, [autoOpenToken, manuallyClosing]); // Removed showCalendar from dependencies!
 
   // Helpers for quick-pick chips (Phase 1 - essentials + optional range chips)
   const normalize = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
