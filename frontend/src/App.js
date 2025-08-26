@@ -1660,6 +1660,74 @@ function App() {
       );
     }
 
+    // Homepage: Show search form when no results are being displayed
+    if (!showResults) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+          {/* Header */}
+          <header className="relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <img
+                    src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
+                    alt="TourSmile"
+                    className="h-12 mr-2"
+                  />
+                </div>
+                <div className="hidden md:flex items-center space-x-8">
+                  <span className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Flights</span>
+                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer">Hotels</span>
+                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer">Activities</span>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          {/* Main Content */}
+          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                Find Your Perfect Flight
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                Book flights, hotels, and activities with our AI-powered travel assistant. 
+                Get personalized recommendations and the best deals.
+              </p>
+            </div>
+
+            {/* Main Search Form */}
+            <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
+
+            {/* Trust Indicators */}
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">⚡</span>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Instant Booking</h3>
+                <p className="text-gray-600">Get confirmed tickets in seconds with our advanced booking system.</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🔒</span>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Secure Payments</h3>
+                <p className="text-gray-600">Your transactions are protected with bank-level security.</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🎯</span>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Best Deals</h3>
+                <p className="text-gray-600">AI-powered price comparison finds you the lowest fares.</p>
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
     // Default: Flight Results
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
