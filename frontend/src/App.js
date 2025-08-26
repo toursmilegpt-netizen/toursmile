@@ -886,6 +886,100 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             </div>
           )}
         </button>
+
+        {/* Trending Searches - Mobile First */}
+        {!compact && (
+          <div className="mt-6 pt-6 border-t border-gray-100">
+            {/* Trending Header */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-2">
+                <span className="text-lg">🔥</span>
+                <h3 className="text-lg font-semibold text-gray-800">Trending Routes</h3>
+              </div>
+              <span className="text-xs text-gray-500 hidden md:block">Popular destinations</span>
+            </div>
+
+            {/* Mobile Trending Routes */}
+            <div className="block md:hidden">
+              <div className="space-y-3">
+                {trendingRoutes.slice(0, 4).map((route, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleTrendingRouteClick(route)}
+                    className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 
+                             rounded-2xl p-4 border border-blue-100 hover:border-blue-200
+                             transition-all duration-200 hover:shadow-lg hover:scale-105
+                             focus:outline-none focus:ring-4 focus:ring-blue-300"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <span className="text-2xl">{route.icon}</span>
+                        <div className="text-left">
+                          <div className="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                            <span className="truncate max-w-[80px]">{route.from.split(',')[0]}</span>
+                            <span className="text-blue-500">→</span>
+                            <span className="truncate max-w-[80px]">{route.to.split(',')[0]}</span>
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {route.from.match(/\([^)]*\)/)?.[0]} → {route.to.match(/\([^)]*\)/)?.[0]}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg font-bold text-blue-600">{route.price}</div>
+                        <div className="text-xs text-gray-500">onwards</div>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop Trending Routes */}
+            <div className="hidden md:block">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                {trendingRoutes.map((route, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleTrendingRouteClick(route)}
+                    className="bg-gradient-to-r from-gray-50 to-blue-50 hover:from-blue-50 hover:to-indigo-50 
+                             rounded-xl p-4 border border-gray-200 hover:border-blue-200
+                             transition-all duration-200 hover:shadow-md hover:-translate-y-1
+                             focus:outline-none focus:ring-4 focus:ring-blue-300 group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <span className="text-xl group-hover:scale-110 transition-transform">{route.icon}</span>
+                        <div className="text-left">
+                          <div className="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                            <span className="truncate max-w-[60px]">{route.from.split(',')[0]}</span>
+                            <span className="text-blue-500 group-hover:text-blue-600">→</span>
+                            <span className="truncate max-w-[60px]">{route.to.split(',')[0]}</span>
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {route.from.match(/\([^)]*\)/)?.[0]} → {route.to.match(/\([^)]*\)/)?.[0]}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-blue-600 group-hover:text-blue-700">{route.price}</div>
+                        <div className="text-xs text-gray-500">onwards</div>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* View All Destinations Link */}
+            <div className="mt-4 text-center">
+              <button className="text-sm text-blue-600 hover:text-blue-700 font-medium hover:underline
+                               focus:outline-none focus:ring-2 focus:ring-blue-300 rounded px-2 py-1">
+                View All Popular Destinations →
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
