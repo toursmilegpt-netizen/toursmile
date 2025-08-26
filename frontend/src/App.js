@@ -359,6 +359,26 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
            segment.departureDate && segment.departureDate.length > 0;
   };
 
+  // Swap From/To cities function
+  const swapCities = () => {
+    if (searchData.segments[0]?.origin && searchData.segments[0]?.destination) {
+      const origin = searchData.segments[0].origin;
+      const destination = searchData.segments[0].destination;
+      
+      setSearchData(prevData => ({
+        ...prevData,
+        segments: [
+          {
+            ...prevData.segments[0],
+            origin: destination,
+            destination: origin
+          },
+          ...prevData.segments.slice(1)
+        ]
+      }));
+    }
+  };
+
   return (
     <div className={`${compact ? 'max-w-none' : 'max-w-4xl'} mx-auto`}>
       <div className={`bg-white rounded-3xl shadow-2xl ${compact ? 'p-4 md:p-6' : 'p-6 md:p-8'} backdrop-blur-md border border-gray-100`}>
