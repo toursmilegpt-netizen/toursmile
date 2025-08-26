@@ -1848,15 +1848,11 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
     const cityName = airport.name;
     setInputValue(cityName);
     setShowSuggestions(false);
-    onChange(cityName);
     
     // Add to recent searches (Priority 2 Feature)
     addToRecentSearches(cityName);
-  };
-    setShowSuggestions(false);
-    setInputValue(cityName);
 
-    // When selecting an "All Airports" option, pass the city IATA code instead of the label
+    // Multi-airport city handling
     if (airport.__type === 'all_airports' && airport.code) {
       onChange(airport.code);
     } else {
