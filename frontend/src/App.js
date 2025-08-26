@@ -888,6 +888,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
         </button>
 
         {/* Trending Searches - Mobile First */}
+        {!compact && (
         <div className={`${compact ? 'mt-4 pt-4' : 'mt-6 pt-6'} border-t border-gray-100 trending-section`}>
             {/* Trending Header */}
             <div className="flex items-center justify-between mb-4">
