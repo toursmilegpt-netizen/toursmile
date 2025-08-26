@@ -707,21 +707,13 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
     }
   }, [showDropdown]);
 
+  // Single-trigger passenger auto-open (no multiple attempts)
   useEffect(() => {
-    if (autoOpenToken > 0) {
-      // Multiple attempts for maximum reliability across all browsers
-      const attemptOpen = () => {
-        try {
-          setShowDropdown(true);
-        } catch (e) {}
-      };
-      
-      // Immediate attempt
-      attemptOpen();
-      
-      // Delayed attempts for stubborn browsers
-      setTimeout(attemptOpen, 50);
-      setTimeout(attemptOpen, 150);
+    // Only auto-open if token is > 0 AND we're not on initial page load
+    if (autoOpenToken > 0 && (searchData.segments?.[0]?.origin || searchData.segments?.[0]?.destination)) {
+      try {
+        setShowDropdown(true);
+      } catch (e) {}
     }
   }, [autoOpenToken]);
 
