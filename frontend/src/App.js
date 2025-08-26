@@ -1015,13 +1015,32 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
   // Auto-open (Safari-safe) when token increments
   useEffect(() => {
     if (autoOpenToken > 0) {
-      // Force open the calendar without toggling via button click to avoid closing
-      setTimeout(() => {
-        try { setShowCalendar(true); } catch (e) {}
-      }, 0);
-      if (buttonRef && buttonRef.current) {
-        try { buttonRef.current.focus(); } catch (e) {}
-      }
+      // Safari-safe approach: Focus + Click + Delayed retry for stubborn browsers
+      const safariSafeOpen = () => {
+        try {
+          if (buttonRef && buttonRef.current) {
+            buttonRef.current.focus();
+            // Small delay then trigger click for Safari compatibility
+            setTimeout(() => {
+              try {
+                if (!showCalendar) {
+                  buttonRef.current.click();
+                }
+              } catch (e) {}
+              // Final fallback - direct state setting
+              setTimeout(() => {
+                try {
+                  if (!showCalendar) {
+                    setShowCalendar(true);
+                  }
+                } catch (e) {}
+              }, 100);
+            }, 50);
+          }
+        } catch (e) {}
+      };
+      
+      setTimeout(safariSafeOpen, 0);
     }
   }, [autoOpenToken]);
 
