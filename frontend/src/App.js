@@ -206,6 +206,17 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
     }
   });
 
+  // Auto-focus refs and state
+  const originRef = useRef(null);
+  const destinationRef = useRef(null);
+  const [depAutoOpenToken, setDepAutoOpenToken] = useState(0);
+  const [retAutoOpenToken, setRetAutoOpenToken] = useState(0);
+  const [passengersAutoOpenToken, setPassengersAutoOpenToken] = useState(0);
+
+  const dateRef = useRef(null);
+  const departButtonRef = useRef(null);
+  const returnButtonRef = useRef(null);
+
   // Enhanced auto-focus/auto-open system with multiple triggers
   useEffect(() => {
     const origin = searchData.segments?.[0]?.origin;
