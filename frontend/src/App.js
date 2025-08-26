@@ -1620,7 +1620,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
             ))}
           </div>
 
-          {/* Calendar Days */}
+          {/* Calendar Days with Price Display (Priority 2 Enhancement) */}
           <div className="grid grid-cols-7 gap-0.5">
             {generateCalendarDays().map((day, index) => (
               <button
@@ -1628,19 +1628,39 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
                 type="button"
                 onClick={() => !day.isPast && handleDateClick(day.date)}
                 disabled={day.isPast}
-                className={`p-1 text-center rounded-lg transition-all duration-200 text-[10px] ${
+                className={`p-1 text-center rounded-lg transition-all duration-200 text-[10px] relative group ${
                   day.isSelected
                     ? 'bg-blue-600 text-white font-semibold shadow-md'
-                    : day.isToday
-                      ? 'bg-blue-100 text-blue-600 font-medium hover:bg-blue-200'
-                      : day.isCurrentMonth
-                        ? day.isPast
-                          ? 'text-gray-300 cursor-not-allowed'
-                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
-                        : 'text-gray-300'
+                    : day.isInFlexibleRange
+                      ? 'bg-green-100 text-green-700 border border-green-300 hover:bg-green-200'
+                      : day.isToday
+                        ? 'bg-blue-100 text-blue-600 font-medium hover:bg-blue-200'
+                        : day.isCurrentMonth
+                          ? day.isPast
+                            ? 'text-gray-300 cursor-not-allowed'
+                            : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                          : 'text-gray-300'
                 }`}
               >
-                {day.day}
+                <div>{day.day}</div>
+                {/* Price display for flexible dates */}
+                {enableFlexibleDates && day.price && day.isCurrentMonth && !day.isPast && (
+                  <div className={`text-[8px] leading-none ${
+                    day.isSelected ? 'text-white' : 
+                    day.isInFlexibleRange ? 'text-green-600 font-medium' : 
+                    'text-gray-500'
+                  }`}>
+                    ₹{Math.floor(day.price/100)}k
+                  </div>
+                )}
+                
+                {/* Price comparison tooltip */}
+                {enableFlexibleDates && day.price && !day.isPast && (
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50">
+                    ₹{day.price.toLocaleString()}
+                    {day.isInFlexibleRange && <div className="text-green-400">±3 day range</div>}
+                  </div>
+                )}
               </button>
             ))}
           </div>
