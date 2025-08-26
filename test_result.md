@@ -721,10 +721,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Homepage Guidance + Date Picker (Flights)"
-    - "Compact Month Calendar (desktop+mobile)"
-    - "Restore Guidance Experience (Step indicators: dots + helper text)"
-    - "Multi-Airport City Autocomplete (All Airports variants)"
+    - "Homepage UI/UX Guidance Fixes"
+    - "Mobile Layout Optimization"
+    - "Auto-opening Date Picker Safari Compatibility"
+    - "Passengers Auto-opening Fix"
   stuck_tasks:
     - "Homepage date picker auto-open reliability"
   test_all: false
