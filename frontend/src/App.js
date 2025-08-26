@@ -531,6 +531,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     type="button"
                     onClick={swapCities}
                     disabled={!searchData.segments[0]?.origin || !searchData.segments[0]?.destination}
+                    style={{
+                      visibility: (searchData.segments[0]?.origin && searchData.segments[0]?.destination) ? 'visible' : 'hidden'
+                    }}
                     className={`
                       bg-white border-2 border-blue-200 rounded-full 
                       p-4 md:p-3 shadow-lg min-w-[48px] min-h-[48px]
