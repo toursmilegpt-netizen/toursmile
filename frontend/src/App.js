@@ -557,7 +557,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
 
         {/* Flight Preferences - Basic Options Only */}
         <div className="mb-3">
-          <div className="text-sm font-medium text-gray-700 mb-3">Flight Preferences</div>
+          <div className="text-sm font-medium text-gray-700 mb-2">Flight Preferences</div>
           
           {/* Basic Quick Options Only */}
           <div className="flex items-center flex-wrap gap-3 p-3 bg-gray-50 rounded-xl">
