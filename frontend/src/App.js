@@ -743,6 +743,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 highlight={searchData.segments[0]?.origin && searchData.segments[0]?.destination && !searchData.segments[0]?.departureDate}
                 buttonRef={departButtonRef}
                 autoOpenToken={depAutoOpenToken}
+                enableFlexibleDates={searchData.preferences.flexibleDates}
+                origin={searchData.segments[0]?.origin}
+                destination={searchData.segments[0]?.destination}
               />
             </div>
 
