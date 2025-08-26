@@ -913,7 +913,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <span className="text-2xl">{route.icon}</span>
+                        <span className="text-2xl trending-icon">{route.icon}</span>
                         <div className="text-left">
                           <div className="flex items-center space-x-2 text-sm font-medium text-gray-700">
                             <span className="truncate max-w-[80px]">{route.from.split(',')[0]}</span>
