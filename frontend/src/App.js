@@ -896,6 +896,46 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [showCalendar]);
+
+  // Auto-focus button when highlight becomes true (to "take me" to next step)
+  useEffect(() => {
+    if (highlight && buttonRef && buttonRef.current) {
+      try { buttonRef.current.focus(); } catch (e) {}
+    }
+  }, [highlight]);
+
+  // Auto-open (Safari-safe) when token increments
+  useEffect(() => {
+    if (autoOpenToken > 0) {
+      // Safari-safe approach: Focus + Click + Delayed retry for stubborn browsers
+      const safariSafeOpen = () => {
+        try {
+          if (buttonRef && buttonRef.current) {
+            buttonRef.current.focus();
+            // Small delay then trigger click for Safari compatibility
+            setTimeout(() => {
+              try {
+                if (!showCalendar) {
+                  buttonRef.current.click();
+                }
+              } catch (e) {}
+              // Final fallback - direct state setting
+              setTimeout(() => {
+                try {
+                  if (!showCalendar) {
+                    setShowCalendar(true);
+                  }
+                } catch (e) {}
+              }, 100);
+            }, 50);
+          }
+        } catch (e) {}
+      };
+      
+      setTimeout(safariSafeOpen, 0);
+    }
+  }, [autoOpenToken]);
+
   // Helpers for quick-pick chips (Phase 1 - essentials + optional range chips)
   const normalize = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
   const fmt = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).toISOString().split('T')[0];
