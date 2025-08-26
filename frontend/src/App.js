@@ -361,10 +361,12 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
 
   // Swap From/To cities function
   const swapCities = () => {
-    if (searchData.segments[0]?.origin && searchData.segments[0]?.destination) {
-      const origin = searchData.segments[0].origin;
-      const destination = searchData.segments[0].destination;
-      
+    const origin = searchData.segments[0]?.origin;
+    const destination = searchData.segments[0]?.destination;
+    
+    console.log('Swapping cities:', { origin, destination }); // Debug log
+    
+    if (origin && destination) {
       setSearchData(prevData => ({
         ...prevData,
         segments: [
@@ -378,6 +380,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
       }));
     }
   };
+
+  // Check if both cities are filled for swap button
+  const canSwap = searchData.segments[0]?.origin && searchData.segments[0]?.destination;
 
   return (
     <div className={`${compact ? 'max-w-none' : 'max-w-4xl'} mx-auto`}>
