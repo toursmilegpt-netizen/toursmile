@@ -1018,72 +1018,8 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
       return score(a) - score(b);
     });
 
-      useEffect(() => {
-        // Programmatic open-on-highlight fallback (when browsers ignore focus-only)
-        if (highlight && buttonRef && buttonRef.current && !showCalendar && !autoOpened) {
-          try {
-            setAutoOpened(true);
-            buttonRef.current.click();
-          } catch (e) {}
-        }
-      }, [highlight, showCalendar]);
-      useEffect(() => {
-        // Retry open with slight delay for stubborn browsers/environments
-        if (highlight && buttonRef && buttonRef.current && !showCalendar) {
-          const t = setTimeout(() => {
-            try {
-              if (!showCalendar) {
-                buttonRef.current.click();
-              }
-            } catch (e) {}
-          }, 120);
-          return () => clearTimeout(t);
-        }
-      }, [highlight]);
-
-
     return picks;
   };
-
-  // Auto-focus button when highlight becomes true (to "take me" to next step)
-  useEffect(() => {
-    if (highlight && buttonRef && buttonRef.current) {
-      try { buttonRef.current.focus(); } catch (e) {}
-    }
-  }, [highlight]);
-
-  // Auto-open (Safari-safe) when token increments
-  useEffect(() => {
-    if (autoOpenToken > 0) {
-      // Safari-safe approach: Focus + Click + Delayed retry for stubborn browsers
-      const safariSafeOpen = () => {
-        try {
-          if (buttonRef && buttonRef.current) {
-            buttonRef.current.focus();
-            // Small delay then trigger click for Safari compatibility
-            setTimeout(() => {
-              try {
-                if (!showCalendar) {
-                  buttonRef.current.click();
-                }
-              } catch (e) {}
-              // Final fallback - direct state setting
-              setTimeout(() => {
-                try {
-                  if (!showCalendar) {
-                    setShowCalendar(true);
-                  }
-                } catch (e) {}
-              }, 100);
-            }, 50);
-          }
-        } catch (e) {}
-      };
-      
-      setTimeout(safariSafeOpen, 0);
-    }
-  }, [autoOpenToken]);
-
 
   const formatDisplayDate = (dateStr) => {
     if (!dateStr) return 'Select Date';
