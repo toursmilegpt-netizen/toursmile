@@ -216,6 +216,23 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   const dateRef = useRef(null);
   const departButtonRef = useRef(null);
   const returnButtonRef = useRef(null);
+  // Auto-open homepage date pickers when cities/dates change (Safari-safe triggers)
+  useEffect(() => {
+    const origin = searchData.segments?.[0]?.origin;
+    const dest = searchData.segments?.[0]?.destination;
+    const dep = searchData.segments?.[0]?.departureDate;
+    if (origin && dest && !dep) {
+      setDepAutoOpenToken(t => t + 1);
+    }
+  }, [searchData.segments?.[0]?.destination]);
+
+  useEffect(() => {
+    const dep = searchData.segments?.[0]?.departureDate;
+    if (searchData.tripType === 'return' && dep && !searchData.returnDate) {
+      setRetAutoOpenToken(t => t + 1);
+    }
+  }, [searchData.segments?.[0]?.departureDate, searchData.tripType]);
+
 
   useEffect(() => {
     // Set tomorrow as default departure date
