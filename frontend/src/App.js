@@ -1048,6 +1048,183 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   );
 };
 
+// Promotional Integration Component (Priority 2 Feature)
+const PromotionalBanner = ({ onPromoApply, compact = false }) => {
+  const [promoCode, setPromoCode] = useState('');
+  const [appliedPromo, setAppliedPromo] = useState(null);
+  const [showPromoInput, setShowPromoInput] = useState(false);
+
+  // Active promotional campaigns (Priority 2 Feature)
+  const activePromotions = [
+    {
+      id: 'NEWUSER50',
+      title: '50% OFF',
+      description: 'First booking discount',
+      code: 'NEWUSER50',
+      discount: '₹2,500 off',
+      type: 'percentage',
+      value: 50,
+      icon: '🎉',
+      bgColor: 'from-green-400 to-green-600'
+    },
+    {
+      id: 'WEEKEND25',
+      title: '25% OFF',
+      description: 'Weekend getaway special',
+      code: 'WEEKEND25',
+      discount: 'Up to ₹1,500 off',
+      type: 'percentage',
+      value: 25,
+      icon: '🌴',
+      bgColor: 'from-blue-400 to-blue-600'
+    },
+    {
+      id: 'FLASH500',
+      title: '₹500 OFF',
+      description: 'Flash sale - Limited time',
+      code: 'FLASH500',
+      discount: '₹500 instant discount',
+      type: 'fixed',
+      value: 500,
+      icon: '⚡',
+      bgColor: 'from-orange-400 to-red-500'
+    }
+  ];
+
+  const [currentPromotion] = useState(activePromotions[0]); // Rotate or show based on logic
+
+  const handlePromoApply = () => {
+    // Mock promo validation
+    const validPromo = activePromotions.find(p => p.code.toLowerCase() === promoCode.toLowerCase());
+    
+    if (validPromo) {
+      setAppliedPromo(validPromo);
+      setShowPromoInput(false);
+      onPromoApply?.(validPromo);
+    } else {
+      // Invalid promo code handling
+      setAppliedPromo({ error: 'Invalid promo code' });
+      setTimeout(() => setAppliedPromo(null), 3000);
+    }
+  };
+
+  if (compact) return null; // Don't show in compact mode
+
+  return (
+    <div className="promotional-section space-y-3 mb-4">
+      {/* Main Promotional Banner */}
+      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-r ${currentPromotion.bgColor} p-4 text-white shadow-lg promotional-banner`}>
+        <div className="relative z-10">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <span className="text-2xl animate-pulse">{currentPromotion.icon}</span>
+              <div>
+                <div className="text-lg font-bold">{currentPromotion.title}</div>
+                <div className="text-sm opacity-90">{currentPromotion.description}</div>
+                <div className="text-xs opacity-75 mt-1">Code: {currentPromotion.code}</div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-xl font-bold">{currentPromotion.discount}</div>
+              <button
+                onClick={() => {
+                  setPromoCode(currentPromotion.code);
+                  setShowPromoInput(true);
+                }}
+                className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-all"
+              >
+                Apply Now
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full -translate-y-16 translate-x-16"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-8 -translate-x-8"></div>
+        </div>
+      </div>
+
+      {/* Promo Code Input Section */}
+      <div className="bg-gray-50 rounded-xl p-3 border border-gray-200">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <span className="text-lg">🏷️</span>
+            <span className="text-sm font-medium text-gray-700">Have a promo code?</span>
+          </div>
+          <button
+            onClick={() => setShowPromoInput(!showPromoInput)}
+            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+          >
+            {showPromoInput ? 'Hide' : 'Enter Code'}
+          </button>
+        </div>
+        
+        {/* Promo Code Input */}
+        {showPromoInput && (
+          <div className="mt-3 space-y-2">
+            <div className="flex space-x-2">
+              <input
+                type="text"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                placeholder="Enter promo code"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <button
+                onClick={handlePromoApply}
+                disabled={!promoCode.trim()}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+              >
+                Apply
+              </button>
+            </div>
+            
+            {/* Applied Promo Status */}
+            {appliedPromo && (
+              <div className={`text-sm p-2 rounded-lg ${
+                appliedPromo.error 
+                  ? 'bg-red-50 text-red-700 border border-red-200' 
+                  : 'bg-green-50 text-green-700 border border-green-200'
+              }`}>
+                {appliedPromo.error ? (
+                  <div className="flex items-center space-x-1">
+                    <span>❌</span>
+                    <span>{appliedPromo.error}</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-1">
+                    <span>✅</span>
+                    <span>Promo applied! You'll save {appliedPromo.discount}</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Small Promotional Pills */}
+      <div className="flex items-center space-x-2 overflow-x-auto pb-1">
+        <span className="text-xs text-gray-500 whitespace-nowrap">Quick codes:</span>
+        {activePromotions.slice(1).map((promo) => (
+          <button
+            key={promo.id}
+            onClick={() => {
+              setPromoCode(promo.code);
+              handlePromoApply();
+            }}
+            className="whitespace-nowrap px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200 transition-colors"
+          >
+            {promo.code}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // Passenger Selector Component with Adults, Children, Infants
 const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassChange, autoOpenToken = 0, highlight = false }) => {
   const [showDropdown, setShowDropdown] = useState(false);
