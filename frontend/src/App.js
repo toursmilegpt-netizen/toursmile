@@ -979,6 +979,18 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
           try { buttonRef.current.focus(); } catch (e) {}
         }
       }, [highlight]);
+  // Auto-open (Safari-safe) when token increments
+  useEffect(() => {
+    if (autoOpenToken > 0 && buttonRef && buttonRef.current) {
+      try { buttonRef.current.focus(); } catch (e) {}
+      try { buttonRef.current.click(); } catch (e) {}
+      const t = setTimeout(() => {
+        try { buttonRef.current.click(); } catch (e) {}
+      }, 120);
+      return () => clearTimeout(t);
+    }
+  }, [autoOpenToken]);
+
 
   const formatDisplayDate = (dateStr) => {
     if (!dateStr) return 'Select Date';
