@@ -22,10 +22,17 @@
     max-width: 100vw !important;
   }
   
-  /* Hide content below search form on mobile */
-  .mt-16 { display: none !important; }
-  .mt-12 { display: none !important; }
-  .mt-8 { display: none !important; }
+  /* Hide ALL content below search form on mobile */
+  .mt-16, .mt-12, .mt-8, .mt-6, .mt-4 { display: none !important; }
+  .py-16, .py-12, .py-8, .py-6 { display: none !important; }
+  
+  /* Hide specific sections that appear below search form */
+  h2:has-text("Popular Destinations"), 
+  [class*="popular"],
+  [class*="destination"],
+  .bg-orange-500,
+  .bg-gradient-to-r.from-orange-400,
+  section:not(:first-child) { display: none !important; }
   
   /* Reduce calendar popup size on mobile and make it overlay */
   .calendar-container { 
@@ -67,6 +74,10 @@
   /* Ensure mobile form takes up minimal vertical space */
   body { overflow-x: hidden !important; }
   .min-h-screen { min-height: 100vh !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+  
+  /* Force hide any remaining sections below the main search form */
+  main > div:nth-child(n+3) { display: none !important; }
+  .container > div:nth-child(n+3) { display: none !important; }
 }
 
 /* Compact date picker tweaks for consistent sizing on desktop and mobile */
