@@ -690,6 +690,14 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
     }
   }, [showDropdown]);
 
+  useEffect(() => {
+    if (autoOpenToken > 0) {
+      try {
+        setShowDropdown(true);
+      } catch (e) {}
+    }
+  }, [autoOpenToken]);
+
   const updatePassengerCount = (type, increment) => {
     const newPassengers = { ...passengers };
     
