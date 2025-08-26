@@ -19,9 +19,16 @@
 }
 
 /* Compact date picker tweaks for consistent sizing on desktop and mobile */
-.date-picker-compact .date-picker-header { font-size: 0.95rem; }
-.date-picker-compact .calendar-container { max-width: 22rem; }
-.date-picker-compact .day-cell { min-width: 2rem; min-height: 2rem; }
+.date-picker-compact .date-picker-header { font-size: 0.875rem; padding: 0.25rem; }
+.date-picker-compact .calendar-container { max-width: 20rem; max-height: 16rem; overflow-y: auto; }
+.date-picker-compact .day-cell { min-width: 1.75rem; min-height: 1.75rem; font-size: 0.75rem; }
+
+/* Mobile-specific calendar optimizations */
+@media (max-width: 768px) {
+  .date-picker-compact .calendar-container { max-width: 18rem !important; max-height: 14rem !important; }
+  .date-picker-compact .day-cell { min-width: 1.5rem !important; min-height: 1.5rem !important; font-size: 0.625rem !important; }
+  .date-picker-compact .date-picker-header { font-size: 0.75rem !important; padding: 0.125rem !important; }
+}
 .animate-soft-pulse { animation: softPulse 1.6s ease-in-out infinite; }
 @keyframes softPulse { 0% { box-shadow: 0 0 0 0 rgba(59,130,246,.3); } 70% { box-shadow: 0 0 0 8px rgba(59,130,246,0); } 100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); } }
 
