@@ -1257,6 +1257,42 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
 // Enhanced Flexible Calendar Date Picker Component (Priority 2 Feature)
 const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeSelect, enableRangeChips = false, highlight = false, buttonRef = null, autoOpenToken = 0, enableFlexibleDates = false, origin = '', destination = '' }) => {
   const [showCalendar, setShowCalendar] = useState(false);
+  const [flexibleRange, setFlexibleRange] = useState(null); // ±3 days from selected date
+  const [priceData, setPriceData] = useState({}); // Mock price data for dates
+  
+  // Mock price data generator for flexible dates
+  useEffect(() => {
+    if (enableFlexibleDates && origin && destination) {
+      const mockPrices = {};
+      for (let i = -3; i <= 10; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() + i);
+        const dateStr = date.toISOString().split('T')[0];
+        
+        // Mock price generation with some variation
+        const basePrice = 4500;
+        const variation = Math.floor(Math.random() * 2000) - 1000; // ±1000
+        mockPrices[dateStr] = Math.max(basePrice + variation, 2500);
+      }
+      setPriceData(mockPrices);
+    }
+  }, [enableFlexibleDates, origin, destination]);
+  
+  // Calculate flexible date range (±3 days)
+  useEffect(() => {
+    if (enableFlexibleDates && value) {
+      const selectedDate = new Date(value);
+      const range = [];
+      for (let i = -3; i <= 3; i++) {
+        const rangeDate = new Date(selectedDate);
+        rangeDate.setDate(selectedDate.getDate() + i);
+        range.push(rangeDate);
+      }
+      setFlexibleRange(range);
+    } else {
+      setFlexibleRange(null);
+    }
+  }, [enableFlexibleDates, value]);
   
   // Debug wrapper for setShowCalendar
   const setShowCalendarDebug = (value) => {
