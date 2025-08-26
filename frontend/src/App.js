@@ -1063,7 +1063,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
     const dateStr = date.toISOString().split('T')[0];
     onChange(dateStr);
     setManuallyClosing(true);
-    setShowCalendar(false);
+    setShowCalendarDebug(false);
     // Reset manually closing flag after a delay
     setTimeout(() => setManuallyClosing(false), 1000);
     console.log('🔍 setShowCalendar(false) called');
