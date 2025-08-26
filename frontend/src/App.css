@@ -97,6 +97,69 @@
   }
 }
 
+/* Enhanced Trip Type Tabs - Mobile First */
+.trip-type-tab {
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Mobile trip type animations */
+@media (max-width: 768px) {
+  .trip-type-tab:active {
+    transform: scale(0.95);
+  }
+  
+  .trip-type-tab.active {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.25), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
+  }
+  
+  /* Mobile tab indicator animation */
+  .trip-type-indicator {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      width: 0;
+      opacity: 0;
+    }
+    to {
+      width: 2rem;
+      opacity: 1;
+    }
+  }
+}
+
+/* Desktop trip type hover effects */
+@media (min-width: 769px) {
+  .trip-type-tab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px -5px rgba(59, 130, 246, 0.15);
+  }
+  
+  .trip-type-tab:active {
+    transform: translateY(0);
+  }
+  
+  .trip-type-tab.active {
+    box-shadow: 0 8px 25px -5px rgba(59, 130, 246, 0.25), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
+  }
+}
+
+/* Trip type icons animation */
+.trip-type-tab span:first-child {
+  transition: transform 0.2s ease-in-out;
+}
+
+.trip-type-tab:hover span:first-child,
+.trip-type-tab:active span:first-child {
+  transform: scale(1.2);
+}
+
+.trip-type-tab.active span:first-child {
+  transform: scale(1.1);
+}
+
 /* Mobile-specific calendar optimizations */
 @media (max-width: 768px) {
   .date-picker-compact .calendar-container { 
