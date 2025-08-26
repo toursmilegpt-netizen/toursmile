@@ -1481,6 +1481,15 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
       const isToday = date.toDateString() === today.toDateString();
       const isPast = date < minDateTime;
       const isSelected = value && date.toISOString().split('T')[0] === value;
+      const dateStr = date.toISOString().split('T')[0];
+      
+      // Check if this date is in flexible range
+      const isInFlexibleRange = flexibleRange && flexibleRange.some(
+        rangeDate => rangeDate.toDateString() === date.toDateString()
+      );
+      
+      // Get price for this date
+      const price = priceData[dateStr];
       
       days.push({
         date: date,
@@ -1488,7 +1497,9 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
         isCurrentMonth,
         isToday,
         isPast,
-        isSelected
+        isSelected,
+        isInFlexibleRange,
+        price: price || null
       });
     }
     
