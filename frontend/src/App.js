@@ -1160,7 +1160,7 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
                     setShowCalendar(false);
                   }
                 }}
-                className={`whitespace-nowrap px-2.5 py-1.5 rounded-full text-xs border transition-colors ${
+                className={`whitespace-nowrap px-2 py-1 rounded-full text-xs border transition-colors ${
                   p.disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-blue-200 text-blue-700 hover:bg-blue-50'
                 }`}
               >
