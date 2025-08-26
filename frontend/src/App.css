@@ -1151,3 +1151,78 @@ input[type="checkbox"]:focus {
     transform: scale(1);
   }
 }
+
+/* Promotional Banner Animations (Priority 2 Feature) */
+.promotional-banner {
+  animation: slideInFromTop 0.6s ease-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promotional-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Promotional Section Animation */
+.promotional-section {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Flexible Date Range Indicators */
+.flexible-date-highlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.flexible-date-highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Smart Autocomplete Enhancements */
+.recent-search-item {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.recent-search-item::before {
+  content: '🕒';
+  margin-right: 8px;
+  opacity: 0.6;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
