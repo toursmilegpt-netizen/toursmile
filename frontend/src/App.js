@@ -653,7 +653,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
 };
 
 // Passenger Selector Component with Adults, Children, Infants
-const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassChange }) => {
+const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassChange, autoOpenToken = 0, highlight = false }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
