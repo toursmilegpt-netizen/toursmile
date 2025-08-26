@@ -385,7 +385,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
         </div>
 
         {/* Route Selection - Different Logic for Each Trip Type */}
-        <div className="space-y-4 mb-4">
+        <div className="space-y-3 mb-3">
           {searchData.tripType === 'multi-city' ? (
             // Multi-city: Show all segments with inline dates
             searchData.segments.map((segment, index) => (
