@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Backend API Testing Suite for TourSmile AI Travel Platform
-Focus: Flight Search Backend Functionality Testing as per Review Request
+Focus: Backend Service Health Check after Homepage UI/UX Guidance Fixes
+Review Request: Test backend functionality after frontend changes to ensure services are operational
 """
 
 import requests
@@ -31,8 +32,9 @@ if not BACKEND_URL:
     exit(1)
 
 API_BASE = f"{BACKEND_URL}/api"
-print(f"🎯 FLIGHT SEARCH BACKEND TESTING")
+print(f"🎯 BACKEND SERVICE HEALTH CHECK AFTER HOMEPAGE UI/UX FIXES")
 print(f"Testing backend at: {API_BASE}")
+print("Review Request: Verify backend services operational after frontend changes")
 print("=" * 80)
 
 class BackendTester:
