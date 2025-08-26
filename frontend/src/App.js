@@ -793,7 +793,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                         <span className="text-blue-600">💡</span>
                         <span className="text-blue-800 font-medium">Round trips often cost less than one-way tickets</span>
                         <span className="text-blue-600">•</span>
-                        <span className="text-green-600 font-semibold">Save up to 15%</span>
+                        <span className="text-green-600 font-semibold savings-highlight">Save up to 15%</span>
                       </div>
                       <button
                         onClick={() => returnButtonRef.current?.click()}
