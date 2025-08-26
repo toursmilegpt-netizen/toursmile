@@ -2150,32 +2150,41 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
           <div className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-2xl max-h-96 overflow-y-auto">
             {inputValue.length === 0 && (
               <div className="px-4 py-2 bg-blue-50 border-b border-blue-100">
-                <div className="text-sm font-medium text-blue-800">Popular Destinations</div>
-              </div>
-            )}
-            {suggestions.map((airport) => (
-              <div
-                key={`${airport.code}-${airport.name}`}
-                onClick={() => selectCity(airport)}
-                className="px-4 py-4 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-all duration-150"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center">
-                      <div className="font-semibold text-gray-900">{airport.name}</div>
-                      {airport.popular && (
-                        <span className="ml-2 px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded-full">Popular</span>
-                      )}
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1">{airport.fullName}</div>
-                    <div className="text-xs text-gray-500">{airport.country}</div>
-                  </div>
-                  <div className="text-sm font-mono bg-gray-100 px-3 py-1 rounded-lg text-gray-600">
-                    {airport.code}
-                  </div>
+                <div className="text-sm font-medium text-blue-800">
+                  {recentSearches.length > 0 ? 'Recent & Popular Destinations' : 'Popular Destinations'}
                 </div>
               </div>
-            ))}
+            )}
+            {suggestions.map((airport) => {
+              const isRecentSearch = recentSearches.includes(airport.name);
+              return (
+                <div
+                  key={`${airport.code}-${airport.name}`}
+                  onClick={() => selectCity(airport)}
+                  className={`px-4 py-4 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-all duration-150 ${isRecentSearch ? 'recent-search-item bg-gradient-to-r from-blue-50 to-white' : ''}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center">
+                        {isRecentSearch && <span className="mr-2 text-blue-500">🕒</span>}
+                        <div className="font-semibold text-gray-900">{airport.name}</div>
+                        {airport.popular && (
+                          <span className="ml-2 px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded-full">Popular</span>
+                        )}
+                        {isRecentSearch && (
+                          <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">Recent</span>
+                        )}
+                      </div>
+                      <div className="text-sm text-gray-600 mt-1">{airport.fullName}</div>
+                      <div className="text-xs text-gray-500">{airport.country}</div>
+                    </div>
+                    <div className="text-sm font-mono bg-gray-100 px-3 py-1 rounded-lg text-gray-600">
+                      {airport.code}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
