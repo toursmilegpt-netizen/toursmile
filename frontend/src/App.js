@@ -10,7 +10,7 @@ import BookingConfirmation from "./BookingConfirmation";
 
 // For development - set to true to show coming soon page
 // For beta subdomain, always show the full booking system
-const SHOW_COMING_SOON = window.location.hostname !== 'beta.vimanpravas.com';
+const SHOW_COMING_SOON = false; // Always show full booking system
 
 // Check for development override in URL parameters
 const urlParams = new URLSearchParams(window.location.search);
