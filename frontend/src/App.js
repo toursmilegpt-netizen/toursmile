@@ -692,9 +692,19 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
 
   useEffect(() => {
     if (autoOpenToken > 0) {
-      try {
-        setShowDropdown(true);
-      } catch (e) {}
+      // Multiple attempts for maximum reliability across all browsers
+      const attemptOpen = () => {
+        try {
+          setShowDropdown(true);
+        } catch (e) {}
+      };
+      
+      // Immediate attempt
+      attemptOpen();
+      
+      // Delayed attempts for stubborn browsers
+      setTimeout(attemptOpen, 50);
+      setTimeout(attemptOpen, 150);
     }
   }, [autoOpenToken]);
 
