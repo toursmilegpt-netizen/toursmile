@@ -40,6 +40,27 @@
 .date-picker-compact .calendar-container { max-width: 20rem; max-height: 16rem; overflow-y: auto; }
 .date-picker-compact .day-cell { min-width: 1.75rem; min-height: 1.75rem; font-size: 0.75rem; }
 
+/* Swap button animations */
+.swap-button {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.swap-button:hover {
+  transform: scale(1.1) rotate(180deg);
+}
+
+.swap-button:active {
+  transform: scale(0.95) rotate(180deg);
+}
+
+.swap-button svg {
+  transition: transform 0.3s ease-in-out;
+}
+
+.swap-button:hover svg {
+  transform: rotate(180deg);
+}
+
 /* Mobile-specific calendar optimizations */
 @media (max-width: 768px) {
   .date-picker-compact .calendar-container { 
