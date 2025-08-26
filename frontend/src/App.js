@@ -487,9 +487,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
         {searchData.tripType !== 'multi-city' && (
           <div className={`grid ${
             searchData.tripType === 'return' 
-              ? 'grid-cols-1 md:grid-cols-2' 
-              : 'grid-cols-1'
-          } gap-4 mb-4`}>
+              ? 'grid-cols-2' 
+              : 'grid-cols-2'
+          } gap-3 mb-3 md:grid-cols-2`}>
             
             {/* Departure Date - Always Present for One-Way and Round-Trip */}
             <div>
