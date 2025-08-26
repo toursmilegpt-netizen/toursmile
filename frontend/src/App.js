@@ -543,7 +543,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
 
         {/* Passengers & Class Selection */}
         {searchData.tripType !== 'multi-city' && (
-          <div className="mb-2 md:mb-4">
+          <div className="mb-2 md:mb-3">
             <PassengerSelector 
               passengers={searchData.passengers}
               classType={searchData.class}
