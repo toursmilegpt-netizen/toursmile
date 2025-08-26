@@ -903,6 +903,7 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
 const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeSelect, enableRangeChips = false, highlight = false, buttonRef = null, autoOpenToken = 0 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [autoOpened, setAutoOpened] = useState(false);
+  const [manuallyClosing, setManuallyClosing] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const calendarRef = useRef(null);
 
