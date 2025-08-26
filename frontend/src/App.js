@@ -1264,8 +1264,8 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
   const handleInputChange = (e) => {
     const input = e.target.value;
     setInputValue(input);
-    // Remove onChange(input) call - only call onChange when city is selected from dropdown
-
+    
+    // Debounced search to improve performance
     if (input.length > 0) {
       // Build a combined pool including airports plus multi-airport city variants
       const pool = [
@@ -1330,7 +1330,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
         })
         .slice(0, 6);
       setSuggestions(popular);
-      setShowSuggestions(input.length === 0);
+      setShowSuggestions(true); // Always show suggestions on empty input
     }
   };
 
