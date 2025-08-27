@@ -1115,7 +1115,6 @@ const PromotionalBanner = ({ onPromoApply, compact = false }) => {
     
     if (validPromo) {
       setAppliedPromo(validPromo);
-      setShowPromoInput(false);
       onPromoApply?.(validPromo);
     } else {
       // Invalid promo code handling
