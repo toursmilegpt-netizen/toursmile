@@ -1127,7 +1127,17 @@ const PromotionalBanner = ({ onPromoApply, compact = false }) => {
     }
   };
 
-  if (compact) return null; // Don't show in compact mode
+  if (compact) {
+    // Simplified promotional display for compact mode
+    return (
+      <div className="promotional-section mb-2">
+        <div className="bg-gradient-to-r from-green-400 to-green-600 rounded-lg p-2 text-white text-center text-sm">
+          <span className="font-bold">🎉 50% OFF First Booking!</span>
+          <span className="ml-2 text-xs">Code: NEWUSER50</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="promotional-section space-y-3 mb-4">
