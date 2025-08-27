@@ -957,17 +957,15 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
         </button>
 
         {/* Promotional Integration (Priority 2 Feature) */}
-        {!compact && (
-          <div className="mt-4">
-            <PromotionalBanner 
-              compact={compact}
-              onPromoApply={(promo) => {
-                console.log('Promo applied:', promo);
-                // Handle promo application logic
-              }}
-            />
-          </div>
-        )}
+        <div className="mt-4">
+          <PromotionalBanner 
+            compact={compact}
+            onPromoApply={(promo) => {
+              console.log('Promo applied:', promo);
+              // Handle promo application logic
+            }}
+          />
+        </div>
 
         {/* Trending Searches - Mobile First */}
         {!compact && (
