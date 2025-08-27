@@ -1202,7 +1202,8 @@ const PromotionalBanner = ({ onPromoApply, compact = false }) => {
               <button
                 onClick={() => {
                   setPromoCode(currentPromotion.code);
-                  setShowPromoInput(true);
+                  // Auto-apply the promo when clicked
+                  setTimeout(() => handlePromoApply(), 100);
                 }}
                 className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-all"
               >
