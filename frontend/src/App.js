@@ -1069,7 +1069,6 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
 const PromotionalBanner = ({ onPromoApply, compact = false }) => {
   const [promoCode, setPromoCode] = useState('');
   const [appliedPromo, setAppliedPromo] = useState(null);
-  const [showPromoInput, setShowPromoInput] = useState(false);
 
   // Active promotional campaigns (Priority 2 Feature)
   const activePromotions = [
