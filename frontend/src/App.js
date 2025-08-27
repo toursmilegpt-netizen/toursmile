@@ -1126,12 +1126,60 @@ const PromotionalBanner = ({ onPromoApply, compact = false }) => {
   };
 
   if (compact) {
-    // Simplified promotional display for compact mode
+    // Enhanced promotional display for compact mode with promo code input
     return (
-      <div className="promotional-section mb-2">
-        <div className="bg-gradient-to-r from-green-400 to-green-600 rounded-lg p-2 text-white text-center text-sm">
-          <span className="font-bold">🎉 50% OFF First Booking!</span>
-          <span className="ml-2 text-xs">Code: NEWUSER50</span>
+      <div className="promotional-section mb-3 space-y-2">
+        <div className="bg-gradient-to-r from-green-400 to-green-600 rounded-lg p-3 text-white text-center">
+          <div className="font-bold text-sm">🎉 50% OFF First Booking!</div>
+          <div className="text-xs mt-1">Code: NEWUSER50</div>
+        </div>
+        
+        {/* Compact Promo Code Input */}
+        <div className="bg-gray-50 rounded-lg p-2 border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-medium text-gray-700">🏷️ Have a promo code?</span>
+            <button
+              onClick={() => setShowPromoInput(!showPromoInput)}
+              className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+            >
+              {showPromoInput ? 'Hide' : 'Enter'}
+            </button>
+          </div>
+          
+          {showPromoInput && (
+            <div className="space-y-2">
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                  placeholder="Enter promo code"
+                  className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <button
+                  onClick={handlePromoApply}
+                  disabled={!promoCode.trim()}
+                  className="px-3 py-1 bg-blue-600 text-white rounded text-xs font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                >
+                  Apply
+                </button>
+              </div>
+              
+              {appliedPromo && (
+                <div className={`text-xs p-2 rounded ${
+                  appliedPromo.error 
+                    ? 'bg-red-50 text-red-700 border border-red-200' 
+                    : 'bg-green-50 text-green-700 border border-green-200'
+                }`}>
+                  {appliedPromo.error ? (
+                    <span>❌ {appliedPromo.error}</span>
+                  ) : (
+                    <span>✅ Promo applied! You'll save {appliedPromo.discount}</span>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     );
