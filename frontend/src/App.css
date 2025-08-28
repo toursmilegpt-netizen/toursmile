@@ -202,7 +202,6 @@
     max-height: 200px !important;
     overflow-y: auto !important;
   }
-}
 
 /* Compact date picker tweaks for consistent sizing on desktop and mobile */
 .date-picker-compact .date-picker-header { font-size: 0.875rem; padding: 0.25rem; }
