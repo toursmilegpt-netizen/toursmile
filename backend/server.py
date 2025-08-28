@@ -21,9 +21,9 @@ from popular_trips_routes import router as popular_trips_router
 from enhanced_chat_service import ExpertTravelConsultantChat
 from destinations_routes import router as destinations_router
 
-# Waitlist and Booking Management - PostgreSQL (ENABLED FOR PRODUCTION)
-from waitlist_routes_pg import router as waitlist_router
-from booking_routes_pg import router as booking_router
+# Waitlist and Booking Management - MongoDB (ENABLED FOR EMERGENT DEPLOYMENT)
+from waitlist_routes import router as waitlist_router
+from booking_routes import router as booking_router
 
 # TourBuilder - Auto package generator (ENABLED FOR PRODUCTION)
 from tourbuilder import router as tourbuilder_router
