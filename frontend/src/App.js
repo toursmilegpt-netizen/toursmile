@@ -230,11 +230,11 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
     }
   };
 
-  // ClearTrip-Style Mobile-First Design - FULL WIDTH EDGE TO EDGE
+  // BRAND NEW LIGHT MOBILE-FIRST DESIGN - COMPLETELY REBUILT
   return (
-    <div className="w-full flex justify-center">
-      {/* Full-Width Card - CENTERED and EDGE TO EDGE on Mobile */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 w-full mx-0 md:mx-auto md:max-w-4xl md:rounded-2xl search-form-container overflow-hidden">
+    <div className="w-full">
+      {/* NEW LIGHT MOBILE DESIGN - EDGE TO EDGE */}
+      <div className="mobile-search-form w-full bg-white shadow-sm border-t border-gray-100">
         
         {/* Trip Type Tabs - Compact Mobile */}
         <div className="bg-gray-50 border-b border-gray-100 px-3 py-2 md:px-4 md:py-3">
