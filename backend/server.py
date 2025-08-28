@@ -41,9 +41,8 @@ from hotel_booking_routes import router as hotel_router
 from admin_auth import router as admin_auth_router
 from admin_dashboard import router as admin_dashboard_router
 
-# Database configuration (ENABLED FOR EMERGENT DEPLOYMENT - MongoDB)
-# PostgreSQL setup disabled for Emergent deployment
-# from database import create_tables, test_connection
+# Database configuration (ENABLED FOR PRODUCTION)
+from database import create_tables, test_connection
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
