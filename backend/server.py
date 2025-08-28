@@ -41,22 +41,23 @@ from hotel_booking_routes import router as hotel_router
 from admin_auth import router as admin_auth_router
 from admin_dashboard import router as admin_dashboard_router
 
-# Database configuration (ENABLED FOR PRODUCTION)
-from database import create_tables, test_connection
+# Database configuration (TEMPORARILY DISABLED FOR TESTING)
+# from database import create_tables, test_connection
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# Initialize database on startup (ENABLED FOR PRODUCTION)
-print("🔄 Initializing PostgreSQL database...")
-try:
-    if test_connection():
-        create_tables()
-        print("✅ PostgreSQL database initialized successfully!")
-    else:
-        print("❌ Database initialization failed! Continuing without database...")
-except Exception as e:
-    print(f"❌ Database initialization error: {e}. Continuing without database...")
+# Initialize database on startup (TEMPORARILY DISABLED FOR TESTING)
+print("🔄 PostgreSQL database initialization temporarily disabled for testing...")
+print("⚠️ Running in fallback mode without PostgreSQL database...")
+# try:
+#     if test_connection():
+#         create_tables()
+#         print("✅ PostgreSQL database initialized successfully!")
+#     else:
+#         print("❌ Database initialization failed! Continuing without database...")
+# except Exception as e:
+#     print(f"❌ Database initialization error: {e}. Continuing without database...")
 
 # OpenAI API Key
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
