@@ -2124,22 +2124,22 @@ function App() {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-8 md:space-x-12">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
-                <span className="text-lg font-semibold text-gray-900">Instant</span>
+                <span className="text-sm font-medium text-gray-700">Instant</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
-                <span className="text-lg font-semibold text-gray-900">Secure</span>
+                <span className="text-sm font-medium text-gray-700">Secure</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
-                <span className="text-lg font-semibold text-gray-900">Easy</span>
+                <span className="text-sm font-medium text-gray-700">Easy</span>
               </div>
             </div>
           </div>
