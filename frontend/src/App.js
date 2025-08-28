@@ -186,6 +186,247 @@ const MULTI_AIRPORT_CITIES = {
 
 // Guided Search Form Component with Progressive Disclosure
 const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
+  // All existing state and functions remain the same...
+  const [searchData, setSearchData] = useState({
+    tripType: 'one-way',
+    segments: [{ origin: '', destination: '', departureDate: '' }],
+    returnDate: '',
+    passengers: { adults: 1, children: 0, infants: 0 },
+    classType: 'economy',
+    preferences: { nonStop: false, student: false, senior: false, armed: false, flexibleDates: false, nearbyAirports: false, corporateBooking: false }
+  });
+
+  const [showPassengerDropdown, setShowPassengerDropdown] = useState(false);
+  const [depAutoOpenToken, setDepAutoOpenToken] = useState(0);
+  const [retAutoOpenToken, setRetAutoOpenToken] = useState(0);
+  const [passengersAutoOpenToken, setPassengersAutoOpenToken] = useState(0);
+
+  const departButtonRef = useRef(null);
+  const returnButtonRef = useRef(null);
+  const passengerButtonRef = useRef(null);
+
+  const canSwap = searchData.segments[0]?.origin && searchData.segments[0]?.destination;
+
+  const swapCities = () => {
+    if (canSwap) {
+      const newSegments = [...searchData.segments];
+      const temp = newSegments[0].origin;
+      newSegments[0].origin = newSegments[0].destination;
+      newSegments[0].destination = temp;
+      setSearchData({...searchData, segments: newSegments});
+    }
+  };
+
+  const updateSegment = (index, field, value) => {
+    const newSegments = [...searchData.segments];
+    if (!newSegments[index]) newSegments[index] = {};
+    newSegments[index][field] = value;
+    setSearchData({...searchData, segments: newSegments});
+  };
+
+  const handleSearch = () => {
+    if (onSearch && !isSearching) {
+      onSearch(searchData);
+    }
+  };
+
+  // ClearTrip-Style Mobile-First Design
+  return (
+    <div className="w-full">
+      {/* Full-Width Card - ClearTrip Style */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 mx-3 md:mx-auto md:max-w-4xl overflow-hidden">
+        
+        {/* Trip Type Tabs - Full Width */}
+        <div className="bg-gray-50 border-b border-gray-100 px-4 py-3">
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
+              className={`flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                searchData.tripType === 'one-way' 
+                  ? 'bg-blue-600 text-white shadow-md' 
+                  : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
+              }`}
+            >
+              One Way
+            </button>
+            
+            <button
+              onClick={() => setSearchData({...searchData, tripType: 'return'})}
+              className={`flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                searchData.tripType === 'return' 
+                  ? 'bg-blue-600 text-white shadow-md' 
+                  : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
+              }`}
+            >
+              Round Trip
+            </button>
+            
+            <button
+              onClick={() => setSearchData({...searchData, tripType: 'multi-city'})}
+              className={`flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                searchData.tripType === 'multi-city' 
+                  ? 'bg-blue-600 text-white shadow-md' 
+                  : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
+              }`}
+            >
+              Multi-City
+            </button>
+          </div>
+        </div>
+
+        {/* Form Content */}
+        <div className="p-4 space-y-4">
+          
+          {/* From/To Section - ClearTrip Horizontal Layout */}
+          <div className="space-y-3">
+            <div className="flex items-end gap-3">
+              {/* From Field */}
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">FROM</label>
+                <CityAutocomplete
+                  label="From"
+                  placeholder="Delhi"
+                  value={searchData.segments[0]?.origin || ''}
+                  onChange={(city) => updateSegment(0, 'origin', city)}
+                  airports={AIRPORTS_DATABASE}
+                  excludeCity={searchData.segments[0]?.destination}
+                  autoFocus={true}
+                  highlight={!searchData.segments[0]?.origin}
+                />
+              </div>
+
+              {/* Professional Swap Button - ClearTrip Style */}
+              <div className="flex-shrink-0 pb-1">
+                <button
+                  type="button"
+                  onClick={swapCities}
+                  disabled={!canSwap}
+                  style={{
+                    opacity: canSwap ? 1 : 0.3
+                  }}
+                  className="bg-blue-50 border-2 border-blue-200 rounded-full p-2.5 hover:bg-blue-100 hover:border-blue-300 transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  aria-label="Swap cities"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
+                    <path d="M7 16l3 3 3-3M14 8l-3-3-3 3"/>
+                    <path d="M10 19V5M14 5v14"/>
+                  </svg>
+                </button>
+              </div>
+
+              {/* To Field */}
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">TO</label>
+                <CityAutocomplete
+                  label="To"
+                  placeholder="Mumbai"
+                  value={searchData.segments[0]?.destination || ''}
+                  onChange={(city) => { updateSegment(0, 'destination', city); setDepAutoOpenToken(t => t + 1); }}
+                  airports={AIRPORTS_DATABASE}
+                  excludeCity={searchData.segments[0]?.origin}
+                  highlight={searchData.segments[0]?.origin && !searchData.segments[0]?.destination}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Date Selection - ClearTrip Style */}
+          <div className="space-y-3">
+            <div className={`grid gap-3 ${searchData.tripType === 'return' ? 'grid-cols-2' : 'grid-cols-1'}`}>
+              {/* Departure Date */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">DEPARTURE</label>
+                <SimpleDatePicker
+                  value={searchData.segments[0]?.departureDate || ''}
+                  onChange={(date) => { updateSegment(0, 'departureDate', date); if (searchData.tripType === 'return') { setRetAutoOpenToken(t => t + 1); } else { setPassengersAutoOpenToken(t => t + 1); } }}
+                  label="Departure Date"
+                  minDate={new Date().toISOString().split('T')[0]}
+                  highlight={searchData.segments[0]?.origin && searchData.segments[0]?.destination && !searchData.segments[0]?.departureDate}
+                  buttonRef={departButtonRef}
+                  autoOpenToken={depAutoOpenToken}
+                  enableFlexibleDates={searchData.preferences.flexibleDates}
+                  origin={searchData.segments[0]?.origin}
+                  destination={searchData.segments[0]?.destination}
+                />
+              </div>
+
+              {/* Return Date */}
+              {searchData.tripType === 'return' && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">RETURN</label>
+                  <SimpleDatePicker
+                    value={searchData.returnDate || ''}
+                    onChange={(date) => setSearchData({...searchData, returnDate: date})}
+                    label="Return Date" 
+                    placeholder={searchData.returnDate ? undefined : "Add return date"}
+                    minDate={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
+                    enableRangeChips={true}
+                    onRangeSelect={(start, end) => setSearchData({ ...searchData, segments: [{ ...searchData.segments[0], departureDate: start }], returnDate: end })}
+                    highlight={searchData.segments[0]?.departureDate && !searchData.returnDate}
+                    buttonRef={returnButtonRef}
+                    autoOpenToken={retAutoOpenToken}
+                    enableFlexibleDates={searchData.preferences.flexibleDates}
+                    origin={searchData.segments[0]?.origin}
+                    destination={searchData.segments[0]?.destination}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Passengers & Class - ClearTrip Style */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">TRAVELLERS & CLASS</label>
+            <PassengerSelector
+              passengers={searchData.passengers}
+              onPassengerChange={(passengers) => setSearchData({...searchData, passengers})}
+              classType={searchData.classType}
+              onClassChange={(classType) => setSearchData({...searchData, classType})}
+              highlight={searchData.segments[0]?.departureDate && (searchData.tripType !== 'return' || searchData.returnDate)}
+              autoOpenToken={passengersAutoOpenToken}
+            />
+          </div>
+
+          {/* Search Button - ClearTrip Style */}
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={handleSearch}
+              disabled={isSearching || !searchData.segments[0]?.origin || !searchData.segments[0]?.destination || !searchData.segments[0]?.departureDate}
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3.5 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2"
+            >
+              {isSearching ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <span>Searching...</span>
+                </>
+              ) : (
+                <>
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                  </svg>
+                  <span>Search Flights</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Promotional Section - Integrated */}
+        {!compact && (
+          <div className="border-t border-gray-100 p-4">
+            <PromotionalBanner 
+              compact={compact}
+              onPromoApply={(promo) => {
+                console.log('Promo applied:', promo);
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
   const [currentStep, setCurrentStep] = useState(1);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [searchData, setSearchData] = useState({
