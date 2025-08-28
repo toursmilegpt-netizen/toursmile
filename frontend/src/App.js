@@ -2556,7 +2556,7 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Enhanced Header */}
       <header className="bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 py-4 max-w-7xl md:mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <div className="flex items-center">
