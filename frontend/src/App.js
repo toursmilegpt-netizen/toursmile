@@ -236,17 +236,17 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
       {/* NEW LIGHT MOBILE DESIGN - EDGE TO EDGE */}
       <div className="mobile-search-form w-full bg-white shadow-sm border-t border-gray-100">
         
-        {/* NEW SIMPLE TRIP TYPE TABS */}
-        <div className="px-4 py-3 border-b border-gray-100">
-          <div className="flex space-x-2">
+        {/* MINIMALISTIC TRIP TYPE TABS - NO BOXES */}
+        <div className="px-4 py-2">
+          <div className="flex space-x-6">
             {['one-way', 'return', 'multi-city'].map((type) => (
               <button
                 key={type}
                 onClick={() => setSearchData({...searchData, tripType: type})}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`text-sm font-medium transition-colors ${
                   searchData.tripType === type 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    : 'text-gray-600 hover:text-blue-600'
                 }`}
               >
                 {type === 'one-way' ? 'One Way' : type === 'return' ? 'Round Trip' : 'Multi-City'}
