@@ -10,7 +10,7 @@ from email_service import email_service
 # MongoDB connection
 MONGO_URL = os.getenv('MONGO_URL', 'mongodb://localhost:27017')
 client = MongoClient(MONGO_URL)
-db = client.toursmile
+db = client[os.getenv('DB_NAME', 'toursmile')]
 bookings_collection = db.bookings
 
 router = APIRouter()
