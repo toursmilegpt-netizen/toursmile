@@ -447,44 +447,55 @@ const CompactPassengerSelector = ({ passengers, onPassengerChange, classType, on
     return `${total} Passenger${total > 1 ? 's' : ''}, ${classNames[classType] || 'Economy'}`;
   };
 
+  const dropdownRef = useRef(null);
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         type="button"
         onClick={() => setShowDropdown(!showDropdown)}
-        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-left flex items-center justify-between"
+        className="w-full p-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-left flex items-center justify-between"
       >
-        <span>{getDisplayText()}</span>
-        <svg className={`w-5 h-5 transform transition-transform ${showDropdown ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-        </svg>
+        <span className="text-sm">{getDisplayText()}</span>
+        <span className="text-xs">▼</span>
       </button>
 
       {showDropdown && (
-        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4">
-          {/* Passenger Counts */}
-          <div className="space-y-4 mb-4">
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded shadow-lg z-50 p-3">
+          {/* Compact Passenger Counts */}
+          <div className="space-y-2 mb-3">
             {[
               { key: 'adults', label: 'Adults', min: 1 },
               { key: 'children', label: 'Children', min: 0 },
               { key: 'infants', label: 'Infants', min: 0 }
             ].map(({ key, label, min }) => (
               <div key={key} className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">{label}</span>
-                <div className="flex items-center space-x-3">
+                <span className="text-xs text-gray-600">{label}</span>
+                <div className="flex items-center space-x-2">
                   <button
                     type="button"
                     onClick={() => updatePassengerCount(key, false)}
                     disabled={passengers[key] <= min}
-                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                    className="w-6 h-6 text-xs rounded border border-gray-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                   >
                     -
                   </button>
-                  <span className="w-8 text-center">{passengers[key] || (key === 'adults' ? 1 : 0)}</span>
+                  <span className="w-6 text-center text-xs">{passengers[key] || (key === 'adults' ? 1 : 0)}</span>
                   <button
                     type="button"
                     onClick={() => updatePassengerCount(key, true)}
-                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                    className="w-6 h-6 text-xs rounded border border-gray-300 flex items-center justify-center hover:bg-gray-50"
                   >
                     +
                   </button>
@@ -493,21 +504,18 @@ const CompactPassengerSelector = ({ passengers, onPassengerChange, classType, on
             ))}
           </div>
 
-          {/* Class Selection */}
-          <div className="border-t pt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Class</label>
-            <div className="grid grid-cols-2 gap-2">
+          {/* Compact Class Selection */}
+          <div className="border-t pt-2">
+            <div className="grid grid-cols-2 gap-1">
               {[
                 { key: 'economy', label: 'Economy' },
-                { key: 'premium-economy', label: 'Premium' },
-                { key: 'business', label: 'Business' },
-                { key: 'first', label: 'First' }
+                { key: 'business', label: 'Business' }
               ].map(({ key, label }) => (
                 <button
                   key={key}
                   type="button"
                   onClick={() => onClassChange(key)}
-                  className={`p-2 text-sm rounded-lg border transition-colors ${
+                  className={`p-1 text-xs rounded border transition-colors ${
                     classType === key
                       ? 'bg-blue-600 text-white border-blue-600'
                       : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
@@ -518,14 +526,6 @@ const CompactPassengerSelector = ({ passengers, onPassengerChange, classType, on
               ))}
             </div>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setShowDropdown(false)}
-            className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Done
-          </button>
         </div>
       )}
     </div>
