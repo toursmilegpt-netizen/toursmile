@@ -347,10 +347,10 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   );
 };
 
-// NEW SIMPLE MOBILE-FIRST COMPONENTS
+// COMPACT MOBILE-OPTIMIZED COMPONENTS
 
-// Simple City Input Component
-const SimpleCityInput = ({ value, onChange, placeholder, airports }) => {
+// Fixed City Input Component - Properly Working on Mobile
+const FixedCityInput = ({ value, onChange, placeholder, airports }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [inputValue, setInputValue] = useState(value || '');
 
