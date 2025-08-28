@@ -651,7 +651,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   <div>
                     <CityAutocomplete
                       label="To"
-                      placeholder="Enter destination city"
+                      placeholder="To city"
                       value={searchData.segments[0]?.destination || ''}
                       onChange={(city) => { updateSegment(0, 'destination', city); setDepAutoOpenToken(t => t + 1); }}
                       airports={AIRPORTS_DATABASE}
