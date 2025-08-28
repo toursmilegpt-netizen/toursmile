@@ -2,8 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CRITICAL: Mobile-First Layout Fix */
+/* CRITICAL: Mobile-First Viewport Optimization */
 @media (max-width: 768px) {
+  /* Ensure mobile viewport fits content */
+  html, body {
+    height: 100vh !important;
+    overflow-x: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* App container height optimization */
+  #root, .App {
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+  }
+  
   /* Override max-width containers on mobile for full-width layout */
   .max-w-7xl.mx-auto,
   .max-w-6xl.mx-auto,
@@ -12,46 +27,50 @@
     max-width: 100% !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
   }
   
-  /* Full-width mobile search form */
-  .bg-white.rounded-3xl.shadow-2xl,
-  .bg-white.rounded-xl.shadow-lg { 
-    margin: 0.5rem !important;
-    border-radius: 1rem !important;
-    width: calc(100% - 1rem) !important;
+  /* Compact mobile header */
+  header {
+    padding: 0.5rem 0 !important;
+    margin-bottom: 0.5rem !important;
   }
   
-  /* Mobile input fields - proper sizing and placeholder text */
-  input[type="text"] {
+  /* Mobile logo optimization */
+  .toursmile-logo {
+    height: 32px !important; /* Compact logo */
+    width: auto !important;
+  }
+  
+  /* Compact premium messaging */
+  .premium-badges {
+    padding: 0.25rem 0 !important;
+    margin: 0.25rem 0 !important;
+  }
+  
+  .premium-badge {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.625rem !important;
+    margin: 0 0.125rem !important;
+  }
+  
+  /* Mobile search form critical optimization */
+  .bg-white.rounded-2xl.shadow-lg { 
+    margin: 0.25rem !important;
+    border-radius: 0.75rem !important;
+    width: calc(100% - 0.5rem) !important;
+    max-height: calc(100vh - 120px) !important; /* Critical: ensure fits in viewport */
+    overflow-y: auto !important;
+  }
+  
+  /* Mobile input fields - iOS zoom prevention */
+  input[type="text"], 
+  input[type="date"],
+  select {
     font-size: 16px !important; /* Prevents zoom on iOS */
-    padding: 0.875rem !important;
-  }
-  
-  /* Fix placeholder text truncation */
-  input[placeholder*="Enter departure"] {
-    placeholder: "From" !important;
-  }
-  
-  input[placeholder*="Enter destination"] {
-    placeholder: "To" !important;
-  }
-  
-  /* Mobile body padding override */
-  body {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  
-  /* Full-width header on mobile */
-  header .max-w-7xl {
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding: 0.5rem !important;
+    border-radius: 0.5rem !important;
   }
 }
 
