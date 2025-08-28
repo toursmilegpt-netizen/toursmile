@@ -1955,8 +1955,8 @@ function App() {
           </header>
 
           {/* NEW CLEAN MAIN CONTENT */}
-          <main>
-            <div className="text-center mb-6 px-4">
+          <main style={{backgroundColor: 'white'}}>
+            <div className="text-center mb-6 px-4" style={{backgroundColor: 'white'}}>
               <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
                 Find Your Flight
               </h1>
@@ -1966,7 +1966,9 @@ function App() {
             </div>
 
             {/* NEW LIGHT SEARCH FORM */}
-            <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
+            <div style={{backgroundColor: 'white'}}>
+              <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
+            </div>
 
             {/* Trust Indicators - Hidden on Mobile */}
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 hidden md:grid">
