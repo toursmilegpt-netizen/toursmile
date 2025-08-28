@@ -417,8 +417,8 @@ const FixedCityInput = ({ value, onChange, placeholder, airports }) => {
   );
 };
 
-// Simple Passenger Selector Component  
-const SimplePassengerSelector = ({ passengers, onPassengerChange, classType, onClassChange }) => {
+// Compact Passenger Selector Component  
+const CompactPassengerSelector = ({ passengers, onPassengerChange, classType, onClassChange }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   
   const updatePassengerCount = (type, increment) => {
