@@ -255,96 +255,90 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           </div>
         </div>
 
-        {/* NEW LIGHT FORM CONTENT */}
-        <div className="p-4 space-y-4">
-          
-          {/* NEW SIMPLE FROM/TO LAYOUT */}
-          <div className="space-y-3">
-            {/* From/To Row */}
-            <div className="grid grid-cols-3 gap-2 items-end">
-              <div className="col-span-1">
-                <label className="block text-sm font-medium text-gray-600 mb-2">From</label>
-                <SimpleCityInput
-                  value={searchData.segments[0]?.origin || ''}
-                  onChange={(city) => updateSegment(0, 'origin', city)}
-                  placeholder="Delhi"
-                  airports={AIRPORTS_DATABASE}
-                />
-              </div>
-              
-              <div className="col-span-1 flex justify-center">
-                <button
-                  type="button"
-                  onClick={swapCities}
-                  disabled={!canSwap}
-                  className="p-2 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors disabled:opacity-50"
-                  aria-label="Swap cities"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
-                    <path d="M7 16l3 3 3-3M14 8l-3-3-3 3"/>
-                  </svg>
-                </button>
-              </div>
-              
-              <div className="col-span-1">
-                <label className="block text-sm font-medium text-gray-600 mb-2">To</label>
-                <SimpleCityInput
-                  value={searchData.segments[0]?.destination || ''}
-                  onChange={(city) => updateSegment(0, 'destination', city)}
-                  placeholder="Mumbai"
-                  airports={AIRPORTS_DATABASE}
-                />
-              </div>
-            </div>
-
-            {/* Date Row */}
-            <div className={`grid gap-3 ${searchData.tripType === 'return' ? 'grid-cols-2' : 'grid-cols-1'}`}>
-              <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">Departure</label>
-                <input
-                  type="date"
-                  value={searchData.segments[0]?.departureDate || ''}
-                  onChange={(e) => updateSegment(0, 'departureDate', e.target.value)}
-                  min={new Date().toISOString().split('T')[0]}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              
-              {searchData.tripType === 'return' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">Return</label>
-                  <input
-                    type="date"
-                    value={searchData.returnDate || ''}
-                    onChange={(e) => setSearchData({...searchData, returnDate: e.target.value})}
-                    min={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Passengers Row */}
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-2">Passengers & Class</label>
-              <SimplePassengerSelector
-                passengers={searchData.passengers}
-                onPassengerChange={(passengers) => setSearchData({...searchData, passengers})}
-                classType={searchData.classType}
-                onClassChange={(classType) => setSearchData({...searchData, classType})}
+        {/* ULTRA COMPACT FORM - MINIMALISTIC */}
+        <div className="px-4 py-3 space-y-3">
+          {/* COMPACT FROM/TO - SINGLE ROW */}
+          <div className="grid grid-cols-5 gap-1 items-center">
+            <div className="col-span-2">
+              <label className="text-xs text-gray-500 mb-1 block">From</label>
+              <FixedCityInput
+                value={searchData.segments[0]?.origin || ''}
+                onChange={(city) => updateSegment(0, 'origin', city)}
+                placeholder="Delhi"
+                airports={AIRPORTS_DATABASE}
               />
             </div>
-
-            {/* Search Button */}
-            <button
-              type="button"
-              onClick={handleSearch}
-              disabled={isSearching || !searchData.segments[0]?.origin || !searchData.segments[0]?.destination || !searchData.segments[0]?.departureDate}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {isSearching ? 'Searching...' : 'Search Flights'}
-            </button>
+            
+            <div className="col-span-1 flex justify-center">
+              <button
+                type="button"
+                onClick={swapCities}
+                disabled={!canSwap}
+                className="p-1 hover:bg-gray-100 rounded transition-colors disabled:opacity-50"
+                aria-label="Swap"
+              >
+                ⇄
+              </button>
+            </div>
+            
+            <div className="col-span-2">
+              <label className="text-xs text-gray-500 mb-1 block">To</label>
+              <FixedCityInput
+                value={searchData.segments[0]?.destination || ''}
+                onChange={(city) => updateSegment(0, 'destination', city)}
+                placeholder="Mumbai"
+                airports={AIRPORTS_DATABASE}
+              />
+            </div>
           </div>
+
+          {/* COMPACT DATE ROW */}
+          <div className={`grid gap-2 ${searchData.tripType === 'return' ? 'grid-cols-2' : 'grid-cols-1'}`}>
+            <div>
+              <label className="text-xs text-gray-500 mb-1 block">Departure</label>
+              <input
+                type="date"
+                value={searchData.segments[0]?.departureDate || ''}
+                onChange={(e) => updateSegment(0, 'departureDate', e.target.value)}
+                min={new Date().toISOString().split('T')[0]}
+                className="w-full p-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            
+            {searchData.tripType === 'return' && (
+              <div>
+                <label className="text-xs text-gray-500 mb-1 block">Return</label>
+                <input
+                  type="date"
+                  value={searchData.returnDate || ''}
+                  onChange={(e) => setSearchData({...searchData, returnDate: e.target.value})}
+                  min={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
+                  className="w-full p-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* COMPACT PASSENGERS */}
+          <div>
+            <label className="text-xs text-gray-500 mb-1 block">Passengers</label>
+            <CompactPassengerSelector
+              passengers={searchData.passengers}
+              onPassengerChange={(passengers) => setSearchData({...searchData, passengers})}
+              classType={searchData.classType}
+              onClassChange={(classType) => setSearchData({...searchData, classType})}
+            />
+          </div>
+
+          {/* COMPACT SEARCH BUTTON */}
+          <button
+            type="button"
+            onClick={handleSearch}
+            disabled={isSearching || !searchData.segments[0]?.origin || !searchData.segments[0]?.destination || !searchData.segments[0]?.departureDate}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {isSearching ? 'Searching...' : 'Search Flights'}
+          </button>
         </div>
 
 
