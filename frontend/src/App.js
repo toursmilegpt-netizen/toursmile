@@ -353,6 +353,176 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   );
 };
 
+// NEW SIMPLE MOBILE-FIRST COMPONENTS
+
+// Simple City Input Component
+const SimpleCityInput = ({ value, onChange, placeholder, airports }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [inputValue, setInputValue] = useState(value || '');
+
+  // Filter airports for mobile (show only major cities)
+  const filteredAirports = airports
+    .filter(airport => airport.popular || airport.name.length <= 15)
+    .filter(airport => 
+      airport.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+      airport.code.toLowerCase().includes(inputValue.toLowerCase())
+    )
+    .slice(0, 8); // Limit to 8 results
+
+  const handleSelect = (airport) => {
+    const cityName = airport.name;
+    setInputValue(cityName);
+    onChange(cityName);
+    setShowDropdown(false);
+  };
+
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          setShowDropdown(true);
+        }}
+        onFocus={() => setShowDropdown(true)}
+        placeholder={placeholder}
+        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+      
+      {showDropdown && (
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+          {filteredAirports.map((airport) => (
+            <div
+              key={airport.code}
+              onClick={() => handleSelect(airport)}
+              className="p-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+            >
+              <div className="font-medium text-gray-900">{airport.name}</div>
+              <div className="text-sm text-gray-500">{airport.code}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Simple Passenger Selector Component  
+const SimplePassengerSelector = ({ passengers, onPassengerChange, classType, onClassChange }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  
+  const updatePassengerCount = (type, increment) => {
+    const current = passengers[type] || (type === 'adults' ? 1 : 0);
+    const newValue = increment ? current + 1 : Math.max(type === 'adults' ? 1 : 0, current - 1);
+    
+    const newPassengers = {
+      ...passengers,
+      [type]: newValue
+    };
+    onPassengerChange(newPassengers);
+  };
+
+  const getTotalPassengers = () => {
+    return (passengers.adults || 1) + (passengers.children || 0) + (passengers.infants || 0);
+  };
+
+  const getDisplayText = () => {
+    const total = getTotalPassengers();
+    const classNames = {
+      'economy': 'Economy',
+      'premium-economy': 'Premium',
+      'business': 'Business',
+      'first': 'First'
+    };
+    return `${total} Passenger${total > 1 ? 's' : ''}, ${classNames[classType] || 'Economy'}`;
+  };
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setShowDropdown(!showDropdown)}
+        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-left flex items-center justify-between"
+      >
+        <span>{getDisplayText()}</span>
+        <svg className={`w-5 h-5 transform transition-transform ${showDropdown ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+        </svg>
+      </button>
+
+      {showDropdown && (
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4">
+          {/* Passenger Counts */}
+          <div className="space-y-4 mb-4">
+            {[
+              { key: 'adults', label: 'Adults', min: 1 },
+              { key: 'children', label: 'Children', min: 0 },
+              { key: 'infants', label: 'Infants', min: 0 }
+            ].map(({ key, label, min }) => (
+              <div key={key} className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">{label}</span>
+                <div className="flex items-center space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => updatePassengerCount(key, false)}
+                    disabled={passengers[key] <= min}
+                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                  >
+                    -
+                  </button>
+                  <span className="w-8 text-center">{passengers[key] || (key === 'adults' ? 1 : 0)}</span>
+                  <button
+                    type="button"
+                    onClick={() => updatePassengerCount(key, true)}
+                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Class Selection */}
+          <div className="border-t pt-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Class</label>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { key: 'economy', label: 'Economy' },
+                { key: 'premium-economy', label: 'Premium' },
+                { key: 'business', label: 'Business' },
+                { key: 'first', label: 'First' }
+              ].map(({ key, label }) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => onClassChange(key)}
+                  className={`p-2 text-sm rounded-lg border transition-colors ${
+                    classType === key
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowDropdown(false)}
+            className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Done
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Enhanced Flexible Calendar Date Picker Component (Priority 2 Feature)
 
 // Promotional Integration Component (Priority 2 Feature)
