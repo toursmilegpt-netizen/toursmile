@@ -1933,7 +1933,7 @@ function App() {
     // Homepage: Show search form when no results are being displayed
     if (!showResults) {
       return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+        <div className="min-h-screen bg-white">
           {/* CLEAN SIMPLE HEADER */}
           <header className="bg-white border-b border-gray-100">
             <div className="px-4 py-4">
