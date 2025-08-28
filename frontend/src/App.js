@@ -1180,9 +1180,11 @@ const SimpleDatePicker = ({ value, onChange, minDate, label, className, onRangeS
         ref={buttonRef}
         type="button"
         onClick={() => setShowCalendar(!showCalendar)}
-        className={`w-full px-3 py-3 text-sm border rounded-xl transition-all duration-200 flex items-center justify-between text-left ${
+        className={`w-full px-3 py-3 text-sm border rounded-xl transition-all duration-200 flex items-center justify-between text-left date-picker-button ${
           showCalendar ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
         } ${className}`}
+        aria-label={`Select ${label || 'date'}`}
+        data-testid="date-picker-button"
       >
         <span className={value ? 'text-gray-900' : 'text-gray-500'}>
           {formatDisplayDate(value)}
