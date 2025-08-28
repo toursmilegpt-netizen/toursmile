@@ -736,9 +736,11 @@ const PassengerSelector = ({ passengers, onPassengerChange, classType, onClassCh
       <button
         type="button"
         onClick={() => setShowDropdown(!showDropdown)}
-        className={`w-full px-3 py-3 text-sm border-2 rounded-2xl transition-all duration-200 flex items-center justify-between text-left ${
+        className={`w-full px-3 py-3 text-sm border-2 rounded-2xl transition-all duration-200 flex items-center justify-between text-left passenger-selector-button ${
           showDropdown ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
         } ${highlight ? 'ring-2 ring-blue-200 animate-soft-pulse' : ''}`}
+        aria-label="Select passengers and travel class"
+        data-testid="passenger-selector-button"
       >
         <div className="flex items-center space-x-2">
           <span className="text-lg">👥</span>
