@@ -1882,9 +1882,9 @@ function App() {
             </div>
           </div>
 
-          {/* Main Content - Mobile Optimized */}
-          <main className="max-w-7xl mx-auto px-3 md:px-4 py-4 md:py-8">
-            <div className="text-center mb-6 md:mb-12">
+          {/* Main Content - FULL WIDTH MOBILE */}
+          <main className="w-full px-0 md:px-4 py-2 md:py-8">
+            <div className="text-center mb-4 md:mb-12 px-4 md:px-0">
               <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-3 md:mb-6">
                 Find Your Perfect Flight
               </h1>
@@ -1894,8 +1894,10 @@ function App() {
               </p>
             </div>
 
-            {/* Main Search Form */}
-            <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
+            {/* Main Search Form - CENTERED */}
+            <div className="flex justify-center w-full">
+              <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
+            </div>
 
             {/* Trust Indicators - Hidden on Mobile */}
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 hidden md:grid">
