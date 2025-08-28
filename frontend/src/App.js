@@ -258,138 +258,91 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
         {/* NEW LIGHT FORM CONTENT */}
         <div className="p-4 space-y-4">
           
-          {/* From/To Section - Mobile Compact Layout */}
-          <div className="space-y-2 md:space-y-3">
-            <div className="flex items-end gap-2 md:gap-3">
-              {/* From Field - Mobile Optimized */}
-              <div className="flex-1">
-                <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">FROM</label>
-                <CityAutocomplete
-                  label="From"
-                  placeholder="Delhi"
+          {/* NEW SIMPLE FROM/TO LAYOUT */}
+          <div className="space-y-3">
+            {/* From/To Row */}
+            <div className="grid grid-cols-3 gap-2 items-end">
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-600 mb-2">From</label>
+                <SimpleCityInput
                   value={searchData.segments[0]?.origin || ''}
                   onChange={(city) => updateSegment(0, 'origin', city)}
+                  placeholder="Delhi"
                   airports={AIRPORTS_DATABASE}
-                  excludeCity={searchData.segments[0]?.destination}
-                  autoFocus={true}
-                  highlight={!searchData.segments[0]?.origin}
                 />
               </div>
-
-              {/* Compact Swap Button - Mobile Optimized */}
-              <div className="flex-shrink-0 pb-0.5">
+              
+              <div className="col-span-1 flex justify-center">
                 <button
                   type="button"
                   onClick={swapCities}
                   disabled={!canSwap}
-                  style={{
-                    opacity: canSwap ? 1 : 0.3
-                  }}
-                  className="bg-blue-50 border-2 border-blue-200 rounded-full p-2 md:p-2.5 hover:bg-blue-100 hover:border-blue-300 transition-all duration-200 min-w-[40px] min-h-[40px] md:min-w-[44px] md:min-h-[44px] flex items-center justify-center"
+                  className="p-2 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors disabled:opacity-50"
                   aria-label="Swap cities"
                 >
-                  <svg width="16" height="16" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
                     <path d="M7 16l3 3 3-3M14 8l-3-3-3 3"/>
-                    <path d="M10 19V5M14 5v14"/>
                   </svg>
                 </button>
               </div>
-
-              {/* To Field - Mobile Optimized */}
-              <div className="flex-1">
-                <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">TO</label>
-                <CityAutocomplete
-                  label="To"
-                  placeholder="Mumbai"
+              
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-600 mb-2">To</label>
+                <SimpleCityInput
                   value={searchData.segments[0]?.destination || ''}
-                  onChange={(city) => { updateSegment(0, 'destination', city); setDepAutoOpenToken(t => t + 1); }}
+                  onChange={(city) => updateSegment(0, 'destination', city)}
+                  placeholder="Mumbai"
                   airports={AIRPORTS_DATABASE}
-                  excludeCity={searchData.segments[0]?.origin}
-                  highlight={searchData.segments[0]?.origin && !searchData.segments[0]?.destination}
                 />
               </div>
             </div>
-          </div>
 
-          {/* Date Selection - Mobile Compact */}
-          <div className="space-y-2 md:space-y-3">
-            <div className={`grid gap-2 md:gap-3 ${searchData.tripType === 'return' ? 'grid-cols-2' : 'grid-cols-1'}`}>
-              {/* Departure Date - Mobile Optimized */}
+            {/* Date Row */}
+            <div className={`grid gap-3 ${searchData.tripType === 'return' ? 'grid-cols-2' : 'grid-cols-1'}`}>
               <div>
-                <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">DEPARTURE</label>
-                <SimpleDatePicker
+                <label className="block text-sm font-medium text-gray-600 mb-2">Departure</label>
+                <input
+                  type="date"
                   value={searchData.segments[0]?.departureDate || ''}
-                  onChange={(date) => { updateSegment(0, 'departureDate', date); if (searchData.tripType === 'return') { setRetAutoOpenToken(t => t + 1); } else { setPassengersAutoOpenToken(t => t + 1); } }}
-                  label="Departure Date"
-                  minDate={new Date().toISOString().split('T')[0]}
-                  highlight={searchData.segments[0]?.origin && searchData.segments[0]?.destination && !searchData.segments[0]?.departureDate}
-                  buttonRef={departButtonRef}
-                  autoOpenToken={depAutoOpenToken}
-                  enableFlexibleDates={searchData.preferences.flexibleDates}
-                  origin={searchData.segments[0]?.origin}
-                  destination={searchData.segments[0]?.destination}
+                  onChange={(e) => updateSegment(0, 'departureDate', e.target.value)}
+                  min={new Date().toISOString().split('T')[0]}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
-
-              {/* Return Date - Mobile Optimized */}
+              
               {searchData.tripType === 'return' && (
                 <div>
-                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">RETURN</label>
-                  <SimpleDatePicker
+                  <label className="block text-sm font-medium text-gray-600 mb-2">Return</label>
+                  <input
+                    type="date"
                     value={searchData.returnDate || ''}
-                    onChange={(date) => setSearchData({...searchData, returnDate: date})}
-                    label="Return Date" 
-                    placeholder={searchData.returnDate ? undefined : "Add return date"}
-                    minDate={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
-                    enableRangeChips={true}
-                    onRangeSelect={(start, end) => setSearchData({ ...searchData, segments: [{ ...searchData.segments[0], departureDate: start }], returnDate: end })}
-                    highlight={searchData.segments[0]?.departureDate && !searchData.returnDate}
-                    buttonRef={returnButtonRef}
-                    autoOpenToken={retAutoOpenToken}
-                    enableFlexibleDates={searchData.preferences.flexibleDates}
-                    origin={searchData.segments[0]?.origin}
-                    destination={searchData.segments[0]?.destination}
+                    onChange={(e) => setSearchData({...searchData, returnDate: e.target.value})}
+                    min={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Passengers & Class - Mobile Compact */}
-          <div>
-            <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">TRAVELLERS & CLASS</label>
-            <PassengerSelector
-              passengers={searchData.passengers}
-              onPassengerChange={(passengers) => setSearchData({...searchData, passengers})}
-              classType={searchData.classType}
-              onClassChange={(classType) => setSearchData({...searchData, classType})}
-              highlight={searchData.segments[0]?.departureDate && (searchData.tripType !== 'return' || searchData.returnDate)}
-              autoOpenToken={passengersAutoOpenToken}
-            />
-          </div>
+            {/* Passengers Row */}
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-2">Passengers & Class</label>
+              <SimplePassengerSelector
+                passengers={searchData.passengers}
+                onPassengerChange={(passengers) => setSearchData({...searchData, passengers})}
+                classType={searchData.classType}
+                onClassChange={(classType) => setSearchData({...searchData, classType})}
+              />
+            </div>
 
-          {/* Search Button - Enhanced Mobile Full-Width */}
-          <div className="pt-1 md:pt-2">
+            {/* Search Button */}
             <button
               type="button"
               onClick={handleSearch}
               disabled={isSearching || !searchData.segments[0]?.origin || !searchData.segments[0]?.destination || !searchData.segments[0]?.departureDate}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 md:py-3.5 rounded-xl font-semibold text-sm md:text-base shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2 min-w-full"
-              style={{ minWidth: '100%' }}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {isSearching ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 md:h-5 md:w-5 border-b-2 border-white"></div>
-                  <span>Searching...</span>
-                </>
-              ) : (
-                <>
-                  <svg width="16" height="16" className="md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                  </svg>
-                  <span>Search Flights</span>
-                </>
-              )}
+              {isSearching ? 'Searching...' : 'Search Flights'}
             </button>
           </div>
         </div>
