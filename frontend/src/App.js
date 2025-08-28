@@ -1978,22 +1978,19 @@ function App() {
             </div>
           </div>
 
-          {/* Main Content - FULL WIDTH MOBILE */}
-          <main className="w-full px-0 md:px-4 py-2 md:py-8">
-            <div className="text-center mb-4 md:mb-12 px-4 md:px-0">
-              <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-3 md:mb-6">
-                Find Your Perfect Flight
+          {/* NEW CLEAN MAIN CONTENT */}
+          <main>
+            <div className="text-center mb-6 px-4">
+              <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
+                Find Your Flight
               </h1>
-              <p className="text-sm md:text-xl text-gray-600 max-w-3xl mx-auto mb-4 md:mb-8 hidden md:block">
-                Book flights, hotels, and activities with our AI-powered travel assistant. 
-                Get personalized recommendations and the best deals.
+              <p className="text-gray-600 hidden md:block">
+                Simple, fast flight search
               </p>
             </div>
 
-            {/* Main Search Form - CENTERED */}
-            <div className="flex justify-center w-full">
-              <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
-            </div>
+            {/* NEW LIGHT SEARCH FORM */}
+            <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
 
             {/* Trust Indicators - Hidden on Mobile */}
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 hidden md:grid">
