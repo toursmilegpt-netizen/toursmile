@@ -1653,7 +1653,9 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
                       {!isMobile() && (
                         <div className="text-sm text-gray-600 mt-1">{airport.fullName}</div>
                       )}
-                      <div className="text-xs text-gray-500">{airport.country}</div>
+                      {!isMobile() && (
+                        <div className="text-xs text-gray-500">{airport.country}</div>
+                      )}
                     </div>
                     <div className="text-sm font-mono bg-gray-100 px-3 py-1 rounded-lg text-gray-600">
                       {airport.code}
