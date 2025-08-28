@@ -344,9 +344,9 @@ backend:
 
   - task: "PostgreSQL Production Readiness for VPS Deployment"
     implemented: true
-    working: true
+    working: false
     file: "/app/backend/server.py, /app/backend/database.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
