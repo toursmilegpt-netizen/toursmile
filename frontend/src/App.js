@@ -637,7 +637,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   <div>
                     <CityAutocomplete
                       label="From"
-                      placeholder="Enter departure city"
+                      placeholder="From city"
                       value={searchData.segments[0]?.origin || ''}
                       onChange={(city) => updateSegment(0, 'origin', city)}
                       airports={AIRPORTS_DATABASE}
