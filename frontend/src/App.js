@@ -370,8 +370,22 @@ const FixedCityInput = ({ value, onChange, placeholder, airports }) => {
     setShowDropdown(false);
   };
 
+  // Close dropdown when clicking outside
+  const dropdownRef = useRef(null);
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <input
         type="text"
         value={inputValue}
@@ -381,19 +395,20 @@ const FixedCityInput = ({ value, onChange, placeholder, airports }) => {
         }}
         onFocus={() => setShowDropdown(true)}
         placeholder={placeholder}
-        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="w-full p-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+        autoComplete="off"
       />
       
-      {showDropdown && (
-        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+      {showDropdown && filteredAirports.length > 0 && (
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded shadow-lg z-50 max-h-48 overflow-y-auto">
           {filteredAirports.map((airport) => (
             <div
               key={airport.code}
               onClick={() => handleSelect(airport)}
-              className="p-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+              className="p-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
             >
-              <div className="font-medium text-gray-900">{airport.name}</div>
-              <div className="text-sm text-gray-500">{airport.code}</div>
+              <div className="text-sm font-medium text-gray-900">{airport.name}</div>
+              <div className="text-xs text-gray-500">{airport.code}</div>
             </div>
           ))}
         </div>
