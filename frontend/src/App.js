@@ -2540,70 +2540,230 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Enhanced Header */}
-      <header className="bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 py-4 max-w-7xl md:mx-auto">
+      {/* Mobile-First Professional Header */}
+      <header className="bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200 sticky top-0 z-40">
+        <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 py-3 max-w-7xl md:mx-auto">
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="flex items-center">
-                <img
-                  src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
-                  alt="TourSmile"
-                  className="h-20 md:h-24"
-                />
-              </div>
+            {/* Mobile-Optimized Logo */}
+            <div className="flex items-center flex-shrink-0">
+              <img
+                src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
+                alt="TourSmile"
+                className="h-8 sm:h-10 md:h-12 w-auto"
+              />
             </div>
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
-              {/* Flight Button - Active */}
-              <div className="relative group">
-                <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-lg">✈️</span>
-                    <span>Flights</span>
-                  </div>
-                </div>
+            
+            {/* Mobile Navigation - Simplified */}
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium text-sm flex items-center space-x-1">
+                <span>✈️</span>
+                <span className="hidden sm:inline">Flights</span>
               </div>
-
-              {/* Hotels Button */}
-              <div className="relative group">
-                <div className="bg-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold text-base hover:border-orange-300 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 hover:text-orange-700 shadow-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-lg">🏨</span>
-                    <span>Hotels</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Activities Button */}
-              <div className="relative group">
-                <div className="bg-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold text-base hover:border-green-300 hover:bg-gradient-to-r hover:from-green-50 hover:to-green-100 hover:text-green-700 shadow-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-lg">🎯</span>
-                    <span>Activities</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile Navigation */}
-            <div className="md:hidden flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg font-medium text-sm">
-                ✈️ Flights
-              </div>
-              <div className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-medium text-sm">
-                🏨 Hotels
-              </div>
-              <div className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-medium text-sm">
-                🎯 Activities
+              <div className="bg-gray-100 text-gray-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium text-sm flex items-center space-x-1">
+                <span>🏨</span>
+                <span className="hidden sm:inline">Hotels</span>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content - Mobile First Layout */}
-      <main className="w-full px-2 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8 max-w-7xl md:mx-auto">
+      {/* Main Content - Mobile-First Card Design */}
+      <main className="w-full px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-6 max-w-6xl md:mx-auto">
+        
+        {/* Professional Search Card */}
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+          
+          {/* Trip Type Header - ClearTrip Style */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-4 border-b border-gray-100">
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+              <button
+                onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
+                className={`px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center space-x-2 ${
+                  searchData.tripType === 'one-way' 
+                    ? 'bg-white text-blue-600 shadow-md' 
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                <span>→</span>
+                <span>One Way</span>
+              </button>
+              
+              <button
+                onClick={() => setSearchData({...searchData, tripType: 'return'})}
+                className={`px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center space-x-2 ${
+                  searchData.tripType === 'return' 
+                    ? 'bg-white text-blue-600 shadow-md' 
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                <span>⇄</span>
+                <span>Round Trip</span>
+              </button>
+              
+              <button
+                onClick={() => setSearchData({...searchData, tripType: 'multi-city'})}
+                className={`px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center space-x-2 ${
+                  searchData.tripType === 'multi-city' 
+                    ? 'bg-white text-blue-600 shadow-md' 
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                <span>⚡</span>
+                <span className="hidden sm:inline">Multi City</span>
+                <span className="sm:hidden">Multi</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Search Form - Mobile-First Layout */}
+          <div className="p-4 sm:p-6 space-y-4">
+            
+            {/* From/To Fields - Professional Horizontal Layout */}
+            <div className="space-y-4">
+              <div className="flex items-end space-x-3">
+                {/* From Field */}
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">From</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={searchData.segments[0]?.origin || ''}
+                      onChange={(e) => updateSegment(0, 'origin', e.target.value)}
+                      placeholder="Delhi"
+                      className="w-full px-4 py-3 text-base border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
+                    />
+                  </div>
+                </div>
+
+                {/* Professional Swap Button */}
+                <div className="flex-shrink-0 pb-1">
+                  <button
+                    type="button"
+                    onClick={swapCities}
+                    className="bg-white border-2 border-blue-200 rounded-full p-3 shadow-lg hover:border-blue-400 hover:shadow-xl transition-all duration-200"
+                  >
+                    <div className="text-blue-600 text-lg font-bold">⇄</div>
+                  </button>
+                </div>
+
+                {/* To Field */}
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">To</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={searchData.segments[0]?.destination || ''}
+                      onChange={(e) => updateSegment(0, 'destination', e.target.value)}
+                      placeholder="Mumbai"
+                      className="w-full px-4 py-3 text-base border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Date Selection - Full Width */}
+            <div className="space-y-4">
+              <div className={`grid gap-4 ${searchData.tripType === 'return' ? 'sm:grid-cols-2' : 'grid-cols-1'}`}>
+                {/* Departure Date */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Departure Date</label>
+                  <input
+                    type="date"
+                    value={searchData.segments[0]?.departureDate || ''}
+                    onChange={(e) => updateSegment(0, 'departureDate', e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
+                    className="w-full px-4 py-3 text-base border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
+                  />
+                </div>
+
+                {/* Return Date */}
+                {searchData.tripType === 'return' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Return Date</label>
+                    <input
+                      type="date"
+                      value={searchData.returnDate || ''}
+                      onChange={(e) => setSearchData({...searchData, returnDate: e.target.value})}
+                      min={searchData.segments[0]?.departureDate || new Date().toISOString().split('T')[0]}
+                      className="w-full px-4 py-3 text-base border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Passengers & Class - Clean Design */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Passengers & Class</label>
+              <button
+                type="button"
+                onClick={() => setShowPassengerDropdown(!showPassengerDropdown)}
+                className="w-full px-4 py-3 text-base border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 text-left flex items-center justify-between"
+              >
+                <span>
+                  {(passengers.adults || 1)} Adult{(passengers.adults || 1) > 1 ? 's' : ''} 
+                  {passengers.children ? `, ${passengers.children} Child${passengers.children > 1 ? 'ren' : ''}` : ''}
+                  {passengers.infants ? `, ${passengers.infants} Infant${passengers.infants > 1 ? 's' : ''}` : ''}
+                  • {classType}
+                </span>
+                <span className="text-gray-400">▼</span>
+              </button>
+            </div>
+
+            {/* Search Button - Prominent */}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={handleSearch}
+                disabled={isSearching || !searchData.segments[0]?.origin || !searchData.segments[0]?.destination || !searchData.segments[0]?.departureDate}
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2"
+              >
+                {isSearching ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <span>Searching...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>🔍</span>
+                    <span>Search Flights</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Promotional Section */}
+          <div className="px-4 pb-4">
+            <PromotionalBanner 
+              onPromoApply={(promo) => console.log('Promo applied:', promo)}
+            />
+          </div>
+        </div>
+
+        {/* Trending Routes - Mobile Optimized */}
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 px-1">Popular Routes</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {trendingRoutes.slice(0, 6).map((route, index) => (
+              <button
+                key={index}
+                onClick={() => fillTrendingRoute(route)}
+                className="bg-white rounded-xl border border-gray-200 p-3 hover:border-blue-300 hover:shadow-lg transition-all duration-200"
+              >
+                <div className="text-center">
+                  <div className="text-2xl mb-1">{route.flag}</div>
+                  <div className="text-sm font-medium text-gray-900">{route.route}</div>
+                  <div className="text-xs text-blue-600 font-semibold">{route.price}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </main>
+    </div>
         {/* Hero Section - Compact Multi-Product Layout */}
         <div className="mb-8">
           {/* Key Features - Compact Version */}
