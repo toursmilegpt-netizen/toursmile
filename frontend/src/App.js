@@ -236,46 +236,27 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
       {/* NEW LIGHT MOBILE DESIGN - EDGE TO EDGE */}
       <div className="mobile-search-form w-full bg-white shadow-sm border-t border-gray-100">
         
-        {/* Trip Type Tabs - Compact Mobile */}
-        <div className="bg-gray-50 border-b border-gray-100 px-3 py-2 md:px-4 md:py-3">
-          <div className="flex items-center space-x-1">
-            <button
-              onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
-              className={`flex-1 py-2 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-200 ${
-                searchData.tripType === 'one-way' 
-                  ? 'bg-blue-600 text-white shadow-md' 
-                  : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
-              }`}
-            >
-              One Way
-            </button>
-            
-            <button
-              onClick={() => setSearchData({...searchData, tripType: 'return'})}
-              className={`flex-1 py-2 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-200 ${
-                searchData.tripType === 'return' 
-                  ? 'bg-blue-600 text-white shadow-md' 
-                  : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
-              }`}
-            >
-              Round Trip
-            </button>
-            
-            <button
-              onClick={() => setSearchData({...searchData, tripType: 'multi-city'})}
-              className={`flex-1 py-2 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-200 ${
-                searchData.tripType === 'multi-city' 
-                  ? 'bg-blue-600 text-white shadow-md' 
-                  : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
-              }`}
-            >
-              Multi-City
-            </button>
+        {/* NEW SIMPLE TRIP TYPE TABS */}
+        <div className="px-4 py-3 border-b border-gray-100">
+          <div className="flex space-x-2">
+            {['one-way', 'return', 'multi-city'].map((type) => (
+              <button
+                key={type}
+                onClick={() => setSearchData({...searchData, tripType: type})}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  searchData.tripType === type 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {type === 'one-way' ? 'One Way' : type === 'return' ? 'Round Trip' : 'Multi-City'}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Form Content - Mobile Compact */}
-        <div className="p-3 md:p-4 space-y-3 md:space-y-4">
+        {/* NEW LIGHT FORM CONTENT */}
+        <div className="p-4 space-y-4">
           
           {/* From/To Section - Mobile Compact Layout */}
           <div className="space-y-2 md:space-y-3">
