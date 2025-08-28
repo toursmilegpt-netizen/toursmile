@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* FORCE WHITE BACKGROUND OVERRIDE */
+body, html, #root, .App, main, div {
+  background-color: white !important;
+}
+
 /* BRAND NEW LIGHT MOBILE-FIRST DESIGN */
 /* Reset and Base Styles */
 * {
