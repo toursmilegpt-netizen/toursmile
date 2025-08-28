@@ -1354,6 +1354,31 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
       )
     );
   };
+
+  // Mobile-responsive display names
+  const getDisplayName = (airport, isMobile = false) => {
+    if (airport.__type === 'all_airports') {
+      return isMobile ? airport.cityName || airport.name.split(' - ')[0] : airport.name;
+    }
+    
+    // Mobile: Show only city name for compact display
+    if (isMobile) {
+      return airport.name; // Just "Mumbai", "Delhi", etc.
+    }
+    
+    // Desktop: Show detailed information
+    if (airport.country === 'India') {
+      return `${airport.name}, ${airport.country}`;
+    } else {
+      return `${airport.name}, ${airport.country}`;
+    }
+  };
+  
+  // Detect if mobile viewport
+  const isMobile = () => {
+    return window.innerWidth <= 768;
+  };
+
   // Build "All Airports" suggestion variants for multi-airport cities
   const buildAllAirportsVariants = (cityRecord) => {
     const code = cityRecord.cityCode;
