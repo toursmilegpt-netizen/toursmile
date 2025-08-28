@@ -21,25 +21,25 @@ from popular_trips_routes import router as popular_trips_router
 from enhanced_chat_service import ExpertTravelConsultantChat
 from destinations_routes import router as destinations_router
 
-# Waitlist and Booking Management - PostgreSQL (ENABLED FOR PRODUCTION)
-from waitlist_routes_pg import router as waitlist_router
-from booking_routes_pg import router as booking_router
+# Waitlist and Booking Management - PostgreSQL (TEMPORARILY DISABLED FOR TESTING)
+# from waitlist_routes_pg import router as waitlist_router
+# from booking_routes_pg import router as booking_router
 
-# TourBuilder - Auto package generator (ENABLED FOR PRODUCTION)
-from tourbuilder import router as tourbuilder_router
+# TourBuilder - Auto package generator (TEMPORARILY DISABLED FOR TESTING)
+# from tourbuilder import router as tourbuilder_router
 
-# Payment processing - Razorpay integration (ENABLED FOR PRODUCTION)
-from payment_service import router as payment_router
+# Payment processing - Razorpay integration (TEMPORARILY DISABLED FOR TESTING)
+# from payment_service import router as payment_router
 
-# OTP Authentication - MSG91 integration (ENABLED FOR PRODUCTION)  
-from otp_service import router as auth_router
+# OTP Authentication - MSG91 integration (TEMPORARILY DISABLED FOR TESTING)  
+# from otp_service import router as auth_router
 
-# Complete Hotel Booking System - TripJack integration with pre-book API (ENABLED FOR PRODUCTION)
-from hotel_booking_routes import router as hotel_router
+# Complete Hotel Booking System - TripJack integration with pre-book API (TEMPORARILY DISABLED FOR TESTING)
+# from hotel_booking_routes import router as hotel_router
 
-# Admin Authentication and Dashboard System (ENABLED FOR PRODUCTION)
-from admin_auth import router as admin_auth_router
-from admin_dashboard import router as admin_dashboard_router
+# Admin Authentication and Dashboard System (TEMPORARILY DISABLED FOR TESTING)
+# from admin_auth import router as admin_auth_router
+# from admin_dashboard import router as admin_dashboard_router
 
 # Database configuration (TEMPORARILY DISABLED FOR TESTING)
 # from database import create_tables, test_connection
