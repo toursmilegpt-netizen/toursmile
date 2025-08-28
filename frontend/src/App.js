@@ -1730,7 +1730,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
                 <div
                   key={`${airport.code}-${airport.name}`}
                   onClick={() => selectCity(airport)}
-                  className={`px-4 py-4 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-all duration-150 ${isRecentSearch ? 'recent-search-item bg-gradient-to-r from-blue-50 to-white' : ''}`}
+                  className={`px-4 py-4 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-all duration-150 ${isRecentSearch ? 'recent-search-item bg-blue-50' : ''}`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
