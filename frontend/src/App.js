@@ -330,12 +330,12 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             </div>
           </div>
 
-          {/* Date Selection - ClearTrip Style */}
-          <div className="space-y-3">
-            <div className={`grid gap-3 ${searchData.tripType === 'return' ? 'grid-cols-2' : 'grid-cols-1'}`}>
-              {/* Departure Date */}
+          {/* Date Selection - Mobile Compact */}
+          <div className="space-y-2 md:space-y-3">
+            <div className={`grid gap-2 md:gap-3 ${searchData.tripType === 'return' ? 'grid-cols-2' : 'grid-cols-1'}`}>
+              {/* Departure Date - Mobile Optimized */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">DEPARTURE</label>
+                <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">DEPARTURE</label>
                 <SimpleDatePicker
                   value={searchData.segments[0]?.departureDate || ''}
                   onChange={(date) => { updateSegment(0, 'departureDate', date); if (searchData.tripType === 'return') { setRetAutoOpenToken(t => t + 1); } else { setPassengersAutoOpenToken(t => t + 1); } }}
@@ -350,10 +350,10 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 />
               </div>
 
-              {/* Return Date */}
+              {/* Return Date - Mobile Optimized */}
               {searchData.tripType === 'return' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">RETURN</label>
+                  <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">RETURN</label>
                   <SimpleDatePicker
                     value={searchData.returnDate || ''}
                     onChange={(date) => setSearchData({...searchData, returnDate: date})}
@@ -374,9 +374,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             </div>
           </div>
 
-          {/* Passengers & Class - ClearTrip Style */}
+          {/* Passengers & Class - Mobile Compact */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">TRAVELLERS & CLASS</label>
+            <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">TRAVELLERS & CLASS</label>
             <PassengerSelector
               passengers={searchData.passengers}
               onPassengerChange={(passengers) => setSearchData({...searchData, passengers})}
@@ -387,22 +387,22 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             />
           </div>
 
-          {/* Search Button - ClearTrip Style */}
-          <div className="pt-2">
+          {/* Search Button - Mobile Compact */}
+          <div className="pt-1 md:pt-2">
             <button
               type="button"
               onClick={handleSearch}
               disabled={isSearching || !searchData.segments[0]?.origin || !searchData.segments[0]?.destination || !searchData.segments[0]?.departureDate}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3.5 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2.5 md:py-3.5 rounded-xl font-semibold text-sm md:text-base shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2"
             >
               {isSearching ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 md:h-5 md:w-5 border-b-2 border-white"></div>
                   <span>Searching...</span>
                 </>
               ) : (
                 <>
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                  <svg width="16" height="16" className="md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                   </svg>
                   <span>Search Flights</span>
