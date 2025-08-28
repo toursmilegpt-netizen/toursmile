@@ -1,4 +1,60 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CRITICAL: Mobile-First Layout Fix */
+@media (max-width: 768px) {
+  /* Override max-width containers on mobile for full-width layout */
+  .max-w-7xl.mx-auto,
+  .max-w-6xl.mx-auto,
+  .max-w-5xl.mx-auto,
+  .max-w-4xl.mx-auto {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Full-width mobile search form */
+  .bg-white.rounded-3xl.shadow-2xl,
+  .bg-white.rounded-xl.shadow-lg { 
+    margin: 0.5rem !important;
+    border-radius: 1rem !important;
+    width: calc(100% - 1rem) !important;
+  }
+  
+  /* Mobile input fields - proper sizing and placeholder text */
+  input[type="text"] {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 0.875rem !important;
+  }
+  
+  /* Fix placeholder text truncation */
+  input[placeholder*="Enter departure"] {
+    placeholder: "From" !important;
+  }
+  
+  input[placeholder*="Enter destination"] {
+    placeholder: "To" !important;
+  }
+  
+  /* Mobile body padding override */
+  body {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Full-width header on mobile */
+  header .max-w-7xl {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
 /* Mobile-first compact layout for top search form */
 @media (max-width: 768px) {
   .mobile-search-sticky { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(6px); background: rgba(255,255,255,0.85); }
