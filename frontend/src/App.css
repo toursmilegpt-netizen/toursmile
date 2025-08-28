@@ -7,6 +7,45 @@ body, html, #root, .App, main, div {
   background-color: white !important;
 }
 
+/* ULTRA COMPACT MOBILE DESIGN */
+@media (max-width: 768px) {
+  /* Remove all unnecessary margins and padding */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Compact spacing */
+  .space-y-3 > * + * {
+    margin-top: 0.5rem !important;
+  }
+
+  .space-y-2 > * + * {
+    margin-top: 0.25rem !important;
+  }
+
+  /* Compact inputs */
+  input, button, select {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Minimal borders */
+  .border {
+    border-width: 1px !important;
+  }
+
+  /* Compact grid gaps */
+  .gap-1 {
+    gap: 0.125rem !important;
+  }
+
+  .gap-2 {
+    gap: 0.25rem !important;
+  }
+}
+
 /* BRAND NEW LIGHT MOBILE-FIRST DESIGN */
 /* Reset and Base Styles */
 * {
