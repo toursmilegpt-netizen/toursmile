@@ -277,12 +277,12 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
         {/* Form Content - Mobile Compact */}
         <div className="p-3 md:p-4 space-y-3 md:space-y-4">
           
-          {/* From/To Section - ClearTrip Horizontal Layout */}
-          <div className="space-y-3">
-            <div className="flex items-end gap-3">
-              {/* From Field */}
+          {/* From/To Section - Mobile Compact Layout */}
+          <div className="space-y-2 md:space-y-3">
+            <div className="flex items-end gap-2 md:gap-3">
+              {/* From Field - Mobile Optimized */}
               <div className="flex-1">
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">FROM</label>
+                <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">FROM</label>
                 <CityAutocomplete
                   label="From"
                   placeholder="Delhi"
@@ -295,8 +295,8 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 />
               </div>
 
-              {/* Professional Swap Button - ClearTrip Style */}
-              <div className="flex-shrink-0 pb-1">
+              {/* Compact Swap Button - Mobile Optimized */}
+              <div className="flex-shrink-0 pb-0.5">
                 <button
                   type="button"
                   onClick={swapCities}
@@ -304,19 +304,19 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   style={{
                     opacity: canSwap ? 1 : 0.3
                   }}
-                  className="bg-blue-50 border-2 border-blue-200 rounded-full p-2.5 hover:bg-blue-100 hover:border-blue-300 transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  className="bg-blue-50 border-2 border-blue-200 rounded-full p-2 md:p-2.5 hover:bg-blue-100 hover:border-blue-300 transition-all duration-200 min-w-[40px] min-h-[40px] md:min-w-[44px] md:min-h-[44px] flex items-center justify-center"
                   aria-label="Swap cities"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
+                  <svg width="16" height="16" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M7 16l3 3 3-3M14 8l-3-3-3 3"/>
                     <path d="M10 19V5M14 5v14"/>
                   </svg>
                 </button>
               </div>
 
-              {/* To Field */}
+              {/* To Field - Mobile Optimized */}
               <div className="flex-1">
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">TO</label>
+                <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">TO</label>
                 <CityAutocomplete
                   label="To"
                   placeholder="Mumbai"
