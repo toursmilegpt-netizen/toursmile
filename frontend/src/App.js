@@ -692,32 +692,6 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                 </div>
               </div>
                       active:scale-95 md:hover:scale-110
-                      focus:outline-none focus:ring-4 focus:ring-blue-300
-                      transition-all duration-200 group
-                      ${!canSwap 
-                        ? 'opacity-0 cursor-not-allowed' 
-                        : 'opacity-100 hover:bg-blue-50 cursor-pointer active:bg-blue-100'
-                      }
-                    `}
-                    title="Swap cities"
-                    aria-label="Swap departure and destination cities"
-                  >
-                    <div className="text-blue-600 group-hover:rotate-180 group-active:rotate-180 transition-transform duration-300">
-                      <svg 
-                        width="24" 
-                        height="24" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5"
-                        className="md:w-5 md:h-5"
-                      >
-                        <path d="M7 16l3 3 3-3M14 8l-3-3-3 3"/>
-                        <path d="M10 19V5M14 5v14"/>
-                      </svg>
-                    </div>
-                  </button>
-                </div>
               </div>
             </div>
           )}
