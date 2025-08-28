@@ -2764,10 +2764,8 @@ function App() {
         </div>
       </main>
     </div>
-        {/* Hero Section - Compact Multi-Product Layout */}
-        <div className="mb-8">
-          {/* Key Features - Compact Version */}
-          <div className="text-center mb-8">
+  );
+};
             <div className="flex items-center justify-center space-x-8 md:space-x-12">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
