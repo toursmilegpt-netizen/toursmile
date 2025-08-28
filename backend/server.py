@@ -1035,29 +1035,29 @@ app.include_router(popular_trips_router, prefix="/api", tags=["popular-trips"])
 # Include the destinations router
 app.include_router(destinations_router, prefix="/api", tags=["destinations"])
 
-# Include PostgreSQL-based routers (ENABLED FOR PRODUCTION)
-app.include_router(waitlist_router, prefix="/api", tags=["waitlist"])
+# Include PostgreSQL-based routers (TEMPORARILY DISABLED FOR TESTING)
+# app.include_router(waitlist_router, prefix="/api", tags=["waitlist"])
 
-# Include booking router (ENABLED FOR PRODUCTION)
-app.include_router(booking_router, prefix="/api/bookings", tags=["bookings"])
+# Include booking router (TEMPORARILY DISABLED FOR TESTING)
+# app.include_router(booking_router, prefix="/api/bookings", tags=["bookings"])
 
-# Include TourBuilder router (ENABLED FOR PRODUCTION)
-app.include_router(tourbuilder_router, prefix="/api", tags=["tourbuilder"])
+# Include TourBuilder router (TEMPORARILY DISABLED FOR TESTING)
+# app.include_router(tourbuilder_router, prefix="/api", tags=["tourbuilder"])
 
-# Include payment router (ENABLED FOR PRODUCTION)
-app.include_router(payment_router, prefix="/api", tags=["payments"])
+# Include payment router (TEMPORARILY DISABLED FOR TESTING)
+# app.include_router(payment_router, prefix="/api", tags=["payments"])
 
-# Include authentication router (ENABLED FOR PRODUCTION)
-app.include_router(auth_router, prefix="/api", tags=["auth"])
+# Include authentication router (TEMPORARILY DISABLED FOR TESTING)
+# app.include_router(auth_router, prefix="/api", tags=["auth"])
 
-# Include hotel booking router (ENABLED FOR PRODUCTION)
-app.include_router(hotel_router, prefix="/api", tags=["hotels"])
+# Include hotel booking router (TEMPORARILY DISABLED FOR TESTING)
+# app.include_router(hotel_router, prefix="/api", tags=["hotels"])
 
-# Include admin authentication router (ENABLED FOR PRODUCTION)
-app.include_router(admin_auth_router, prefix="/api", tags=["admin-auth"])
+# Include admin authentication router (TEMPORARILY DISABLED FOR TESTING)
+# app.include_router(admin_auth_router, prefix="/api", tags=["admin-auth"])
 
-# Include admin dashboard router (ENABLED FOR PRODUCTION)
-app.include_router(admin_dashboard_router, prefix="/api", tags=["admin-dashboard"])
+# Include admin dashboard router (TEMPORARILY DISABLED FOR TESTING)
+# app.include_router(admin_dashboard_router, prefix="/api", tags=["admin-dashboard"])
 
 app.add_middleware(
     CORSMiddleware,
