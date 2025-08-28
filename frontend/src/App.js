@@ -632,9 +632,10 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             // One-way & Round-trip: Show only first segment for cities (dates handled separately)
             <div>
               <div className="relative">
-                <div className="grid grid-cols-2 gap-3 md:grid-cols-2">
-                  {/* From */}
-                  <div>
+                {/* Professional Horizontal Layout - ClearTrip/MakeMyTrip Style */}
+                <div className="flex items-center space-x-2 md:space-x-3">
+                  {/* From Field - Equal Width */}
+                  <div className="flex-1">
                     <CityAutocomplete
                       label="From"
                       placeholder="From city"
@@ -647,8 +648,33 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     />
                   </div>
 
-                  {/* To */}
-                  <div>
+                  {/* Professional Swap Button - Between Fields */}
+                  <div className="flex-shrink-0 pt-6 md:pt-7">
+                    <button
+                      type="button"
+                      onClick={swapCities}
+                      disabled={!canSwap}
+                      style={{
+                        visibility: canSwap ? 'visible' : 'hidden'
+                      }}
+                      className={`
+                        bg-white border-2 border-blue-200 rounded-full 
+                        p-2.5 md:p-2 shadow-lg min-w-[44px] min-h-[44px] md:min-w-[40px] md:min-h-[40px]
+                        hover:border-blue-400 hover:shadow-xl 
+                        ${canSwap ? 'hover:scale-110' : ''} 
+                        transition-all duration-200 ease-in-out
+                        flex items-center justify-center
+                      `}
+                      aria-label="Swap departure and destination cities"
+                    >
+                      <div className="text-blue-600 text-lg md:text-base font-bold transform hover:rotate-180 transition-transform duration-300">
+                        ⇄
+                      </div>
+                    </button>
+                  </div>
+
+                  {/* To Field - Equal Width */}
+                  <div className="flex-1">
                     <CityAutocomplete
                       label="To"
                       placeholder="To city"
@@ -664,20 +690,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     )}
                   </div>
                 </div>
-
-                {/* Mobile-First Swap Button - Larger touch target for mobile */}
-                <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10 md:top-8">
-                  <button
-                    type="button"
-                    onClick={swapCities}
-                    disabled={!canSwap}
-                    style={{
-                      visibility: canSwap ? 'visible' : 'hidden'
-                    }}
-                    className={`
-                      bg-white border-2 border-blue-200 rounded-full 
-                      p-4 md:p-3 shadow-lg min-w-[48px] min-h-[48px]
-                      hover:border-blue-400 hover:shadow-xl 
+              </div>
                       active:scale-95 md:hover:scale-110
                       focus:outline-none focus:ring-4 focus:ring-blue-300
                       transition-all duration-200 group
