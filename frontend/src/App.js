@@ -691,8 +691,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                   </div>
                 </div>
               </div>
-                      active:scale-95 md:hover:scale-110
-              </div>
+
             </div>
           )}
 
