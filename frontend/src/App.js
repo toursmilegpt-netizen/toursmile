@@ -387,13 +387,14 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             />
           </div>
 
-          {/* Search Button - Mobile Compact */}
+          {/* Search Button - Enhanced Mobile Full-Width */}
           <div className="pt-1 md:pt-2">
             <button
               type="button"
               onClick={handleSearch}
               disabled={isSearching || !searchData.segments[0]?.origin || !searchData.segments[0]?.destination || !searchData.segments[0]?.departureDate}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2.5 md:py-3.5 rounded-xl font-semibold text-sm md:text-base shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 md:py-3.5 rounded-xl font-semibold text-sm md:text-base shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2 min-w-full"
+              style={{ minWidth: '100%' }}
             >
               {isSearching ? (
                 <>
