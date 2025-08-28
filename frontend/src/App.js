@@ -1642,7 +1642,7 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
                     <div className="flex-1">
                       <div className="flex items-center">
                         {isRecentSearch && <span className="mr-2 text-blue-500">🕒</span>}
-                        <div className="font-semibold text-gray-900">{airport.name}</div>
+                        <div className="font-semibold text-gray-900">{getDisplayName(airport, isMobile())}</div>
                         {airport.popular && (
                           <span className="ml-2 px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded-full">Popular</span>
                         )}
@@ -1650,7 +1650,9 @@ const CityAutocomplete = React.forwardRef(({ label, placeholder, value, onChange
                           <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">Recent</span>
                         )}
                       </div>
-                      <div className="text-sm text-gray-600 mt-1">{airport.fullName}</div>
+                      {!isMobile() && (
+                        <div className="text-sm text-gray-600 mt-1">{airport.fullName}</div>
+                      )}
                       <div className="text-xs text-gray-500">{airport.country}</div>
                     </div>
                     <div className="text-sm font-mono bg-gray-100 px-3 py-1 rounded-lg text-gray-600">
