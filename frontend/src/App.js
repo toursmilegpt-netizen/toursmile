@@ -2563,7 +2563,7 @@ function App() {
                 <img
                   src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
                   alt="TourSmile"
-                  className="h-20 md:h-24"
+                  className="h-8 sm:h-10 md:h-12 max-w-[120px] sm:max-w-none"
                 />
               </div>
             </div>
