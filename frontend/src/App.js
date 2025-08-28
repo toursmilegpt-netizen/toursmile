@@ -413,8 +413,8 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
   };
 
   return (
-    <div className={`${compact ? 'max-w-none' : 'max-w-4xl'} mx-auto`}>
-      <div className={`bg-white rounded-3xl shadow-2xl ${compact ? 'p-4 md:p-6' : 'p-6 md:p-8'} backdrop-blur-md border border-gray-100`}>
+    <div className={`${compact ? 'mx-2 sm:mx-4' : 'mx-3 sm:mx-4 md:mx-auto md:max-w-4xl'}`}>
+      <div className={`bg-white rounded-2xl md:rounded-3xl shadow-2xl ${compact ? 'p-3 md:p-6' : 'p-4 md:p-8'} backdrop-blur-md border border-gray-100`}>
         {/* Enhanced Trip Type Tabs - Mobile-First Design */}
         <div className={`${compact ? 'mb-4' : 'mb-6'}`}>
           {/* Mobile Layout */}
