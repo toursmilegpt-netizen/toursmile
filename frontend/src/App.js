@@ -412,9 +412,9 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           </div>
         </div>
 
-        {/* Promotional Section - Integrated */}
+        {/* Promotional Section - Hidden on Mobile for Space */}
         {!compact && (
-          <div className="border-t border-gray-100 p-4">
+          <div className="border-t border-gray-100 p-4 hidden md:block">
             <PromotionalBanner 
               compact={compact}
               onPromoApply={(promo) => {
