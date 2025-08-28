@@ -1934,49 +1934,25 @@ function App() {
     if (!showResults) {
       return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-          {/* Mobile-Optimized Header */}
-          <header className="relative">
-            <div className="max-w-7xl mx-auto px-3 md:px-4 py-3 md:py-6">
+          {/* CLEAN SIMPLE HEADER */}
+          <header className="bg-white border-b border-gray-100">
+            <div className="px-4 py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <img
                     src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
                     alt="TourSmile"
-                    className="h-8 md:h-12 mr-2 toursmile-logo"
+                    className="h-10"
                   />
                 </div>
-                <div className="hidden md:flex items-center space-x-8">
-                  <span className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">✈️ Flights</span>
-                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer">🏨 Hotels</span>
-                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer">🎯 Activities</span>
-                </div>
-                {/* Mobile Navigation */}
-                <div className="flex md:hidden items-center space-x-4">
-                  <span className="text-blue-600 font-semibold text-sm">✈️ Flights</span>
-                  <span className="text-gray-500 text-sm">🏨 Hotels</span>
-                  <span className="text-gray-500 text-sm">🎯 Activities</span>
+                <div className="flex items-center space-x-6">
+                  <span className="text-blue-600 font-semibold">Flights</span>
+                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer hidden md:inline">Hotels</span>
+                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer hidden md:inline">Activities</span>
                 </div>
               </div>
             </div>
           </header>
-
-          {/* Mobile-Optimized Premium Messaging */}
-          <div className="premium-badges">
-            <div className="flex items-center justify-center space-x-4 md:space-x-6 py-2 md:py-3 bg-white/50 backdrop-blur-sm border-b border-gray-100">
-              <div className="premium-badge flex items-center space-x-1 bg-green-100 text-green-700 px-2 md:px-3 py-1 rounded-full">
-                <span className="text-xs">✅</span>
-                <span className="text-xs md:text-sm font-medium">Instant</span>
-              </div>
-              <div className="premium-badge flex items-center space-x-1 bg-blue-100 text-blue-700 px-2 md:px-3 py-1 rounded-full">
-                <span className="text-xs">🔒</span>
-                <span className="text-xs md:text-sm font-medium">Secure</span>
-              </div>
-              <div className="premium-badge flex items-center space-x-1 bg-orange-100 text-orange-700 px-2 md:px-3 py-1 rounded-full">
-                <span className="text-xs">⚡</span>
-                <span className="text-xs md:text-sm font-medium">Easy</span>
-              </div>
-            </div>
-          </div>
 
           {/* NEW CLEAN MAIN CONTENT */}
           <main>
