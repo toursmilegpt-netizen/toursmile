@@ -632,12 +632,13 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             // One-way & Round-trip: Show only first segment for cities (dates handled separately)
             <div>
               <div className="relative">
-                <div className="grid grid-cols-2 gap-3 md:grid-cols-2">
-                  {/* From */}
-                  <div>
+                {/* Professional Horizontal Layout - No Overlap */}
+                <div className="flex items-end space-x-2">
+                  {/* From Field */}
+                  <div className="flex-1">
                     <CityAutocomplete
                       label="From"
-                      placeholder="Enter departure city"
+                      placeholder="From city"
                       value={searchData.segments[0]?.origin || ''}
                       onChange={(city) => updateSegment(0, 'origin', city)}
                       airports={AIRPORTS_DATABASE}
@@ -647,11 +648,27 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                     />
                   </div>
 
-                  {/* To */}
-                  <div>
+                  {/* Professional Swap Button - Between Fields */}
+                  <div className="flex-shrink-0 pb-1">
+                    <button
+                      type="button"
+                      onClick={swapCities}
+                      disabled={!canSwap}
+                      style={{
+                        visibility: canSwap ? 'visible' : 'hidden'
+                      }}
+                      className="bg-white border-2 border-blue-200 rounded-full p-2.5 shadow-lg min-w-[44px] min-h-[44px] hover:border-blue-400 hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
+                      aria-label="Swap departure and destination cities"
+                    >
+                      <div className="text-blue-600 text-lg font-bold">⇄</div>
+                    </button>
+                  </div>
+
+                  {/* To Field */}
+                  <div className="flex-1">
                     <CityAutocomplete
                       label="To"
-                      placeholder="Enter destination city"
+                      placeholder="To city"
                       value={searchData.segments[0]?.destination || ''}
                       onChange={(city) => { updateSegment(0, 'destination', city); setDepAutoOpenToken(t => t + 1); }}
                       airports={AIRPORTS_DATABASE}
@@ -663,47 +680,6 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
                       <span className="sr-only" aria-live="polite">Next: Departure Date</span>
                     )}
                   </div>
-                </div>
-
-                {/* Mobile-First Swap Button - Larger touch target for mobile */}
-                <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10 md:top-8">
-                  <button
-                    type="button"
-                    onClick={swapCities}
-                    disabled={!canSwap}
-                    style={{
-                      visibility: canSwap ? 'visible' : 'hidden'
-                    }}
-                    className={`
-                      bg-white border-2 border-blue-200 rounded-full 
-                      p-4 md:p-3 shadow-lg min-w-[48px] min-h-[48px]
-                      hover:border-blue-400 hover:shadow-xl 
-                      active:scale-95 md:hover:scale-110
-                      focus:outline-none focus:ring-4 focus:ring-blue-300
-                      transition-all duration-200 group
-                      ${!canSwap 
-                        ? 'opacity-0 cursor-not-allowed' 
-                        : 'opacity-100 hover:bg-blue-50 cursor-pointer active:bg-blue-100'
-                      }
-                    `}
-                    title="Swap cities"
-                    aria-label="Swap departure and destination cities"
-                  >
-                    <div className="text-blue-600 group-hover:rotate-180 group-active:rotate-180 transition-transform duration-300">
-                      <svg 
-                        width="24" 
-                        height="24" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5"
-                        className="md:w-5 md:h-5"
-                      >
-                        <path d="M7 16l3 3 3-3M14 8l-3-3-3 3"/>
-                        <path d="M10 19V5M14 5v14"/>
-                      </svg>
-                    </div>
-                  </button>
                 </div>
               </div>
             </div>
