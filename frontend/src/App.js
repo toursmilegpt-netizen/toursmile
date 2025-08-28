@@ -230,18 +230,18 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
     }
   };
 
-  // ClearTrip-Style Mobile-First Design
+  // ClearTrip-Style Mobile-First Design - Optimized for Viewport
   return (
     <div className="w-full">
-      {/* Full-Width Card - ClearTrip Style */}
+      {/* Full-Width Card - ClearTrip Style - Mobile Optimized */}
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 mx-3 md:mx-auto md:max-w-4xl overflow-hidden">
         
-        {/* Trip Type Tabs - Full Width */}
-        <div className="bg-gray-50 border-b border-gray-100 px-4 py-3">
+        {/* Trip Type Tabs - Compact Mobile */}
+        <div className="bg-gray-50 border-b border-gray-100 px-3 py-2 md:px-4 md:py-3">
           <div className="flex items-center space-x-1">
             <button
               onClick={() => setSearchData({...searchData, tripType: 'one-way'})}
-              className={`flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${
+              className={`flex-1 py-2 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-200 ${
                 searchData.tripType === 'one-way' 
                   ? 'bg-blue-600 text-white shadow-md' 
                   : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
@@ -252,7 +252,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             
             <button
               onClick={() => setSearchData({...searchData, tripType: 'return'})}
-              className={`flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${
+              className={`flex-1 py-2 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-200 ${
                 searchData.tripType === 'return' 
                   ? 'bg-blue-600 text-white shadow-md' 
                   : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
@@ -263,7 +263,7 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
             
             <button
               onClick={() => setSearchData({...searchData, tripType: 'multi-city'})}
-              className={`flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${
+              className={`flex-1 py-2 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-200 ${
                 searchData.tripType === 'multi-city' 
                   ? 'bg-blue-600 text-white shadow-md' 
                   : 'bg-white text-gray-600 hover:text-blue-600 border border-gray-200'
@@ -274,8 +274,8 @@ const GuidedSearchForm = ({ onSearch, isSearching, compact = false }) => {
           </div>
         </div>
 
-        {/* Form Content */}
-        <div className="p-4 space-y-4">
+        {/* Form Content - Mobile Compact */}
+        <div className="p-3 md:p-4 space-y-3 md:space-y-4">
           
           {/* From/To Section - ClearTrip Horizontal Layout */}
           <div className="space-y-3">
