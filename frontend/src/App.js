@@ -1287,11 +1287,21 @@ const PromotionalBanner = ({ onPromoApply, compact = false }) => {
   );
 };
 
-// Passenger Selector Component with Adults, Children, Infants
-const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassChange, autoOpenToken = 0, highlight = false }) => {
+// Compact Mobile-Optimized Passenger Selector Component (Enhanced)
+const PassengerSelector = ({ passengers, onPassengerChange, classType, onClassChange, highlight = false, autoOpenToken = 0 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
+  // Auto-open based on guidance flow
+  useEffect(() => {
+    if (autoOpenToken > 0) {
+      setTimeout(() => {
+        setShowDropdown(true);
+      }, 300);
+    }
+  }, [autoOpenToken]);
+
+  // Click outside to close
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -1299,34 +1309,18 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
       }
     };
 
-    if (showDropdown) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [showDropdown]);
-
-  // Controlled passenger auto-open (only when triggered by user flow)
-  useEffect(() => {
-    if (autoOpenToken > 0) {
-      try {
-        setShowDropdown(true);
-      } catch (e) {}
-    }
-  }, [autoOpenToken]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const updatePassengerCount = (type, increment) => {
-    const newPassengers = { ...passengers };
+    const current = passengers[type] || (type === 'adults' ? 1 : 0);
+    const newValue = increment ? current + 1 : Math.max(type === 'adults' ? 1 : 0, current - 1);
     
-    if (increment) {
-      newPassengers[type] = (newPassengers[type] || 0) + 1;
-    } else {
-      if (type === 'adults') {
-        newPassengers[type] = Math.max(1, (newPassengers[type] || 1) - 1);
-      } else {
-        newPassengers[type] = Math.max(0, (newPassengers[type] || 0) - 1);
-      }
-    }
-    
+    const newPassengers = {
+      ...passengers,
+      [type]: newValue
+    };
     onPassengerChange(newPassengers);
   };
 
@@ -1334,125 +1328,168 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
     return (passengers.adults || 1) + (passengers.children || 0) + (passengers.infants || 0);
   };
 
-  const getPassengerSummary = () => {
+  const getCompactSummary = () => {
     const total = getTotalPassengers();
-    const parts = [];
+    const adults = passengers.adults || 1;
+    const children = passengers.children || 0;
+    const infants = passengers.infants || 0;
     
-    if (passengers.adults || 1) parts.push(`${passengers.adults || 1} Adult${(passengers.adults || 1) > 1 ? 's' : ''}`);
-    if (passengers.children) parts.push(`${passengers.children} Child${passengers.children > 1 ? 'ren' : ''}`);
-    if (passengers.infants) parts.push(`${passengers.infants} Infant${passengers.infants > 1 ? 's' : ''}`);
-    
-    return parts.join(', ');
+    // Mobile-friendly compact format
+    if (children === 0 && infants === 0) {
+      return `${adults} Adult${adults > 1 ? 's' : ''}`;
+    } else {
+      return `${total} Passenger${total > 1 ? 's' : ''}`;
+    }
+  };
+
+  const getClassIcon = () => {
+    const icons = {
+      'economy': '🪑',
+      'premium-economy': '✨',
+      'business': '💼',
+      'first': '👑'
+    };
+    return icons[classType] || '🪑';
+  };
+
+  const getClassName = () => {
+    const names = {
+      'economy': 'Economy',
+      'premium-economy': 'Premium',
+      'business': 'Business',
+      'first': 'First'
+    };
+    return names[classType] || 'Economy';
   };
 
   return (
     <div className="relative" ref={dropdownRef}>
       <label className="block text-sm font-medium text-gray-700 mb-2">Passengers & Class</label>
       
-      {/* Passenger Display Button */}
+      {/* Compact Passenger Display Button */}
       <button
         type="button"
         onClick={() => setShowDropdown(!showDropdown)}
-        className={`w-full px-3 py-3 text-base border-2 rounded-2xl transition-all duration-200 flex items-center justify-between text-left ${
+        className={`w-full px-3 py-3 text-sm border-2 rounded-2xl transition-all duration-200 flex items-center justify-between text-left ${
           showDropdown ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
         } ${highlight ? 'ring-2 ring-blue-200 animate-soft-pulse' : ''}`}
       >
-        <div>
-          <div className="font-medium text-gray-900">{getPassengerSummary()}</div>
-          <div className="text-sm text-gray-600 capitalize">{classType} Class</div>
+        <div className="flex items-center space-x-2">
+          <span className="text-lg">👥</span>
+          <div>
+            <div className="font-medium text-gray-900">{getCompactSummary()}</div>
+            <div className="text-xs text-gray-600 flex items-center">
+              <span className="mr-1">{getClassIcon()}</span>
+              <span>{getClassName()}</span>
+            </div>
+          </div>
         </div>
-        <div className="text-2xl">👥</div>
+        <div className={`text-gray-400 transition-transform duration-200 ${showDropdown ? 'rotate-180' : ''}`}>
+          ▼
+        </div>
       </button>
 
-      {/* Passenger Selection Dropdown */}
+      {/* Compact Mobile-Optimized Dropdown */}
       {showDropdown && (
-        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border-2 border-blue-200 rounded-2xl shadow-2xl p-4">
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">Select Passengers</h3>
-            <p className="text-sm text-gray-600">Choose number of travelers</p>
+        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-2xl shadow-2xl max-w-sm">
+          {/* Header */}
+          <div className="p-3 border-b border-gray-100 bg-blue-50 rounded-t-2xl">
+            <h3 className="text-sm font-semibold text-gray-900">Select Passengers & Class</h3>
           </div>
 
-          {/* Adults */}
-          <div className="flex items-center justify-between py-3 border-b border-gray-100">
-            <div>
-              <div className="font-medium text-gray-900">Adults</div>
-              <div className="text-sm text-gray-600">12+ years</div>
+          {/* Compact Passenger Counters */}
+          <div className="p-3 space-y-3">
+            {/* Adults - Compact Row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm">👨‍👩‍👧‍👦</span>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">Adults</div>
+                  <div className="text-xs text-gray-500">12+ years</div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  type="button"
+                  onClick={() => updatePassengerCount('adults', false)}
+                  className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-xs font-bold transition-colors disabled:opacity-50"
+                  disabled={(passengers.adults || 1) <= 1}
+                >
+                  −
+                </button>
+                <span className="w-6 text-center text-sm font-medium">{passengers.adults || 1}</span>
+                <button
+                  type="button"
+                  onClick={() => updatePassengerCount('adults', true)}
+                  className="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-200 text-xs font-bold transition-colors"
+                >
+                  +
+                </button>
+              </div>
             </div>
-            <div className="flex items-center space-x-3">
-              <button
-                type="button"
-                onClick={() => updatePassengerCount('adults', false)}
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
-                disabled={(passengers.adults || 1) <= 1}
-              >
-                -
-              </button>
-              <span className="w-8 text-center font-medium">{passengers.adults || 1}</span>
-              <button
-                type="button"
-                onClick={() => updatePassengerCount('adults', true)}
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
-              >
-                +
-              </button>
+
+            {/* Children - Compact Row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm">🧒</span>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">Children</div>
+                  <div className="text-xs text-gray-500">2-12 years</div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  type="button"
+                  onClick={() => updatePassengerCount('children', false)}
+                  className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-xs font-bold transition-colors disabled:opacity-50"
+                  disabled={(passengers.children || 0) <= 0}
+                >
+                  −
+                </button>
+                <span className="w-6 text-center text-sm font-medium">{passengers.children || 0}</span>
+                <button
+                  type="button"
+                  onClick={() => updatePassengerCount('children', true)}
+                  className="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-200 text-xs font-bold transition-colors"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Infants - Compact Row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm">👶</span>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">Infants</div>
+                  <div className="text-xs text-gray-500">Under 2 years</div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  type="button"
+                  onClick={() => updatePassengerCount('infants', false)}
+                  className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-xs font-bold transition-colors disabled:opacity-50"
+                  disabled={(passengers.infants || 0) <= 0}
+                >
+                  −
+                </button>
+                <span className="w-6 text-center text-sm font-medium">{passengers.infants || 0}</span>
+                <button
+                  type="button"
+                  onClick={() => updatePassengerCount('infants', true)}
+                  className="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-200 text-xs font-bold transition-colors"
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Children */}
-          <div className="flex items-center justify-between py-3 border-b border-gray-100">
-            <div>
-              <div className="font-medium text-gray-900">Children</div>
-              <div className="text-sm text-gray-600">2-12 years</div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <button
-                type="button"
-                onClick={() => updatePassengerCount('children', false)}
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
-                disabled={(passengers.children || 0) <= 0}
-              >
-                -
-              </button>
-              <span className="w-8 text-center font-medium">{passengers.children || 0}</span>
-              <button
-                type="button"
-                onClick={() => updatePassengerCount('children', true)}
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          {/* Infants */}
-          <div className="flex items-center justify-between py-3 border-b border-gray-100">
-            <div>
-              <div className="font-medium text-gray-900">Infants</div>
-              <div className="text-sm text-gray-600">Under 2 years</div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <button
-                type="button"
-                onClick={() => updatePassengerCount('infants', false)}
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
-                disabled={(passengers.infants || 0) <= 0}
-              >
-                -
-              </button>
-              <span className="w-8 text-center font-medium">{passengers.infants || 0}</span>
-              <button
-                type="button"
-                onClick={() => updatePassengerCount('infants', true)}
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-sm font-bold"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          {/* Class Selection */}
-          <div className="pt-4">
-            <div className="font-medium text-gray-900 mb-3">Travel Class</div>
+          {/* Compact Travel Class Selection */}
+          <div className="p-3 border-t border-gray-100">
+            <div className="text-sm font-medium text-gray-900 mb-2">Travel Class</div>
             <div className="grid grid-cols-2 gap-2">
               {[
                 { value: 'economy', label: 'Economy', icon: '🪑' },
@@ -1464,27 +1501,27 @@ const PassengerSelector = ({ passengers, classType, onPassengerChange, onClassCh
                   key={cls.value}
                   type="button"
                   onClick={() => onClassChange(cls.value)}
-                  className={`p-3 rounded-xl border text-center transition-all duration-200 ${
+                  className={`p-2 rounded-lg border text-center transition-all duration-200 ${
                     classType === cls.value
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-md'
                       : 'bg-white border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-blue-50'
                   }`}
                 >
-                  <div className="text-lg mb-1">{cls.icon}</div>
-                  <div className="text-sm font-medium">{cls.label}</div>
+                  <div className="text-sm mb-0.5">{cls.icon}</div>
+                  <div className="text-xs font-medium">{cls.label}</div>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Apply Button */}
-          <div className="pt-4">
+          {/* Compact Apply Button */}
+          <div className="p-3 border-t border-gray-100">
             <button
               type="button"
               onClick={() => setShowDropdown(false)}
-              className="w-full bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+              className="w-full bg-blue-600 text-white py-2 rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors"
             >
-              Apply
+              Apply Selection
             </button>
           </div>
         </div>
