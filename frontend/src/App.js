@@ -1806,33 +1806,57 @@ function App() {
     if (!showResults) {
       return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-          {/* Header */}
+          {/* Mobile-Optimized Header */}
           <header className="relative">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="max-w-7xl mx-auto px-3 md:px-4 py-3 md:py-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <img
                     src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
                     alt="TourSmile"
-                    className="h-12 mr-2"
+                    className="h-8 md:h-12 mr-2 toursmile-logo"
                   />
                 </div>
                 <div className="hidden md:flex items-center space-x-8">
-                  <span className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Flights</span>
-                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer">Hotels</span>
-                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer">Activities</span>
+                  <span className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">✈️ Flights</span>
+                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer">🏨 Hotels</span>
+                  <span className="text-gray-500 hover:text-gray-700 cursor-pointer">🎯 Activities</span>
+                </div>
+                {/* Mobile Navigation */}
+                <div className="flex md:hidden items-center space-x-4">
+                  <span className="text-blue-600 font-semibold text-sm">✈️ Flights</span>
+                  <span className="text-gray-500 text-sm">🏨 Hotels</span>
+                  <span className="text-gray-500 text-sm">🎯 Activities</span>
                 </div>
               </div>
             </div>
           </header>
 
-          {/* Main Content */}
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          {/* Mobile-Optimized Premium Messaging */}
+          <div className="premium-badges">
+            <div className="flex items-center justify-center space-x-4 md:space-x-6 py-2 md:py-3 bg-white/50 backdrop-blur-sm border-b border-gray-100">
+              <div className="premium-badge flex items-center space-x-1 bg-green-100 text-green-700 px-2 md:px-3 py-1 rounded-full">
+                <span className="text-xs">✅</span>
+                <span className="text-xs md:text-sm font-medium">Instant</span>
+              </div>
+              <div className="premium-badge flex items-center space-x-1 bg-blue-100 text-blue-700 px-2 md:px-3 py-1 rounded-full">
+                <span className="text-xs">🔒</span>
+                <span className="text-xs md:text-sm font-medium">Secure</span>
+              </div>
+              <div className="premium-badge flex items-center space-x-1 bg-orange-100 text-orange-700 px-2 md:px-3 py-1 rounded-full">
+                <span className="text-xs">⚡</span>
+                <span className="text-xs md:text-sm font-medium">Easy</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content - Mobile Optimized */}
+          <main className="max-w-7xl mx-auto px-3 md:px-4 py-4 md:py-8">
+            <div className="text-center mb-6 md:mb-12">
+              <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-3 md:mb-6">
                 Find Your Perfect Flight
               </h1>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              <p className="text-sm md:text-xl text-gray-600 max-w-3xl mx-auto mb-4 md:mb-8 hidden md:block">
                 Book flights, hotels, and activities with our AI-powered travel assistant. 
                 Get personalized recommendations and the best deals.
               </p>
@@ -1841,8 +1865,8 @@ function App() {
             {/* Main Search Form */}
             <GuidedSearchForm onSearch={handleSearch} isSearching={isSearching} />
 
-            {/* Trust Indicators */}
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Trust Indicators - Hidden on Mobile */}
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 hidden md:grid">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">⚡</span>
