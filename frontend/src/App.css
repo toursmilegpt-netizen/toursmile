@@ -119,11 +119,22 @@
     margin-bottom: 0.25rem !important;
   }
   
-  /* Compact search button */
+  /* Enhanced search button - full width mobile optimization */
   .w-full.bg-gradient-to-r { 
-    padding: 0.625rem 1rem !important; 
+    padding: 0.75rem 1rem !important; 
     font-size: 0.875rem !important; 
     margin-top: 0.25rem !important; 
+    min-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  /* Enhanced button accessibility */
+  .date-picker-button {
+    min-height: 44px !important; /* Touch-friendly minimum */
+  }
+  
+  .passenger-selector-button {
+    min-height: 44px !important; /* Touch-friendly minimum */
   }
   
   /* Hide promotional section on mobile to save space */
