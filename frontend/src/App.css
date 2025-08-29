@@ -142,13 +142,10 @@ body {
   background-color: #F3F4F6;
 }
 
-/* ========================================= */
-/* MAIN CONTAINER */
-/* ========================================= */
-
+/* MAIN CONTAINER - Optimized for mobile viewport */
 .main-container {
   padding: var(--spacing-lg);
-  padding-bottom: 100px; /* Space for sticky CTA */
+  padding-bottom: 80px; /* Reduced from 100px to fit viewport better */
 }
 
 /* ========================================= */
