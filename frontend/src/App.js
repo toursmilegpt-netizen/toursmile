@@ -388,6 +388,7 @@ const FlightSearchForm = () => {
   const [destination, setDestination] = useState(null);
   const [departureDate, setDepartureDate] = useState(null);
   const [returnDate, setReturnDate] = useState(null);
+  // Interactivity Handoff.txt: Default: 1 adult, 0 child, 0 infant
   const [travellers, setTravellers] = useState({
     adults: 1,
     children: 0,
