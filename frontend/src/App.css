@@ -1032,12 +1032,12 @@ body {
   background-color: transparent;
   color: var(--text-secondary);
   text-align: center;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-lg); /* Reduced vertical padding */
   font-family: var(--font-family);
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-regular);
   line-height: 1.4;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md); /* Reduced margin */
 }
 
 /* POPULAR ROUTES - README.txt specifications */
