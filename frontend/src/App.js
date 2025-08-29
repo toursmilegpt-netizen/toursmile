@@ -259,12 +259,12 @@ const TravellersBottomSheet = ({
     
     const newTravellers = { ...travellers, [type]: newCount };
     
-    // Validation: infants ≤ adults
+    // Interactivity Handoff.txt: Validation - infants ≤ adults, total pax ≤ 9
     if (type === 'infants' && newTravellers.infants > newTravellers.adults) {
-      return;
+      return; // Block infants > adults
     }
     
-    // Max 9 rule - 10+ opens Group Booking
+    // Interactivity Handoff.txt: If >9 pax show Group Booking
     const total = newTravellers.adults + newTravellers.children + newTravellers.infants;
     if (total > 9) {
       setShowGroupBooking(true);
