@@ -1012,17 +1012,14 @@ body {
   background-color: #3367d6;
 }
 
-/* ========================================= */
-/* TRUST STRIP - BELOW SEARCH CARD */
-/* ========================================= */
-
+/* TRUST STRIP - README.txt: Exact text below search card */
 .trust-strip {
   background-color: transparent;
   color: var(--text-secondary);
   text-align: center;
   padding: var(--spacing-md) var(--spacing-lg);
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-size-label);
+  font-family: var(--font-family);
+  font-size: var(--font-size-caption);
   font-weight: var(--font-weight-regular);
   line-height: 1.4;
   margin-bottom: var(--spacing-xl);
