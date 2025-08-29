@@ -702,6 +702,7 @@ body {
   background-color: #F0F4FF;
 }
 
+/* Interactivity Handoff.txt: today highlighted */
 .calendar-cell.today {
   background-color: var(--primary-blue);
   color: var(--background-white);
