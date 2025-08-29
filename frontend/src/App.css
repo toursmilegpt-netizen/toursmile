@@ -468,10 +468,7 @@ body {
   color: var(--text-primary);
 }
 
-/* ========================================= */
-/* STICKY CTA - ORANGE GRADIENT EXACT FIGMA */
-/* ========================================= */
-
+/* STICKY CTA - Interactivity Handoff.txt: Orange gradient, sticky bottom */
 .sticky-cta {
   position: fixed;
   bottom: 0;
@@ -480,7 +477,7 @@ body {
   width: 100%;
   max-width: 390px;
   background-color: var(--background-white);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md); /* Reduced padding for mobile viewport */
   border-top: 1px solid var(--border-light);
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
   z-index: 100;
@@ -488,29 +485,30 @@ body {
 
 .cta-button {
   width: 100%;
-  padding: var(--spacing-lg) var(--spacing-xxl);
+  padding: var(--spacing-md) var(--spacing-xl);
   border: none;
   border-radius: var(--radius-lg);
-  font-family: var(--font-family-primary);
+  font-family: var(--font-family);
   font-size: var(--font-size-input);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition: all 0.2s ease;
-  min-height: 52px;
+  min-height: var(--tap-target-min); /* README.txt: 44px tap target */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Orange gradient #FFA382 - EXACT Figma colors */
+/* Interactivity Handoff.txt: Default lighter orange gradient */
 .cta-button.enabled {
   background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8a50 100%);
   color: var(--background-white);
   box-shadow: var(--shadow-button);
 }
 
+/* Interactivity Handoff.txt: Pressed slightly darker shade */
 .cta-button.enabled:hover {
-  background: linear-gradient(135deg, #ff8a50 0%, #ff7a40 100%); /* Pressed state */
+  background: linear-gradient(135deg, #ff8a50 0%, #ff7a40 100%);
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(255, 163, 130, 0.4);
 }
@@ -526,6 +524,28 @@ body {
   color: #9CA3AF;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+/* Interactivity Handoff.txt: Loading spinner inside button */
+.cta-button.loading {
+  position: relative;
+}
+
+.cta-button.loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--background-white);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: var(--spacing-sm);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .cta-text {
