@@ -106,7 +106,7 @@ body {
 
 .app-header {
   background-color: var(--background-white);
-  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm) var(--spacing-lg); /* Reduced vertical padding */
+  padding: var(--spacing-16) var(--spacing-16) var(--spacing-12) var(--spacing-16); /* Figma padding */
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -114,44 +114,54 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-sm); /* Reduced gap */
+  gap: var(--spacing-12); /* Figma gap */
 }
 
-/* Logo centered - Size per Figma */
+/* Logo - Exact Figma Size */
 .logo-centered {
-  height: 32px; /* Exact Figma logo height */
+  height: 28px; /* Exact Figma mobile logo height */
   width: auto;
+  object-fit: contain;
 }
 
-/* Navigation Chips - Styled & spaced exactly per Figma */
+/* Navigation Chips - Exact Figma Styling */
 .nav-chips {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-8);
 }
 
 .nav-chip {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-lg);
+  padding: var(--spacing-8) var(--spacing-16); /* Figma padding */
+  border-radius: var(--radius-12); /* Figma radius */
   font-family: var(--font-family);
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-medium);
   color: var(--text-secondary);
   background-color: var(--surface-light);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   border: none;
-  min-height: var(--tap-target-min); /* README.txt: 44px tap target */
+  min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
+  text-align: center;
 }
 
 .nav-chip.active {
   background-color: var(--primary-blue);
   color: var(--background-white);
+  box-shadow: var(--shadow-hover);
 }
 
 .nav-chip:hover:not(.active) {
-  background-color: #F3F4F6;
+  background-color: var(--hover-overlay);
+  transform: translateY(-1px);
+  transition: all var(--transition-fast);
+}
+
+.nav-chip:active {
+  transform: translateY(0);
+  transition: all var(--transition-fast);
 }
 
 /* MAIN CONTAINER - Optimized for mobile viewport */
