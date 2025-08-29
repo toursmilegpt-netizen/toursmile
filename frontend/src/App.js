@@ -135,11 +135,13 @@ const CalendarOverlay = ({
     const selected = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
     onDateSelect(selected);
     
-    // Auto-advance: Departure → Return within same overlay
-    if (!isReturn && !isOneWay) {
-      // Parent will handle return date selection
+    // Interactivity Handoff.txt: Auto-advance behavior
+    // Departure → Return within same overlay, Return → Close
+    if (!isReturn) {
+      // Departure date selected - parent handles auto-advance to return
     } else {
-      onClose(); // Close after Return date selection
+      // Return date selected - close overlay
+      onClose();
     }
   };
 
