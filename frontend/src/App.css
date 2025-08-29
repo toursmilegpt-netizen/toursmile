@@ -532,7 +532,10 @@ body {
   line-height: 1.4;
 }
 
-/* STICKY CTA - Interactivity Handoff.txt: Orange gradient, sticky bottom */
+/* ========================================= */
+/* STICKY CTA - EXACT FIGMA ORANGE GRADIENT */
+/* ========================================= */
+
 .sticky-cta {
   position: fixed;
   bottom: 0;
@@ -541,40 +544,42 @@ body {
   width: 100%;
   max-width: 390px;
   background-color: var(--background-white);
-  padding: var(--spacing-md); /* Reduced padding for mobile viewport */
+  padding: var(--spacing-16); /* Figma CTA container padding */
   border-top: 1px solid var(--border-light);
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08); /* Figma CTA shadow */
   z-index: 100;
 }
 
 .cta-button {
   width: 100%;
-  padding: var(--spacing-md) var(--spacing-xl);
+  padding: var(--spacing-16) var(--spacing-24); /* Figma button padding */
   border: none;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-12); /* Figma button radius */
   font-family: var(--font-family);
-  font-size: var(--font-size-input);
+  font-size: var(--font-size-value); /* Same as input values */
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-height: var(--tap-target-min); /* README.txt: 44px tap target */
+  transition: all var(--transition-base);
+  min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Interactivity Handoff.txt: Default lighter orange gradient */
+/* FIGMA ORANGE GRADIENT - ENABLED STATE */
 .cta-button.enabled {
-  background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8a50 100%);
+  background: var(--accent-orange-gradient); /* Exact Figma gradient */
   color: var(--background-white);
   box-shadow: var(--shadow-button);
+  border: 1px solid rgba(255, 163, 130, 0.3);
 }
 
-/* Interactivity Handoff.txt: Pressed slightly darker shade */
 .cta-button.enabled:hover {
-  background: linear-gradient(135deg, #ff8a50 0%, #ff7a40 100%);
+  background: linear-gradient(135deg, #FF8A50 0%, #FF7A40 100%); /* Darker on hover */
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(255, 163, 130, 0.4);
+  box-shadow: 0 8px 20px rgba(255, 163, 130, 0.35);
 }
 
 .cta-button.enabled:active {
@@ -582,17 +587,20 @@ body {
   box-shadow: var(--shadow-button);
 }
 
-/* Disabled style when form incomplete */
+/* FIGMA DISABLED STATE */
 .cta-button.disabled {
-  background-color: #F3F4F6;
-  color: #9CA3AF;
+  background: var(--surface-light);
+  color: var(--text-secondary);
   cursor: not-allowed;
   box-shadow: none;
+  border: 1px solid var(--border-light);
 }
 
-/* Interactivity Handoff.txt: Loading spinner inside button */
+/* FIGMA LOADING STATE */
 .cta-button.loading {
-  position: relative;
+  background: var(--accent-orange-gradient);
+  color: var(--background-white);
+  cursor: wait;
 }
 
 .cta-button.loading::after {
@@ -604,7 +612,7 @@ body {
   border-top: 2px solid var(--background-white);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-left: var(--spacing-sm);
+  margin-left: var(--spacing-8);
 }
 
 @keyframes spin {
@@ -614,6 +622,7 @@ body {
 
 .cta-text {
   font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.2px; /* Figma letter spacing */
 }
 
 /* CALENDAR OVERLAY - Interactivity Handoff.txt: Full-screen dimmed background */
