@@ -7,7 +7,7 @@
 
 Current frontend configuration points to Emergent platform:
 ```
-REACT_APP_BACKEND_URL=https://skyseeker.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://pixel-perfect-ui-12.preview.emergentagent.com
 ```
 
 **This needs to be changed to your Interserver domain before deployment.**
