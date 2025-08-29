@@ -331,10 +331,9 @@ body {
 }
 
 /* ========================================= */
-/* AUTOCOMPLETE DROPDOWN */
+/* AUTOCOMPLETE DROPDOWN - FIGMA STYLING */
 /* ========================================= */
 
-/* Autocomplete: Interactivity Handoff.txt - smooth fade/slide animation */
 .autocomplete-dropdown {
   position: absolute;
   top: 100%;
@@ -343,30 +342,33 @@ body {
   background-color: var(--background-white);
   border: 1px solid var(--border-light);
   border-top: none;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-radius: 0 0 var(--radius-12) var(--radius-12); /* Match input radius */
   box-shadow: var(--shadow-card);
   z-index: 50;
-  max-height: 200px;
+  max-height: 240px; /* Figma max height */
   overflow-y: auto;
-  animation: dropdown-appear var(--animation-duration) ease-out; /* ~200ms fade/slide */
+  animation: dropdown-slide-in var(--transition-base); /* 200ms slide */
 }
 
-@keyframes dropdown-appear {
+@keyframes dropdown-slide-in {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 .dropdown-item {
-  padding: var(--spacing-md);
+  padding: var(--spacing-12) var(--spacing-16); /* Figma item padding */
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background-color var(--transition-fast);
   border-bottom: 1px solid #F5F5F5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
 }
 
 .dropdown-item:hover {
@@ -377,18 +379,18 @@ body {
   border-bottom: none;
 }
 
-/* Interactivity Handoff.txt: "City – Airport (IATA)" format */
+/* FIGMA AUTOCOMPLETE FORMAT: "City – Airport (IATA)" */
 .item-primary {
   font-weight: var(--font-weight-medium);
   color: var(--text-primary);
   font-size: var(--font-size-body);
+  line-height: 1.4;
 }
 
 .item-secondary {
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-regular);
   color: var(--text-secondary);
-  margin-top: 2px;
 }
 
 /* ========================================= */
