@@ -144,8 +144,8 @@ body {
 
 /* MAIN CONTAINER - Optimized for mobile viewport */
 .main-container {
-  padding: var(--spacing-lg);
-  padding-bottom: 80px; /* Reduced from 100px to fit viewport better */
+  padding: var(--spacing-md); /* Reduced from lg to md */
+  padding-bottom: 70px; /* Reduced for sticky CTA */
 }
 
 /* Search card: 12px radius, shadows per README.txt specs */
