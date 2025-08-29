@@ -467,13 +467,16 @@ body {
   justify-content: flex-start;
 }
 
-/* OPTIONS ROW - More compact for mobile */
+/* ========================================= */
+/* OPTIONS ROW - FIGMA STYLING */
+/* ========================================= */
+
 .options-row {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs); /* Further reduced gap */
-  margin-bottom: var(--spacing-sm); /* Further reduced for mobile */
-  padding: var(--spacing-sm) 0; /* Further reduced padding */
+  gap: var(--spacing-12); /* Figma option spacing */
+  margin-bottom: var(--spacing-20); /* Figma bottom margin */
+  padding: var(--spacing-16) 0; /* Figma section padding */
   border-top: 1px solid var(--border-light);
 }
 
@@ -481,10 +484,16 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
   color: var(--text-primary);
+  gap: var(--spacing-12); /* Figma checkbox-to-text gap */
+  transition: all var(--transition-fast);
+}
+
+.option-checkbox:hover {
+  color: var(--primary-blue);
 }
 
 .option-checkbox input[type="checkbox"] {
@@ -495,29 +504,32 @@ body {
   width: 20px;
   height: 20px;
   border: 2px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  margin-right: var(--spacing-md);
+  border-radius: var(--radius-4); /* Small radius for checkboxes */
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
+  flex-shrink: 0;
 }
 
 .option-checkbox input[type="checkbox"]:checked + .checkmark {
   background-color: var(--primary-blue);
   border-color: var(--primary-blue);
+  box-shadow: var(--focus-ring);
 }
 
 .option-checkbox input[type="checkbox"]:checked + .checkmark::after {
   content: "✓";
-  color: white;
+  color: var(--background-white);
   font-size: 12px;
   font-weight: var(--font-weight-semibold);
+  line-height: 1;
 }
 
 .option-text {
   font-size: var(--font-size-body);
   color: var(--text-primary);
+  line-height: 1.4;
 }
 
 /* STICKY CTA - Interactivity Handoff.txt: Orange gradient, sticky bottom */
