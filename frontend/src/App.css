@@ -610,21 +610,22 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
 }
 
 .modal-title {
-  font-family: var(--font-family-primary);
+  font-family: var(--font-family);
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
 }
 
+/* Interactivity Handoff.txt: One-way toggle at top */
 .toggle-oneway {
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
   color: var(--text-secondary);
