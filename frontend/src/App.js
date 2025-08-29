@@ -418,16 +418,16 @@ const FlightSearchForm = () => {
 
   const handleDepartureDateSelect = (date) => {
     setDepartureDate(date);
-    setShowCalendar(false);
     
+    // Interactivity Handoff.txt: "On selecting departure date → auto-advance to return"
     if (tripType === 'round-trip') {
       // Auto-advance to return within same overlay
-      setTimeout(() => {
-        setCalendarType('return');
-        setShowCalendar(true);
-        setCurrentField('return');
-      }, 300);
+      setCalendarType('return');
+      setCurrentField('return');
+      // Keep calendar open for return date selection
     } else {
+      // One-way: close overlay and advance to travellers
+      setShowCalendar(false);
       setCurrentField('travellers');
     }
   };
