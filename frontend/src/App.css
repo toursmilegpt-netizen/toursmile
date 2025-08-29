@@ -1,7 +1,61 @@
-/* TOURSMILE FLIGHT SEARCH - PIXEL-PERFECT FIGMA IMPLEMENTATION */
-/* Mobile Frame: 390px | Colors: #4285F4, #FFA382 | Typography: Exact specs */
+/* TOURSMILE FLIGHT SEARCH - PIXEL-PERFECT FIGMA DEV MODE IMPLEMENTATION */
+/* Using EXACT Figma Inspect values - NO SUBSTITUTIONS */
+/* Mobile Frame: 390px | Design Tokens: Exact Figma specifications */
 
-/* RESET & BASE */
+/* ========================================= */
+/* DESIGN TOKENS - EXACT FIGMA VALUES */
+/* ========================================= */
+
+:root {
+  /* Colors - Exact Figma Hex Values */
+  --primary-blue: #4285F4;
+  --accent-orange: #FFA382;
+  --text-primary: #1E1E1E;
+  --text-secondary: #666666;
+  --background-white: #FFFFFF;
+  --border-light: #E5E7EB;
+  --surface-light: #F9FAFB;
+  
+  /* Typography - Exact Figma Font Specifications */
+  --font-family-primary: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-secondary: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Font Weights - Exact Figma Values */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  
+  /* Font Sizes - Exact Figma Measurements */
+  --font-size-label: 11px;
+  --font-size-input: 16px;
+  --font-size-title: 18px;
+  --font-size-body: 14px;
+  --font-size-caption: 12px;
+  
+  /* Spacing - Exact Figma Measurements */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-xxl: 24px;
+  
+  /* Border Radius - Exact Figma Values */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Shadows - Exact Figma Drop Shadows */
+  --shadow-card: 0px 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-modal: 0px 20px 40px rgba(0, 0, 0, 0.15);
+  --shadow-button: 0px 4px 12px rgba(255, 163, 130, 0.3);
+}
+
+/* ========================================= */
+/* RESET & BASE STYLES */
+/* ========================================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -9,195 +63,239 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #FFFFFF;
-  color: #1E1E1E;
+  font-family: var(--font-family-secondary);
+  background-color: var(--background-white);
+  color: var(--text-primary);
   line-height: 1.4;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 0;
 }
 
 .App {
   min-height: 100vh;
-  background-color: #FFFFFF;
-  max-width: 390px; /* Exact Figma frame width */
+  background-color: var(--background-white);
+  max-width: 390px; /* Exact Figma mobile frame width */
   margin: 0 auto;
   position: relative;
 }
 
-/* HEADER - Exact Figma Layout */
+/* ========================================= */
+/* HEADER - EXACT FIGMA LAYOUT */
+/* ========================================= */
+
 .app-header {
-  background-color: #FFFFFF;
-  padding: 16px 16px 12px 16px;
-  border-bottom: 1px solid #f0f0f0;
+  background-color: var(--background-white);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-light);
 }
 
-.header-content {
+.header-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--spacing-md);
 }
 
-.app-logo {
-  height: 28px; /* Exact Figma logo size */
+/* Logo centered - Size per Figma */
+.logo-centered {
+  height: 32px; /* Exact Figma logo height */
   width: auto;
 }
 
-/* Navigation Chips - Exact Figma Styling */
+/* Navigation Chips - Styled & spaced exactly per Figma */
 .nav-chips {
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-sm);
 }
 
 .nav-chip {
-  padding: 6px 12px;
-  border-radius: 12px; /* Exact radius from specs */
-  font-size: 12px;
-  font-weight: 500; /* Medium weight */
-  color: #666666;
-  background-color: #f8f9fa;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  background-color: var(--surface-light);
   cursor: pointer;
   transition: all 0.2s ease;
+  border: none;
 }
 
 .nav-chip.active {
-  background-color: #4285F4; /* Primary Blue */
-  color: #FFFFFF;
+  background-color: var(--primary-blue);
+  color: var(--background-white);
 }
 
 .nav-chip:hover:not(.active) {
-  background-color: #e9ecef;
+  background-color: #F3F4F6;
 }
 
-/* MAIN CONTENT */
-.main-content {
-  padding: 16px;
-  padding-bottom: 120px; /* Space for sticky button */
+/* ========================================= */
+/* MAIN CONTAINER */
+/* ========================================= */
+
+.main-container {
+  padding: var(--spacing-lg);
+  padding-bottom: 100px; /* Space for sticky CTA */
 }
 
-/* SEARCH CARD - Exact Figma Design */
+/* ========================================= */
+/* SEARCH CARD - EXACT FIGMA SPECS */
+/* ========================================= */
+
+/* Search card: 12px radius, shadows per Figma */
 .search-card {
-  background-color: #FFFFFF;
-  border-radius: 12px; /* Exact radius from specs */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  padding: 20px 16px;
-  margin-bottom: 16px;
+  background-color: var(--background-white);
+  border-radius: var(--radius-lg); /* Exact 12px radius */
+  box-shadow: var(--shadow-card); /* Exact Figma shadow */
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--border-light);
 }
 
-/* TRIP TYPE TABS - Exact Figma Implementation */
-.trip-tabs {
+/* ========================================= */
+/* TRIP TYPE SEGMENTED CONTROL - EXACT FIGMA */
+/* ========================================= */
+
+.trip-segmented-control {
   display: flex;
-  margin-bottom: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  background-color: var(--surface-light);
+  border-radius: var(--radius-md);
   padding: 2px;
+  margin-bottom: var(--spacing-xl);
 }
 
-.trip-tab {
+.segment-option {
   flex: 1;
-  padding: 10px 12px; /* 8-12px vertical padding as per specs */
+  padding: var(--spacing-md) var(--spacing-lg);
   border: none;
   background: transparent;
-  color: #666666; /* Exact text color */
-  font-size: 13px;
-  font-weight: 400; /* Regular weight as per specs */
-  border-radius: 6px;
+  color: var(--text-secondary);
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
 }
 
-.trip-tab.active {
-  background-color: #FFFFFF;
-  color: #1E1E1E; /* Darker text for active */
-  font-weight: 500; /* Medium weight for active */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.segment-option.active {
+  background-color: var(--background-white);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* FIELD CONTAINERS - Exact Typography */
-.field-container {
-  position: relative;
-  margin-bottom: 16px;
+/* ========================================= */
+/* INPUT FIELDS - EXACT FIGMA SPECIFICATIONS */
+/* ========================================= */
+
+.input-field {
+  margin-bottom: var(--spacing-lg);
 }
 
-/* FIELD LABELS - Exact Figma Typography */
-.field-label {
+/* Labels: UPPERCASE, 11px, #666 - Exact Figma specs */
+.input-label {
   display: block;
-  font-size: 11px; /* Small as per specs */
-  font-weight: 400; /* Regular weight */
-  color: #666666; /* Subtle grey */
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-label); /* Exact 11px */
+  font-weight: var(--font-weight-regular); /* Regular 400 */
+  color: var(--text-secondary); /* Exact #666666 */
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 8px; /* 8-12px vertical spacing */
+  margin-bottom: var(--spacing-sm); /* 8-12px vertical per specs */
 }
 
-/* INPUT WRAPPER */
-.input-wrapper {
+.input-container {
   position: relative;
 }
 
-/* FIELD INPUTS - Exact Figma Styling */
-.field-input {
+/* Input boxes: padding & borders per Figma */
+.input-box {
   width: 100%;
-  padding: 12px; /* 8-12px vertical padding */
-  border: 1px solid #e0e0e0;
-  border-radius: 12px; /* Exact radius from specs */
-  font-size: 15px; /* Exact font size */
-  font-weight: 500; /* Medium weight for values */
-  color: #1E1E1E; /* Darker text for values */
-  background-color: #FFFFFF;
+  padding: var(--spacing-md) var(--spacing-md); /* Exact padding per Figma */
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg); /* Exact 12px radius */
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-input); /* Size per Figma */
+  font-weight: var(--font-weight-medium); /* Medium 500 */
+  color: var(--text-primary); /* Exact #1E1E1E */
+  background-color: var(--background-white);
   transition: all 0.2s ease;
-  cursor: text;
-  min-height: 44px; /* Minimum tap target */
+  min-height: 48px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.field-input:focus {
+  cursor: pointer;
   outline: none;
-  border-color: #4285F4; /* Primary Blue */
-  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.12); /* Subtle blue glow */
 }
 
-/* GUIDANCE EFFECTS - Highlight next field */
-.field-highlight {
-  border-color: #4285F4 !important;
+.input-box:focus,
+.input-box:hover {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.12);
+}
+
+/* Values: Medium 500, size per Figma, #1E1E1E */
+.input-value {
+  flex: 1;
+  font-weight: var(--font-weight-medium); /* Medium 500 */
+  color: var(--text-primary); /* Exact #1E1E1E */
+  font-size: var(--font-size-input);
+}
+
+/* Guidance effects: highlight next field */
+.input-highlight {
+  border-color: var(--primary-blue) !important;
   box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2) !important;
-  animation: gentle-glow 1.5s ease-in-out infinite;
+  animation: field-glow 1.5s ease-in-out infinite;
 }
 
-@keyframes gentle-glow {
+@keyframes field-glow {
   0%, 100% { box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2); }
   50% { box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.35); }
 }
 
-/* INPUT VALUES - Medium Weight, Darker */
-.input-value {
-  font-weight: 500; /* Medium weight */
-  color: #1E1E1E; /* Darker text */
+/* Focus rings for accessibility */
+.input-box:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
 }
 
-/* AUTOCOMPLETE DROPDOWN - Fade/Slide Animation */
+/* Error states for invalid combos */
+.input-error {
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+}
+
+.dropdown-icon {
+  color: var(--text-secondary);
+  font-size: var(--font-size-caption);
+  margin-left: var(--spacing-sm);
+}
+
+/* ========================================= */
+/* AUTOCOMPLETE DROPDOWN */
+/* ========================================= */
+
+/* Anchored to field with 200ms fade/slide */
 .autocomplete-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background-color: #FFFFFF;
-  border: 1px solid #e0e0e0;
+  background-color: var(--background-white);
+  border: 1px solid var(--border-light);
   border-top: none;
-  border-radius: 0 0 12px 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  box-shadow: var(--shadow-card);
   z-index: 50;
   max-height: 200px;
   overflow-y: auto;
-  animation: dropdown-fade-slide 200ms ease-out; /* Smooth 200ms animation */
+  animation: dropdown-appear 200ms ease-out; /* Exact 200ms animation */
 }
 
-@keyframes dropdown-fade-slide {
+@keyframes dropdown-appear {
   from {
     opacity: 0;
     transform: translateY(-8px);
@@ -208,51 +306,53 @@ body {
   }
 }
 
-.autocomplete-option {
-  padding: 12px;
+.dropdown-item {
+  padding: var(--spacing-md);
   cursor: pointer;
   transition: background-color 0.15s ease;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid #F5F5F5;
 }
 
-.autocomplete-option:hover {
-  background-color: #f8f9fa;
+.dropdown-item:hover {
+  background-color: var(--surface-light);
 }
 
-.autocomplete-option:last-child {
+.dropdown-item:last-child {
   border-bottom: none;
 }
 
-/* City – Airport (IATA) Format */
-.option-main {
-  font-weight: 500; /* Medium weight */
-  color: #1E1E1E;
-  font-size: 14px;
+/* "City – Airport (IATA)" format */
+.item-primary {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  font-size: var(--font-size-body);
 }
 
-.option-code {
-  font-size: 12px;
-  font-weight: 400; /* Regular weight */
-  color: #666666; /* Subtle grey */
+.item-secondary {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-secondary);
   margin-top: 2px;
 }
 
-/* ROUTE SECTION */
+/* ========================================= */
+/* ROUTE & DATE SECTIONS */
+/* ========================================= */
+
 .route-section {
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-xl);
 }
 
-.route-row {
+.route-fields {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: 12px;
+  gap: var(--spacing-md);
   align-items: end;
 }
 
-/* SWAP BUTTON - Exact Figma Styling */
-.swap-btn {
-  background-color: #4285F4; /* Primary Blue */
-  color: white;
+.swap-button {
+  background-color: var(--primary-blue);
+  color: var(--background-white);
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -266,213 +366,124 @@ body {
   box-shadow: 0 2px 6px rgba(66, 133, 244, 0.25);
 }
 
-.swap-btn:hover:not(:disabled) {
+.swap-button:hover:not(:disabled) {
   background-color: #3367d6;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(66, 133, 244, 0.35);
 }
 
-.swap-btn:disabled {
-  background-color: #e0e0e0;
-  color: #999999;
+.swap-button:disabled {
+  background-color: #E5E7EB;
+  color: #9CA3AF;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-/* DATE SECTION */
 .date-section {
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-xl);
 }
 
-.date-row {
+.date-fields {
   display: grid;
-  gap: 12px;
+  gap: var(--spacing-md);
 }
 
-.date-row.one-date {
+.date-fields.one-date {
   grid-template-columns: 1fr;
 }
 
-.date-row.two-dates {
+.date-fields.two-dates {
   grid-template-columns: 1fr 1fr;
 }
 
-.date-input {
-  cursor: pointer;
+.date-selector {
   text-align: left;
+  justify-content: flex-start;
 }
 
-.date-input .input-value {
-  color: #1E1E1E;
-  font-weight: 500;
-}
+/* ========================================= */
+/* OPTIONS ROW - EXACT FIGMA POSITION */
+/* ========================================= */
 
-/* TRAVELLERS SELECTOR */
-.travellers-input {
-  cursor: pointer;
-  text-align: left;
-}
-
-.dropdown-arrow {
-  font-size: 12px;
-  color: #666666;
-  margin-left: 8px;
-}
-
-/* TRAVELLERS DROPDOWN */
-.travellers-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: #FFFFFF;
-  border: 1px solid #e0e0e0;
-  border-top: none;
-  border-radius: 0 0 12px 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 50;
-  padding: 16px;
-  animation: dropdown-fade-slide 200ms ease-out;
-}
-
-.traveller-row {
+.options-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #f5f5f5;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg) 0;
+  border-top: 1px solid var(--border-light);
 }
 
-.traveller-row:last-of-type {
-  border-bottom: none;
-}
-
-.traveller-info {
-  flex: 1;
-}
-
-.traveller-type {
-  font-weight: 500; /* Medium weight */
-  color: #1E1E1E;
-  font-size: 14px;
-}
-
-.traveller-age {
-  font-size: 12px;
-  font-weight: 400; /* Regular weight */
-  color: #666666; /* Subtle grey */
-  margin-top: 2px;
-}
-
-.stepper-controls {
+.option-checkbox {
   display: flex;
   align-items: center;
-  gap: 12px;
+  cursor: pointer;
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-primary);
 }
 
-.stepper-btn {
-  width: 32px;
-  height: 32px;
-  border: 1px solid #e0e0e0;
-  background-color: #FFFFFF;
-  border-radius: 6px;
+.option-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  margin-right: var(--spacing-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  font-weight: 600;
-  color: #4285F4; /* Primary Blue */
   transition: all 0.2s ease;
-  font-size: 16px;
 }
 
-.stepper-btn:hover:not(:disabled) {
-  border-color: #4285F4;
-  background-color: #f0f4ff;
+.option-checkbox input[type="checkbox"]:checked + .checkmark {
+  background-color: var(--primary-blue);
+  border-color: var(--primary-blue);
 }
 
-.stepper-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  color: #999999;
-}
-
-.stepper-value {
-  font-weight: 500; /* Medium weight */
-  color: #1E1E1E;
-  min-width: 20px;
-  text-align: center;
-  font-size: 14px;
-}
-
-/* CLASS SELECTION */
-.class-section {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid #f5f5f5;
-}
-
-.class-title {
-  font-weight: 500; /* Medium weight */
-  color: #1E1E1E;
-  margin-bottom: 12px;
-  font-size: 14px;
-}
-
-.class-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.class-option {
-  padding: 8px 12px;
-  border: 1px solid #e0e0e0;
-  background-color: #FFFFFF;
-  border-radius: 8px;
-  cursor: pointer;
+.option-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  content: "✓";
+  color: white;
   font-size: 12px;
-  font-weight: 400; /* Regular weight */
-  color: #1E1E1E;
-  transition: all 0.2s ease;
-  text-align: center;
+  font-weight: var(--font-weight-semibold);
 }
 
-.class-option.active {
-  border-color: #4285F4; /* Primary Blue */
-  background-color: #f0f4ff;
-  color: #4285F4;
-  font-weight: 500; /* Medium weight for active */
+.option-text {
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
 }
 
-.class-option:hover:not(.active) {
-  border-color: #cccccc;
-  background-color: #f8f9fa;
-}
+/* ========================================= */
+/* STICKY CTA - ORANGE GRADIENT EXACT FIGMA */
+/* ========================================= */
 
-/* SEARCH BUTTON - Sticky with Orange Gradient */
-.search-section {
+.sticky-cta {
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 390px; /* Match app width */
-  background-color: #FFFFFF;
-  padding: 16px;
-  border-top: 1px solid #f0f0f0;
+  max-width: 390px;
+  background-color: var(--background-white);
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--border-light);
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
   z-index: 100;
 }
 
-.search-btn {
+.cta-button {
   width: 100%;
-  padding: 16px 24px;
+  padding: var(--spacing-lg) var(--spacing-xxl);
   border: none;
-  border-radius: 12px; /* Exact radius */
-  font-size: 16px;
-  font-weight: 600; /* Semibold for CTA */
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-input);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition: all 0.2s ease;
   min-height: 52px;
@@ -481,74 +492,40 @@ body {
   justify-content: center;
 }
 
-/* Orange Gradient - Exact Figma Colors */
-.search-btn.enabled {
-  background: linear-gradient(135deg, #FFA382 0%, #ff8a50 100%); /* Accent Orange gradient */
-  color: white;
-  box-shadow: 0 4px 12px rgba(255, 163, 130, 0.3);
+/* Orange gradient #FFA382 - EXACT Figma colors */
+.cta-button.enabled {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8a50 100%);
+  color: var(--background-white);
+  box-shadow: var(--shadow-button);
 }
 
-.search-btn.enabled:hover {
-  background: linear-gradient(135deg, #ff8a50 0%, #ff7a40 100%); /* Slightly darker shade */
+.cta-button.enabled:hover {
+  background: linear-gradient(135deg, #ff8a50 0%, #ff7a40 100%); /* Pressed state */
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(255, 163, 130, 0.4);
 }
 
-.search-btn.disabled {
-  background-color: #f0f0f0;
-  color: #999999;
+.cta-button.enabled:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-button);
+}
+
+/* Disabled style when form incomplete */
+.cta-button.disabled {
+  background-color: #F3F4F6;
+  color: #9CA3AF;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
-/* TRUST STRIP - Below search card as per Figma */
-.trust-strip {
-  background-color: transparent;
-  color: #666666; /* Subtle grey */
-  text-align: center;
-  padding: 12px 16px;
-  font-size: 11px;
-  font-weight: 400; /* Regular weight */
-  line-height: 1.4;
-  margin-bottom: 20px;
+.cta-text {
+  font-weight: var(--font-weight-semibold);
 }
 
-/* POPULAR ROUTES */
-.popular-routes {
-  margin-top: 24px;
-}
+/* ========================================= */
+/* CALENDAR OVERLAY - FULL-SCREEN WITH DIM */
+/* ========================================= */
 
-.section-title {
-  font-size: 16px;
-  font-weight: 600; /* Semibold */
-  color: #1E1E1E;
-  margin-bottom: 12px;
-}
-
-.routes-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.route-card {
-  background-color: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  padding: 12px 8px;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 400; /* Regular weight */
-  color: #1E1E1E;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.route-card:hover {
-  background-color: #e9ecef;
-  border-color: #dee2e6;
-}
-
-/* CALENDAR OVERLAY - Full-screen with dimmed background */
 .calendar-overlay {
   position: fixed;
   top: 0;
@@ -559,34 +536,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: overlay-appear 300ms ease-out;
+  animation: overlay-fade 300ms ease-out;
 }
 
-@keyframes overlay-appear {
+@keyframes overlay-fade {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-.calendar-backdrop {
+.overlay-backdrop {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+  background-color: rgba(0, 0, 0, 0.5); /* Dim background */
 }
 
 .calendar-modal {
-  background-color: #FFFFFF;
-  border-radius: 16px;
-  padding: 24px 20px;
-  margin: 20px;
+  background-color: var(--background-white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xxl);
+  margin: var(--spacing-xl);
   max-width: 340px;
-  width: calc(100% - 40px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  width: calc(100% - 32px);
+  box-shadow: var(--shadow-modal);
   position: relative;
   z-index: 201;
-  animation: modal-slide 300ms ease-out; /* Smooth slide animations */
+  animation: modal-slide 300ms ease-out;
 }
 
 @keyframes modal-slide {
@@ -600,74 +577,76 @@ body {
   }
 }
 
-.calendar-header {
+.modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-xl);
 }
 
-.calendar-title {
-  font-size: 18px;
-  font-weight: 600; /* Semibold */
-  color: #1E1E1E;
+.modal-title {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
 }
 
-.oneway-toggle {
+.toggle-oneway {
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-size: 13px;
-  font-weight: 400; /* Regular */
-  color: #666666; /* Subtle grey */
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-secondary);
 }
 
-.oneway-toggle input {
-  margin-right: 6px;
-  accent-color: #4285F4; /* Primary Blue */
+.toggle-oneway input {
+  margin-right: var(--spacing-sm);
+  accent-color: var(--primary-blue);
 }
 
-.calendar-nav {
+.calendar-navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-lg);
 }
 
-.nav-btn {
+.nav-button {
   background: none;
   border: none;
   font-size: 20px;
-  color: #4285F4; /* Primary Blue */
+  color: var(--primary-blue);
   cursor: pointer;
-  padding: 8px;
-  border-radius: 6px;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
   transition: background-color 0.2s ease;
 }
 
-.nav-btn:hover {
-  background-color: #f0f4ff;
+.nav-button:hover {
+  background-color: #F0F4FF;
 }
 
-.current-month {
-  font-weight: 500; /* Medium */
-  color: #1E1E1E;
-  font-size: 15px;
+.month-year {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  font-size: var(--font-size-body);
 }
 
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  margin-bottom: 8px;
+  gap: 2px;
+  margin-bottom: var(--spacing-sm);
 }
 
-.weekday-label {
+.weekday {
   text-align: center;
-  font-size: 11px;
-  color: #666666; /* Subtle grey */
-  font-weight: 400; /* Regular */
-  padding: 6px 2px;
+  font-size: var(--font-size-label);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-regular);
+  padding: var(--spacing-sm) 2px;
 }
 
 .calendar-grid {
@@ -676,40 +655,43 @@ body {
   gap: 2px;
 }
 
-.calendar-day {
+.calendar-cell {
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 400; /* Regular */
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
   cursor: pointer;
   transition: all 0.15s ease;
   min-height: 32px;
 }
 
-.calendar-day:hover:not(.disabled):not(.empty) {
-  background-color: #f0f4ff;
+.calendar-cell:hover:not(.disabled):not(.empty) {
+  background-color: #F0F4FF;
 }
 
-.calendar-day.today {
-  background-color: #4285F4; /* Primary Blue */
-  color: white;
-  font-weight: 500; /* Medium - today highlighted */
+.calendar-cell.today {
+  background-color: var(--primary-blue);
+  color: var(--background-white);
+  font-weight: var(--font-weight-medium);
 }
 
-.calendar-day.disabled {
-  color: #cccccc;
+.calendar-cell.disabled {
+  color: #CCCCCC;
   cursor: not-allowed;
 }
 
-.calendar-day.empty {
+.calendar-cell.empty {
   cursor: default;
 }
 
-/* GROUP BOOKING MODAL */
-.group-booking-overlay {
+/* ========================================= */
+/* TRAVELLERS BOTTOM SHEET */
+/* ========================================= */
+
+.bottom-sheet-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -717,12 +699,209 @@ body {
   bottom: 0;
   z-index: 300;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  animation: overlay-appear 300ms ease-out;
+  animation: overlay-fade 300ms ease-out;
 }
 
-.group-booking-backdrop {
+.sheet-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bottom-sheet {
+  background-color: var(--background-white);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%;
+  max-width: 390px;
+  max-height: 70vh;
+  position: relative;
+  z-index: 301;
+  animation: sheet-slide 300ms ease-out;
+}
+
+@keyframes sheet-slide {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xl);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.sheet-header h3 {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: var(--surface-light);
+}
+
+.sheet-content {
+  padding: var(--spacing-xl);
+  max-height: calc(70vh - 80px);
+  overflow-y: auto;
+}
+
+/* Adults (12+), Children (2–11), Infants (<2) */
+.traveller-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid #F5F5F5;
+}
+
+.traveller-row:last-of-type {
+  border-bottom: none;
+}
+
+.traveller-info {
+  flex: 1;
+}
+
+.traveller-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  font-size: var(--font-size-body);
+}
+
+.traveller-age {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.stepper-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-light);
+  background-color: var(--background-white);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-blue);
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.stepper-btn:hover:not(:disabled) {
+  border-color: var(--primary-blue);
+  background-color: #F0F4FF;
+}
+
+.stepper-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  color: #9CA3AF;
+}
+
+.stepper-count {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  min-width: 20px;
+  text-align: center;
+  font-size: var(--font-size-body);
+}
+
+.class-section {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid #F5F5F5;
+}
+
+.class-title {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-body);
+}
+
+.class-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.class-option {
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-light);
+  background-color: var(--background-white);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.class-option.active {
+  border-color: var(--primary-blue);
+  background-color: #F0F4FF;
+  color: var(--primary-blue);
+  font-weight: var(--font-weight-medium);
+}
+
+.class-option:hover:not(.active) {
+  border-color: #D1D5DB;
+  background-color: var(--surface-light);
+}
+
+/* ========================================= */
+/* GROUP BOOKING MODAL */
+/* ========================================= */
+
+.group-booking-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: overlay-fade 300ms ease-out;
+}
+
+.group-backdrop {
   position: absolute;
   top: 0;
   left: 0;
@@ -731,114 +910,177 @@ body {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.group-booking-modal {
-  background-color: #FFFFFF;
-  border-radius: 16px;
-  padding: 24px;
-  margin: 20px;
+.group-modal {
+  background-color: var(--background-white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xxl);
+  margin: var(--spacing-xl);
   max-width: 320px;
-  width: calc(100% - 40px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  width: calc(100% - 32px);
+  box-shadow: var(--shadow-modal);
   position: relative;
-  z-index: 301;
+  z-index: 401;
   animation: modal-slide 300ms ease-out;
 }
 
-.group-booking-modal h3 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1E1E1E;
-  margin-bottom: 8px;
+.group-modal h3 {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
 }
 
-.group-booking-modal p {
-  font-size: 14px;
-  font-weight: 400;
-  color: #666666;
-  margin-bottom: 20px;
+.group-modal p {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
   line-height: 1.4;
 }
 
-.group-booking-form {
+.group-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--spacing-md);
 }
 
-.group-booking-form input {
-  padding: 12px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 400;
-  color: #1E1E1E;
+.group-form input {
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-primary);
 }
 
-.group-booking-form input:focus {
+.group-form input:focus {
   outline: none;
-  border-color: #4285F4;
+  border-color: var(--primary-blue);
   box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.12);
 }
 
-.form-actions {
+.form-buttons {
   display: flex;
-  gap: 8px;
-  margin-top: 8px;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
 }
 
-.btn-secondary {
+.btn-cancel {
   flex: 1;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  background-color: #FFFFFF;
-  color: #666666;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--border-light);
+  background-color: var(--background-white);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.btn-secondary:hover {
-  background-color: #f8f9fa;
-  border-color: #cccccc;
+.btn-cancel:hover {
+  background-color: var(--surface-light);
+  border-color: #D1D5DB;
 }
 
-.btn-primary {
+.btn-submit {
   flex: 1;
-  padding: 10px 16px;
+  padding: var(--spacing-md) var(--spacing-lg);
   border: none;
-  background-color: #4285F4;
-  color: white;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
+  background-color: var(--primary-blue);
+  color: var(--background-white);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.btn-primary:hover {
+.btn-submit:hover {
   background-color: #3367d6;
 }
 
-/* RESPONSIVE ADJUSTMENTS */
+/* ========================================= */
+/* TRUST STRIP - BELOW SEARCH CARD */
+/* ========================================= */
+
+.trust-strip {
+  background-color: transparent;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-xl);
+}
+
+/* ========================================= */
+/* POPULAR ROUTES - TITLE CENTERED */
+/* ========================================= */
+
+.popular-routes {
+  margin-top: var(--spacing-xxl);
+}
+
+.section-title-centered {
+  font-family: var(--font-family-primary);
+  font-size: var(--spacing-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.route-chips {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.route-chip {
+  background-color: var(--surface-light);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-sm);
+  text-align: center;
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.route-chip:hover {
+  background-color: #E9ECEF;
+  border-color: #DEE2E6;
+}
+
+/* ========================================= */
+/* RESPONSIVE DESIGN */
+/* ========================================= */
+
 @media (max-width: 390px) {
   .App {
     max-width: 100%;
   }
   
-  .route-row {
+  .route-fields {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: var(--spacing-lg);
   }
   
-  .swap-btn {
+  .swap-button {
     justify-self: center;
-    margin: -8px 0;
+    margin: calc(-1 * var(--spacing-sm)) 0;
   }
   
-  .date-row.two-dates {
+  .date-fields.two-dates {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: var(--spacing-lg);
   }
 }
