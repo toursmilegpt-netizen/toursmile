@@ -331,7 +331,7 @@ body {
   border-bottom: none;
 }
 
-/* "City – Airport (IATA)" format */
+/* Interactivity Handoff.txt: "City – Airport (IATA)" format */
 .item-primary {
   font-weight: var(--font-weight-medium);
   color: var(--text-primary);
