@@ -164,10 +164,13 @@ body {
   transition: all var(--transition-fast);
 }
 
-/* MAIN CONTAINER - Optimized for mobile viewport */
+/* ========================================= */
+/* MAIN CONTAINER - FIGMA LAYOUT */
+/* ========================================= */
+
 .main-container {
-  padding: var(--spacing-md); /* Reduced from lg to md */
-  padding-bottom: 70px; /* Reduced for sticky CTA */
+  padding: var(--spacing-16); /* Figma container padding */
+  padding-bottom: 80px; /* Space for sticky CTA */
 }
 
 /* Search card: 12px radius, shadows per README.txt specs */
