@@ -434,6 +434,7 @@ const FlightSearchForm = () => {
 
   const handleReturnDateSelect = (date) => {
     setReturnDate(date);
+    // Interactivity Handoff.txt: "Overlay closes after return date chosen"
     setShowCalendar(false);
     setCurrentField('travellers');
   };
