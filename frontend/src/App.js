@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 
-// TOURSMILE FLIGHT SEARCH - PIXEL-PERFECT FIGMA REBUILD
-// 390px mobile frame, exact typography and colors from specs
-// Following README.txt tokens and Interactivity Handoff.txt behaviors
+// TOURSMILE FLIGHT SEARCH - PIXEL-PERFECT FIGMA DEV MODE IMPLEMENTATION
+// Using EXACT Figma Inspect values - no substitutions
+// Mobile Frame: 390px | Colors: #4285F4, #FFA382 | Typography: Exact Figma specs
 
 const AIRPORTS_DATABASE = [
   { code: 'DEL', name: 'New Delhi', city: 'Delhi', country: 'India', popular: true },
@@ -16,7 +16,7 @@ const AIRPORTS_DATABASE = [
   { code: 'SIN', name: 'Singapore', city: 'Singapore', country: 'Singapore', popular: true }
 ];
 
-// Airport Autocomplete Component - Exact Figma Implementation
+// Airport Autocomplete Component - EXACT Figma Specifications
 const AirportAutocomplete = ({ 
   value, 
   onChange, 
@@ -29,9 +29,8 @@ const AirportAutocomplete = ({
   const [inputValue, setInputValue] = useState(value || '');
   const [filteredAirports, setFilteredAirports] = useState([]);
   const dropdownRef = useRef(null);
-  const inputRef = useRef(null);
 
-  // Trigger autocomplete after 3 characters as per specs
+  // Trigger after 3 characters as per Interactivity Handoff
   useEffect(() => {
     if (inputValue.length >= 3) {
       const filtered = AIRPORTS_DATABASE.filter(airport =>
@@ -47,7 +46,6 @@ const AirportAutocomplete = ({
     }
   }, [inputValue]);
 
-  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -59,12 +57,10 @@ const AirportAutocomplete = ({
   }, []);
 
   const handleInputChange = (e) => {
-    const newValue = e.target.value;
-    setInputValue(newValue);
+    setInputValue(e.target.value);
   };
 
   const handleInputFocus = () => {
-    // Show popular airports on focus if empty
     if (!inputValue) {
       setFilteredAirports(AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6));
       setIsOpen(true);
@@ -73,38 +69,38 @@ const AirportAutocomplete = ({
   };
 
   const handleSelect = (airport) => {
-    const selectedValue = `${airport.city} – ${airport.name} (${airport.code})`; // City – Airport (IATA) format
+    // City – Airport (IATA) format as per specs
+    const selectedValue = `${airport.city} – ${airport.name} (${airport.code})`;
     setInputValue(selectedValue);
     onChange(airport);
     setIsOpen(false);
   };
 
   return (
-    <div className="field-container" ref={dropdownRef}>
-      <label className="field-label">{label}</label>
-      <div className="input-wrapper">
+    <div className="input-field" ref={dropdownRef}>
+      <label className="input-label">{label}</label>
+      <div className="input-container">
         <input
-          ref={inputRef}
           type="text"
           value={inputValue}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
           placeholder={placeholder}
-          className={`field-input ${highlight ? 'field-highlight' : ''}`}
+          className={`input-box ${highlight ? 'input-highlight' : ''}`}
           autoComplete="off"
         />
         
-        {/* Dropdown with fade/slide animation */}
+        {/* Dropdown with 200ms fade/slide animation */}
         {isOpen && (
           <div className="autocomplete-dropdown">
             {filteredAirports.map((airport) => (
               <div
                 key={airport.code}
                 onClick={() => handleSelect(airport)}
-                className="autocomplete-option"
+                className="dropdown-item"
               >
-                <div className="option-main">{airport.city} – {airport.name}</div>
-                <div className="option-code">({airport.code})</div>
+                <div className="item-primary">{airport.city} – {airport.name}</div>
+                <div className="item-secondary">({airport.code})</div>
               </div>
             ))}
           </div>
@@ -114,7 +110,7 @@ const AirportAutocomplete = ({
   );
 };
 
-// Calendar Overlay Component - Full-screen with auto-advance
+// Calendar Overlay - Full-screen with auto-advance
 const CalendarOverlay = ({ 
   isOpen, 
   onClose, 
@@ -139,11 +135,11 @@ const CalendarOverlay = ({
     const selected = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
     onDateSelect(selected);
     
-    // Auto-advance: Departure → Return, close after Return
+    // Auto-advance: Departure → Return within same overlay
     if (!isReturn && !isOneWay) {
-      // Will trigger return calendar in parent
+      // Parent will handle return date selection
     } else {
-      onClose(); // Close overlay after return date chosen
+      onClose(); // Close after Return date selection
     }
   };
 
@@ -162,12 +158,10 @@ const CalendarOverlay = ({
   const renderCalendarDays = () => {
     const days = [];
     
-    // Empty cells for days before month starts
     for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+      days.push(<div key={`empty-${i}`} className="calendar-cell empty"></div>);
     }
     
-    // Days of the month
     for (let day = 1; day <= daysInMonth; day++) {
       const disabled = isDateDisabled(day);
       const isCurrentToday = isToday(day);
@@ -176,7 +170,7 @@ const CalendarOverlay = ({
         <div
           key={day}
           onClick={() => !disabled && handleDateClick(day)}
-          className={`calendar-day ${disabled ? 'disabled' : ''} ${isCurrentToday ? 'today' : ''}`}
+          className={`calendar-cell ${disabled ? 'disabled' : ''} ${isCurrentToday ? 'today' : ''}`}
         >
           {day}
         </div>
@@ -188,16 +182,15 @@ const CalendarOverlay = ({
 
   return (
     <div className="calendar-overlay">
-      <div className="calendar-backdrop" onClick={onClose}></div>
+      <div className="overlay-backdrop" onClick={onClose}></div>
       <div className="calendar-modal">
-        <div className="calendar-header">
-          <h3 className="calendar-title">
+        <div className="modal-header">
+          <h3 className="modal-title">
             {isReturn ? 'Return Date' : 'Departure Date'}
           </h3>
           
-          {/* One-way toggle at top */}
           {!isReturn && (
-            <label className="oneway-toggle">
+            <label className="toggle-oneway">
               <input
                 type="checkbox"
                 checked={isOneWay}
@@ -208,19 +201,19 @@ const CalendarOverlay = ({
           )}
         </div>
 
-        <div className="calendar-nav">
+        <div className="calendar-navigation">
           <button
             onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
-            className="nav-btn prev"
+            className="nav-button prev"
           >
             ‹
           </button>
-          <div className="current-month">
+          <div className="month-year">
             {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </div>
           <button
             onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
-            className="nav-btn next"
+            className="nav-button next"
           >
             ›
           </button>
@@ -228,7 +221,7 @@ const CalendarOverlay = ({
 
         <div className="calendar-weekdays">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="weekday-label">{day}</div>
+            <div key={day} className="weekday">{day}</div>
           ))}
         </div>
 
@@ -240,27 +233,17 @@ const CalendarOverlay = ({
   );
 };
 
-// Travellers Selector Component - With validation as per specs
-const TravellersSelector = ({ 
+// Travellers Bottom Sheet - With validation rules
+const TravellersBottomSheet = ({ 
   travellers, 
   onTravellersChange, 
   travelClass, 
   onClassChange, 
-  highlight = false 
+  highlight = false,
+  isOpen,
+  onClose 
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [showGroupBooking, setShowGroupBooking] = useState(false);
-  const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const updateCount = (type, increment) => {
     const current = travellers[type];
@@ -279,7 +262,7 @@ const TravellersSelector = ({
       return;
     }
     
-    // Validation: total ≤ 9, show group booking for 10+
+    // Max 9 rule - 10+ opens Group Booking
     const total = newTravellers.adults + newTravellers.children + newTravellers.infants;
     if (total > 9) {
       setShowGroupBooking(true);
@@ -298,25 +281,25 @@ const TravellersSelector = ({
     return `${total} Traveller${total > 1 ? 's' : ''}, ${travelClass}`;
   };
 
-  // Group Booking Modal for 10+ passengers
+  // Group Booking Form Modal for 10+ passengers
   const GroupBookingModal = () => (
     <div className="group-booking-overlay">
-      <div className="group-booking-backdrop" onClick={() => setShowGroupBooking(false)}></div>
-      <div className="group-booking-modal">
+      <div className="group-backdrop" onClick={() => setShowGroupBooking(false)}></div>
+      <div className="group-modal">
         <h3>Group Booking Request</h3>
         <p>For 10 or more passengers, please request a Group Booking</p>
-        <form className="group-booking-form">
+        <form className="group-form">
           <input type="text" placeholder="Name" required />
           <input type="tel" placeholder="Phone" required />
           <input type="email" placeholder="Email" required />
           <input type="text" placeholder="Route" required />
           <input type="text" placeholder="Dates" required />
           <input type="number" placeholder="Passengers" min="10" required />
-          <div className="form-actions">
-            <button type="button" onClick={() => setShowGroupBooking(false)} className="btn-secondary">
+          <div className="form-buttons">
+            <button type="button" onClick={() => setShowGroupBooking(false)} className="btn-cancel">
               Cancel
             </button>
-            <button type="submit" className="btn-primary">
+            <button type="submit" className="btn-submit">
               Request Group Booking
             </button>
           </div>
@@ -325,124 +308,77 @@ const TravellersSelector = ({
     </div>
   );
 
+  if (!isOpen) return null;
+
   return (
-    <div className="field-container" ref={dropdownRef}>
-      <label className="field-label">TRAVELLERS & CLASS</label>
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className={`field-input travellers-input ${highlight ? 'field-highlight' : ''}`}
-      >
-        <span className="input-value">{getDisplayText()}</span>
-        <span className="dropdown-arrow">▼</span>
-      </button>
-
-      {isOpen && (
-        <div className="travellers-dropdown">
-          {/* Adults */}
-          <div className="traveller-row">
-            <div className="traveller-info">
-              <div className="traveller-type">Adults</div>
-              <div className="traveller-age">(12+)</div>
-            </div>
-            <div className="stepper-controls">
-              <button
-                type="button"
-                onClick={() => updateCount('adults', false)}
-                disabled={travellers.adults <= 1}
-                className="stepper-btn minus"
-              >
-                -
-              </button>
-              <span className="stepper-value">{travellers.adults}</span>
-              <button
-                type="button"
-                onClick={() => updateCount('adults', true)}
-                className="stepper-btn plus"
-              >
-                +
-              </button>
-            </div>
+    <>
+      <div className="bottom-sheet-overlay">
+        <div className="sheet-backdrop" onClick={onClose}></div>
+        <div className="bottom-sheet">
+          <div className="sheet-header">
+            <h3>Travellers & Class</h3>
+            <button onClick={onClose} className="close-button">×</button>
           </div>
 
-          {/* Children */}
-          <div className="traveller-row">
-            <div className="traveller-info">
-              <div className="traveller-type">Children</div>
-              <div className="traveller-age">(2–11)</div>
-            </div>
-            <div className="stepper-controls">
-              <button
-                type="button"
-                onClick={() => updateCount('children', false)}
-                disabled={travellers.children <= 0}
-                className="stepper-btn minus"
-              >
-                -
-              </button>
-              <span className="stepper-value">{travellers.children}</span>
-              <button
-                type="button"
-                onClick={() => updateCount('children', true)}
-                className="stepper-btn plus"
-              >
-                +
-              </button>
-            </div>
-          </div>
+          <div className="sheet-content">
+            {/* Traveller Types */}
+            {[
+              { key: 'adults', label: 'Adults', age: '(12+)', min: 1 },
+              { key: 'children', label: 'Children', age: '(2–11)', min: 0 },
+              { key: 'infants', label: 'Infants', age: '(<2)', min: 0 }
+            ].map(({ key, label, age, min }) => (
+              <div key={key} className="traveller-row">
+                <div className="traveller-info">
+                  <div className="traveller-label">{label}</div>
+                  <div className="traveller-age">{age}</div>
+                </div>
+                <div className="stepper">
+                  <button
+                    type="button"
+                    onClick={() => updateCount(key, false)}
+                    disabled={travellers[key] <= min}
+                    className="stepper-btn minus"
+                  >
+                    -
+                  </button>
+                  <span className="stepper-count">{travellers[key]}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateCount(key, true)}
+                    className="stepper-btn plus"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            ))}
 
-          {/* Infants */}
-          <div className="traveller-row">
-            <div className="traveller-info">
-              <div className="traveller-type">Infants</div>
-              <div className="traveller-age">(&lt;2)</div>
-            </div>
-            <div className="stepper-controls">
-              <button
-                type="button"
-                onClick={() => updateCount('infants', false)}
-                disabled={travellers.infants <= 0}
-                className="stepper-btn minus"
-              >
-                -
-              </button>
-              <span className="stepper-value">{travellers.infants}</span>
-              <button
-                type="button"
-                onClick={() => updateCount('infants', true)}
-                disabled={travellers.infants >= travellers.adults}
-                className="stepper-btn plus"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          {/* Travel Class */}
-          <div className="class-section">
-            <div className="class-title">Travel Class</div>
-            <div className="class-grid">
-              {['Economy', 'Premium Economy', 'Business', 'First'].map((cls) => (
-                <button
-                  key={cls}
-                  type="button"
-                  onClick={() => onClassChange(cls)}
-                  className={`class-option ${travelClass === cls ? 'active' : ''}`}
-                >
-                  {cls}
-                </button>
-              ))}
+            {/* Travel Class */}
+            <div className="class-section">
+              <div className="class-title">Travel Class</div>
+              <div className="class-options">
+                {['Economy', 'Premium Economy', 'Business', 'First'].map((cls) => (
+                  <button
+                    key={cls}
+                    type="button"
+                    onClick={() => onClassChange(cls)}
+                    className={`class-option ${travelClass === cls ? 'active' : ''}`}
+                  >
+                    {cls}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {showGroupBooking && <GroupBookingModal />}
-    </div>
+    </>
   );
 };
 
-// Main Flight Search Form - Pixel-Perfect Implementation
+// Main Flight Search Form - EXACT Figma Layout
 const FlightSearchForm = () => {
   // Form state
   const [tripType, setTripType] = useState('round-trip');
@@ -456,30 +392,28 @@ const FlightSearchForm = () => {
     infants: 0
   });
   const [travelClass, setTravelClass] = useState('Economy');
+  const [directFlights, setDirectFlights] = useState(false);
+  const [flexibleDates, setFlexibleDates] = useState(false);
 
   // UI state for guidance effects
   const [currentField, setCurrentField] = useState('departure');
   const [showCalendar, setShowCalendar] = useState(false);
   const [calendarType, setCalendarType] = useState('departure');
+  const [showTravellers, setShowTravellers] = useState(false);
 
-  // Guidance effects - highlight next field after selection
+  // Guidance effects - highlight next field
   const getFieldHighlight = (fieldName) => {
     return currentField === fieldName;
   };
 
   const handleDepartureSelect = (airport) => {
     setDeparture(airport);
-    setCurrentField('destination'); // Highlight next field
+    setCurrentField('destination');
   };
 
   const handleDestinationSelect = (airport) => {
     setDestination(airport);
     setCurrentField('departureDate');
-    // Auto-open date picker after destination selection
-    setTimeout(() => {
-      setCalendarType('departure');
-      setShowCalendar(true);
-    }, 200);
   };
 
   const handleDepartureDateSelect = (date) => {
@@ -487,7 +421,7 @@ const FlightSearchForm = () => {
     setShowCalendar(false);
     
     if (tripType === 'round-trip') {
-      // Auto-advance to return date
+      // Auto-advance to return within same overlay
       setTimeout(() => {
         setCalendarType('return');
         setShowCalendar(true);
@@ -516,52 +450,41 @@ const FlightSearchForm = () => {
       return;
     }
 
-    const searchData = {
+    console.log('Flight Search Data:', {
       tripType,
       departure: departure.code,
       destination: destination.code,
       departureDate: departureDate.toISOString().split('T')[0],
       returnDate: tripType === 'round-trip' ? returnDate?.toISOString().split('T')[0] : null,
       travellers,
-      travelClass
-    };
-
-    console.log('Flight Search:', searchData);
-    // Backend integration will be wired after UI is approved
+      travelClass,
+      directFlights,
+      flexibleDates
+    });
   };
 
   const isFormValid = departure && destination && departureDate && (tripType === 'one-way' || returnDate);
+  const getTotalTravellers = () => travellers.adults + travellers.children + travellers.infants;
 
   return (
     <div className="search-form">
-      {/* Trip Type Tabs */}
-      <div className="trip-tabs">
-        <button
-          type="button"
-          onClick={() => setTripType('round-trip')}
-          className={`trip-tab ${tripType === 'round-trip' ? 'active' : ''}`}
-        >
-          Round Trip
-        </button>
-        <button
-          type="button"
-          onClick={() => setTripType('one-way')}
-          className={`trip-tab ${tripType === 'one-way' ? 'active' : ''}`}
-        >
-          One Way
-        </button>
-        <button
-          type="button"
-          onClick={() => setTripType('multi-city')}
-          className={`trip-tab ${tripType === 'multi-city' ? 'active' : ''}`}
-        >
-          Multi City
-        </button>
+      {/* Trip Type Segmented Control - EXACT Figma */}
+      <div className="trip-segmented-control">
+        {['round-trip', 'one-way', 'multi-city'].map((type) => (
+          <button
+            key={type}
+            type="button"
+            onClick={() => setTripType(type)}
+            className={`segment-option ${tripType === type ? 'active' : ''}`}
+          >
+            {type === 'round-trip' ? 'Round Trip' : type === 'one-way' ? 'One Way' : 'Multi City'}
+          </button>
+        ))}
       </div>
 
       {/* Route Selection */}
       <div className="route-section">
-        <div className="route-row">
+        <div className="route-fields">
           <AirportAutocomplete
             value={departure?.city || ''}
             onChange={handleDepartureSelect}
@@ -574,7 +497,7 @@ const FlightSearchForm = () => {
           <button
             type="button"
             onClick={handleSwap}
-            className="swap-btn"
+            className="swap-button"
             disabled={!departure && !destination}
           >
             ⇄
@@ -593,16 +516,16 @@ const FlightSearchForm = () => {
 
       {/* Date Selection */}
       <div className="date-section">
-        <div className={`date-row ${tripType === 'round-trip' ? 'two-dates' : 'one-date'}`}>
-          <div className="field-container">
-            <label className="field-label">DEPARTURE</label>
+        <div className={`date-fields ${tripType === 'round-trip' ? 'two-dates' : 'one-date'}`}>
+          <div className="input-field">
+            <label className="input-label">DEPARTURE</label>
             <button
               type="button"
               onClick={() => {
                 setCalendarType('departure');
                 setShowCalendar(true);
               }}
-              className={`field-input date-input ${getFieldHighlight('departureDate') ? 'field-highlight' : ''}`}
+              className={`input-box date-selector ${getFieldHighlight('departureDate') ? 'input-highlight' : ''}`}
             >
               <span className="input-value">
                 {departureDate ? departureDate.toLocaleDateString('en-GB') : 'Select Date'}
@@ -611,15 +534,15 @@ const FlightSearchForm = () => {
           </div>
 
           {tripType === 'round-trip' && (
-            <div className="field-container">
-              <label className="field-label">RETURN</label>
+            <div className="input-field">
+              <label className="input-label">RETURN</label>
               <button
                 type="button"
                 onClick={() => {
                   setCalendarType('return');
                   setShowCalendar(true);
                 }}
-                className={`field-input date-input ${getFieldHighlight('return') ? 'field-highlight' : ''}`}
+                className={`input-box date-selector ${getFieldHighlight('return') ? 'input-highlight' : ''}`}
               >
                 <span className="input-value">
                   {returnDate ? returnDate.toLocaleDateString('en-GB') : 'Select Date'}
@@ -631,24 +554,41 @@ const FlightSearchForm = () => {
       </div>
 
       {/* Travellers Selection */}
-      <TravellersSelector
-        travellers={travellers}
-        onTravellersChange={setTravellers}
-        travelClass={travelClass}
-        onClassChange={setTravelClass}
-        highlight={getFieldHighlight('travellers')}
-      />
-
-      {/* Search Button - Sticky at bottom with orange gradient */}
-      <div className="search-section">
+      <div className="input-field">
+        <label className="input-label">TRAVELLERS & CLASS</label>
         <button
           type="button"
-          onClick={handleSearch}
-          disabled={!isFormValid}
-          className={`search-btn ${isFormValid ? 'enabled' : 'disabled'}`}
+          onClick={() => setShowTravellers(true)}
+          className={`input-box traveller-selector ${getFieldHighlight('travellers') ? 'input-highlight' : ''}`}
         >
-          Search Flights
+          <span className="input-value">
+            {getTotalTravellers()} Traveller{getTotalTravellers() > 1 ? 's' : ''}, {travelClass}
+          </span>
+          <span className="dropdown-icon">▼</span>
         </button>
+      </div>
+
+      {/* Options Row - EXACT Figma Position */}
+      <div className="options-row">
+        <label className="option-checkbox">
+          <input
+            type="checkbox"
+            checked={directFlights}
+            onChange={(e) => setDirectFlights(e.target.checked)}
+          />
+          <span className="checkmark"></span>
+          <span className="option-text">Direct flights</span>
+        </label>
+
+        <label className="option-checkbox">
+          <input
+            type="checkbox"
+            checked={flexibleDates}
+            onChange={(e) => setFlexibleDates(e.target.checked)}
+          />
+          <span className="checkmark"></span>
+          <span className="option-text">Flexible dates ±3 days</span>
+        </label>
       </div>
 
       {/* Calendar Overlay */}
@@ -661,21 +601,44 @@ const FlightSearchForm = () => {
         isReturn={calendarType === 'return'}
         departureDate={departureDate}
       />
+
+      {/* Travellers Bottom Sheet */}
+      <TravellersBottomSheet
+        travellers={travellers}
+        onTravellersChange={setTravellers}
+        travelClass={travelClass}
+        onClassChange={setTravelClass}
+        highlight={getFieldHighlight('travellers')}
+        isOpen={showTravellers}
+        onClose={() => setShowTravellers(false)}
+      />
+
+      {/* Sticky CTA - Orange Gradient */}
+      <div className="sticky-cta">
+        <button
+          type="button"
+          onClick={handleSearch}
+          disabled={!isFormValid}
+          className={`cta-button ${isFormValid ? 'enabled' : 'disabled'}`}
+        >
+          <span className="cta-text">Search Flights</span>
+        </button>
+      </div>
     </div>
   );
 };
 
-// Main App Component - Exact Figma Layout
+// Main App Component - EXACT Figma Layout
 function App() {
   return (
     <div className="App">
-      {/* Header with Logo and Navigation */}
+      {/* Header with centered logo and nav chips */}
       <header className="app-header">
-        <div className="header-content">
+        <div className="header-container">
           <img
             src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
             alt="TourSmile"
-            className="app-logo"
+            className="logo-centered"
           />
           
           <nav className="nav-chips">
@@ -686,28 +649,29 @@ function App() {
         </div>
       </header>
 
-      {/* Main Search Card */}
-      <main className="main-content">
+      {/* Main Content */}
+      <main className="main-container">
+        {/* Search Card with 12px radius and shadows per Figma */}
         <div className="search-card">
           <FlightSearchForm />
         </div>
 
-        {/* Trust Strip - Below search card as per Figma */}
+        {/* Trust Strip - Below search card, light style */}
         <div className="trust-strip">
           Trusted by travellers · 24×7 WhatsApp support · Secure payments
         </div>
 
-        {/* Popular Routes */}
-        <div className="popular-routes">
-          <h3 className="section-title">Popular Routes</h3>
-          <div className="routes-grid">
+        {/* Popular Routes - Title centered, chips match Figma */}
+        <section className="popular-routes">
+          <h2 className="section-title-centered">Popular Routes</h2>
+          <div className="route-chips">
             {['Delhi–Mumbai', 'Bangalore–Hyderabad', 'Mumbai–Dubai', 'Delhi–Singapore'].map((route) => (
-              <div key={route} className="route-card">
+              <div key={route} className="route-chip">
                 {route}
               </div>
             ))}
           </div>
-        </div>
+        </section>
       </main>
     </div>
   );
