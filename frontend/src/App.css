@@ -220,40 +220,41 @@ body {
   position: relative;
 }
 
-/* Input boxes: padding & borders per Figma */
+/* Input boxes: README.txt padding & borders, 44px tap target */
 .input-box {
   width: 100%;
-  padding: var(--spacing-md) var(--spacing-md); /* Exact padding per Figma */
+  padding: var(--spacing-md) var(--spacing-md); /* README.txt: 8-12px vertical */
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg); /* Exact 12px radius */
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-size-input); /* Size per Figma */
-  font-weight: var(--font-weight-medium); /* Medium 500 */
-  color: var(--text-primary); /* Exact #1E1E1E */
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family);
+  font-size: var(--font-size-input);
+  font-weight: var(--font-weight-medium); /* README.txt: Values Medium weight */
+  color: var(--text-primary); /* README.txt: prominent contrast #1E1E1E */
   background-color: var(--background-white);
   transition: all 0.2s ease;
-  min-height: 48px;
+  min-height: var(--tap-target-min); /* README.txt: 44px minimum tap target */
   display: flex;
   align-items: center;
   cursor: pointer;
   outline: none;
 }
 
+/* Interactivity Handoff.txt: Focus subtle blue glow */
 .input-box:focus,
 .input-box:hover {
   border-color: var(--primary-blue);
-  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.12);
+  box-shadow: var(--focus-glow); /* subtle blue glow */
 }
 
-/* Values: Medium 500, size per Figma, #1E1E1E */
+/* Values: Medium weight, prominent contrast - README.txt */
 .input-value {
   flex: 1;
-  font-weight: var(--font-weight-medium); /* Medium 500 */
-  color: var(--text-primary); /* Exact #1E1E1E */
+  font-weight: var(--font-weight-medium); /* README.txt: Values Medium */
+  color: var(--text-primary); /* README.txt: prominent contrast #1E1E1E */
   font-size: var(--font-size-input);
 }
 
-/* Guidance effects: highlight next field */
+/* Guidance effects: highlight next field - Interactivity Handoff.txt */
 .input-highlight {
   border-color: var(--primary-blue) !important;
   box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2) !important;
@@ -271,10 +272,10 @@ body {
   outline-offset: 2px;
 }
 
-/* Error states for invalid combos */
+/* Error states - Interactivity Handoff.txt: red outline + helper text */
 .input-error {
-  border-color: #EF4444 !important;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+  border-color: var(--error-red) !important;
+  box-shadow: var(--error-outline) !important;
 }
 
 .dropdown-icon {
