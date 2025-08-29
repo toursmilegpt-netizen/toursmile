@@ -1025,17 +1025,14 @@ body {
   margin-bottom: var(--spacing-xl);
 }
 
-/* ========================================= */
-/* POPULAR ROUTES - TITLE CENTERED */
-/* ========================================= */
-
+/* POPULAR ROUTES - README.txt specifications */
 .popular-routes {
   margin-top: var(--spacing-xxl);
 }
 
 .section-title-centered {
-  font-family: var(--font-family-primary);
-  font-size: var(--spacing-lg);
+  font-family: var(--font-family);
+  font-size: var(--font-size-title);
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
   margin-bottom: var(--spacing-md);
@@ -1054,12 +1051,16 @@ body {
   border-radius: var(--radius-md);
   padding: var(--spacing-md) var(--spacing-sm);
   text-align: center;
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family);
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-regular);
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
+  min-height: var(--tap-target-min); /* README.txt: 44px tap target */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .route-chip:hover {
