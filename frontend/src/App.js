@@ -656,12 +656,12 @@ function App() {
           <FlightSearchForm />
         </div>
 
-        {/* Trust Strip - Below search card, light style */}
+        {/* Trust Strip - README.txt: Exact text below search card */}
         <div className="trust-strip">
           Trusted by travellers · 24×7 WhatsApp support · Secure payments
         </div>
 
-        {/* Popular Routes - Title centered, chips match Figma */}
+        {/* Popular Routes - README.txt: Exact routes */}
         <section className="popular-routes">
           <h2 className="section-title-centered">Popular Routes</h2>
           <div className="route-chips">
