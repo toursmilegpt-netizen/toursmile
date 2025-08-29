@@ -1,42 +1,44 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 
-// TOURSMILE FLIGHT SEARCH - FIGMA IMPLEMENTATION V1.0
-// Mobile-first design: 390px frame width
-// Colors: Primary Blue #4285F4, Accent Orange #FFA382
+// TOURSMILE FLIGHT SEARCH - PIXEL-PERFECT FIGMA REBUILD
+// 390px mobile frame, exact typography and colors from specs
+// Following README.txt tokens and Interactivity Handoff.txt behaviors
 
-// Airport Database with IATA codes - as per backend integration
 const AIRPORTS_DATABASE = [
-  { code: 'DEL', name: 'Delhi', city: 'New Delhi', country: 'India', popular: true },
+  { code: 'DEL', name: 'New Delhi', city: 'Delhi', country: 'India', popular: true },
   { code: 'BOM', name: 'Mumbai', city: 'Mumbai', country: 'India', popular: true },
   { code: 'BLR', name: 'Bangalore', city: 'Bangalore', country: 'India', popular: true },
   { code: 'MAA', name: 'Chennai', city: 'Chennai', country: 'India', popular: true },
   { code: 'CCU', name: 'Kolkata', city: 'Kolkata', country: 'India', popular: true },
   { code: 'HYD', name: 'Hyderabad', city: 'Hyderabad', country: 'India', popular: true },
-  { code: 'AMD', name: 'Ahmedabad', city: 'Ahmedabad', country: 'India', popular: true },
-  { code: 'PNQ', name: 'Pune', city: 'Pune', country: 'India', popular: true },
-  { code: 'GOI', name: 'Goa', city: 'Goa', country: 'India', popular: true },
-  { code: 'JAI', name: 'Jaipur', city: 'Jaipur', country: 'India', popular: true },
   { code: 'DXB', name: 'Dubai', city: 'Dubai', country: 'UAE', popular: true },
   { code: 'SIN', name: 'Singapore', city: 'Singapore', country: 'Singapore', popular: true }
 ];
 
-// Airport Autocomplete Component - Figma Specs Implementation
-const AirportAutocomplete = ({ value, onChange, placeholder, label, isDestination = false, highlight = false }) => {
+// Airport Autocomplete Component - Exact Figma Implementation
+const AirportAutocomplete = ({ 
+  value, 
+  onChange, 
+  label, 
+  placeholder, 
+  highlight = false,
+  onFocus 
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(value || '');
   const [filteredAirports, setFilteredAirports] = useState([]);
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Filter airports after typing 3 characters - as per interactivity specs
+  // Trigger autocomplete after 3 characters as per specs
   useEffect(() => {
     if (inputValue.length >= 3) {
       const filtered = AIRPORTS_DATABASE.filter(airport =>
         airport.city.toLowerCase().includes(inputValue.toLowerCase()) ||
         airport.name.toLowerCase().includes(inputValue.toLowerCase()) ||
         airport.code.toLowerCase().includes(inputValue.toLowerCase())
-      ).slice(0, 6); // Show max 6 results
+      ).slice(0, 6);
       setFilteredAirports(filtered);
       setIsOpen(filtered.length > 0);
     } else {
@@ -45,7 +47,7 @@ const AirportAutocomplete = ({ value, onChange, placeholder, label, isDestinatio
     }
   }, [inputValue]);
 
-  // Close dropdown on outside click
+  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -61,47 +63,48 @@ const AirportAutocomplete = ({ value, onChange, placeholder, label, isDestinatio
     setInputValue(newValue);
   };
 
+  const handleInputFocus = () => {
+    // Show popular airports on focus if empty
+    if (!inputValue) {
+      setFilteredAirports(AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6));
+      setIsOpen(true);
+    }
+    onFocus && onFocus();
+  };
+
   const handleSelect = (airport) => {
-    const selectedValue = `${airport.city} – ${airport.name} (${airport.code})`;
+    const selectedValue = `${airport.city} – ${airport.name} (${airport.code})`; // City – Airport (IATA) format
     setInputValue(selectedValue);
     onChange(airport);
     setIsOpen(false);
   };
 
-  const handleFocus = () => {
-    // Show popular routes immediately on focus if empty
-    if (!inputValue && !isDestination) {
-      setFilteredAirports(AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6));
-      setIsOpen(true);
-    }
-  };
-
   return (
-    <div className="airport-autocomplete" ref={dropdownRef}>
+    <div className="field-container" ref={dropdownRef}>
       <label className="field-label">{label}</label>
-      <div className="input-container">
+      <div className="input-wrapper">
         <input
           ref={inputRef}
           type="text"
           value={inputValue}
           onChange={handleInputChange}
-          onFocus={handleFocus}
+          onFocus={handleInputFocus}
           placeholder={placeholder}
-          className={`airport-input ${highlight ? 'highlight' : ''}`}
+          className={`field-input ${highlight ? 'field-highlight' : ''}`}
           autoComplete="off"
         />
         
-        {/* Dropdown with smooth fade/slide animation */}
+        {/* Dropdown with fade/slide animation */}
         {isOpen && (
-          <div className="airport-dropdown">
+          <div className="autocomplete-dropdown">
             {filteredAirports.map((airport) => (
               <div
                 key={airport.code}
                 onClick={() => handleSelect(airport)}
-                className="airport-option"
+                className="autocomplete-option"
               >
-                <div className="airport-city">{airport.city} – {airport.name}</div>
-                <div className="airport-code">({airport.code})</div>
+                <div className="option-main">{airport.city} – {airport.name}</div>
+                <div className="option-code">({airport.code})</div>
               </div>
             ))}
           </div>
@@ -111,8 +114,16 @@ const AirportAutocomplete = ({ value, onChange, placeholder, label, isDestinatio
   );
 };
 
-// Full-Screen Calendar Overlay - as per interactivity specs
-const CalendarOverlay = ({ isOpen, onClose, onDateSelect, selectedDate, minDate, isReturn = false, departureDate }) => {
+// Calendar Overlay Component - Full-screen with auto-advance
+const CalendarOverlay = ({ 
+  isOpen, 
+  onClose, 
+  onDateSelect, 
+  selectedDate, 
+  minDate, 
+  isReturn = false,
+  departureDate 
+}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isOneWay, setIsOneWay] = useState(false);
 
@@ -125,14 +136,14 @@ const CalendarOverlay = ({ isOpen, onClose, onDateSelect, selectedDate, minDate,
   const startingDayOfWeek = firstDay.getDay();
 
   const handleDateClick = (day) => {
-    const selectedDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-    onDateSelect(selectedDate);
+    const selected = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+    onDateSelect(selected);
     
-    // Auto-advance to return if departure is selected
+    // Auto-advance: Departure → Return, close after Return
     if (!isReturn && !isOneWay) {
-      // Will auto-open return date picker in parent component
+      // Will trigger return calendar in parent
     } else {
-      onClose();
+      onClose(); // Close overlay after return date chosen
     }
   };
 
@@ -178,40 +189,38 @@ const CalendarOverlay = ({ isOpen, onClose, onDateSelect, selectedDate, minDate,
   return (
     <div className="calendar-overlay">
       <div className="calendar-backdrop" onClick={onClose}></div>
-      <div className="calendar-container">
+      <div className="calendar-modal">
         <div className="calendar-header">
-          <div className="calendar-title">
+          <h3 className="calendar-title">
             {isReturn ? 'Return Date' : 'Departure Date'}
-          </div>
+          </h3>
           
           {/* One-way toggle at top */}
           {!isReturn && (
-            <div className="oneway-toggle">
-              <label className="toggle-label">
-                <input
-                  type="checkbox"
-                  checked={isOneWay}
-                  onChange={(e) => setIsOneWay(e.target.checked)}
-                />
-                <span>One-way</span>
-              </label>
-            </div>
+            <label className="oneway-toggle">
+              <input
+                type="checkbox"
+                checked={isOneWay}
+                onChange={(e) => setIsOneWay(e.target.checked)}
+              />
+              <span>One-way</span>
+            </label>
           )}
         </div>
 
         <div className="calendar-nav">
           <button
             onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
-            className="calendar-nav-btn"
+            className="nav-btn prev"
           >
             ‹
           </button>
-          <div className="calendar-month">
+          <div className="current-month">
             {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </div>
           <button
             onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
-            className="calendar-nav-btn"
+            className="nav-btn next"
           >
             ›
           </button>
@@ -219,11 +228,11 @@ const CalendarOverlay = ({ isOpen, onClose, onDateSelect, selectedDate, minDate,
 
         <div className="calendar-weekdays">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="calendar-weekday">{day}</div>
+            <div key={day} className="weekday-label">{day}</div>
           ))}
         </div>
 
-        <div className="calendar-days">
+        <div className="calendar-grid">
           {renderCalendarDays()}
         </div>
       </div>
@@ -231,9 +240,16 @@ const CalendarOverlay = ({ isOpen, onClose, onDateSelect, selectedDate, minDate,
   );
 };
 
-// Travellers and Class Selector - with validation as per specs
-const TravellersClassSelector = ({ travellers, onTravellersChange, travelClass, onClassChange, highlight = false }) => {
+// Travellers Selector Component - With validation as per specs
+const TravellersSelector = ({ 
+  travellers, 
+  onTravellersChange, 
+  travelClass, 
+  onClassChange, 
+  highlight = false 
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showGroupBooking, setShowGroupBooking] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -263,9 +279,10 @@ const TravellersClassSelector = ({ travellers, onTravellersChange, travelClass, 
       return;
     }
     
-    // Validation: total ≤ 9
+    // Validation: total ≤ 9, show group booking for 10+
     const total = newTravellers.adults + newTravellers.children + newTravellers.infants;
     if (total > 9) {
+      setShowGroupBooking(true);
       return;
     }
     
@@ -278,35 +295,45 @@ const TravellersClassSelector = ({ travellers, onTravellersChange, travelClass, 
 
   const getDisplayText = () => {
     const total = getTotalPassengers();
-    if (total > 9) {
-      return "Group Booking Required";
-    }
     return `${total} Traveller${total > 1 ? 's' : ''}, ${travelClass}`;
   };
 
-  // Group booking for 10+ passengers
-  if (getTotalPassengers() > 9) {
-    return (
-      <div className="group-booking-notice">
-        <div className="group-booking-message">
-          For 10 or more passengers, please request a Group Booking
-        </div>
-        <button className="group-booking-btn">
-          Request Group Booking
-        </button>
+  // Group Booking Modal for 10+ passengers
+  const GroupBookingModal = () => (
+    <div className="group-booking-overlay">
+      <div className="group-booking-backdrop" onClick={() => setShowGroupBooking(false)}></div>
+      <div className="group-booking-modal">
+        <h3>Group Booking Request</h3>
+        <p>For 10 or more passengers, please request a Group Booking</p>
+        <form className="group-booking-form">
+          <input type="text" placeholder="Name" required />
+          <input type="tel" placeholder="Phone" required />
+          <input type="email" placeholder="Email" required />
+          <input type="text" placeholder="Route" required />
+          <input type="text" placeholder="Dates" required />
+          <input type="number" placeholder="Passengers" min="10" required />
+          <div className="form-actions">
+            <button type="button" onClick={() => setShowGroupBooking(false)} className="btn-secondary">
+              Cancel
+            </button>
+            <button type="submit" className="btn-primary">
+              Request Group Booking
+            </button>
+          </div>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
 
   return (
-    <div className="travellers-selector" ref={dropdownRef}>
+    <div className="field-container" ref={dropdownRef}>
       <label className="field-label">TRAVELLERS & CLASS</label>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`travellers-button ${highlight ? 'highlight' : ''}`}
+        className={`field-input travellers-input ${highlight ? 'field-highlight' : ''}`}
       >
-        <span>{getDisplayText()}</span>
+        <span className="input-value">{getDisplayText()}</span>
         <span className="dropdown-arrow">▼</span>
       </button>
 
@@ -318,20 +345,20 @@ const TravellersClassSelector = ({ travellers, onTravellersChange, travelClass, 
               <div className="traveller-type">Adults</div>
               <div className="traveller-age">(12+)</div>
             </div>
-            <div className="traveller-controls">
+            <div className="stepper-controls">
               <button
                 type="button"
                 onClick={() => updateCount('adults', false)}
                 disabled={travellers.adults <= 1}
-                className="stepper-btn"
+                className="stepper-btn minus"
               >
                 -
               </button>
-              <span className="traveller-count">{travellers.adults}</span>
+              <span className="stepper-value">{travellers.adults}</span>
               <button
                 type="button"
                 onClick={() => updateCount('adults', true)}
-                className="stepper-btn"
+                className="stepper-btn plus"
               >
                 +
               </button>
@@ -344,20 +371,20 @@ const TravellersClassSelector = ({ travellers, onTravellersChange, travelClass, 
               <div className="traveller-type">Children</div>
               <div className="traveller-age">(2–11)</div>
             </div>
-            <div className="traveller-controls">
+            <div className="stepper-controls">
               <button
                 type="button"
                 onClick={() => updateCount('children', false)}
                 disabled={travellers.children <= 0}
-                className="stepper-btn"
+                className="stepper-btn minus"
               >
                 -
               </button>
-              <span className="traveller-count">{travellers.children}</span>
+              <span className="stepper-value">{travellers.children}</span>
               <button
                 type="button"
                 onClick={() => updateCount('children', true)}
-                className="stepper-btn"
+                className="stepper-btn plus"
               >
                 +
               </button>
@@ -370,21 +397,21 @@ const TravellersClassSelector = ({ travellers, onTravellersChange, travelClass, 
               <div className="traveller-type">Infants</div>
               <div className="traveller-age">(&lt;2)</div>
             </div>
-            <div className="traveller-controls">
+            <div className="stepper-controls">
               <button
                 type="button"
                 onClick={() => updateCount('infants', false)}
                 disabled={travellers.infants <= 0}
-                className="stepper-btn"
+                className="stepper-btn minus"
               >
                 -
               </button>
-              <span className="traveller-count">{travellers.infants}</span>
+              <span className="stepper-value">{travellers.infants}</span>
               <button
                 type="button"
                 onClick={() => updateCount('infants', true)}
                 disabled={travellers.infants >= travellers.adults}
-                className="stepper-btn"
+                className="stepper-btn plus"
               >
                 +
               </button>
@@ -392,15 +419,15 @@ const TravellersClassSelector = ({ travellers, onTravellersChange, travelClass, 
           </div>
 
           {/* Travel Class */}
-          <div className="class-selection">
+          <div className="class-section">
             <div className="class-title">Travel Class</div>
-            <div className="class-options">
+            <div className="class-grid">
               {['Economy', 'Premium Economy', 'Business', 'First'].map((cls) => (
                 <button
                   key={cls}
                   type="button"
                   onClick={() => onClassChange(cls)}
-                  className={`class-btn ${travelClass === cls ? 'active' : ''}`}
+                  className={`class-option ${travelClass === cls ? 'active' : ''}`}
                 >
                   {cls}
                 </button>
@@ -409,12 +436,14 @@ const TravellersClassSelector = ({ travellers, onTravellersChange, travelClass, 
           </div>
         </div>
       )}
+
+      {showGroupBooking && <GroupBookingModal />}
     </div>
   );
 };
 
-// Main Flight Search Form - Figma Implementation
-const FlightSearchForm = ({ onSearch, isSearching }) => {
+// Main Flight Search Form - Pixel-Perfect Implementation
+const FlightSearchForm = () => {
   // Form state
   const [tripType, setTripType] = useState('round-trip');
   const [departure, setDeparture] = useState(null);
@@ -428,7 +457,7 @@ const FlightSearchForm = ({ onSearch, isSearching }) => {
   });
   const [travelClass, setTravelClass] = useState('Economy');
 
-  // UI state
+  // UI state for guidance effects
   const [currentField, setCurrentField] = useState('departure');
   const [showCalendar, setShowCalendar] = useState(false);
   const [calendarType, setCalendarType] = useState('departure');
@@ -440,7 +469,7 @@ const FlightSearchForm = ({ onSearch, isSearching }) => {
 
   const handleDepartureSelect = (airport) => {
     setDeparture(airport);
-    setCurrentField('destination');
+    setCurrentField('destination'); // Highlight next field
   };
 
   const handleDestinationSelect = (airport) => {
@@ -497,46 +526,55 @@ const FlightSearchForm = ({ onSearch, isSearching }) => {
       travelClass
     };
 
-    onSearch(searchData);
+    console.log('Flight Search:', searchData);
+    // Backend integration will be wired after UI is approved
   };
 
   const isFormValid = departure && destination && departureDate && (tripType === 'one-way' || returnDate);
 
   return (
-    <div className="flight-search-form">
-      {/* Trip Type Toggle */}
-      <div className="trip-type-selector">
+    <div className="search-form">
+      {/* Trip Type Tabs */}
+      <div className="trip-tabs">
         <button
           type="button"
           onClick={() => setTripType('round-trip')}
-          className={`trip-type-btn ${tripType === 'round-trip' ? 'active' : ''}`}
+          className={`trip-tab ${tripType === 'round-trip' ? 'active' : ''}`}
         >
           Round Trip
         </button>
         <button
           type="button"
           onClick={() => setTripType('one-way')}
-          className={`trip-type-btn ${tripType === 'one-way' ? 'active' : ''}`}
+          className={`trip-tab ${tripType === 'one-way' ? 'active' : ''}`}
         >
           One Way
+        </button>
+        <button
+          type="button"
+          onClick={() => setTripType('multi-city')}
+          className={`trip-tab ${tripType === 'multi-city' ? 'active' : ''}`}
+        >
+          Multi City
         </button>
       </div>
 
       {/* Route Selection */}
-      <div className="route-selection">
-        <div className="route-inputs">
+      <div className="route-section">
+        <div className="route-row">
           <AirportAutocomplete
             value={departure?.city || ''}
             onChange={handleDepartureSelect}
-            placeholder="From"
             label="FROM"
+            placeholder="Delhi"
             highlight={getFieldHighlight('departure')}
+            onFocus={() => setCurrentField('departure')}
           />
           
           <button
             type="button"
             onClick={handleSwap}
-            className="swap-button"
+            className="swap-btn"
             disabled={!departure && !destination}
           >
             ⇄
@@ -545,18 +583,18 @@ const FlightSearchForm = ({ onSearch, isSearching }) => {
           <AirportAutocomplete
             value={destination?.city || ''}
             onChange={handleDestinationSelect}
-            placeholder="To"
             label="TO"
-            isDestination={true}
+            placeholder="Mumbai"
             highlight={getFieldHighlight('destination')}
+            onFocus={() => setCurrentField('destination')}
           />
         </div>
       </div>
 
       {/* Date Selection */}
-      <div className="date-selection">
-        <div className="date-inputs">
-          <div className="date-field">
+      <div className="date-section">
+        <div className={`date-row ${tripType === 'round-trip' ? 'two-dates' : 'one-date'}`}>
+          <div className="field-container">
             <label className="field-label">DEPARTURE</label>
             <button
               type="button"
@@ -564,14 +602,16 @@ const FlightSearchForm = ({ onSearch, isSearching }) => {
                 setCalendarType('departure');
                 setShowCalendar(true);
               }}
-              className={`date-button ${getFieldHighlight('departureDate') ? 'highlight' : ''}`}
+              className={`field-input date-input ${getFieldHighlight('departureDate') ? 'field-highlight' : ''}`}
             >
-              {departureDate ? departureDate.toLocaleDateString('en-GB') : 'Select Date'}
+              <span className="input-value">
+                {departureDate ? departureDate.toLocaleDateString('en-GB') : 'Select Date'}
+              </span>
             </button>
           </div>
 
           {tripType === 'round-trip' && (
-            <div className="date-field">
+            <div className="field-container">
               <label className="field-label">RETURN</label>
               <button
                 type="button"
@@ -579,17 +619,19 @@ const FlightSearchForm = ({ onSearch, isSearching }) => {
                   setCalendarType('return');
                   setShowCalendar(true);
                 }}
-                className={`date-button ${getFieldHighlight('return') ? 'highlight' : ''}`}
+                className={`field-input date-input ${getFieldHighlight('return') ? 'field-highlight' : ''}`}
               >
-                {returnDate ? returnDate.toLocaleDateString('en-GB') : 'Select Date'}
+                <span className="input-value">
+                  {returnDate ? returnDate.toLocaleDateString('en-GB') : 'Select Date'}
+                </span>
               </button>
             </div>
           )}
         </div>
       </div>
 
-      {/* Travellers and Class */}
-      <TravellersClassSelector
+      {/* Travellers Selection */}
+      <TravellersSelector
         travellers={travellers}
         onTravellersChange={setTravellers}
         travelClass={travelClass}
@@ -597,22 +639,15 @@ const FlightSearchForm = ({ onSearch, isSearching }) => {
         highlight={getFieldHighlight('travellers')}
       />
 
-      {/* Search Button - Sticky at bottom */}
+      {/* Search Button - Sticky at bottom with orange gradient */}
       <div className="search-section">
         <button
           type="button"
           onClick={handleSearch}
-          disabled={!isFormValid || isSearching}
-          className={`search-button ${isFormValid ? 'enabled' : 'disabled'}`}
+          disabled={!isFormValid}
+          className={`search-btn ${isFormValid ? 'enabled' : 'disabled'}`}
         >
-          {isSearching ? (
-            <div className="search-loading">
-              <div className="loading-spinner"></div>
-              Searching...
-            </div>
-          ) : (
-            'Search Flights'
-          )}
+          Search Flights
         </button>
       </div>
 
@@ -630,49 +665,11 @@ const FlightSearchForm = ({ onSearch, isSearching }) => {
   );
 };
 
-// Main App Component
+// Main App Component - Exact Figma Layout
 function App() {
-  const [searchResults, setSearchResults] = useState(null);
-  const [isSearching, setIsSearching] = useState(false);
-
-  const handleSearch = async (searchData) => {
-    setIsSearching(true);
-    console.log('Flight Search Data:', searchData);
-    
-    try {
-      // Connect to existing TripJack backend
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
-      const response = await fetch(`${backendUrl}/api/search-flights`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(searchData),
-      });
-      
-      if (response.ok) {
-        const results = await response.json();
-        setSearchResults(results);
-      } else {
-        console.error('Search failed:', response.statusText);
-        alert('Search failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('Search error:', error);
-      alert('Network error. Please check your connection.');
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
   return (
     <div className="App">
-      {/* Trust Strip */}
-      <div className="trust-strip">
-        Trusted by travellers · 24×7 WhatsApp support · Secure payments
-      </div>
-
-      {/* Header */}
+      {/* Header with Logo and Navigation */}
       <header className="app-header">
         <div className="header-content">
           <img
@@ -680,16 +677,29 @@ function App() {
             alt="TourSmile"
             className="app-logo"
           />
+          
+          <nav className="nav-chips">
+            <span className="nav-chip active">Flights</span>
+            <span className="nav-chip">Hotels</span>
+            <span className="nav-chip">Packages</span>
+          </nav>
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main Search Card */}
       <main className="main-content">
-        <FlightSearchForm onSearch={handleSearch} isSearching={isSearching} />
-        
+        <div className="search-card">
+          <FlightSearchForm />
+        </div>
+
+        {/* Trust Strip - Below search card as per Figma */}
+        <div className="trust-strip">
+          Trusted by travellers · 24×7 WhatsApp support · Secure payments
+        </div>
+
         {/* Popular Routes */}
         <div className="popular-routes">
-          <h3 className="popular-title">Popular Routes</h3>
+          <h3 className="section-title">Popular Routes</h3>
           <div className="routes-grid">
             {['Delhi–Mumbai', 'Bangalore–Hyderabad', 'Mumbai–Dubai', 'Delhi–Singapore'].map((route) => (
               <div key={route} className="route-card">
