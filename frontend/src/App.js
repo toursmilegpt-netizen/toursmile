@@ -283,7 +283,7 @@ const TravellersBottomSheet = ({
     return `${total} Traveller${total > 1 ? 's' : ''}, ${travelClass}`;
   };
 
-  // Group Booking Form Modal for 10+ passengers
+  // Interactivity Handoff.txt: Group Booking Form Modal for >9 passengers
   const GroupBookingModal = () => (
     <div className="group-booking-overlay">
       <div className="group-backdrop" onClick={() => setShowGroupBooking(false)}></div>
