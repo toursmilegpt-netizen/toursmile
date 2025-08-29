@@ -148,16 +148,12 @@ body {
   padding-bottom: 80px; /* Reduced from 100px to fit viewport better */
 }
 
-/* ========================================= */
-/* SEARCH CARD - EXACT FIGMA SPECS */
-/* ========================================= */
-
-/* Search card: 12px radius, shadows per Figma */
+/* Search card: 12px radius, shadows per README.txt specs */
 .search-card {
   background-color: var(--background-white);
   border-radius: var(--radius-lg); /* Exact 12px radius */
-  box-shadow: var(--shadow-card); /* Exact Figma shadow */
-  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-card); /* Exact shadow */
+  padding: var(--spacing-lg); /* Reduced from xl to lg for mobile */
   margin-bottom: var(--spacing-lg);
   border: 1px solid var(--border-light);
 }
