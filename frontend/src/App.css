@@ -581,11 +581,12 @@ body {
   background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
 }
 
+/* Interactivity Handoff.txt: smooth slide animations, today highlighted */
 .calendar-modal {
   background-color: var(--background-white);
   border-radius: var(--radius-xl);
-  padding: var(--spacing-xxl);
-  margin: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  margin: var(--spacing-lg);
   max-width: 340px;
   width: calc(100% - 32px);
   box-shadow: var(--shadow-modal);
