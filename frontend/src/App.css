@@ -552,10 +552,7 @@ body {
   font-weight: var(--font-weight-semibold);
 }
 
-/* ========================================= */
-/* CALENDAR OVERLAY - FULL-SCREEN WITH DIM */
-/* ========================================= */
-
+/* CALENDAR OVERLAY - Interactivity Handoff.txt: Full-screen dimmed background */
 .calendar-overlay {
   position: fixed;
   top: 0;
@@ -574,13 +571,14 @@ body {
   to { opacity: 1; }
 }
 
+/* Interactivity Handoff.txt: dimmed background */
 .overlay-backdrop {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+  background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
 }
 
 .calendar-modal {
