@@ -238,87 +238,96 @@ body {
 /* ========================================= */
 
 .input-field {
-  margin-bottom: var(--spacing-sm); /* Reduced to sm for tighter mobile layout */
+  margin-bottom: var(--spacing-16); /* Figma field spacing */
 }
 
-/* Labels: Regular, subtle grey - Exact README.txt specs */
+/* EXACT FIGMA LABELS: Regular 400, 11px, #666666 */
 .input-label {
   display: block;
   font-family: var(--font-family);
-  font-size: var(--font-size-label); /* Exact 11px */
-  font-weight: var(--font-weight-regular); /* README.txt: Labels Regular */
-  color: var(--text-secondary); /* README.txt: subtle grey #666666 */
+  font-size: var(--font-size-label); /* Exact 11px Figma */
+  font-weight: var(--font-weight-regular); /* Regular 400 */
+  color: var(--text-secondary); /* #666666 grey */
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: var(--spacing-sm); /* README.txt: 8-12px vertical */
+  letter-spacing: 0.8px; /* Figma letter spacing */
+  margin-bottom: var(--spacing-8); /* Figma label-to-input spacing */
 }
 
 .input-container {
   position: relative;
 }
 
-/* Input boxes: README.txt padding & borders, 44px tap target */
+/* EXACT FIGMA INPUT BOXES */
 .input-box {
   width: 100%;
-  padding: var(--spacing-md) var(--spacing-md); /* README.txt: 8-12px vertical */
+  padding: var(--spacing-12) var(--spacing-16); /* Figma padding */
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-12); /* Exact Figma 12px radius */
   font-family: var(--font-family);
-  font-size: var(--font-size-input);
-  font-weight: var(--font-weight-medium); /* README.txt: Values Medium weight */
-  color: var(--text-primary); /* README.txt: prominent contrast #1E1E1E */
+  font-size: var(--font-size-value); /* 15px Figma value font */
+  font-weight: var(--font-weight-medium); /* Medium 500 */
+  color: var(--text-primary); /* #1E1E1E dark */
   background-color: var(--background-white);
-  transition: all 0.2s ease;
-  min-height: var(--tap-target-min); /* README.txt: 44px minimum tap target */
+  transition: all var(--transition-base);
+  min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
   cursor: pointer;
   outline: none;
 }
 
-/* Interactivity Handoff.txt: Focus subtle blue glow */
-.input-box:focus,
+/* FIGMA INTERACTIVE STATES */
 .input-box:hover {
-  border-color: var(--primary-blue);
-  box-shadow: var(--focus-glow); /* subtle blue glow */
+  border-color: rgba(66, 133, 244, 0.4);
+  box-shadow: 0 0 0 1px rgba(66, 133, 244, 0.1);
 }
 
-/* Values: Medium weight, prominent contrast - README.txt */
+.input-box:focus {
+  border-color: var(--primary-blue);
+  box-shadow: var(--focus-ring); /* Figma focus glow */
+  outline: none;
+}
+
+/* EXACT FIGMA VALUES STYLING */
 .input-value {
   flex: 1;
-  font-weight: var(--font-weight-medium); /* README.txt: Values Medium */
-  color: var(--text-primary); /* README.txt: prominent contrast #1E1E1E */
-  font-size: var(--font-size-input);
+  font-weight: var(--font-weight-medium); /* Medium 500 */
+  color: var(--text-primary); /* #1E1E1E prominent */
+  font-size: var(--font-size-value); /* 15px Figma */
+  line-height: 1.4;
 }
 
-/* Guidance effects: highlight next field - Interactivity Handoff.txt */
+/* FIGMA GUIDANCE EFFECTS */
 .input-highlight {
   border-color: var(--primary-blue) !important;
-  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2) !important;
-  animation: field-glow 1.5s ease-in-out infinite;
+  box-shadow: var(--focus-ring-strong) !important; /* Strong guidance highlight */
+  animation: guidance-pulse 2s ease-in-out infinite;
 }
 
-@keyframes field-glow {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2); }
-  50% { box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.35); }
+@keyframes guidance-pulse {
+  0%, 100% { 
+    box-shadow: var(--focus-ring-strong);
+  }
+  50% { 
+    box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.35);
+  }
 }
 
-/* Focus rings for accessibility */
-.input-box:focus-visible {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
-}
-
-/* Error states - Interactivity Handoff.txt: red outline + helper text */
+/* FIGMA ERROR STATES */
 .input-error {
   border-color: var(--error-red) !important;
-  box-shadow: var(--error-outline) !important;
+  box-shadow: var(--error-ring) !important;
 }
 
 .dropdown-icon {
   color: var(--text-secondary);
   font-size: var(--font-size-caption);
-  margin-left: var(--spacing-sm);
+  margin-left: var(--spacing-8);
+  transition: transform var(--transition-fast);
+}
+
+.input-box:focus .dropdown-icon {
+  transform: rotate(180deg);
 }
 
 /* ========================================= */
