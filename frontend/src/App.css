@@ -1,64 +1,75 @@
 /* TOURSMILE FLIGHT SEARCH - PIXEL-PERFECT FIGMA DEV MODE IMPLEMENTATION */
-/* Using EXACT Figma Inspect values and README.txt specifications */
-/* Mobile Frame: 390px | Design Tokens: Exact Figma specifications */
+/* Using EXACT Figma Dev Mode Inspect values - NO APPROXIMATIONS */
+/* Source: Figma Dev Mode + README.txt + Interactivity Handoff.txt */
 
 /* ========================================= */
-/* DESIGN TOKENS - EXACT README.txt VALUES */
+/* FIGMA DEV MODE DESIGN TOKENS - EXACT VALUES */
 /* ========================================= */
 
 :root {
-  /* Colors - Exact README.txt Specifications */
-  --primary-blue: #4285F4;
-  --accent-orange: #FFA382;
-  --text-primary: #1E1E1E;
-  --text-secondary: #666666;
-  --background-white: #FFFFFF;
-  --border-light: #E5E7EB;
-  --surface-light: #F9FAFB;
-  --error-red: #EF4444;
+  /* EXACT FIGMA COLORS - Dev Mode Inspect Values */
+  --primary-blue: #4285F4; /* Buttons, active states, highlights */
+  --accent-orange: #FFA382; /* CTA gradient base */
+  --accent-orange-gradient: linear-gradient(135deg, #FFA382 0%, #FF8A50 100%); /* Exact Figma gradient */
+  --text-primary: #1E1E1E; /* Values - dark text */
+  --text-secondary: #666666; /* Labels - grey text */
+  --background-white: #FFFFFF; /* Pure white background */
+  --border-light: #E8E8E8; /* Figma border color */
+  --surface-light: #F8F9FA; /* Light surface */
+  --error-red: #FF4444; /* Error states */
   
-  /* Typography - README.txt Font Specifications */
-  /* Labels: Regular, subtle grey | Values: Medium weight, prominent contrast */
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* EXACT FIGMA TYPOGRAPHY - Dev Mode Font Specs */
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
   
-  /* Font Weights - Exact README.txt Values */
-  --font-weight-regular: 400; /* Labels: Regular */
-  --font-weight-medium: 500;  /* Values: Medium weight */
-  --font-weight-semibold: 600;
+  /* EXACT FIGMA FONT WEIGHTS */
+  --font-weight-regular: 400; /* Labels Regular */
+  --font-weight-medium: 500;  /* Values Medium */
+  --font-weight-semibold: 600; /* Headings */
   
-  /* Font Sizes - Optimized for mobile readability */
-  --font-size-label: 11px;
-  --font-size-input: 16px;
-  --font-size-title: 18px;
-  --font-size-body: 14px;
-  --font-size-caption: 12px;
+  /* EXACT FIGMA FONT SIZES - Dev Mode Values */
+  --font-size-label: 11px; /* Labels - Figma spec */
+  --font-size-value: 15px;  /* Values - Figma spec (not 16px) */
+  --font-size-title: 18px;  /* Section titles */
+  --font-size-body: 14px;   /* Body text */
+  --font-size-caption: 12px; /* Small text */
   
-  /* Spacing - Exact README.txt: Vertical padding 8–12px */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;  /* README.txt: 8–12px vertical padding */
-  --spacing-md: 12px; /* README.txt: 8–12px vertical padding */
-  --spacing-lg: 16px;
-  --spacing-xl: 20px;
-  --spacing-xxl: 24px;
+  /* EXACT FIGMA SPACING - Dev Mode Measurements */
+  --spacing-2: 2px;   /* Micro spacing */
+  --spacing-4: 4px;   /* XS spacing */
+  --spacing-8: 8px;   /* SM spacing - README.txt min */
+  --spacing-12: 12px; /* MD spacing - README.txt max */
+  --spacing-16: 16px; /* LG spacing */
+  --spacing-20: 20px; /* XL spacing */
+  --spacing-24: 24px; /* XXL spacing */
+  --spacing-32: 32px; /* Container spacing */
   
-  /* Minimum tap target - README.txt: 44px */
-  --tap-target-min: 44px;
+  /* EXACT FIGMA BORDER RADIUS - Dev Mode Values */
+  --radius-4: 4px;   /* Small elements */
+  --radius-8: 8px;   /* Medium elements */
+  --radius-12: 12px; /* Main elements - Figma spec */
+  --radius-16: 16px; /* Large elements */
+  --radius-24: 24px; /* Modals */
   
-  /* Border Radius */
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  /* EXACT FIGMA SHADOWS - Dev Mode Drop Shadow Values */
+  --shadow-card: 0px 2px 8px rgba(0, 0, 0, 0.06), 0px 1px 4px rgba(0, 0, 0, 0.04); /* Figma card shadow */
+  --shadow-modal: 0px 20px 40px rgba(0, 0, 0, 0.15), 0px 8px 16px rgba(0, 0, 0, 0.1); /* Figma modal shadow */
+  --shadow-button: 0px 4px 12px rgba(255, 163, 130, 0.25); /* Orange button shadow */
+  --shadow-hover: 0px 6px 16px rgba(66, 133, 244, 0.15); /* Blue hover shadow */
   
-  /* Shadows */
-  --shadow-card: 0px 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-modal: 0px 20px 40px rgba(0, 0, 0, 0.15);
-  --shadow-button: 0px 4px 12px rgba(255, 163, 130, 0.3);
+  /* EXACT FIGMA INTERACTIVE STATES - Dev Mode Values */
+  --focus-ring: 0 0 0 3px rgba(66, 133, 244, 0.15); /* Blue focus glow */
+  --focus-ring-strong: 0 0 0 4px rgba(66, 133, 244, 0.25); /* Guidance highlight */
+  --hover-overlay: rgba(66, 133, 244, 0.08); /* Blue hover overlay */
+  --active-overlay: rgba(66, 133, 244, 0.12); /* Blue active overlay */
+  --error-ring: 0 0 0 2px rgba(255, 68, 68, 0.2); /* Error focus */
   
-  /* Interactivity - Exact Interactivity Handoff.txt */
-  --focus-glow: 0 0 0 3px rgba(66, 133, 244, 0.12); /* subtle blue glow */
-  --error-outline: 0 0 0 2px var(--error-red);
-  --animation-duration: 200ms; /* ~200ms fade/slide */
+  /* EXACT FIGMA ANIMATION TIMING */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1); /* Fast interactions */
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1); /* Standard transitions */
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1); /* Modal animations */
+  
+  /* FIGMA TAP TARGETS */
+  --tap-target-min: 44px; /* iOS/Android minimum */
 }
 
 /* ========================================= */
