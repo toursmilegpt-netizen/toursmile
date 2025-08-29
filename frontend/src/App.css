@@ -204,16 +204,16 @@ body {
   margin-bottom: var(--spacing-lg);
 }
 
-/* Labels: UPPERCASE, 11px, #666 - Exact Figma specs */
+/* Labels: Regular, subtle grey - Exact README.txt specs */
 .input-label {
   display: block;
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family);
   font-size: var(--font-size-label); /* Exact 11px */
-  font-weight: var(--font-weight-regular); /* Regular 400 */
-  color: var(--text-secondary); /* Exact #666666 */
+  font-weight: var(--font-weight-regular); /* README.txt: Labels Regular */
+  color: var(--text-secondary); /* README.txt: subtle grey #666666 */
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: var(--spacing-sm); /* 8-12px vertical per specs */
+  margin-bottom: var(--spacing-sm); /* README.txt: 8-12px vertical */
 }
 
 .input-container {
