@@ -201,7 +201,7 @@ body {
 /* ========================================= */
 
 .input-field {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md); /* Reduced from lg to md for mobile */
 }
 
 /* Labels: Regular, subtle grey - Exact README.txt specs */
