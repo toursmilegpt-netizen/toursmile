@@ -1050,7 +1050,7 @@ body {
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm); /* Reduced margin */
   text-align: center;
 }
 
