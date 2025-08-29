@@ -350,7 +350,7 @@ body {
 /* ========================================= */
 
 .route-section {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
 }
 
 .route-fields {
@@ -391,7 +391,7 @@ body {
 }
 
 .date-section {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
 }
 
 .date-fields {
@@ -412,16 +412,13 @@ body {
   justify-content: flex-start;
 }
 
-/* ========================================= */
-/* OPTIONS ROW - EXACT FIGMA POSITION */
-/* ========================================= */
-
+/* OPTIONS ROW - More compact for mobile */
 .options-row {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-xl);
-  padding: var(--spacing-lg) 0;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md); /* Reduced for mobile */
+  padding: var(--spacing-md) 0; /* Reduced padding */
   border-top: 1px solid var(--border-light);
 }
 
