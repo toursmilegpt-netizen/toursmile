@@ -64,7 +64,7 @@
 }
 
 /* ========================================= */
-/* BASE STYLES - TOKEN-BASED */
+/* BASE STYLES - TAILWIND TOKEN-BASED */
 /* ========================================= */
 
 * {
@@ -75,7 +75,7 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-background);
+  background-color: var(--color-surface);
   color: var(--color-text-strong);
   font-size: var(--font-size-base);
   line-height: 1.5;
@@ -85,8 +85,8 @@ body {
 
 .App {
   min-height: 100vh;
-  background-color: var(--color-background);
-  max-width: 390px; /* Mobile frame */
+  background-color: var(--color-surface);
+  max-width: var(--screen-xs); /* Tailwind xs: 390px */
   margin: 0 auto;
   position: relative;
 }
