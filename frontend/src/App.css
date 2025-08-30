@@ -615,7 +615,10 @@ body {
   letter-spacing: 0.2px; /* Figma letter spacing */
 }
 
-/* CALENDAR OVERLAY - Interactivity Handoff.txt: Full-screen dimmed background */
+/* ========================================= */
+/* CALENDAR OVERLAY - TOKEN-BASED WITH MICRO-INTERACTIONS */
+/* ========================================= */
+
 .calendar-overlay {
   position: fixed;
   top: 0;
@@ -626,39 +629,45 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: overlay-fade 300ms ease-out;
+  animation: calendar-fade-in var(--duration-fast) var(--easing); /* 120ms fade+scale */
 }
 
-@keyframes overlay-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes calendar-fade-in {
+  from { 
+    opacity: 0; 
+    transform: scale(0.98);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1);
+  }
 }
 
-/* Interactivity Handoff.txt: dimmed background */
+/* MICRO-INTERACTION: Dim background to rgba(0,0,0,.25) */
 .overlay-backdrop {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+  background-color: rgba(0, 0, 0, var(--backdrop-opacity)); /* Exact token value */
 }
 
-/* Interactivity Handoff.txt: smooth slide animations, today highlighted */
 .calendar-modal {
-  background-color: var(--background-white);
-  border-radius: var(--radius-xl);
-  padding: var(--spacing-xl);
-  margin: var(--spacing-lg);
+  background-color: var(--color-background);
+  border-radius: var(--radius);
+  padding: var(--spacing-5);
+  margin: var(--spacing-4);
   max-width: 340px;
   width: calc(100% - 32px);
-  box-shadow: var(--shadow-modal);
+  box-shadow: var(--shadow-subtle);
   position: relative;
   z-index: 201;
-  animation: modal-slide 300ms ease-out;
+  animation: modal-scale-in var(--duration-fast) var(--easing);
+  border: 1px solid var(--color-border);
 }
 
-@keyframes modal-slide {
+@keyframes modal-scale-in {
   from {
     opacity: 0;
     transform: translateY(20px) scale(0.95);
@@ -673,73 +682,77 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-4);
 }
 
 .modal-title {
   font-family: var(--font-family);
-  font-size: var(--font-size-title);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
+  color: var(--color-text-strong);
 }
 
-/* Interactivity Handoff.txt: One-way toggle at top */
 .toggle-oneway {
   display: flex;
   align-items: center;
   cursor: pointer;
   font-family: var(--font-family);
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-regular);
-  color: var(--text-secondary);
+  color: var(--color-text-muted);
 }
 
 .toggle-oneway input {
-  margin-right: var(--spacing-sm);
-  accent-color: var(--primary-blue);
+  margin-right: var(--spacing-2);
+  accent-color: var(--color-primary);
 }
 
 .calendar-navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-4);
 }
 
 .nav-button {
   background: none;
   border: none;
   font-size: 20px;
-  color: var(--primary-blue);
+  color: var(--color-primary);
   cursor: pointer;
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  transition: background-color 0.2s ease;
+  padding: var(--spacing-2);
+  border-radius: var(--radius);
+  transition: background-color var(--duration-base) var(--easing);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-button:hover {
-  background-color: #F0F4FF;
+  background-color: rgba(91, 155, 255, 0.1);
 }
 
 .month-year {
   font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
-  font-size: var(--font-size-body);
+  color: var(--color-text-strong);
+  font-size: var(--font-size-base);
 }
 
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-2);
 }
 
 .weekday {
   text-align: center;
-  font-size: var(--font-size-label);
-  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
   font-weight: var(--font-weight-regular);
-  padding: var(--spacing-sm) 2px;
+  padding: var(--spacing-2) 2px;
 }
 
 .calendar-grid {
@@ -753,28 +766,30 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-body);
+  border-radius: var(--radius);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-regular);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--duration-fast) var(--easing);
   min-height: 32px;
+  border: 1px solid transparent;
 }
 
 .calendar-cell:hover:not(.disabled):not(.empty) {
-  background-color: #F0F4FF;
+  background-color: rgba(91, 155, 255, 0.1);
+  border-color: var(--color-primary);
 }
 
-/* Interactivity Handoff.txt: today highlighted */
 .calendar-cell.today {
-  background-color: var(--primary-blue);
-  color: var(--background-white);
+  background-color: var(--color-primary);
+  color: var(--color-background);
   font-weight: var(--font-weight-medium);
 }
 
 .calendar-cell.disabled {
-  color: #CCCCCC;
+  color: var(--color-text-muted);
   cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .calendar-cell.empty {
