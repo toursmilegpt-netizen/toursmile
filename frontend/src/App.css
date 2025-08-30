@@ -519,7 +519,7 @@ body {
 }
 
 /* ========================================= */
-/* CTA BUTTON - TOKEN-BASED WITH MICRO-INTERACTIONS */
+/* CTA BUTTON - TAILWIND TOKEN-BASED WITH MICRO-INTERACTIONS */
 /* ========================================= */
 
 .sticky-cta {
@@ -528,8 +528,8 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 390px;
-  background-color: var(--color-background);
+  max-width: var(--screen-xs); /* Tailwind xs: 390px */
+  background-color: var(--color-surface);
   padding: var(--spacing-4);
   border-top: 1px solid var(--color-divider);
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
@@ -540,12 +540,12 @@ body {
   width: 100%;
   padding: var(--spacing-4) var(--spacing-6);
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-button); /* Tailwind token */
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: all var(--duration-base) var(--easing);
+  transition: all var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
   min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
@@ -556,26 +556,26 @@ body {
 
 .cta-button.enabled {
   background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A50 100%);
-  color: var(--color-background);
-  box-shadow: var(--shadow-subtle);
+  color: var(--color-surface);
+  box-shadow: var(--shadow-subtle); /* Tailwind token */
   border: 1px solid rgba(255, 184, 150, 0.3);
 }
 
-/* MICRO-INTERACTION: Hover lift + subtle shadow */
+/* TAILWIND MICRO-INTERACTION: Hover lift + subtle shadow */
 .cta-button.enabled:hover {
   background: linear-gradient(135deg, #FF8A50 0%, #FF7A40 100%);
   transform: translateY(-1px);
   box-shadow: 0 8px 20px rgba(255, 184, 150, 0.35);
 }
 
-/* MICRO-INTERACTION: Active state 98% scale */
+/* TAILWIND MICRO-INTERACTION: Active state 98% scale */
 .cta-button.enabled:active {
   transform: translateY(0) scale(var(--scale-pressed));
   box-shadow: var(--shadow-subtle);
 }
 
 .cta-button.disabled {
-  background: var(--color-surface);
+  background: #F8F9FA;
   color: var(--color-text-muted);
   cursor: not-allowed;
   box-shadow: none;
@@ -584,7 +584,7 @@ body {
 
 .cta-button.loading {
   background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A50 100%);
-  color: var(--color-background);
+  color: var(--color-surface);
   cursor: wait;
 }
 
@@ -594,7 +594,7 @@ body {
   width: 20px;
   height: 20px;
   border: 2px solid transparent;
-  border-top: 2px solid var(--color-background);
+  border-top: 2px solid var(--color-surface);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-left: var(--spacing-2);
