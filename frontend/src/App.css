@@ -1,32 +1,48 @@
-/* TOURSMILE FLIGHT SEARCH - TOKEN-BASED DESIGN SYSTEM */
-/* Using EXACT Design Tokens - NO HARD-CODED VALUES */
-/* Source: Manual Design Handoff - Flight Module Update */
+/* TOURSMILE FLIGHT SEARCH - TAILWIND TOKEN-BASED DESIGN SYSTEM */
+/* Using EXACT Tailwind token patch - NO HARD-CODED VALUES */
+/* Source: Tailwind extend configuration for TourSmile Flight */
 
 /* ========================================= */
-/* DESIGN TOKENS - EXACT SPECIFICATIONS */
+/* TAILWIND TOKEN PATCH - EXACT VALUES */
 /* ========================================= */
 
 :root {
-  /* FONT STACK - Exact Specification */
+  /* COLORS - Exact Tailwind Token Patch */
+  --color-primary: #5B9BFF;      /* primary */
+  --color-accent: #FFB896;       /* accent */
+  --color-text-strong: #1E1E1E;  /* textStrong */
+  --color-text-muted: #666666;   /* textMuted */
+  --color-divider: #E0E0E0;      /* divider */
+  --color-border: #E0E0E0;       /* border */
+  --color-surface: #FFFFFF;      /* surface */
+  
+  /* BORDER RADIUS - Exact Tailwind Token Patch */
+  --radius-card: 12px;    /* card */
+  --radius-button: 12px;  /* button */
+  --radius-input: 12px;   /* input */
+  
+  /* BOX SHADOW - Exact Tailwind Token Patch */
+  --shadow-input: 0 1px 3px rgba(0, 0, 0, 0.06);              /* input */
+  --shadow-input-focus: 0 0 0 3px rgba(91, 155, 255, 0.35);   /* inputFocus */
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.06);            /* subtle */
+  
+  /* TRANSITIONS - Exact Tailwind Token Patch */
+  --duration-fast: 200ms;   /* fast */
+  --timing-fast: ease;      /* fast */
+  
+  /* SCREENS - Exact Tailwind Token Patch */
+  --screen-xs: 390px;   /* xs - mobile */
+  --screen-md: 768px;   /* md - tablet */
+  --screen-lg: 1024px;  /* lg - small desktop */
+  --screen-xl: 1440px;  /* xl - large desktop */
+  
+  /* TYPOGRAPHY - Mobile-optimized scale */
   --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  
-  /* COLORS - Exact Token Values */
-  --color-primary: #5B9BFF;      /* Primary blue */
-  --color-accent: #FFB896;       /* Accent orange */
-  --color-text-strong: #1E1E1E;  /* Strong text */
-  --color-text-muted: #666666;   /* Muted text */
-  --color-divider: #E0E0E0;      /* Dividers */
-  --color-border: #E0E0E0;       /* Borders */
-  --color-background: #FFFFFF;    /* Pure white background */
-  --color-surface: #F8F9FA;      /* Light surface */
-  --color-error: #FF4444;        /* Error states */
-  
-  /* TYPOGRAPHY - Token-based font weights */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   
-  /* FONT SIZES - Mobile-optimized scale */
+  /* FONT SIZES - Mobile-optimized */
   --font-size-xs: 11px;   /* Labels */
   --font-size-sm: 13px;   /* Small text */
   --font-size-base: 15px; /* Base/values */
@@ -34,33 +50,16 @@
   --font-size-xl: 19px;   /* Titles */
   
   /* SPACING - Consistent scale */
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 12px;
-  --spacing-4: 16px;
-  --spacing-5: 20px;
-  --spacing-6: 24px;
-  --spacing-8: 32px;
+  --spacing-1: 4px;   /* xs */
+  --spacing-2: 8px;   /* sm */
+  --spacing-3: 12px;  /* md */
+  --spacing-4: 16px;  /* lg */
+  --spacing-5: 20px;  /* xl */
+  --spacing-6: 24px;  /* 2xl */
+  --spacing-8: 32px;  /* 4xl */
   
-  /* RADIUS - Exact Token Value */
-  --radius: 12px; /* card/button/input */
-  
-  /* SHADOWS - Exact Token Values */
-  --shadow-input: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-input-focus: 0 0 0 3px rgba(91, 155, 255, 0.35);
-  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.06);
-  
-  /* MICRO-INTERACTIONS - Exact Timing */
-  --duration-fast: 120ms;    /* Calendar fade+scale */
-  --duration-base: 150ms;    /* Travellers */
-  --duration-slow: 200ms;    /* Inputs */
-  --easing: ease;            /* Standard easing */
-  
-  /* INTERACTION VALUES */
-  --scale-pressed: 0.98;     /* Active button scale */
-  --backdrop-opacity: 0.25;  /* Calendar dim background */
-  
-  /* TAP TARGETS */
+  /* MICRO-INTERACTIONS */
+  --scale-pressed: 0.98;
   --tap-target-min: 44px;
 }
 
