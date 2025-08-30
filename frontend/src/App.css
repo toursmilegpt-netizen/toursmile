@@ -178,13 +178,13 @@ body {
 }
 
 /* ========================================= */
-/* TRIP TYPE SEGMENTED CONTROL - TOKEN-BASED */
+/* TRIP TYPE SEGMENTED CONTROL - TAILWIND TOKEN-BASED */
 /* ========================================= */
 
 .trip-segmented-control {
   display: flex;
-  background-color: var(--color-surface);
-  border-radius: var(--radius);
+  background-color: #F8F9FA; /* Light surface for contrast */
+  border-radius: var(--radius-card); /* Tailwind token */
   padding: 4px;
   margin-bottom: var(--spacing-5);
   border: 1px solid var(--color-border);
@@ -199,9 +199,9 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-regular);
-  border-radius: calc(var(--radius) - 4px); /* Inner radius */
+  border-radius: calc(var(--radius-button) - 4px); /* Inner radius */
   cursor: pointer;
-  transition: all var(--duration-base) var(--easing);
+  transition: all var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
   text-align: center;
   min-height: var(--tap-target-min);
   display: flex;
@@ -210,10 +210,10 @@ body {
 }
 
 .segment-option.active {
-  background-color: var(--color-background);
+  background-color: var(--color-surface);
   color: var(--color-text-strong);
   font-weight: var(--font-weight-medium);
-  box-shadow: var(--shadow-input);
+  box-shadow: var(--shadow-input); /* Tailwind token */
 }
 
 .segment-option:hover:not(.active) {
