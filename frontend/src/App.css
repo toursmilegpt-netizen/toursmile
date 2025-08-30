@@ -523,7 +523,7 @@ body {
 }
 
 /* ========================================= */
-/* STICKY CTA - EXACT FIGMA ORANGE GRADIENT */
+/* CTA BUTTON - TOKEN-BASED WITH MICRO-INTERACTIONS */
 /* ========================================= */
 
 .sticky-cta {
@@ -533,23 +533,23 @@ body {
   transform: translateX(-50%);
   width: 100%;
   max-width: 390px;
-  background-color: var(--background-white);
-  padding: var(--spacing-16); /* Figma CTA container padding */
-  border-top: 1px solid var(--border-light);
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08); /* Figma CTA shadow */
+  background-color: var(--color-background);
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--color-divider);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
   z-index: 100;
 }
 
 .cta-button {
   width: 100%;
-  padding: var(--spacing-16) var(--spacing-24); /* Figma button padding */
+  padding: var(--spacing-4) var(--spacing-6);
   border: none;
-  border-radius: var(--radius-12); /* Figma button radius */
+  border-radius: var(--radius);
   font-family: var(--font-family);
-  font-size: var(--font-size-value); /* Same as input values */
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all var(--duration-base) var(--easing);
   min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
@@ -558,38 +558,37 @@ body {
   overflow: hidden;
 }
 
-/* FIGMA ORANGE GRADIENT - ENABLED STATE */
 .cta-button.enabled {
-  background: var(--accent-orange-gradient); /* Exact Figma gradient */
-  color: var(--background-white);
-  box-shadow: var(--shadow-button);
-  border: 1px solid rgba(255, 163, 130, 0.3);
+  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A50 100%);
+  color: var(--color-background);
+  box-shadow: var(--shadow-subtle);
+  border: 1px solid rgba(255, 184, 150, 0.3);
 }
 
+/* MICRO-INTERACTION: Hover lift + subtle shadow */
 .cta-button.enabled:hover {
-  background: linear-gradient(135deg, #FF8A50 0%, #FF7A40 100%); /* Darker on hover */
+  background: linear-gradient(135deg, #FF8A50 0%, #FF7A40 100%);
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(255, 163, 130, 0.35);
+  box-shadow: 0 8px 20px rgba(255, 184, 150, 0.35);
 }
 
+/* MICRO-INTERACTION: Active state 98% scale */
 .cta-button.enabled:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-button);
+  transform: translateY(0) scale(var(--scale-pressed));
+  box-shadow: var(--shadow-subtle);
 }
 
-/* FIGMA DISABLED STATE */
 .cta-button.disabled {
-  background: var(--surface-light);
-  color: var(--text-secondary);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
   cursor: not-allowed;
   box-shadow: none;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--color-border);
 }
 
-/* FIGMA LOADING STATE */
 .cta-button.loading {
-  background: var(--accent-orange-gradient);
-  color: var(--background-white);
+  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A50 100%);
+  color: var(--color-background);
   cursor: wait;
 }
 
@@ -599,10 +598,10 @@ body {
   width: 20px;
   height: 20px;
   border: 2px solid transparent;
-  border-top: 2px solid var(--background-white);
+  border-top: 2px solid var(--color-background);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-left: var(--spacing-8);
+  margin-left: var(--spacing-2);
 }
 
 @keyframes spin {
@@ -612,7 +611,7 @@ body {
 
 .cta-text {
   font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.2px; /* Figma letter spacing */
+  letter-spacing: 0.2px;
 }
 
 /* ========================================= */
