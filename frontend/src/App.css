@@ -383,24 +383,23 @@ body {
 }
 
 /* ========================================= */
-/* ROUTE & DATE SECTIONS - FIGMA LAYOUT */
+/* ROUTE & DATE SECTIONS - TOKEN-BASED */
 /* ========================================= */
 
 .route-section {
-  margin-bottom: var(--spacing-20); /* Figma section spacing */
+  margin-bottom: var(--spacing-5);
 }
 
 .route-fields {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: var(--spacing-12); /* Figma gap */
+  gap: var(--spacing-3);
   align-items: end;
 }
 
-/* FIGMA SWAP BUTTON */
 .swap-button {
-  background: var(--accent-orange-gradient); /* Orange gradient */
-  color: var(--background-white);
+  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A50 100%);
+  color: var(--color-background);
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -411,36 +410,38 @@ body {
   cursor: pointer;
   font-size: 16px;
   font-weight: var(--font-weight-medium);
-  transition: all var(--transition-base);
-  box-shadow: var(--shadow-button);
+  transition: all var(--duration-base) var(--easing);
+  box-shadow: var(--shadow-subtle);
 }
 
+/* MICRO-INTERACTION: Hover lift + subtle shadow */
 .swap-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #FF8A50 0%, #FF7A40 100%); /* Darker gradient */
+  background: linear-gradient(135deg, #FF8A50 0%, #FF7A40 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 163, 130, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 184, 150, 0.4);
 }
 
+/* MICRO-INTERACTION: Active state 98% scale */
 .swap-button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: var(--shadow-button);
+  transform: translateY(0) scale(var(--scale-pressed));
+  box-shadow: var(--shadow-subtle);
 }
 
 .swap-button:disabled {
-  background: var(--surface-light);
-  color: var(--text-secondary);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
 .date-section {
-  margin-bottom: var(--spacing-20); /* Figma section spacing */
+  margin-bottom: var(--spacing-5);
 }
 
 .date-fields {
   display: grid;
-  gap: var(--spacing-12); /* Figma gap */
+  gap: var(--spacing-3);
 }
 
 .date-fields.one-date {
