@@ -227,96 +227,93 @@ body {
 }
 
 /* ========================================= */
-/* INPUT FIELDS - EXACT FIGMA SPECIFICATIONS */
+/* INPUT FIELDS - TOKEN-BASED WITH MICRO-INTERACTIONS */
 /* ========================================= */
 
 .input-field {
-  margin-bottom: var(--spacing-16); /* Figma field spacing */
+  margin-bottom: var(--spacing-4);
 }
 
-/* EXACT FIGMA LABELS: Regular 400, 11px, #666666 */
 .input-label {
   display: block;
   font-family: var(--font-family);
-  font-size: var(--font-size-label); /* Exact 11px Figma */
-  font-weight: var(--font-weight-regular); /* Regular 400 */
-  color: var(--text-secondary); /* #666666 grey */
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.8px; /* Figma letter spacing */
-  margin-bottom: var(--spacing-8); /* Figma label-to-input spacing */
+  letter-spacing: 0.8px;
+  margin-bottom: var(--spacing-2);
 }
 
 .input-container {
   position: relative;
 }
 
-/* EXACT FIGMA INPUT BOXES */
 .input-box {
   width: 100%;
-  padding: var(--spacing-12) var(--spacing-16); /* Figma padding */
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-12); /* Exact Figma 12px radius */
+  padding: var(--spacing-3) var(--spacing-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
   font-family: var(--font-family);
-  font-size: var(--font-size-value); /* 15px Figma value font */
-  font-weight: var(--font-weight-medium); /* Medium 500 */
-  color: var(--text-primary); /* #1E1E1E dark */
-  background-color: var(--background-white);
-  transition: all var(--transition-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-strong);
+  background-color: var(--color-background);
+  transition: all var(--duration-slow) var(--easing); /* 200ms ease - micro-interaction spec */
   min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
   cursor: pointer;
   outline: none;
+  box-shadow: var(--shadow-input);
 }
 
-/* FIGMA INTERACTIVE STATES */
-.input-box:hover {
-  border-color: rgba(66, 133, 244, 0.4);
-  box-shadow: 0 0 0 1px rgba(66, 133, 244, 0.1);
-}
-
+/* MICRO-INTERACTION: Elevate to shadow-input-focus on focus */
 .input-box:focus {
-  border-color: var(--primary-blue);
-  box-shadow: var(--focus-ring); /* Figma focus glow */
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-input-focus); /* Exact token */
   outline: none;
 }
 
-/* EXACT FIGMA VALUES STYLING */
+.input-box:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-input-focus);
+}
+
 .input-value {
   flex: 1;
-  font-weight: var(--font-weight-medium); /* Medium 500 */
-  color: var(--text-primary); /* #1E1E1E prominent */
-  font-size: var(--font-size-value); /* 15px Figma */
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-strong);
+  font-size: var(--font-size-base);
   line-height: 1.4;
 }
 
-/* FIGMA GUIDANCE EFFECTS */
+/* Guidance effects */
 .input-highlight {
-  border-color: var(--primary-blue) !important;
-  box-shadow: var(--focus-ring-strong) !important; /* Strong guidance highlight */
+  border-color: var(--color-primary) !important;
+  box-shadow: var(--shadow-input-focus) !important;
   animation: guidance-pulse 2s ease-in-out infinite;
 }
 
 @keyframes guidance-pulse {
   0%, 100% { 
-    box-shadow: var(--focus-ring-strong);
+    box-shadow: var(--shadow-input-focus);
   }
   50% { 
-    box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.35);
+    box-shadow: 0 0 0 3px rgba(91, 155, 255, 0.5);
   }
 }
 
-/* FIGMA ERROR STATES */
 .input-error {
-  border-color: var(--error-red) !important;
-  box-shadow: var(--error-ring) !important;
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.2) !important;
 }
 
 .dropdown-icon {
-  color: var(--text-secondary);
-  font-size: var(--font-size-caption);
-  margin-left: var(--spacing-8);
-  transition: transform var(--transition-fast);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-left: var(--spacing-2);
+  transition: transform var(--duration-fast) var(--easing);
 }
 
 .input-box:focus .dropdown-icon {
