@@ -93,46 +93,44 @@ body {
 }
 
 /* ========================================= */
-/* HEADER - EXACT FIGMA LAYOUT */
+/* HEADER - TOKEN-BASED STYLING */
 /* ========================================= */
 
 .app-header {
-  background-color: var(--background-white);
-  padding: var(--spacing-16) var(--spacing-16) var(--spacing-12) var(--spacing-16); /* Figma padding */
-  border-bottom: 1px solid var(--border-light);
+  background-color: var(--color-background);
+  padding: var(--spacing-4) var(--spacing-4) var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-12); /* Figma gap */
+  gap: var(--spacing-3);
 }
 
-/* Logo - Exact Figma Size */
 .logo-centered {
-  height: 28px; /* Exact Figma mobile logo height */
+  height: 28px;
   width: auto;
   object-fit: contain;
 }
 
-/* Navigation Chips - Exact Figma Styling */
 .nav-chips {
   display: flex;
-  gap: var(--spacing-8);
+  gap: var(--spacing-2);
 }
 
 .nav-chip {
-  padding: var(--spacing-8) var(--spacing-16); /* Figma padding */
-  border-radius: var(--radius-12); /* Figma radius */
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: var(--radius);
   font-family: var(--font-family);
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--text-secondary);
-  background-color: var(--surface-light);
+  color: var(--color-text-muted);
+  background-color: var(--color-surface);
   cursor: pointer;
-  transition: all var(--transition-base);
-  border: none;
+  transition: all var(--duration-base) var(--easing);
+  border: 1px solid var(--color-border);
   min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
@@ -140,20 +138,22 @@ body {
 }
 
 .nav-chip.active {
-  background-color: var(--primary-blue);
-  color: var(--background-white);
-  box-shadow: var(--shadow-hover);
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-subtle);
 }
 
 .nav-chip:hover:not(.active) {
-  background-color: var(--hover-overlay);
+  background-color: rgba(91, 155, 255, 0.08);
+  border-color: var(--color-primary);
   transform: translateY(-1px);
-  transition: all var(--transition-fast);
+  transition: all var(--duration-fast) var(--easing);
 }
 
 .nav-chip:active {
-  transform: translateY(0);
-  transition: all var(--transition-fast);
+  transform: translateY(0) scale(var(--scale-pressed));
+  transition: all var(--duration-fast) var(--easing);
 }
 
 /* ========================================= */
