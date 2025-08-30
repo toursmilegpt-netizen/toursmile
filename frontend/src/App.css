@@ -458,16 +458,16 @@ body {
 }
 
 /* ========================================= */
-/* OPTIONS ROW - FIGMA STYLING */
+/* OPTIONS ROW - TOKEN-BASED */
 /* ========================================= */
 
 .options-row {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-12); /* Figma option spacing */
-  margin-bottom: var(--spacing-20); /* Figma bottom margin */
-  padding: var(--spacing-16) 0; /* Figma section padding */
-  border-top: 1px solid var(--border-light);
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-5);
+  padding: var(--spacing-4) 0;
+  border-top: 1px solid var(--color-divider);
 }
 
 .option-checkbox {
@@ -475,15 +475,15 @@ body {
   align-items: center;
   cursor: pointer;
   font-family: var(--font-family);
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-regular);
-  color: var(--text-primary);
-  gap: var(--spacing-12); /* Figma checkbox-to-text gap */
-  transition: all var(--transition-fast);
+  color: var(--color-text-strong);
+  gap: var(--spacing-3);
+  transition: all var(--duration-fast) var(--easing);
 }
 
 .option-checkbox:hover {
-  color: var(--primary-blue);
+  color: var(--color-primary);
 }
 
 .option-checkbox input[type="checkbox"] {
@@ -493,32 +493,32 @@ body {
 .checkmark {
   width: 20px;
   height: 20px;
-  border: 2px solid var(--border-light);
-  border-radius: var(--radius-4); /* Small radius for checkboxes */
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-base);
+  transition: all var(--duration-base) var(--easing);
   flex-shrink: 0;
 }
 
 .option-checkbox input[type="checkbox"]:checked + .checkmark {
-  background-color: var(--primary-blue);
-  border-color: var(--primary-blue);
-  box-shadow: var(--focus-ring);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-input-focus);
 }
 
 .option-checkbox input[type="checkbox"]:checked + .checkmark::after {
   content: "✓";
-  color: var(--background-white);
+  color: var(--color-background);
   font-size: 12px;
   font-weight: var(--font-weight-semibold);
   line-height: 1;
 }
 
 .option-text {
-  font-size: var(--font-size-body);
-  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  color: var(--color-text-strong);
   line-height: 1.4;
 }
 
