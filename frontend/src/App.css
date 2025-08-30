@@ -381,7 +381,7 @@ body {
 }
 
 /* ========================================= */
-/* ROUTE & DATE SECTIONS - TOKEN-BASED */
+/* ROUTE & DATE SECTIONS - TAILWIND TOKEN-BASED */
 /* ========================================= */
 
 .route-section {
@@ -397,7 +397,7 @@ body {
 
 .swap-button {
   background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A50 100%);
-  color: var(--color-background);
+  color: var(--color-surface);
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -408,25 +408,23 @@ body {
   cursor: pointer;
   font-size: 16px;
   font-weight: var(--font-weight-medium);
-  transition: all var(--duration-base) var(--easing);
+  transition: all var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
   box-shadow: var(--shadow-subtle);
 }
 
-/* MICRO-INTERACTION: Hover lift + subtle shadow */
 .swap-button:hover:not(:disabled) {
   background: linear-gradient(135deg, #FF8A50 0%, #FF7A40 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 184, 150, 0.4);
 }
 
-/* MICRO-INTERACTION: Active state 98% scale */
 .swap-button:active:not(:disabled) {
   transform: translateY(0) scale(var(--scale-pressed));
   box-shadow: var(--shadow-subtle);
 }
 
 .swap-button:disabled {
-  background: var(--color-surface);
+  background: #F8F9FA;
   color: var(--color-text-muted);
   cursor: not-allowed;
   transform: none;
