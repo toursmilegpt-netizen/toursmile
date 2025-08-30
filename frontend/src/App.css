@@ -226,7 +226,7 @@ body {
 }
 
 /* ========================================= */
-/* INPUT FIELDS - TOKEN-BASED WITH MICRO-INTERACTIONS */
+/* INPUT FIELDS - TAILWIND TOKEN-BASED WITH MICRO-INTERACTIONS */
 /* ========================================= */
 
 .input-field {
@@ -252,25 +252,25 @@ body {
   width: 100%;
   padding: var(--spacing-3) var(--spacing-4);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-input); /* Tailwind token */
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-strong);
-  background-color: var(--color-background);
-  transition: all var(--duration-slow) var(--easing); /* 200ms ease - micro-interaction spec */
+  background-color: var(--color-surface);
+  transition: all var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
   min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
   cursor: pointer;
   outline: none;
-  box-shadow: var(--shadow-input);
+  box-shadow: var(--shadow-input); /* Tailwind token */
 }
 
-/* MICRO-INTERACTION: Elevate to shadow-input-focus on focus */
+/* TAILWIND MICRO-INTERACTION: 200ms ease, elevate to shadow-input-focus */
 .input-box:focus {
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-input-focus); /* Exact token */
+  box-shadow: var(--shadow-input-focus); /* Tailwind token */
   outline: none;
 }
 
@@ -287,7 +287,6 @@ body {
   line-height: 1.4;
 }
 
-/* Guidance effects */
 .input-highlight {
   border-color: var(--color-primary) !important;
   box-shadow: var(--shadow-input-focus) !important;
@@ -304,7 +303,7 @@ body {
 }
 
 .input-error {
-  border-color: var(--color-error) !important;
+  border-color: #FF4444 !important;
   box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.2) !important;
 }
 
@@ -312,7 +311,7 @@ body {
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   margin-left: var(--spacing-2);
-  transition: transform var(--duration-fast) var(--easing);
+  transition: transform var(--duration-fast) var(--timing-fast);
 }
 
 .input-box:focus .dropdown-icon {
