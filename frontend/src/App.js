@@ -337,41 +337,62 @@ const TravellersBottomSheet = ({
           </div>
 
           <div className="sheet-content">
-            {/* Traveller Types */}
-            {[
-              { key: 'adults', label: 'Adults', age: '(12+)', min: 1 },
-              { key: 'children', label: 'Children', age: '(2–11)', min: 0 },
-              { key: 'infants', label: 'Infants', age: '(<2)', min: 0 }
-            ].map(({ key, label, age, min }) => (
-              <div key={key} className="traveller-row">
-                <div className="traveller-info">
-                  <div className="traveller-label">{label}</div>
-                  <div className="traveller-age">{age}</div>
+            {/* Passenger Categories - Clear split with live counts */}
+            <div className="passenger-categories">
+              <h4 className="categories-title">Passengers</h4>
+              
+              {[
+                { key: 'adults', label: 'Adults', age: '12+ years', min: 1, description: 'Age 12 and above' },
+                { key: 'children', label: 'Children', age: '2–11 years', min: 0, description: 'Age 2 to 11' },
+                { key: 'infants', label: 'Infants', age: 'Under 2 years', min: 0, description: 'Under 2 years (on lap)' }
+              ].map(({ key, label, age, min, description }) => (
+                <div key={key} className="passenger-category">
+                  <div className="category-info">
+                    <div className="category-label">{label}</div>
+                    <div className="category-age">{age}</div>
+                  </div>
+                  <div className="category-stepper">
+                    <button
+                      type="button"
+                      onClick={() => updateCount(key, false)}
+                      disabled={travellers[key] <= min}
+                      className="stepper-btn minus"
+                      aria-label={`Decrease ${label.toLowerCase()}`}
+                    >
+                      −
+                    </button>
+                    <span className="stepper-count" aria-label={`${travellers[key]} ${label.toLowerCase()}`}>
+                      {travellers[key]}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => updateCount(key, true)}
+                      disabled={getTotalPassengers() >= 9}
+                      className="stepper-btn plus"
+                      aria-label={`Increase ${label.toLowerCase()}`}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-                <div className="stepper">
-                  <button
-                    type="button"
-                    onClick={() => updateCount(key, false)}
-                    disabled={travellers[key] <= min}
-                    className="stepper-btn minus"
-                  >
-                    -
-                  </button>
-                  <span className="stepper-count">{travellers[key]}</span>
-                  <button
-                    type="button"
-                    onClick={() => updateCount(key, true)}
-                    className="stepper-btn plus"
-                  >
-                    +
-                  </button>
+              ))}
+              
+              {/* Passenger Total & Limit Warning */}
+              <div className="passenger-summary">
+                <div className="total-count">
+                  Total: {getTotalPassengers()}/9 passengers
                 </div>
+                {getTotalPassengers() >= 8 && (
+                  <div className="limit-warning">
+                    Maximum 9 passengers allowed
+                  </div>
+                )}
               </div>
-            ))}
+            </div>
 
-            {/* Travel Class */}
+            {/* Travel Class Selection */}
             <div className="class-section">
-              <div className="class-title">Travel Class</div>
+              <h4 className="class-title">Travel Class</h4>
               <div className="class-options">
                 {['Economy', 'Premium Economy', 'Business', 'First'].map((cls) => (
                   <button
