@@ -279,8 +279,22 @@ const TravellersBottomSheet = ({
   };
 
   const getDisplayText = () => {
-    const total = getTotalPassengers();
-    return `${total} Traveller${total > 1 ? 's' : ''}, ${travelClass}`;
+    const { adults, children, infants } = travellers;
+    const parts = [];
+    
+    // Build dynamic summary with proper pluralization
+    if (adults > 0) {
+      parts.push(`${adults} Adult${adults > 1 ? 's' : ''}`);
+    }
+    if (children > 0) {
+      parts.push(`${children} Child${children > 1 ? 'ren' : ''}`);
+    }
+    if (infants > 0) {
+      parts.push(`${infants} Infant${infants > 1 ? 's' : ''}`);
+    }
+    
+    const passengerText = parts.length > 0 ? parts.join(', ') : '1 Adult';
+    return `${passengerText}, ${travelClass}`;
   };
 
   // Interactivity Handoff.txt: Group Booking Form Modal for >9 passengers
