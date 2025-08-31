@@ -172,24 +172,24 @@ body {
 }
 
 /* ========================================= */
-/* MAIN CONTAINER - TOKEN-BASED */
+/* MAIN CONTAINER - APPLE MINIMAL LAYOUT */
 /* ========================================= */
 
 .main-container {
-  padding: var(--spacing-4);
-  padding-bottom: 80px; /* Space for sticky CTA */
+  padding: var(--space-4); /* 16px - 8px rhythm */
+  padding-bottom: var(--space-10); /* 40px for sticky CTA */
 }
 
 /* ========================================= */
-/* SEARCH CARD - TAILWIND TOKEN-BASED */
+/* SEARCH CARD - APPLE CARD DESIGN */
 /* ========================================= */
 
 .search-card {
-  background-color: var(--color-surface);
-  border-radius: var(--radius-card); /* Tailwind token */
-  box-shadow: var(--shadow-subtle); /* Tailwind token */
-  padding: var(--spacing-5);
-  margin-bottom: var(--spacing-4);
+  background-color: var(--color-background);
+  border-radius: var(--radius); /* 12px */
+  box-shadow: var(--shadow-base); /* Apple subtle shadow */
+  padding: var(--space-6); /* 24px - generous but not wasteful */
+  margin-bottom: var(--space-4); /* 16px */
   border: 1px solid var(--color-border);
 }
 
