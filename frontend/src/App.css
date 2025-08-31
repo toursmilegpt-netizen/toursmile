@@ -243,22 +243,23 @@ body {
 }
 
 /* ========================================= */
-/* INPUT FIELDS - TAILWIND TOKEN-BASED WITH MICRO-INTERACTIONS */
+/* INPUT FIELDS - APPLE MINIMAL DESIGN */
 /* ========================================= */
 
 .input-field {
-  margin-bottom: var(--spacing-4);
+  margin-bottom: var(--space-4); /* 16px - 8px rhythm */
 }
 
+/* Apple Light Labels */
 .input-label {
   display: block;
-  font-family: var(--font-family);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-regular);
-  color: var(--color-text-muted);
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs); /* 11px */
+  font-weight: var(--font-weight-light); /* Light labels - Apple style */
+  color: var(--color-text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: var(--spacing-2);
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-2); /* 8px compact */
 }
 
 .input-container {
@@ -267,72 +268,74 @@ body {
 
 .input-box {
   width: 100%;
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: var(--space-4) var(--space-4); /* 16px - generous touch target */
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-input); /* Tailwind token */
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
+  border-radius: var(--radius); /* 12px */
+  font-family: var(--font-secondary);
+  font-size: var(--text-base); /* 15px */
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-strong);
-  background-color: var(--color-surface);
-  transition: all var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
-  min-height: var(--tap-target-min);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  transition: all var(--transition-base); /* 200ms Apple easing */
+  min-height: var(--tap-target);
   display: flex;
   align-items: center;
   cursor: pointer;
   outline: none;
-  box-shadow: var(--shadow-input); /* Tailwind token */
+  box-shadow: var(--shadow-xs); /* Subtle Apple shadow */
 }
 
-/* TAILWIND MICRO-INTERACTION: 200ms ease, elevate to shadow-input-focus */
+/* Apple Focus Glow */
 .input-box:focus {
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-input-focus); /* Tailwind token */
+  box-shadow: var(--shadow-focus); /* Apple blue focus glow */
   outline: none;
 }
 
 .input-box:hover {
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-input-focus);
+  box-shadow: var(--shadow-sm);
 }
 
 .input-value {
   flex: 1;
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-strong);
-  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
   line-height: 1.4;
 }
 
+/* Apple Guidance Effects */
 .input-highlight {
   border-color: var(--color-primary) !important;
-  box-shadow: var(--shadow-input-focus) !important;
-  animation: guidance-pulse 2s ease-in-out infinite;
+  box-shadow: var(--shadow-focus) !important;
+  animation: apple-guidance 2s ease-in-out infinite;
 }
 
-@keyframes guidance-pulse {
+@keyframes apple-guidance {
   0%, 100% { 
-    box-shadow: var(--shadow-input-focus);
+    box-shadow: var(--shadow-focus);
   }
   50% { 
-    box-shadow: 0 0 0 3px rgba(91, 155, 255, 0.5);
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.25);
   }
 }
 
 .input-error {
-  border-color: #FF4444 !important;
-  box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.2) !important;
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.15) !important;
 }
 
 .dropdown-icon {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  margin-left: var(--spacing-2);
-  transition: transform var(--duration-fast) var(--timing-fast);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  margin-left: var(--space-2);
+  transition: transform var(--transition-base);
 }
 
 .input-box:focus .dropdown-icon {
   transform: rotate(180deg);
+  color: var(--color-primary);
 }
 
 /* ========================================= */
