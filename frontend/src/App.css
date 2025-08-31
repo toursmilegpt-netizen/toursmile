@@ -543,7 +543,7 @@ body {
 }
 
 /* ========================================= */
-/* CTA BUTTON - TAILWIND TOKEN-BASED WITH MICRO-INTERACTIONS */
+/* APPLE CTA BUTTON - STICKY MOBILE, INLINE DESKTOP */
 /* ========================================= */
 
 .sticky-cta {
@@ -552,25 +552,27 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: var(--screen-xs); /* Tailwind xs: 390px */
-  background-color: var(--color-surface);
-  padding: var(--spacing-4);
+  max-width: var(--breakpoint-xs); /* 390px */
+  background-color: var(--color-background);
+  padding: var(--space-4); /* 16px */
   border-top: 1px solid var(--color-divider);
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08); /* Apple elevated shadow */
   z-index: 100;
+  backdrop-filter: blur(20px); /* Apple glass effect */
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .cta-button {
   width: 100%;
-  padding: var(--spacing-4) var(--spacing-6);
+  padding: var(--space-4) var(--space-6); /* 16px/24px */
   border: none;
-  border-radius: var(--radius-button); /* Tailwind token */
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
+  border-radius: var(--radius); /* 12px */
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
-  min-height: var(--tap-target-min);
+  transition: all var(--transition-base); /* 200ms Apple easing */
+  min-height: var(--tap-target);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -578,60 +580,60 @@ body {
   overflow: hidden;
 }
 
+/* Apple Orange Gradient */
 .cta-button.enabled {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A50 100%);
-  color: var(--color-surface);
-  box-shadow: var(--shadow-subtle); /* Tailwind token */
-  border: 1px solid rgba(255, 184, 150, 0.3);
+  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8C00 100%);
+  color: var(--color-background);
+  box-shadow: var(--shadow-base);
+  border: 1px solid rgba(255, 149, 0, 0.2);
 }
 
-/* TAILWIND MICRO-INTERACTION: Hover lift + subtle shadow */
 .cta-button.enabled:hover {
-  background: linear-gradient(135deg, #FF8A50 0%, #FF7A40 100%);
+  background: linear-gradient(135deg, #FF8C00 0%, #FF7A00 100%);
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(255, 184, 150, 0.35);
+  box-shadow: var(--shadow-lg);
 }
 
-/* TAILWIND MICRO-INTERACTION: Active state 98% scale */
 .cta-button.enabled:active {
-  transform: translateY(0) scale(var(--scale-pressed));
-  box-shadow: var(--shadow-subtle);
+  transform: scale(var(--scale-pressed));
+  box-shadow: var(--shadow-base);
 }
 
 .cta-button.disabled {
-  background: #F8F9FA;
-  color: var(--color-text-muted);
+  background: var(--color-surface);
+  color: var(--color-text-tertiary);
   cursor: not-allowed;
-  box-shadow: none;
+  box-shadow: var(--shadow-xs);
   border: 1px solid var(--color-border);
+  opacity: var(--opacity-disabled);
 }
 
 .cta-button.loading {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A50 100%);
-  color: var(--color-surface);
+  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8C00 100%);
+  color: var(--color-background);
   cursor: wait;
 }
 
 .cta-button.loading::after {
   content: "";
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border: 2px solid transparent;
-  border-top: 2px solid var(--color-surface);
+  border-top: 2px solid var(--color-background);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-left: var(--spacing-2);
+  animation: apple-spin 0.8s linear infinite;
+  margin-left: var(--space-2);
 }
 
-@keyframes spin {
+@keyframes apple-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
 .cta-text {
   font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.2px;
+  letter-spacing: -0.2px; /* Apple tight spacing */
 }
 
 /* ========================================= */
