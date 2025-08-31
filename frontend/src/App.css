@@ -339,7 +339,7 @@ body {
 }
 
 /* ========================================= */
-/* AUTOCOMPLETE DROPDOWN - TAILWIND TOKEN-BASED */
+/* AUTOCOMPLETE DROPDOWN - APPLE STYLE */
 /* ========================================= */
 
 .autocomplete-dropdown {
@@ -347,21 +347,21 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background-color: var(--color-surface);
+  background-color: var(--color-background);
   border: 1px solid var(--color-border);
   border-top: none;
-  border-radius: 0 0 var(--radius-input) var(--radius-input); /* Tailwind token */
-  box-shadow: var(--shadow-subtle); /* Tailwind token */
+  border-radius: 0 0 var(--radius) var(--radius); /* 12px */
+  box-shadow: var(--shadow-lg); /* Apple elevated shadow */
   z-index: 50;
   max-height: 240px;
   overflow-y: auto;
-  animation: dropdown-slide-in var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
+  animation: apple-dropdown var(--transition-base); /* 200ms Apple animation */
 }
 
-@keyframes dropdown-slide-in {
+@keyframes apple-dropdown {
   from {
     opacity: 0;
-    transform: translateY(-8px) scale(0.98);
+    transform: translateY(-4px) scale(0.99);
   }
   to {
     opacity: 1;
@@ -370,17 +370,17 @@ body {
 }
 
 .dropdown-item {
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: var(--space-3) var(--space-4); /* 12px/16px */
   cursor: pointer;
-  transition: background-color var(--duration-fast) var(--timing-fast);
+  transition: background-color var(--transition-fast);
   border-bottom: 1px solid var(--color-divider);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-1);
+  gap: var(--space-1); /* 4px */
 }
 
 .dropdown-item:hover {
-  background-color: #F8F9FA;
+  background-color: var(--color-surface);
 }
 
 .dropdown-item:last-child {
@@ -389,15 +389,15 @@ body {
 
 .item-primary {
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-strong);
-  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
   line-height: 1.4;
 }
 
 .item-secondary {
-  font-size: var(--font-size-sm);
+  font-size: var(--text-sm);
   font-weight: var(--font-weight-regular);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 /* ========================================= */
