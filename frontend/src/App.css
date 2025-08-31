@@ -109,12 +109,12 @@ body {
 }
 
 /* ========================================= */
-/* HEADER - TAILWIND TOKEN-BASED */
+/* APPLE HEADER - MINIMAL & REFINED */
 /* ========================================= */
 
 .app-header {
-  background-color: var(--color-surface);
-  padding: var(--spacing-4) var(--spacing-4) var(--spacing-3) var(--spacing-4);
+  background-color: var(--color-background);
+  padding: var(--space-4) var(--space-4) var(--space-3) var(--space-4); /* 8px rhythm */
   border-bottom: 1px solid var(--color-divider);
 }
 
@@ -122,54 +122,53 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-3);
+  gap: var(--space-3); /* 12px - compact */
 }
 
 .logo-centered {
-  height: 28px;
+  height: 24px; /* Minimal Apple-style */
   width: auto;
   object-fit: contain;
 }
 
 .nav-chips {
   display: flex;
-  gap: var(--spacing-2);
+  gap: var(--space-2); /* 8px rhythm */
 }
 
 .nav-chip {
-  padding: var(--spacing-2) var(--spacing-4);
-  border-radius: var(--radius-button); /* Tailwind token */
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
+  padding: var(--space-2) var(--space-4); /* 8px/16px */
+  border-radius: var(--radius); /* 12px */
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   background-color: var(--color-surface);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
+  transition: all var(--transition-base); /* 200ms Apple easing */
   border: 1px solid var(--color-border);
-  min-height: var(--tap-target-min);
+  min-height: var(--tap-target);
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
 .nav-chip.active {
   background-color: var(--color-primary);
-  color: var(--color-surface);
+  color: var(--color-background);
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-subtle); /* Tailwind token */
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-chip:hover:not(.active) {
-  background-color: rgba(91, 155, 255, 0.08);
+  background-color: rgba(0, 122, 255, 0.06);
   border-color: var(--color-primary);
   transform: translateY(-1px);
-  transition: all var(--duration-fast) var(--timing-fast);
 }
 
 .nav-chip:active {
-  transform: translateY(0) scale(var(--scale-pressed));
-  transition: all var(--duration-fast) var(--timing-fast);
+  transform: scale(var(--scale-pressed));
 }
 
 /* ========================================= */
