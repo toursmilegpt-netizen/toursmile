@@ -1230,28 +1230,28 @@ body {
 }
 
 /* ========================================= */
-/* RESPONSIVE DESIGN - TAILWIND BREAKPOINTS */
+/* APPLE RESPONSIVE DESIGN - MOBILE-FIRST */
 /* ========================================= */
 
-/* Mobile: xs (390px) - Primary Mobile Design */
+/* Mobile: 390px - iPhone, minimal and clean */
 @media (max-width: 767px) {
   .App {
-    max-width: var(--screen-xs); /* Tailwind xs: 390px */
+    max-width: var(--breakpoint-xs); /* 390px */
     margin: 0 auto;
   }
   
   .route-fields {
     grid-template-columns: 1fr auto 1fr;
-    gap: var(--spacing-3);
+    gap: var(--space-3);
     align-items: end;
   }
   
   .date-fields.two-dates {
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-3);
+    gap: var(--space-3);
   }
   
-  /* Very small screens override */
+  /* Very small screens - stack everything */
   @media (max-width: 390px) {
     .App {
       max-width: 100%;
@@ -1259,168 +1259,168 @@ body {
     
     .route-fields {
       grid-template-columns: 1fr;
-      gap: var(--spacing-4);
+      gap: var(--space-4);
     }
     
     .swap-button {
       justify-self: center;
-      margin: calc(-1 * var(--spacing-2)) 0;
+      margin: calc(-1 * var(--space-2)) 0;
     }
     
     .date-fields.two-dates {
       grid-template-columns: 1fr;
-      gap: var(--spacing-4);
+      gap: var(--space-4);
     }
   }
 }
 
-/* Tablet: md (768px) - Tailwind MD Breakpoint */
+/* Tablet: 768px - iPad, spacious but focused */
 @media (min-width: 768px) and (max-width: 1023px) {
   .App {
-    max-width: var(--screen-md); /* Tailwind md: 768px */
+    max-width: var(--breakpoint-sm); /* 768px */
     margin: 0 auto;
-    padding: 0 var(--spacing-6);
+    padding: 0 var(--space-6);
   }
   
   .main-container {
-    padding: var(--spacing-6);
-    padding-bottom: 90px;
+    padding: var(--space-8); /* 32px */
+    padding-bottom: var(--space-12); /* 48px */
   }
   
   .search-card {
-    padding: var(--spacing-6);
+    padding: var(--space-8); /* 32px */
     max-width: 600px;
-    margin: 0 auto var(--spacing-4) auto;
+    margin: 0 auto var(--space-6) auto;
   }
   
   .app-header {
-    padding: var(--spacing-4) var(--spacing-6);
+    padding: var(--space-6) var(--space-8);
   }
   
   .header-container {
-    gap: var(--spacing-4);
+    gap: var(--space-5);
+  }
+  
+  .logo-centered {
+    height: 28px;
+  }
+  
+  .route-chips {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+/* Small Desktop: 1024px - MacBook Air, transitional layout */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .App {
+    max-width: var(--breakpoint-md); /* 1024px */
+    margin: 0 auto;
+    padding: 0 var(--space-8);
+  }
+  
+  .main-container {
+    padding: var(--space-10) var(--space-8); /* 40px/32px */
+    padding-bottom: var(--space-8);
+  }
+  
+  .search-card {
+    padding: var(--space-10); /* 40px */
+    max-width: 700px;
+    margin: 0 auto var(--space-8) auto;
+  }
+  
+  .app-header {
+    padding: var(--space-6) var(--space-10);
+  }
+  
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-8);
   }
   
   .logo-centered {
     height: 32px;
   }
   
-  .input-field {
-    margin-bottom: var(--spacing-4);
-  }
-  
   .route-chips {
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-3);
-  }
-}
-
-/* Small Desktop: lg (1024px) - Tailwind LG Breakpoint */
-@media (min-width: 1024px) and (max-width: 1439px) {
-  .App {
-    max-width: var(--screen-lg); /* Tailwind lg: 1024px */
-    margin: 0 auto;
-    padding: 0 var(--spacing-8);
+    gap: var(--space-4);
   }
   
-  .main-container {
-    padding: var(--spacing-8);
-    padding-bottom: 100px;
-  }
-  
-  .search-card {
-    padding: var(--spacing-8);
-    max-width: 800px;
-    margin: 0 auto var(--spacing-6) auto;
-  }
-  
-  .app-header {
-    padding: var(--spacing-6) var(--spacing-8);
-  }
-  
-  .header-container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--spacing-6);
-  }
-  
-  .logo-centered {
-    height: 40px;
-  }
-  
-  .route-chips {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-4);
-  }
-  
+  /* Desktop CTA - Inline instead of sticky */
   .sticky-cta {
     position: static;
     padding: 0;
     background: transparent;
     border: none;
     box-shadow: none;
-    margin-top: var(--spacing-6);
+    backdrop-filter: none;
+    margin-top: var(--space-8);
   }
   
   .cta-button {
-    max-width: 300px;
+    max-width: 280px;
     margin: 0 auto;
   }
 }
 
-/* Large Desktop: xl (1440px) - Tailwind XL Breakpoint */
+/* Large Desktop: 1440px - MacBook Pro, spacious layout */
 @media (min-width: 1440px) {
   .App {
-    max-width: var(--screen-xl); /* Tailwind xl: 1440px */
+    max-width: var(--breakpoint-lg); /* 1440px */
     margin: 0 auto;
   }
   
   .main-container {
-    padding: var(--spacing-8) calc(var(--spacing-8) * 2);
-    padding-bottom: 120px;
+    padding: var(--space-12) var(--space-10); /* 48px/40px */
+    padding-bottom: var(--space-10);
   }
   
   .search-card {
-    max-width: 1000px;
-    margin: 0 auto var(--spacing-6) auto;
-    padding: calc(var(--spacing-8) * 1.5);
+    max-width: 900px;
+    margin: 0 auto var(--space-10) auto;
+    padding: var(--space-12); /* 48px generous */
   }
   
   .app-header {
-    padding: var(--spacing-6) calc(var(--spacing-8) * 2);
+    padding: var(--space-8) var(--space-12);
   }
   
   .header-container {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: var(--spacing-8);
+    gap: var(--space-10);
   }
   
   .logo-centered {
-    height: 48px;
+    height: 36px; /* Larger for desktop */
   }
   
   .route-chips {
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-6);
-    max-width: 800px;
+    gap: var(--space-6);
+    max-width: 700px;
     margin: 0 auto;
   }
   
+  /* Desktop CTA - Inline with max width */
   .sticky-cta {
     position: static;
     padding: 0;
     background: transparent;
     border: none;
     box-shadow: none;
-    margin-top: calc(var(--spacing-6) * 2);
+    backdrop-filter: none;
+    margin-top: var(--space-10);
   }
   
   .cta-button {
-    max-width: 400px;
+    max-width: 320px;
     margin: 0 auto;
-    padding: var(--spacing-4) calc(var(--spacing-8) * 2);
+    padding: var(--space-5) var(--space-8); /* 20px/32px */
   }
 }
