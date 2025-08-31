@@ -194,46 +194,47 @@ body {
 }
 
 /* ========================================= */
-/* TRIP TYPE SEGMENTED CONTROL - TAILWIND TOKEN-BASED */
+/* TRIP TYPE SEGMENTED CONTROL - APPLE STYLE */
 /* ========================================= */
 
 .trip-segmented-control {
   display: flex;
-  background-color: #F8F9FA; /* Light surface for contrast */
-  border-radius: var(--radius-card); /* Tailwind token */
-  padding: 4px;
-  margin-bottom: var(--spacing-5);
+  background-color: var(--color-surface);
+  border-radius: var(--radius); /* 12px */
+  padding: var(--space-1); /* 4px - tight Apple style */
+  margin-bottom: var(--space-6); /* 24px - 8px rhythm */
   border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-xs); /* Subtle inset feel */
 }
 
 .segment-option {
   flex: 1;
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: var(--space-3) var(--space-4); /* 12px/16px */
   border: none;
   background: transparent;
-  color: var(--color-text-muted);
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-regular);
-  border-radius: calc(var(--radius-button) - 4px); /* Inner radius */
+  color: var(--color-text-secondary);
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  border-radius: calc(var(--radius) - 4px); /* Inner radius */
   cursor: pointer;
-  transition: all var(--duration-fast) var(--timing-fast); /* Tailwind tokens */
+  transition: all var(--transition-base); /* 200ms Apple easing */
   text-align: center;
-  min-height: var(--tap-target-min);
+  min-height: var(--tap-target);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .segment-option.active {
-  background-color: var(--color-surface);
-  color: var(--color-text-strong);
-  font-weight: var(--font-weight-medium);
-  box-shadow: var(--shadow-input); /* Tailwind token */
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold); /* Bold Apple style */
+  box-shadow: var(--shadow-sm); /* Elevated feel */
 }
 
 .segment-option:hover:not(.active) {
-  background-color: rgba(91, 155, 255, 0.08);
+  background-color: rgba(0, 122, 255, 0.04);
   color: var(--color-primary);
 }
 
