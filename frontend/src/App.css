@@ -519,71 +519,93 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 /* ========================================= */
-/* ENFORCED HORIZONTAL LAYOUT - MAKEMYTRIP STYLE */
+/* HORIZONTAL LAYOUT FIX - MAKEMYTRIP STYLE */
 /* ========================================= */
 
 .route-section-enhanced {
   margin-bottom: var(--space-4);
 }
 
-/* FORCE HORIZONTAL: flex flex-row items-end gap-3 flex-nowrap overflow-x-auto */
+/* FORCE HORIZONTAL LAYOUT - Override all block behavior */
 .route-fields-horizontal-enforced {
   display: flex !important;
   flex-direction: row !important;
-  align-items: flex-end !important;
-  gap: var(--space-3) !important;
+  align-items: flex-start !important; /* Changed to flex-start for better alignment */
+  gap: var(--space-2) !important; /* Reduced gap for tighter layout */
   flex-wrap: nowrap !important;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
   width: 100%;
 }
 
-/* From: basis-[45%] min-w-[200px] */
-.route-field-from {
-  flex-basis: 45% !important;
-  min-width: 200px !important;
-  scroll-snap-align: start;
-  flex-shrink: 0 !important;
+/* Route field containers - Force flex behavior */
+.route-field-from,
+.route-field-to {
+  flex: 1 !important; /* Equal flex distribution */
+  min-width: 140px !important; /* Reduced for mobile fit */
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.route-field-from .enhanced-airport-field {
-  margin-bottom: 0 !important; /* Force inline */
-  width: 100%;
+/* Enhanced airport fields - Force inline behavior */
+.route-field-from .enhanced-airport-field,
+.route-field-to .enhanced-airport-field {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  display: block !important;
 }
 
-/* Swap: basis-10 shrink-0 */
+/* Swap container - Centered between fields */
 .swap-container {
-  flex-basis: 40px !important;
-  flex-shrink: 0 !important;
-  scroll-snap-align: start;
+  flex: 0 0 40px !important; /* Fixed width, no grow/shrink */
   display: flex !important;
   align-items: flex-end !important;
+  justify-content: center !important;
+  margin-top: var(--space-5) !important; /* Align with field content */
+}
+
+/* Swap button - Compact for horizontal layout */
+.swap-button-final {
+  width: 32px !important; /* Smaller for tighter layout */
+  height: 32px !important;
+  border-radius: 50%;
+  background-color: #F5F5F5;
+  border: none;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text-primary);
 }
 
-/* To: basis-[45%] min-w-[200px] */
-.route-field-to {
-  flex-basis: 45% !important;
-  min-width: 200px !important;
-  scroll-snap-align: start;
-  flex-shrink: 0 !important;
+.swap-button-final:hover:not(:disabled) {
+  background-color: #E5E5E5;
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
 }
 
-.route-field-to .enhanced-airport-field {
-  margin-bottom: 0 !important; /* Force inline */
-  width: 100%;
+.swap-button-final:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #F5F5F5;
 }
 
-/* Enhanced Airport Fields - Force inline behavior */
-.enhanced-airport-field {
-  margin-bottom: var(--space-3);
-  width: 100%;
+/* Remove any inherited margins that could cause stacking */
+.route-fields-horizontal-enforced * {
+  box-sizing: border-box !important;
 }
 
-/* When inside horizontal container, remove margins */
+.route-fields-horizontal-enforced .input-field,
 .route-fields-horizontal-enforced .enhanced-airport-field {
   margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
 
 /* Swap Button - h-10 w-10 rounded-full bg-neutral-100 hover:bg-neutral-200 shadow-sm */
