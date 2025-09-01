@@ -1089,9 +1089,22 @@ const FlightSearchForm = () => {
       {/* Enhanced Route Selection - TRUE HORIZONTAL LAYOUT */}
       <div className="route-section-enhanced">
         <div className="route-row-container">
-          <div className="route-fields-row">
-            {/* FROM Field - No duplicate label */}
-            <div className="from-field-inline">
+          <div 
+            className="route-fields-row"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 40px 1fr',
+              gap: '8px',
+              alignItems: 'end',
+              width: '100%',
+              gridTemplateAreas: '"from swap to"'
+            }}
+          >
+            {/* FROM Field */}
+            <div 
+              className="from-field-inline"
+              style={{ gridArea: 'from', margin: 0 }}
+            >
               <EnhancedAirportSelector
                 value={departure?.city || ''}
                 selectedAirport={departure}
@@ -1103,13 +1116,37 @@ const FlightSearchForm = () => {
               />
             </div>
             
-            {/* SWAP Button - Polished and aligned */}
-            <div className="swap-inline">
+            {/* SWAP Button */}
+            <div 
+              className="swap-inline"
+              style={{ 
+                gridArea: 'swap', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                paddingBottom: '4px'
+              }}
+            >
               <button
                 type="button"
                 onClick={handleSwap}
                 disabled={!departure || !destination}
-                className="swap-button-polished"
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                  color: 'white',
+                  border: 'none',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s ease'
+                }}
                 aria-label="Swap From and To"
                 title="Swap origin and destination"
               >
@@ -1117,8 +1154,11 @@ const FlightSearchForm = () => {
               </button>
             </div>
             
-            {/* TO Field - No duplicate label */}
-            <div className="to-field-inline">
+            {/* TO Field */}
+            <div 
+              className="to-field-inline"
+              style={{ gridArea: 'to', margin: 0 }}
+            >
               <EnhancedAirportSelector
                 value={destination?.city || ''}
                 selectedAirport={destination}
