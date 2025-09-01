@@ -1086,48 +1086,51 @@ const FlightSearchForm = () => {
         ))}
       </div>
 
-      {/* Enhanced Route Selection - ENFORCED HORIZONTAL LAYOUT */}
+      {/* Enhanced Route Selection - TRUE HORIZONTAL LAYOUT */}
       <div className="route-section-enhanced">
-        {/* Container: flex flex-row items-end gap-3 md:gap-4 flex-nowrap overflow-x-auto snap-x snap-mandatory */}
-        <div className="route-fields-horizontal-enforced">
-          {/* From: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */}
-          <div className="route-field-from">
-            <EnhancedAirportSelector
-              value={departure?.city || ''}
-              selectedAirport={departure}
-              onSelect={handleDepartureSelect}
-              label="FROM"
-              placeholder="Departure city"
-              highlight={getFieldHighlight('departure')}
-              onFocus={() => setCurrentField('departure')}
-            />
-          </div>
-          
-          {/* Swap: basis-10 shrink-0 snap-start */}
-          <div className="swap-container">
-            <button
-              type="button"
-              onClick={handleSwap}
-              disabled={!departure || !destination}
-              className="swap-button-final"
-              aria-label="Swap From and To"
-              title="Swap origin and destination"
-            >
-              ⇄
-            </button>
-          </div>
-          
-          {/* To: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */}
-          <div className="route-field-to">
-            <EnhancedAirportSelector
-              value={destination?.city || ''}
-              selectedAirport={destination}
-              onSelect={handleDestinationSelect}
-              label="TO"
-              placeholder="Destination city"
-              highlight={getFieldHighlight('destination')}
-              onFocus={() => setCurrentField('destination')}
-            />
+        <div className="route-row-container">
+          <div className="route-fields-row">
+            {/* FROM Field - Inline */}
+            <div className="from-field-inline">
+              <label className="input-label">FROM</label>
+              <EnhancedAirportSelector
+                value={departure?.city || ''}
+                selectedAirport={departure}
+                onSelect={handleDepartureSelect}
+                label="FROM"
+                placeholder="Departure city"
+                highlight={getFieldHighlight('departure')}
+                onFocus={() => setCurrentField('departure')}
+              />
+            </div>
+            
+            {/* SWAP Button - Centered */}
+            <div className="swap-inline">
+              <button
+                type="button"
+                onClick={handleSwap}
+                disabled={!departure || !destination}
+                className="swap-button-final"
+                aria-label="Swap From and To"
+                title="Swap origin and destination"
+              >
+                ⇄
+              </button>
+            </div>
+            
+            {/* TO Field - Inline */}
+            <div className="to-field-inline">
+              <label className="input-label">TO</label>
+              <EnhancedAirportSelector
+                value={destination?.city || ''}
+                selectedAirport={destination}
+                onSelect={handleDestinationSelect}
+                label="TO"
+                placeholder="Destination city"
+                highlight={getFieldHighlight('destination')}
+                onFocus={() => setCurrentField('destination')}
+              />
+            </div>
           </div>
         </div>
       </div>
