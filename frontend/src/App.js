@@ -464,15 +464,19 @@ const EnhancedAirportSelector = ({
     setActiveIndex(-1);
   };
 
-  // Helper function to shorten airport names
+  // Helper function to shorten airport names - MakeMyTrip style
   const shortenAirportName = (name) => {
+    // Aggressive truncation for delicate design
     return name
       .replace('International Airport', 'Intl')
       .replace('International', 'Intl')
       .replace('Airport', '')
-      .replace('Chhatrapati Shivaji Maharaj', 'Chhatrapati Shivaji')
-      .replace('Indira Gandhi', 'Indira Gandhi')
+      .replace('Chhatrapati Shivaji Maharaj', 'CSM')
+      .replace('Indira Gandhi', 'IGI')
       .replace('Kempegowda', 'Kempegowda')
+      .replace('Rajiv Gandhi', 'RGI')
+      .replace('Sardar Vallabhbhai Patel', 'SVP')
+      .substring(0, 20) // Truncate to 20 chars max
       .trim();
   };
 
