@@ -971,16 +971,16 @@ const FlightSearchForm = () => {
         </div>
       </div>
 
-      {/* Travellers Selection */}
-      <div className="input-field">
+      {/* Compact Travellers Selection */}
+      <div className="traveller-field-compact">
         <label className="input-label">TRAVELLERS & CLASS</label>
         <button
           type="button"
           onClick={() => setShowTravellers(true)}
-          className={`input-box traveller-selector ${getFieldHighlight('travellers') ? 'input-highlight' : ''}`}
+          className={`traveller-input-compact ${getFieldHighlight('travellers') ? 'input-highlight' : ''}`}
         >
-          <span className="input-value">
-            {getTotalTravellers()} Traveller{getTotalTravellers() > 1 ? 's' : ''}, {travelClass}
+          <span className="traveller-value">
+            {getDisplayText()}
           </span>
           <span className="dropdown-icon">▼</span>
         </button>
