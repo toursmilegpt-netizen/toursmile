@@ -1372,10 +1372,10 @@ const FlightSearchForm = () => {
     setCurrentField('departure');
     
     // Announce for screen readers
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance('All search fields cleared');
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.SpeechSynthesisUtterance) {
+      const utterance = new window.SpeechSynthesisUtterance('All search fields cleared');
       utterance.volume = 0;
-      speechSynthesis.speak(utterance);
+      window.speechSynthesis.speak(utterance);
     }
   };
 
