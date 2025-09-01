@@ -1017,8 +1017,8 @@ const FlightSearchForm = () => {
         onClose={() => setShowTravellers(false)}
       />
 
-      {/* Sticky CTA - Orange Gradient */}
-      <div className="sticky-cta">
+      {/* Sticky CTA - Fixed positioning for mobile */}
+      <div className="sticky-cta" style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 100 }}>
         <button
           type="button"
           onClick={handleSearch}
