@@ -951,7 +951,7 @@ const TravellersBottomSheet = ({
   );
 };
 
-// Main Flight Search Form - EXACT Figma Layout
+// Enhanced Flight Search Form - COMPREHENSIVE UX CONSOLIDATION
 const FlightSearchForm = () => {
   // Form state
   const [tripType, setTripType] = useState('round-trip');
@@ -959,7 +959,6 @@ const FlightSearchForm = () => {
   const [destination, setDestination] = useState(null);
   const [departureDate, setDepartureDate] = useState(null);
   const [returnDate, setReturnDate] = useState(null);
-  // Interactivity Handoff.txt: Default: 1 adult, 0 child, 0 infant
   const [travellers, setTravellers] = useState({
     adults: 1,
     children: 0,
@@ -974,6 +973,7 @@ const FlightSearchForm = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [calendarType, setCalendarType] = useState('departure');
   const [showTravellers, setShowTravellers] = useState(false);
+  const [isSwapping, setIsSwapping] = useState(false);
 
   // Guidance effects - highlight next field
   const getFieldHighlight = (fieldName) => {
@@ -993,14 +993,10 @@ const FlightSearchForm = () => {
   const handleDepartureDateSelect = (date) => {
     setDepartureDate(date);
     
-    // Interactivity Handoff.txt: "On selecting departure date → auto-advance to return"
     if (tripType === 'round-trip') {
-      // Auto-advance to return within same overlay
       setCalendarType('return');
       setCurrentField('return');
-      // Keep calendar open for return date selection
     } else {
-      // One-way: close overlay and advance to travellers
       setShowCalendar(false);
       setCurrentField('travellers');
     }
@@ -1008,15 +1004,55 @@ const FlightSearchForm = () => {
 
   const handleReturnDateSelect = (date) => {
     setReturnDate(date);
-    // Interactivity Handoff.txt: "Overlay closes after return date chosen"
     setShowCalendar(false);
     setCurrentField('travellers');
   };
 
+  // Enhanced Swap Functionality with Animation
   const handleSwap = () => {
-    const temp = departure;
-    setDeparture(destination);
-    setDestination(temp);
+    if (!departure || !destination) {
+      return; // Safe guard - ignore if either field empty
+    }
+
+    setIsSwapping(true);
+    
+    // Announce for screen readers
+    const announcement = `Swapped origin and destination. From ${destination.city} to ${departure.city}`;
+    
+    // Swap with 300ms animation
+    setTimeout(() => {
+      const temp = departure;
+      setDeparture(destination);
+      setDestination(temp);
+      setIsSwapping(false);
+      
+      // Announce swap completion
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(announcement);
+        utterance.volume = 0; // Silent for privacy, but triggers screen reader
+        speechSynthesis.speak(utterance);
+      }
+    }, 150); // Half of 300ms for smooth transition
+  };
+
+  // Clear All Functionality
+  const handleClearAll = () => {
+    setDeparture(null);
+    setDestination(null);
+    setDepartureDate(null);
+    setReturnDate(null);
+    setTravellers({ adults: 1, children: 0, infants: 0 });
+    setTravelClass('Economy');
+    setDirectFlights(false);
+    setFlexibleDates(false);
+    setCurrentField('departure');
+    
+    // Announce for screen readers
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance('All search fields cleared');
+      utterance.volume = 0;
+      speechSynthesis.speak(utterance);
+    }
   };
 
   const handleSearch = () => {
@@ -1042,7 +1078,7 @@ const FlightSearchForm = () => {
 
   return (
     <div className="search-form">
-      {/* Trip Type Segmented Control - EXACT Figma */}
+      {/* Trip Type Segmented Control */}
       <div className="trip-segmented-control">
         {['round-trip', 'one-way', 'multi-city'].map((type) => (
           <button
@@ -1056,35 +1092,56 @@ const FlightSearchForm = () => {
         ))}
       </div>
 
-      {/* Route Selection */}
-      <div className="route-section">
-        <div className="route-fields">
-          <AirportAutocomplete
-            value={departure?.city || ''}
-            onChange={handleDepartureSelect}
-            label="FROM"
-            placeholder="Delhi"
-            highlight={getFieldHighlight('departure')}
-            onFocus={() => setCurrentField('departure')}
-          />
+      {/* Enhanced Route Selection with Swap */}
+      <div className="route-section-enhanced">
+        <div className="route-fields-enhanced">
+          <div className={`route-field-container ${isSwapping ? 'swapping' : ''}`}>
+            <EnhancedAirportSelector
+              value={departure?.city || ''}
+              selectedAirport={departure}
+              onSelect={handleDepartureSelect}
+              label="FROM"
+              placeholder="Departure city"
+              highlight={getFieldHighlight('departure')}
+              onFocus={() => setCurrentField('departure')}
+            />
+          </div>
           
+          {/* Enhanced Swap Button */}
           <button
             type="button"
             onClick={handleSwap}
-            className="swap-button"
-            disabled={!departure && !destination}
+            disabled={!departure || !destination}
+            className="swap-button-enhanced"
+            aria-label="Swap From and To"
+            title="Swap origin and destination"
           >
             ⇄
           </button>
           
-          <AirportAutocomplete
-            value={destination?.city || ''}
-            onChange={handleDestinationSelect}
-            label="TO"
-            placeholder="Mumbai"
-            highlight={getFieldHighlight('destination')}
-            onFocus={() => setCurrentField('destination')}
-          />
+          <div className={`route-field-container ${isSwapping ? 'swapping' : ''}`}>
+            <EnhancedAirportSelector
+              value={destination?.city || ''}
+              selectedAirport={destination}
+              onSelect={handleDestinationSelect}
+              label="TO"
+              placeholder="Destination city"
+              highlight={getFieldHighlight('destination')}
+              onFocus={() => setCurrentField('destination')}
+            />
+          </div>
+        </div>
+
+        {/* Clear All Action */}
+        <div className="form-actions">
+          <button
+            type="button"
+            onClick={handleClearAll}
+            className="clear-all-btn"
+            aria-label="Clear all search fields"
+          >
+            Clear All
+          </button>
         </div>
       </div>
 
@@ -1172,7 +1229,7 @@ const FlightSearchForm = () => {
         </button>
       </div>
 
-      {/* Options Row - EXACT Figma Position */}
+      {/* Options Row */}
       <div className="options-row">
         <label className="option-checkbox">
           <input
