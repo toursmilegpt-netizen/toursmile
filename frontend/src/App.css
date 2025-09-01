@@ -1,103 +1,101 @@
-/* TOURSMILE FLIGHT SEARCH - OPTIMAL MOBILE & DESKTOP UX */
-/* Expert-driven design decisions for travel booking conversion */
-/* Mobile-first with strategic desktop enhancements */
+/* TOURSMILE FLIGHT SEARCH - COMPACT & DELICATE DESIGN */
+/* Minimal spacing, light typography, optimal mobile & desktop UX */
+/* Responsive breakpoints: 390px, 768px, 1024px, 1440px */
 
 /* ========================================= */
-/* OPTIMIZED DESIGN SYSTEM - TRAVEL FOCUSED */
+/* DELICATE DESIGN SYSTEM - TRAVEL FOCUSED */
 /* ========================================= */
 
 :root {
-  /* TRAVEL INDUSTRY OPTIMIZED COLORS */
-  --color-primary: #2563EB;        /* Trust blue - airline industry standard */
-  --color-primary-hover: #1D4ED8;  /* Darker blue for interactions */
-  --color-accent: #F59E0B;         /* Attention orange - booking CTAs */
-  --color-accent-hover: #D97706;   /* Darker orange for hover */
-  --color-success: #10B981;        /* Success green - confirmations */
-  --color-error: #EF4444;          /* Error red - validation */
+  /* TRUST-BUILDING COLORS - AIRLINE INDUSTRY */
+  --color-primary: #2563EB;        /* Trust blue */
+  --color-primary-hover: #1D4ED8;  /* Darker blue */
+  --color-accent: #F59E0B;         /* Conversion orange */
+  --color-accent-hover: #D97706;   /* Darker orange */
+  --color-success: #10B981;        /* Success green */
+  --color-error: #EF4444;          /* Error red */
   --color-warning: #F59E0B;        /* Warning amber */
   
-  /* OPTIMIZED TEXT HIERARCHY */
-  --color-text-primary: #111827;   /* High contrast for readability */
-  --color-text-secondary: #6B7280; /* Secondary info */
-  --color-text-tertiary: #9CA3AF;  /* Subtle text */
-  --color-text-inverse: #FFFFFF;   /* White text on dark backgrounds */
+  /* DELICATE TEXT HIERARCHY */
+  --color-text-primary: #1F2937;   /* Softer black */
+  --color-text-secondary: #6B7280; /* Medium gray */
+  --color-text-tertiary: #9CA3AF;  /* Light gray */
+  --color-text-inverse: #FFFFFF;   /* White text */
   
-  /* SURFACE COLORS - TRAVEL UI OPTIMIZED */
+  /* CLEAN SURFACE COLORS */
   --color-background: #FFFFFF;     /* Pure white */
-  --color-surface: #F9FAFB;        /* Light surface */
-  --color-surface-elevated: #FFFFFF; /* Elevated cards */
-  --color-border: #E5E7EB;         /* Subtle borders */
+  --color-surface: #FAFBFC;        /* Subtle surface */
+  --color-surface-elevated: #FFFFFF; /* Cards */
+  --color-border: #E5E7EB;         /* Delicate borders */
   --color-divider: #F3F4F6;       /* Section dividers */
-  --color-overlay: rgba(17, 24, 39, 0.75); /* Dark overlay for modals */
+  --color-overlay: rgba(17, 24, 39, 0.6); /* Modal overlay */
   
-  /* TYPOGRAPHY - MOBILE-OPTIMIZED HIERARCHY */
-  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
-  --font-family-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  /* DELICATE TYPOGRAPHY */
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+  --font-family-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
   
-  /* FONT WEIGHTS - CLEAR HIERARCHY */
+  /* LIGHT FONT WEIGHTS - DELICATE */
   --font-weight-light: 300;
   --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  --font-weight-medium: 500;      /* Primary weight */
+  --font-weight-semibold: 600;    /* Emphasis only */
+  --font-weight-bold: 700;        /* Rare use */
   
-  /* MOBILE-FIRST FONT SCALE */
-  --text-xs: 11px;     /* Labels, captions */
-  --text-sm: 13px;     /* Secondary text */
-  --text-base: 15px;   /* Body text, inputs */
-  --text-lg: 17px;     /* Emphasized text */
-  --text-xl: 20px;     /* Section headers */
-  --text-2xl: 24px;    /* Page titles */
-  --text-3xl: 28px;    /* Hero titles (desktop) */
+  /* COMPACT FONT SCALE */
+  --text-xs: 11px;     /* Labels */
+  --text-sm: 13px;     /* Secondary */
+  --text-base: 15px;   /* Body */
+  --text-lg: 17px;     /* Emphasis */
+  --text-xl: 19px;     /* Headings */
+  --text-2xl: 22px;    /* Titles */
+  --text-3xl: 26px;    /* Hero (desktop) */
   
-  /* MOBILE-OPTIMIZED SPACING (8px rhythm) */
-  --space-1: 4px;      /* Micro spacing */
-  --space-2: 8px;      /* Tight spacing */
-  --space-3: 12px;     /* Compact spacing */
-  --space-4: 16px;     /* Standard spacing */
-  --space-5: 20px;     /* Comfortable spacing */
-  --space-6: 24px;     /* Generous spacing */
-  --space-8: 32px;     /* Section spacing */
-  --space-10: 40px;    /* Large spacing */
-  --space-12: 48px;    /* Extra large */
-  --space-16: 64px;    /* Desktop sections */
+  /* MINIMAL SPACING - COMPACT DESIGN */
+  --space-1: 2px;      /* Micro */
+  --space-2: 4px;      /* Tight */
+  --space-3: 8px;      /* Small */
+  --space-4: 12px;     /* Standard */
+  --space-5: 16px;     /* Medium */
+  --space-6: 20px;     /* Large */
+  --space-8: 24px;     /* Section */
+  --space-10: 32px;    /* Major */
+  --space-12: 40px;    /* Extra */
+  --space-16: 48px;    /* Desktop */
   
-  /* RADIUS - MODERN & FRIENDLY */
-  --radius-sm: 6px;    /* Small elements */
-  --radius: 8px;       /* Standard radius */
-  --radius-md: 12px;   /* Cards, buttons */
-  --radius-lg: 16px;   /* Large cards */
-  --radius-xl: 24px;   /* Modals */
-  --radius-full: 50%;  /* Circular buttons */
+  /* SUBTLE RADIUS */
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 50%;
   
-  /* SHADOWS - TRAVEL UI OPTIMIZED */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
-  --shadow-focus: 0 0 0 3px rgba(37, 99, 235, 0.1); /* Focus ring */
-  --shadow-error: 0 0 0 3px rgba(239, 68, 68, 0.1);  /* Error ring */
+  /* DELICATE SHADOWS */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 8px 20px rgba(0, 0, 0, 0.12);
+  --shadow-focus: 0 0 0 2px rgba(37, 99, 235, 0.12);
+  --shadow-error: 0 0 0 2px rgba(239, 68, 68, 0.12);
   
-  /* ANIMATIONS - SMOOTH & RESPONSIVE */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* SMOOTH ANIMATIONS */
+  --transition-fast: 150ms ease-out;
+  --transition-base: 200ms ease-out;
+  --transition-slow: 300ms ease-out;
   
-  /* MOBILE-OPTIMIZED BREAKPOINTS */
-  --breakpoint-xs: 390px;   /* iPhone 12/13/14 */
-  --breakpoint-sm: 768px;   /* iPad portrait */
-  --breakpoint-md: 1024px;  /* iPad landscape / small laptop */
-  --breakpoint-lg: 1440px;  /* Desktop / laptop */
-  --breakpoint-xl: 1920px;  /* Large desktop */
+  /* RESPONSIVE BREAKPOINTS */
+  --breakpoint-xs: 390px;   /* iPhone */
+  --breakpoint-sm: 768px;   /* iPad */
+  --breakpoint-md: 1024px;  /* Small laptop */
+  --breakpoint-lg: 1440px;  /* Desktop */
+  --breakpoint-xl: 1920px;  /* Large */
   
-  /* INTERACTION OPTIMIZATIONS */
-  --tap-target-min: 44px;   /* iOS/Android standard */
-  --tap-target-comfortable: 48px; /* Preferred mobile size */
-  --scale-press: 0.96;      /* Press feedback */
-  --opacity-disabled: 0.4;  /* Disabled state */
-  --opacity-loading: 0.7;   /* Loading state */
+  /* INTERACTION */
+  --tap-target-min: 44px;
+  --tap-target-comfortable: 48px;
+  --scale-press: 0.98;
+  --opacity-disabled: 0.5;
 }
 
 /* ========================================= */
