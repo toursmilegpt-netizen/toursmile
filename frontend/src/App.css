@@ -101,7 +101,7 @@
 }
 
 /* ========================================= */
-/* APPLE BASE STYLES - MINIMAL & CLEAN */
+/* OPTIMAL BASE STYLES - TRAVEL BOOKING UX */
 /* ========================================= */
 
 * {
@@ -111,63 +111,73 @@
 }
 
 body {
-  font-family: var(--font-secondary);
+  font-family: var(--font-family);
   background-color: var(--color-background);
   color: var(--color-text-primary);
   font-size: var(--text-base);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .App {
   min-height: 100vh;
   background-color: var(--color-background);
-  max-width: var(--breakpoint-xs); /* 390px mobile-first */
+  max-width: var(--breakpoint-xs);
   margin: 0 auto;
   position: relative;
 }
 
 /* ========================================= */
-/* APPLE HEADER - MINIMAL & REFINED */
+/* MOBILE-OPTIMIZED HEADER */
 /* ========================================= */
 
 .app-header {
-  background-color: var(--color-background);
-  padding: var(--space-4) var(--space-4) var(--space-3) var(--space-4); /* 8px rhythm */
-  border-bottom: 1px solid var(--color-divider);
+  background-color: var(--color-surface-elevated);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3); /* 12px - compact */
+  gap: var(--space-3);
 }
 
 .logo-centered {
-  height: 24px; /* Minimal Apple-style */
+  height: 28px;
   width: auto;
   object-fit: contain;
 }
 
 .nav-chips {
   display: flex;
-  gap: var(--space-2); /* 8px rhythm */
+  gap: var(--space-2);
+  background-color: var(--color-surface);
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
 }
 
 .nav-chip {
-  padding: var(--space-2) var(--space-4); /* 8px/16px */
-  border-radius: var(--radius); /* 12px */
-  font-family: var(--font-secondary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius);
+  font-family: var(--font-family);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
-  background-color: var(--color-surface);
+  background-color: transparent;
   cursor: pointer;
-  transition: all var(--transition-base); /* 200ms Apple easing */
-  border: 1px solid var(--color-border);
-  min-height: var(--tap-target);
+  transition: all var(--transition-base);
+  border: none;
+  min-height: var(--tap-target-min);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,19 +186,18 @@ body {
 
 .nav-chip.active {
   background-color: var(--color-primary);
-  color: var(--color-background);
-  border-color: var(--color-primary);
+  color: var(--color-text-inverse);
   box-shadow: var(--shadow-sm);
 }
 
 .nav-chip:hover:not(.active) {
-  background-color: rgba(0, 122, 255, 0.06);
-  border-color: var(--color-primary);
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--color-primary);
   transform: translateY(-1px);
 }
 
 .nav-chip:active {
-  transform: scale(var(--scale-pressed));
+  transform: scale(var(--scale-press));
 }
 
 /* ========================================= */
