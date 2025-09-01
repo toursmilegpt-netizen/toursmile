@@ -2051,20 +2051,7 @@ body {
   border-radius: var(--radius);
   padding: var(--space-1);
   border: 1px solid var(--color-border);
-  /* Mobile route fields - Stack vertically with gap-2 */
-  .route-fields-enhanced {
-    grid-template-columns: 1fr; /* Stack From/To vertically */
-    gap: var(--space-2); /* gap-2 mobile */
-  }
-  
-  /* Swap centered between fields - my-1 */
-  .swap-button-enhanced {
-    order: 1;
-    justify-self: center;
-    margin: var(--space-1) 0; /* my-1 */
-  }
-  
-  /* Mobile dropdown - larger tap targets */
+  /* Mobile dropdown - larger tap targets for enhanced fields */
   .dropdown-item-enhanced {
     min-height: 44px; /* Ensure ≥44px tap targets */
     padding: var(--space-3) var(--space-4); /* Larger padding for touch */
