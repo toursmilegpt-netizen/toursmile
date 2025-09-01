@@ -275,23 +275,22 @@ body {
 }
 
 /* ========================================= */
-/* INPUT FIELDS - APPLE MINIMAL DESIGN */
+/* INPUT FIELDS - TRAVEL BOOKING OPTIMIZED */
 /* ========================================= */
 
 .input-field {
-  margin-bottom: var(--space-4); /* 16px - 8px rhythm */
+  margin-bottom: var(--space-5);
 }
 
-/* Apple Light Labels */
 .input-label {
   display: block;
-  font-family: var(--font-secondary);
-  font-size: var(--text-xs); /* 11px */
-  font-weight: var(--font-weight-light); /* Light labels - Apple style */
+  font-family: var(--font-family);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: var(--space-2); /* 8px compact */
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
 }
 
 .input-container {
@@ -300,33 +299,35 @@ body {
 
 .input-box {
   width: 100%;
-  padding: var(--space-4) var(--space-4); /* 16px - generous touch target */
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius); /* 12px */
-  font-family: var(--font-secondary);
-  font-size: var(--text-base); /* 15px */
+  padding: var(--space-4);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
-  background-color: var(--color-background);
-  transition: all var(--transition-base); /* 200ms Apple easing */
-  min-height: var(--tap-target);
+  background-color: var(--color-surface-elevated);
+  transition: all var(--transition-base);
+  min-height: var(--tap-target-comfortable);
   display: flex;
   align-items: center;
   cursor: pointer;
   outline: none;
-  box-shadow: var(--shadow-xs); /* Subtle Apple shadow */
+  box-shadow: var(--shadow-xs);
 }
 
-/* Apple Focus Glow */
+/* Enhanced focus for travel forms */
 .input-box:focus {
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-focus); /* Apple blue focus glow */
+  box-shadow: var(--shadow-focus);
+  background-color: var(--color-background);
   outline: none;
 }
 
-.input-box:hover {
-  border-color: var(--color-primary);
+.input-box:hover:not(:focus) {
+  border-color: var(--color-primary-hover);
   box-shadow: var(--shadow-sm);
+  background-color: var(--color-background);
 }
 
 .input-value {
@@ -337,32 +338,32 @@ body {
   line-height: 1.4;
 }
 
-/* Apple Guidance Effects */
+/* Smart guidance for booking flow */
 .input-highlight {
   border-color: var(--color-primary) !important;
   box-shadow: var(--shadow-focus) !important;
-  animation: apple-guidance 2s ease-in-out infinite;
+  animation: booking-guidance 2s ease-in-out infinite;
 }
 
-@keyframes apple-guidance {
+@keyframes booking-guidance {
   0%, 100% { 
     box-shadow: var(--shadow-focus);
   }
   50% { 
-    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.25);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
   }
 }
 
 .input-error {
   border-color: var(--color-error) !important;
-  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.15) !important;
+  box-shadow: var(--shadow-error) !important;
 }
 
 .dropdown-icon {
   color: var(--color-text-secondary);
   font-size: var(--text-sm);
   margin-left: var(--space-2);
-  transition: transform var(--transition-base);
+  transition: all var(--transition-base);
 }
 
 .input-box:focus .dropdown-icon {
