@@ -436,47 +436,49 @@ body {
 }
 
 /* ========================================= */
-/* ROUTE & DATE SECTIONS - APPLE MINIMAL */
+/* ROUTE SECTION - MOBILE THUMB-FRIENDLY */
 /* ========================================= */
 
 .route-section {
-  margin-bottom: var(--space-6); /* 24px - 8px rhythm */
+  margin-bottom: var(--space-6);
 }
 
 .route-fields {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: var(--space-3); /* 12px */
-  align-items: end;
+  gap: var(--space-3);
+  align-items: center;
 }
 
-/* Apple Orange Swap Button */
+/* Prominent swap button for easy thumb access */
 .swap-button {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8C00 100%);
-  color: var(--color-background);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: var(--color-text-inverse);
   border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  border-radius: var(--radius-full);
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: var(--font-weight-semibold);
-  transition: all var(--transition-base); /* 200ms Apple */
-  box-shadow: var(--shadow-sm);
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+  position: relative;
 }
 
 .swap-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #FF8C00 0%, #FF7A00 100%);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-base);
+  background: linear-gradient(135deg, var(--color-accent-hover) 0%, #B45309 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-lg);
 }
 
 .swap-button:active:not(:disabled) {
-  transform: scale(var(--scale-pressed));
-  box-shadow: var(--shadow-sm);
+  transform: scale(var(--scale-press));
+  box-shadow: var(--shadow-md);
 }
 
 .swap-button:disabled {
@@ -485,16 +487,16 @@ body {
   cursor: not-allowed;
   opacity: var(--opacity-disabled);
   transform: none;
-  box-shadow: none;
+  box-shadow: var(--shadow-xs);
 }
 
 .date-section {
-  margin-bottom: var(--space-6); /* 24px */
+  margin-bottom: var(--space-6);
 }
 
 .date-fields {
   display: grid;
-  gap: var(--space-3); /* 12px */
+  gap: var(--space-3);
 }
 
 .date-fields.one-date {
