@@ -580,7 +580,7 @@ body {
 }
 
 /* ========================================= */
-/* APPLE CTA BUTTON - STICKY MOBILE, INLINE DESKTOP */
+/* CTA BUTTON - CONVERSION OPTIMIZED */
 /* ========================================= */
 
 .sticky-cta {
@@ -589,51 +589,52 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: var(--breakpoint-xs); /* 390px */
-  background-color: var(--color-background);
-  padding: var(--space-4); /* 16px */
-  border-top: 1px solid var(--color-divider);
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08); /* Apple elevated shadow */
+  max-width: var(--breakpoint-xs);
+  background: linear-gradient(to top, var(--color-background), rgba(255, 255, 255, 0.95));
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.1);
   z-index: 100;
-  backdrop-filter: blur(20px); /* Apple glass effect */
+  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
 .cta-button {
   width: 100%;
-  padding: var(--space-4) var(--space-6); /* 16px/24px */
+  padding: var(--space-4) var(--space-6);
   border: none;
-  border-radius: var(--radius); /* 12px */
-  font-family: var(--font-primary);
-  font-size: var(--text-base);
-  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-display);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition: all var(--transition-base); /* 200ms Apple easing */
-  min-height: var(--tap-target);
+  transition: all var(--transition-base);
+  min-height: 56px; /* Larger for conversion */
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  letter-spacing: -0.01em;
 }
 
-/* Apple Orange Gradient */
+/* High-conversion CTA styling */
 .cta-button.enabled {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8C00 100%);
-  color: var(--color-background);
-  box-shadow: var(--shadow-base);
-  border: 1px solid rgba(255, 149, 0, 0.2);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 .cta-button.enabled:hover {
-  background: linear-gradient(135deg, #FF8C00 0%, #FF7A00 100%);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, var(--color-accent-hover) 0%, #B45309 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
 }
 
 .cta-button.enabled:active {
-  transform: scale(var(--scale-pressed));
-  box-shadow: var(--shadow-base);
+  transform: scale(var(--scale-press));
+  box-shadow: var(--shadow-lg);
 }
 
 .cta-button.disabled {
@@ -646,31 +647,31 @@ body {
 }
 
 .cta-button.loading {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #FF8C00 100%);
-  color: var(--color-background);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: var(--color-text-inverse);
   cursor: wait;
 }
 
 .cta-button.loading::after {
   content: "";
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border: 2px solid transparent;
-  border-top: 2px solid var(--color-background);
+  border-top: 2px solid var(--color-text-inverse);
   border-radius: 50%;
-  animation: apple-spin 0.8s linear infinite;
-  margin-left: var(--space-2);
+  animation: loading-spin 0.8s linear infinite;
+  margin-left: var(--space-3);
 }
 
-@keyframes apple-spin {
+@keyframes loading-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
 .cta-text {
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: -0.2px; /* Apple tight spacing */
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
 }
 
 /* ========================================= */
