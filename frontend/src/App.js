@@ -536,13 +536,13 @@ const EnhancedAirportSelector = ({
             aria-label={`Selected airport: ${selectedAirport.city}. Click to change.`}
           >
             <div className="airport-display-content">
-              {/* City - text-base md:text-lg font-semibold leading-tight */}
-              <div className="airport-city-display">{selectedAirport.city}</div>
-              {/* Airport + IATA - Enhanced visual hierarchy */}
+              {/* City + IATA - "Mumbai (BOM)" - Bigger, prominent */}
+              <div className="airport-city-display">
+                {selectedAirport.city} ({selectedAirport.code})
+              </div>
+              {/* Shortened Airport Name - Much smaller, truncated */}
               <div className="airport-details-display">
-                <span className="airport-name">{selectedAirport.name}</span>
-                {' — '}
-                <span className="airport-iata">{selectedAirport.code}</span>
+                {shortenAirportName(selectedAirport.name)} — {selectedAirport.code}
               </div>
             </div>
             <div className="field-actions">
