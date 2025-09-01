@@ -1061,10 +1061,12 @@ const FlightSearchForm = () => {
         ))}
       </div>
 
-      {/* Enhanced Route Selection with Swap - HORIZONTAL ONLY */}
+      {/* Enhanced Route Selection - ENFORCED HORIZONTAL LAYOUT */}
       <div className="route-section-enhanced">
-        <div className="route-fields-horizontal">
-          <div className={`route-field-container ${isSwapping ? 'swapping' : ''}`}>
+        {/* Container: flex flex-row items-end gap-3 md:gap-4 flex-nowrap overflow-x-auto snap-x snap-mandatory */}
+        <div className="route-fields-horizontal-enforced">
+          {/* From: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */}
+          <div className="route-field-from">
             <EnhancedAirportSelector
               value={departure?.city || ''}
               selectedAirport={departure}
@@ -1076,19 +1078,22 @@ const FlightSearchForm = () => {
             />
           </div>
           
-          {/* Enhanced Swap Button */}
-          <button
-            type="button"
-            onClick={handleSwap}
-            disabled={!departure || !destination}
-            className="swap-button-enhanced"
-            aria-label="Swap From and To"
-            title="Swap origin and destination"
-          >
-            ⇄
-          </button>
+          {/* Swap: basis-10 shrink-0 snap-start */}
+          <div className="swap-container">
+            <button
+              type="button"
+              onClick={handleSwap}
+              disabled={!departure || !destination}
+              className="swap-button-final"
+              aria-label="Swap From and To"
+              title="Swap origin and destination"
+            >
+              ⇄
+            </button>
+          </div>
           
-          <div className={`route-field-container ${isSwapping ? 'swapping' : ''}`}>
+          {/* To: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */}
+          <div className="route-field-to">
             <EnhancedAirportSelector
               value={destination?.city || ''}
               selectedAirport={destination}
