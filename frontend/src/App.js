@@ -1079,9 +1079,9 @@ const FlightSearchForm = () => {
         ))}
       </div>
 
-      {/* Enhanced Route Selection with Swap */}
+      {/* Enhanced Route Selection with Swap - HORIZONTAL ONLY */}
       <div className="route-section-enhanced">
-        <div className="route-fields-enhanced">
+        <div className="route-fields-horizontal">
           <div className={`route-field-container ${isSwapping ? 'swapping' : ''}`}>
             <EnhancedAirportSelector
               value={departure?.city || ''}
@@ -1117,18 +1117,6 @@ const FlightSearchForm = () => {
               onFocus={() => setCurrentField('destination')}
             />
           </div>
-        </div>
-
-        {/* Clear All Action */}
-        <div className="form-actions">
-          <button
-            type="button"
-            onClick={handleClearAll}
-            className="clear-all-btn"
-            aria-label="Clear all search fields"
-          >
-            Clear All
-          </button>
         </div>
       </div>
 
