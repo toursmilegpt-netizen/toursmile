@@ -438,10 +438,10 @@ const EnhancedAirportSelector = ({
     setActiveIndex(-1);
     
     // Announce dropdown opening
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance('Dropdown opened');
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      const utterance = new window.SpeechSynthesisUtterance('Dropdown opened');
       utterance.volume = 0;
-      speechSynthesis.speak(utterance);
+      window.speechSynthesis.speak(utterance);
     }
     
     onFocus && onFocus();
