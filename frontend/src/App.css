@@ -725,20 +725,19 @@ body {
   max-height: 24px;
 }
 
-/* Airport Details - Very delicate like MakeMyTrip */
+/* Airport Details - EXACTLY like MakeMyTrip delicate style */
 .airport-details-display {
-  font-size: 6px; /* Very small - MakeMyTrip style */
-  color: #999999; /* Light gray like MakeMyTrip */
-  font-weight: 300; /* Ultra-light */
-  line-height: 1.0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-  max-height: 8px;
-  opacity: 0.7; /* Delicate visibility */
-  letter-spacing: 0.01em;
-  text-transform: none; /* Keep original case */
+  font-size: 9px !important; /* MakeMyTrip-size details */
+  color: #888888 !important; /* Light gray like MakeMyTrip */
+  font-weight: 400 !important; /* Normal weight */
+  line-height: 1.0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  width: 100% !important;
+  max-height: 10px !important;
+  opacity: 0.8 !important; /* Visible but delicate */
+  letter-spacing: 0.01em !important;
 }
 
 .field-actions {
