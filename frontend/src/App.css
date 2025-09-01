@@ -600,7 +600,7 @@ body {
   margin-bottom: var(--space-3);
 }
 
-/* Selected Airport Display - h-12 (48px) */
+/* Selected Airport Display - Button-as-Control (h-12, px-3 py-2) */
 .airport-display-enhanced {
   width: 100%;
   height: 48px; /* h-12 */
@@ -615,6 +615,7 @@ body {
   cursor: pointer;
   outline: none;
   box-shadow: var(--shadow-xs);
+  text-align: left; /* Button content left-aligned */
 }
 
 .airport-display-enhanced:hover, .airport-display-enhanced:focus {
@@ -629,8 +630,10 @@ body {
   flex-direction: column;
   gap: 2px;
   justify-content: center;
+  align-items: flex-start; /* Left align content */
 }
 
+/* Typography - Tailwind-compliant */
 /* City - text-lg font-semibold leading-tight */
 .airport-city-enhanced {
   font-size: var(--text-lg);
