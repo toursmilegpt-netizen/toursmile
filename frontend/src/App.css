@@ -1527,7 +1527,7 @@ body {
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   width: 100%;
   max-width: var(--breakpoint-xs);
-  max-height: 60vh; /* Reduced from 75vh to fit mobile better */
+  max-height: 50vh; /* Further reduced to 50vh for mobile */
   position: relative;
   z-index: 301;
   animation: sheet-slide var(--transition-slow);
