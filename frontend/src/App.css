@@ -99,7 +99,7 @@
 }
 
 /* ========================================= */
-/* OPTIMAL BASE STYLES - TRAVEL BOOKING UX */
+/* COMPACT BASE STYLES - MINIMAL SPACING */
 /* ========================================= */
 
 * {
@@ -113,10 +113,11 @@ body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
   font-size: var(--text-base);
-  line-height: 1.5;
+  font-weight: var(--font-weight-normal); /* Delicate default */
+  line-height: 1.4; /* Tighter line height */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
 .App {
