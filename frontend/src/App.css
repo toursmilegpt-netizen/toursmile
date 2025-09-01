@@ -519,50 +519,71 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 /* ========================================= */
-/* ENFORCED HORIZONTAL LAYOUT - NO STACKING */
+/* ENFORCED HORIZONTAL LAYOUT - MAKEMYTRIP STYLE */
 /* ========================================= */
 
 .route-section-enhanced {
   margin-bottom: var(--space-4);
 }
 
-/* Enforced horizontal: flex flex-row items-end gap-3 md:gap-4 flex-nowrap overflow-x-auto snap-x snap-mandatory */
+/* FORCE HORIZONTAL: flex flex-row items-end gap-3 flex-nowrap overflow-x-auto */
 .route-fields-horizontal-enforced {
   display: flex !important;
-  flex-direction: row !important; /* Force horizontal - override any column rules */
+  flex-direction: row !important;
   align-items: flex-end !important;
-  gap: var(--space-3) !important; /* gap-3 */
-  flex-wrap: nowrap !important; /* flex-nowrap */
-  overflow-x: auto; /* overflow-x-auto */
-  scroll-snap-type: x mandatory; /* snap-x snap-mandatory */
+  gap: var(--space-3) !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: var(--space-1); /* Prevent scroll cutoff */
+  width: 100%;
 }
 
-/* From: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */
+/* From: basis-[45%] min-w-[200px] */
 .route-field-from {
-  flex-basis: 45% !important; /* Force basis */
-  min-width: 200px !important; /* Reduce min-width for mobile */
+  flex-basis: 45% !important;
+  min-width: 200px !important;
   scroll-snap-align: start;
-  flex-shrink: 0;
+  flex-shrink: 0 !important;
 }
 
-/* Swap: basis-10 shrink-0 snap-start */
+.route-field-from .enhanced-airport-field {
+  margin-bottom: 0 !important; /* Force inline */
+  width: 100%;
+}
+
+/* Swap: basis-10 shrink-0 */
 .swap-container {
   flex-basis: 40px !important;
   flex-shrink: 0 !important;
   scroll-snap-align: start;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: var(--space-1);
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center;
 }
 
-/* To: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */
+/* To: basis-[45%] min-w-[200px] */
 .route-field-to {
-  flex-basis: 45% !important; /* Force basis */
-  min-width: 200px !important; /* Reduce min-width for mobile */
+  flex-basis: 45% !important;
+  min-width: 200px !important;
   scroll-snap-align: start;
-  flex-shrink: 0;
+  flex-shrink: 0 !important;
+}
+
+.route-field-to .enhanced-airport-field {
+  margin-bottom: 0 !important; /* Force inline */
+  width: 100%;
+}
+
+/* Enhanced Airport Fields - Force inline behavior */
+.enhanced-airport-field {
+  margin-bottom: var(--space-3);
+  width: 100%;
+}
+
+/* When inside horizontal container, remove margins */
+.route-fields-horizontal-enforced .enhanced-airport-field {
+  margin-bottom: 0 !important;
 }
 
 /* Swap Button - h-10 w-10 rounded-full bg-neutral-100 hover:bg-neutral-200 shadow-sm */
