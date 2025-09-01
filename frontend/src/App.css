@@ -2094,7 +2094,203 @@ body {
   }
 }
 
-/* DESKTOP: 1024px+ - Optimized desktop experience */
+/* ========================================= */
+/* FIXED RESPONSIVE BREAKPOINTS - THOROUGH TESTING */
+/* ========================================= */
+
+/* MOBILE: 390px - Compact mobile experience */
+@media (max-width: 767px) {
+  .App {
+    max-width: var(--breakpoint-xs);
+    margin: 0 auto;
+  }
+  
+  /* Mobile header - compact with bigger logo */
+  .header-container {
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: 0 var(--space-3);
+  }
+  
+  .header-main {
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  
+  .logo-main {
+    height: 36px; /* Bigger on mobile */
+  }
+  
+  .main-navigation {
+    gap: var(--space-2);
+  }
+  
+  .nav-link {
+    font-size: var(--text-sm);
+    padding: var(--space-1) var(--space-2);
+  }
+  
+  .header-actions {
+    gap: var(--space-2);
+  }
+  
+  .header-btn {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-xs);
+  }
+  
+  /* Mobile sections - minimal gaps */
+  .trust-section, .destinations-section, .offers-section, .features-section {
+    padding: var(--space-4) var(--space-3);
+  }
+  
+  .trust-indicators {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  
+  .destinations-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  
+  .offers-grid, .features-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  
+  /* MOBILE CTA - PROPERLY STICKY */
+  .sticky-cta {
+    position: fixed !important;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: var(--breakpoint-xs);
+    background: var(--color-background);
+    padding: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .cta-button {
+    width: 100%;
+    padding: var(--space-4) var(--space-5);
+    min-height: var(--tap-target-comfortable);
+    font-size: var(--text-base);
+  }
+  
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-2);
+  }
+  
+  /* Stack route fields on very small screens */
+  @media (max-width: 360px) {
+    .route-fields {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    
+    .swap-button {
+      order: 1;
+      justify-self: center;
+      margin: var(--space-1) 0;
+    }
+    
+    .date-fields.two-dates {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+  }
+}
+
+/* TABLET: 768px - Bridge experience */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .App {
+    max-width: var(--breakpoint-sm);
+    margin: 0 auto;
+  }
+  
+  .logo-main {
+    height: 40px; /* Bigger on tablet */
+  }
+  
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 var(--space-4);
+  }
+  
+  .main-container {
+    padding: var(--space-5) var(--space-4);
+    padding-bottom: var(--space-10);
+  }
+  
+  .search-card, .search-card-hero {
+    padding: var(--space-6);
+    max-width: 600px;
+    margin: 0 auto var(--space-4) auto;
+  }
+  
+  .trust-indicators {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .destinations-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .offers-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+  
+  /* TABLET CTA - STILL STICKY */
+  .sticky-cta {
+    position: fixed !important;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: var(--breakpoint-sm);
+    background: var(--color-background);
+    padding: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .cta-button {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--text-base);
+    min-height: 50px;
+  }
+}
+
+/* DESKTOP: 1024px+ - FIXED INLINE CTA */
 @media (min-width: 1024px) {
   .App {
     max-width: var(--breakpoint-lg);
@@ -2105,19 +2301,24 @@ body {
     height: 44px; /* Bigger on desktop */
   }
   
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 var(--space-6);
+  }
+  
   .main-container {
     padding: var(--space-8) var(--space-6);
-    padding-bottom: var(--space-6);
+    padding-bottom: var(--space-8); /* Normal bottom padding */
   }
   
   .search-card, .search-card-hero {
     padding: var(--space-8);
-    margin-bottom: 0;
+    margin-bottom: var(--space-6); /* Add margin for CTA */
     box-shadow: var(--shadow-md);
-  }
-  
-  .header-container {
-    padding: 0 var(--space-6);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .nav-link {
@@ -2125,15 +2326,18 @@ body {
     font-size: var(--text-base);
   }
   
-  /* Desktop CTA - inline */
+  /* DESKTOP CTA - PROPERLY INLINE */
   .sticky-cta {
-    position: static;
-    padding: 0;
+    position: static !important;
+    padding: var(--space-5) 0;
     background: transparent;
     border: none;
     box-shadow: none;
     backdrop-filter: none;
-    margin-top: var(--space-6);
+    margin-top: 0;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .cta-button {
@@ -2142,6 +2346,18 @@ body {
     padding: var(--space-4) var(--space-6);
     font-size: var(--text-lg);
     min-height: 52px;
+    font-weight: var(--font-weight-medium);
+  }
+  
+  /* Desktop form enhancements */
+  .input-box {
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-base);
+  }
+  
+  .input-label {
+    font-size: var(--text-xs);
+    margin-bottom: var(--space-2);
   }
   
   /* Desktop sections - efficient spacing */
@@ -2164,12 +2380,29 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-6);
   }
+  
+  /* Desktop hero adjustments */
+  .hero-section {
+    padding: var(--space-10) var(--space-6) var(--space-8);
+  }
+  
+  .hero-title {
+    font-size: var(--text-2xl);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--text-lg);
+  }
 }
 
 /* LARGE DESKTOP: 1440px+ - Enhanced experience */
 @media (min-width: 1440px) {
   .logo-main {
     height: 48px; /* Biggest on large desktop */
+  }
+  
+  .header-container {
+    padding: 0 var(--space-8);
   }
   
   .main-container {
@@ -2180,10 +2413,14 @@ body {
   
   .search-card, .search-card-hero {
     padding: var(--space-10);
+    max-width: 900px;
   }
   
-  .header-container {
-    padding: 0 var(--space-8);
+  .cta-button {
+    max-width: 350px;
+    padding: var(--space-5) var(--space-8);
+    font-size: var(--text-xl);
+    min-height: 56px;
   }
   
   .input-field {
@@ -2192,5 +2429,9 @@ body {
   
   .route-section, .date-section {
     margin-bottom: var(--space-6);
+  }
+  
+  .hero-title {
+    font-size: var(--text-3xl);
   }
 }
