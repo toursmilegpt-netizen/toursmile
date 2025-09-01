@@ -1141,8 +1141,10 @@ const FlightSearchForm = () => {
             <button
               type="button"
               onClick={() => {
+                console.log('Departure date clicked'); // Debug
                 setCalendarType('departure');
                 setShowCalendar(true);
+                console.log('Calendar state set:', { calendarType: 'departure', showCalendar: true }); // Debug
               }}
               className={`date-input-compact ${getFieldHighlight('departureDate') ? 'input-highlight' : ''}`}
             >
@@ -1166,8 +1168,10 @@ const FlightSearchForm = () => {
                 <button
                   type="button"
                   onClick={() => {
+                    console.log('Return date clicked'); // Debug
                     setCalendarType('return');
                     setShowCalendar(true);
+                    console.log('Calendar state set:', { calendarType: 'return', showCalendar: true }); // Debug
                   }}
                   className={`date-input-compact ${getFieldHighlight('return') ? 'input-highlight' : ''}`}
                 >
