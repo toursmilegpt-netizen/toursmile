@@ -519,57 +519,69 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 /* ========================================= */
-/* HORIZONTAL LAYOUT FIX - MAKEMYTRIP STYLE */
+/* TRUE HORIZONTAL LAYOUT - MAKEMYTRIP STYLE */
 /* ========================================= */
 
 .route-section-enhanced {
   margin-bottom: var(--space-4);
 }
 
-/* FORCE HORIZONTAL LAYOUT - Override all block behavior */
-.route-fields-horizontal-enforced {
+.route-row-container {
+  width: 100%;
+}
+
+/* TRUE HORIZONTAL ROW - Force side-by-side layout */
+.route-fields-row {
   display: flex !important;
   flex-direction: row !important;
-  align-items: flex-start !important; /* Changed to flex-start for better alignment */
-  gap: var(--space-2) !important; /* Reduced gap for tighter layout */
+  align-items: flex-end !important;
+  gap: var(--space-2) !important;
   flex-wrap: nowrap !important;
   overflow-x: auto;
   width: 100%;
 }
 
-/* Route field containers - Force flex behavior */
-.route-field-from,
-.route-field-to {
-  flex: 1 !important; /* Equal flex distribution */
-  min-width: 140px !important; /* Reduced for mobile fit */
+/* FROM Field - Inline */
+.from-field-inline {
+  flex: 1 !important;
+  min-width: 120px !important;
   max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
 }
 
-/* Enhanced airport fields - Force inline behavior */
-.route-field-from .enhanced-airport-field,
-.route-field-to .enhanced-airport-field {
+.from-field-inline .enhanced-airport-field {
   margin-bottom: 0 !important;
-  margin-top: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  width: 100% !important;
-  display: block !important;
 }
 
-/* Swap container - Centered between fields */
-.swap-container {
-  flex: 0 0 40px !important; /* Fixed width, no grow/shrink */
+.from-field-inline .input-label {
+  margin-bottom: var(--space-1) !important;
+}
+
+/* SWAP Button - Centered */
+.swap-inline {
+  flex: 0 0 auto !important;
   display: flex !important;
   align-items: flex-end !important;
-  justify-content: center !important;
-  margin-top: var(--space-5) !important; /* Align with field content */
+  padding-bottom: var(--space-1);
 }
 
-/* Swap button - Compact for horizontal layout */
+/* TO Field - Inline */
+.to-field-inline {
+  flex: 1 !important;
+  min-width: 120px !important;
+  max-width: none !important;
+}
+
+.to-field-inline .enhanced-airport-field {
+  margin-bottom: 0 !important;
+}
+
+.to-field-inline .input-label {
+  margin-bottom: var(--space-1) !important;
+}
+
+/* Swap button styling */
 .swap-button-final {
-  width: 32px !important; /* Smaller for tighter layout */
+  width: 32px !important;
   height: 32px !important;
   border-radius: 50%;
   background-color: #F5F5F5;
@@ -594,18 +606,6 @@ body {
 .swap-button-final:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: #F5F5F5;
-}
-
-/* Remove any inherited margins that could cause stacking */
-.route-fields-horizontal-enforced * {
-  box-sizing: border-box !important;
-}
-
-.route-fields-horizontal-enforced .input-field,
-.route-fields-horizontal-enforced .enhanced-airport-field {
-  margin-bottom: 0 !important;
-  margin-top: 0 !important;
 }
 
 /* Swap Button - h-10 w-10 rounded-full bg-neutral-100 hover:bg-neutral-200 shadow-sm */
