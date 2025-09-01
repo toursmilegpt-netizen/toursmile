@@ -327,25 +327,24 @@ const AIRPORTS_DATABASE = [
   { code: 'NAN', name: 'Nadi International Airport', city: 'Nadi', country: 'Fiji', popular: true }
 ];
 
-// Enhanced Airport Autocomplete Component - WITH RECENT SEARCHES
-const AirportAutocomplete = ({ 
+// Enhanced Airport Selector Component - COMPREHENSIVE UX CONSOLIDATION
+const EnhancedAirportSelector = ({ 
   value, 
-  onChange, 
+  selectedAirport,
+  onSelect, 
   label, 
   placeholder, 
   highlight = false,
   onFocus 
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [inputValue, setInputValue] = useState(value || '');
+  const [query, setQuery] = useState('');
   const [filteredAirports, setFilteredAirports] = useState([]);
   const [recents, setRecents] = useState([]);
-  const [selectedAirport, setSelectedAirport] = useState(null);
-  const [query, setQuery] = useState('');
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Recent searches utilities
+  // Recent searches utilities - localStorage ts_recent_airports_v1
   const loadRecents = () => {
     try {
       const stored = localStorage.getItem('ts_recent_airports_v1');
@@ -363,7 +362,7 @@ const AirportAutocomplete = ({
     try {
       let currentRecents = loadRecents();
       
-      // Remove existing entry with same IATA (de-duplicate)
+      // De-duplicate by IATA code
       currentRecents = currentRecents.filter(item => item.code !== airport.code);
       
       // Add to front (most recent first)
@@ -394,12 +393,12 @@ const AirportAutocomplete = ({
     }
   };
 
-  // Load recents on component mount
+  // Load recents on mount
   useEffect(() => {
     setRecents(loadRecents());
   }, []);
 
-  // Enhanced filtering with debounce
+  // Debounced filtering - 250ms
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       if (query.length >= 3) {
@@ -409,7 +408,6 @@ const AirportAutocomplete = ({
           airport.code.toLowerCase().includes(query.toLowerCase())
         );
         
-        // Smart sorting: Popular airports first, then group by city
         const sorted = filtered.sort((a, b) => {
           if (a.city !== b.city) {
             return a.city.localeCompare(b.city);
@@ -443,57 +441,40 @@ const AirportAutocomplete = ({
   const handleInputChange = (e) => {
     const newValue = e.target.value;
     setQuery(newValue);
-    setInputValue(newValue);
-    setSelectedAirport(null);
     setIsOpen(true);
   };
 
-  const handleInputClick = () => {
-    // Re-open dropdown on click (no text cursor if value exists)
-    if (selectedAirport) {
-      // Field has value - re-open dropdown
-      setIsOpen(true);
-      setQuery(''); // Clear query to show recents + popular
-      if (inputRef.current) {
-        inputRef.current.blur(); // Remove text cursor
-      }
-    } else {
-      // Empty field - normal behavior
-      setIsOpen(true);
-      setQuery('');
+  const handleFieldClick = () => {
+    // Re-open dropdown on click - NO text cursor for filled fields
+    setIsOpen(true);
+    setQuery(''); // Clear query to show recents + popular
+    
+    if (selectedAirport && inputRef.current) {
+      inputRef.current.blur(); // Remove text cursor
     }
+    
     onFocus && onFocus();
   };
 
-  const handleInputFocus = () => {
-    if (!selectedAirport) {
-      setIsOpen(true);
-      setQuery('');
-    }
-  };
-
   const handleSelect = (airport) => {
-    setSelectedAirport(airport);
-    setInputValue(''); // Clear input for display component
     setQuery('');
     setIsOpen(false);
     
-    // Save to recent searches
+    // Save to recent searches on successful selection
     saveRecent(airport);
     
-    onChange(airport);
+    onSelect(airport);
   };
 
   const handleKeyDown = (e) => {
-    // Keyboard navigation
     if (e.key === 'Escape') {
       setIsOpen(false);
       setQuery('');
     }
-    // TODO: Add Up/Down arrow navigation
+    // TODO: Arrow key navigation can be added here
   };
 
-  // Group airports by city for better display
+  // Group airports by city
   const groupedAirports = filteredAirports.reduce((groups, airport) => {
     const city = airport.city;
     if (!groups[city]) {
@@ -504,23 +485,26 @@ const AirportAutocomplete = ({
   }, {});
 
   return (
-    <div className="input-field" ref={dropdownRef}>
+    <div className="enhanced-airport-field" ref={dropdownRef}>
       <label className="input-label">{label}</label>
       <div className="input-container">
         {selectedAirport ? (
-          // Display selected airport with enhanced typography
+          // Enhanced Selected Display - City large, Airport small
           <div
-            onClick={handleInputClick}
-            className={`airport-display ${highlight ? 'input-highlight' : ''}`}
+            onClick={handleFieldClick}
+            className={`airport-display-enhanced ${highlight ? 'input-highlight' : ''}`}
             role="button"
             tabIndex={0}
             aria-expanded={isOpen}
-            aria-controls="airport-dropdown"
+            aria-controls={`${label.toLowerCase()}-dropdown`}
             onKeyDown={handleKeyDown}
+            aria-label={`Selected airport: ${selectedAirport.city}`}
           >
             <div className="airport-display-content">
-              <div className="airport-city">{selectedAirport.city}</div>
-              <div className="airport-details">
+              {/* City - Large Primary (text-lg font-semibold) */}
+              <div className="airport-city-enhanced">{selectedAirport.city}</div>
+              {/* Airport + IATA - Small Secondary (text-xs text-gray-500) */}
+              <div className="airport-details-enhanced">
                 {selectedAirport.name} — {selectedAirport.code}
               </div>
             </div>
@@ -531,29 +515,33 @@ const AirportAutocomplete = ({
           <input
             ref={inputRef}
             type="text"
-            value={inputValue}
+            value={query}
             onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            onClick={handleInputClick}
+            onClick={handleFieldClick}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             className={`input-box ${highlight ? 'input-highlight' : ''}`}
             autoComplete="off"
             role="combobox"
             aria-expanded={isOpen}
-            aria-controls="airport-dropdown"
+            aria-controls={`${label.toLowerCase()}-dropdown`}
             aria-autocomplete="list"
           />
         )}
         
-        {/* Enhanced dropdown with recents */}
+        {/* Enhanced Dropdown with Recent Searches */}
         {isOpen && (
-          <div className="autocomplete-dropdown" id="airport-dropdown" role="listbox">
+          <div 
+            className="autocomplete-dropdown-enhanced" 
+            id={`${label.toLowerCase()}-dropdown`} 
+            role="listbox"
+            aria-label={`${label} airport options`}
+          >
             {/* Recent Searches Section */}
             {recents.length > 0 && (
               <div className="recents-section">
                 <div className="recents-header">
-                  <span className="recents-title" aria-label="Recent searches">Recent</span>
+                  <span className="recents-title" aria-label="Recent searches">RECENT</span>
                   <button
                     type="button"
                     onClick={clearRecents}
@@ -568,12 +556,13 @@ const AirportAutocomplete = ({
                   <div
                     key={`recent-${airport.code}`}
                     onClick={() => handleSelect(airport)}
-                    className="dropdown-item recent-item"
+                    className="dropdown-item-enhanced recent-item"
                     role="option"
                     tabIndex={0}
+                    aria-label={`Recent: ${airport.city}, ${airport.name}`}
                   >
-                    <div className="item-primary recent-city">{airport.city}</div>
-                    <div className="item-secondary recent-airport">
+                    <div className="item-primary-enhanced recent-city">{airport.city}</div>
+                    <div className="item-secondary-enhanced recent-airport">
                       {airport.name} — {airport.code}
                     </div>
                   </div>
@@ -584,13 +573,10 @@ const AirportAutocomplete = ({
             {/* Live Suggestions */}
             {query.length >= 3 && Object.keys(groupedAirports).length > 0 && (
               <div className="suggestions-section">
-                {recents.length > 0 && (
-                  <div className="section-divider"></div>
-                )}
+                {recents.length > 0 && <div className="section-divider"></div>}
                 
                 {Object.entries(groupedAirports).map(([city, airports]) => (
                   <div key={city} className="city-group">
-                    {/* City header for multiple airports */}
                     {airports.length > 1 && (
                       <div className="city-header">
                         <span className="city-name">{city}</span>
@@ -598,19 +584,19 @@ const AirportAutocomplete = ({
                       </div>
                     )}
                     
-                    {/* Airport options */}
                     {airports.map((airport) => (
                       <div
                         key={airport.code}
                         onClick={() => handleSelect(airport)}
-                        className={`dropdown-item ${airports.length > 1 ? 'grouped-item' : ''}`}
+                        className={`dropdown-item-enhanced ${airports.length > 1 ? 'grouped-item' : ''}`}
                         role="option"
                         tabIndex={0}
+                        aria-label={`${airport.city}, ${airport.name}, ${airport.code}`}
                       >
-                        <div className="item-primary">
+                        <div className="item-primary-enhanced">
                           {airports.length > 1 ? airport.name : `${airport.city} – ${airport.name}`}
                         </div>
-                        <div className="item-secondary">
+                        <div className="item-secondary-enhanced">
                           <span className="airport-code">({airport.code})</span>
                           {airport.popular && <span className="popular-badge">Popular</span>}
                           {!airport.popular && airports.length > 1 && (
@@ -624,24 +610,23 @@ const AirportAutocomplete = ({
               </div>
             )}
 
-            {/* Show popular airports when no query and no recents or empty query */}
+            {/* Popular Destinations */}
             {query.length < 3 && (
               <div className="popular-section">
-                {recents.length > 0 && (
-                  <div className="section-divider"></div>
-                )}
+                {recents.length > 0 && <div className="section-divider"></div>}
                 
-                <div className="section-header">Popular Destinations</div>
+                <div className="section-header">POPULAR DESTINATIONS</div>
                 {AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6).map((airport) => (
                   <div
                     key={`popular-${airport.code}`}
                     onClick={() => handleSelect(airport)}
-                    className="dropdown-item popular-item"
+                    className="dropdown-item-enhanced popular-item"
                     role="option"
                     tabIndex={0}
+                    aria-label={`Popular: ${airport.city}, ${airport.name}`}
                   >
-                    <div className="item-primary">{airport.city} – {airport.name}</div>
-                    <div className="item-secondary">({airport.code})</div>
+                    <div className="item-primary-enhanced">{airport.city} – {airport.name}</div>
+                    <div className="item-secondary-enhanced">({airport.code})</div>
                   </div>
                 ))}
               </div>
