@@ -1041,10 +1041,10 @@ const FlightSearchForm = () => {
       setIsSwapping(false);
       
       // Announce swap completion
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(announcement);
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        const utterance = new window.SpeechSynthesisUtterance(announcement);
         utterance.volume = 0; // Silent for privacy, but triggers screen reader
-        speechSynthesis.speak(utterance);
+        window.speechSynthesis.speak(utterance);
       }
     }, 150); // Half of 300ms for smooth transition
   };
