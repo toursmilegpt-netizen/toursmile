@@ -353,7 +353,7 @@ body {
 /* ========================================= */
 
 .input-field {
-  margin-bottom: var(--space-4); /* Reduced spacing */
+  margin-bottom: var(--space-3); /* Further reduced spacing */
 }
 
 .input-label {
@@ -364,7 +364,7 @@ body {
   color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1); /* Reduced margin */
 }
 
 .input-container {
