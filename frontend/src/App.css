@@ -536,37 +536,29 @@ body {
 
 .route-fields-row {
   display: grid !important;
-  grid-template-columns: 1fr auto 1fr !important;
+  grid-template-columns: 1fr 40px 1fr !important;
   gap: var(--space-2) !important;
   align-items: end !important;
   width: 100% !important;
+  grid-template-areas: "from swap to" !important;
 }
 
-.from-field-inline,
-.to-field-inline {
-  display: block !important;
+.from-field-inline {
+  grid-area: from !important;
   margin: 0 !important;
-  padding: 0 !important;
-}
-
-.from-field-inline .enhanced-airport-field,
-.to-field-inline .enhanced-airport-field {
-  margin-bottom: 0 !important;
-  margin-top: 0 !important;
-  width: 100% !important;
-}
-
-.from-field-inline .input-label,
-.to-field-inline .input-label {
-  margin-bottom: var(--space-1) !important;
-  display: block !important;
 }
 
 .swap-inline {
+  grid-area: swap !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  margin-top: var(--space-4) !important; /* Align with fields */
+  margin-top: var(--space-4) !important;
+}
+
+.to-field-inline {
+  grid-area: to !important;
+  margin: 0 !important;
 }
 
 .swap-button-final {
