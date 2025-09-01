@@ -2059,6 +2059,90 @@ body {
     margin: 0 auto;
   }
   
+  /* Mobile header - simplified */
+  .header-main {
+    gap: var(--space-4);
+  }
+  
+  .main-navigation {
+    gap: var(--space-3);
+  }
+  
+  .nav-link {
+    font-size: var(--text-sm);
+    padding: var(--space-2);
+  }
+  
+  .header-actions {
+    gap: var(--space-2);
+  }
+  
+  .header-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+  
+  /* Mobile hero - focused */
+  .hero-section {
+    padding: var(--space-8) var(--space-4) var(--space-12);
+  }
+  
+  .hero-title {
+    font-size: var(--text-xl);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--text-base);
+  }
+  
+  .search-card-hero {
+    padding: var(--space-6);
+  }
+  
+  /* Mobile trust section - stacked */
+  .trust-indicators {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .trust-item {
+    padding: var(--space-4);
+  }
+  
+  /* Mobile destinations - 2 columns */
+  .destinations-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .destination-card {
+    padding: var(--space-4);
+  }
+  
+  /* Mobile offers - stacked */
+  .offers-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  
+  /* Mobile features - stacked */
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  
+  /* Mobile footer - stacked */
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+  
   /* Stack route fields on very small screens */
   @media (max-width: 360px) {
     .route-fields {
@@ -2075,6 +2159,10 @@ body {
     .date-fields.two-dates {
       grid-template-columns: 1fr;
       gap: var(--space-4);
+    }
+    
+    .destinations-grid {
+      grid-template-columns: 1fr;
     }
   }
 }
