@@ -1089,7 +1089,16 @@ const FlightSearchForm = () => {
       {/* Enhanced Route Selection - TRUE HORIZONTAL LAYOUT */}
       <div className="route-section-enhanced">
         <div className="route-row-container">
-          <div className="route-fields-row">
+          <div 
+            className="route-fields-row"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 40px 1fr',
+              gap: '8px',
+              alignItems: 'end',
+              width: '100%'
+            }}
+          >
             {/* FROM Field - Inline */}
             <div className="from-field-inline">
               <label className="input-label">FROM</label>
