@@ -327,7 +327,7 @@ const AIRPORTS_DATABASE = [
   { code: 'NAN', name: 'Nadi International Airport', city: 'Nadi', country: 'Fiji', popular: true }
 ];
 
-// Airport Autocomplete Component - ENHANCED MULTIPLE AIRPORTS LOGIC
+// Enhanced Airport Autocomplete Component - WITH RECENT SEARCHES
 const AirportAutocomplete = ({ 
   value, 
   onChange, 
@@ -339,44 +339,101 @@ const AirportAutocomplete = ({
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(value || '');
   const [filteredAirports, setFilteredAirports] = useState([]);
+  const [recents, setRecents] = useState([]);
+  const [selectedAirport, setSelectedAirport] = useState(null);
+  const [query, setQuery] = useState('');
   const dropdownRef = useRef(null);
+  const inputRef = useRef(null);
 
-  // Enhanced filtering with multiple airports grouping
-  useEffect(() => {
-    if (inputValue.length >= 3) {
-      const filtered = AIRPORTS_DATABASE.filter(airport =>
-        airport.city.toLowerCase().includes(inputValue.toLowerCase()) ||
-        airport.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-        airport.code.toLowerCase().includes(inputValue.toLowerCase())
-      );
+  // Recent searches utilities
+  const loadRecents = () => {
+    try {
+      const stored = localStorage.getItem('ts_recent_airports_v1');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) ? parsed.slice(0, 6) : [];
+      }
+    } catch (error) {
+      console.warn('Failed to load recent airports:', error);
+    }
+    return [];
+  };
+
+  const saveRecent = (airport) => {
+    try {
+      let currentRecents = loadRecents();
       
-      // Smart sorting: Popular airports first, then group by city
-      const sorted = filtered.sort((a, b) => {
-        // First, sort by city to group airports together
-        if (a.city !== b.city) {
-          return a.city.localeCompare(b.city);
-        }
-        // Within the same city, popular airports first
-        if (a.popular !== b.popular) {
-          return b.popular - a.popular;
-        }
-        return a.name.localeCompare(b.name);
+      // Remove existing entry with same IATA (de-duplicate)
+      currentRecents = currentRecents.filter(item => item.code !== airport.code);
+      
+      // Add to front (most recent first)
+      currentRecents.unshift({
+        code: airport.code,
+        name: airport.name,
+        city: airport.city,
+        country: airport.country,
+        timestamp: Date.now()
       });
       
-      setFilteredAirports(sorted.slice(0, 8)); // Show more results for multiple airports
-      setIsOpen(sorted.length > 0);
-    } else {
-      // Show popular airports on focus
-      const popular = AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6);
-      setFilteredAirports(popular);
-      setIsOpen(false);
+      // Keep max 6 items
+      currentRecents = currentRecents.slice(0, 6);
+      
+      localStorage.setItem('ts_recent_airports_v1', JSON.stringify(currentRecents));
+      setRecents(currentRecents);
+    } catch (error) {
+      console.warn('Failed to save recent airport:', error);
     }
-  }, [inputValue]);
+  };
+
+  const clearRecents = () => {
+    try {
+      localStorage.removeItem('ts_recent_airports_v1');
+      setRecents([]);
+    } catch (error) {
+      console.warn('Failed to clear recent airports:', error);
+    }
+  };
+
+  // Load recents on component mount
+  useEffect(() => {
+    setRecents(loadRecents());
+  }, []);
+
+  // Enhanced filtering with debounce
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      if (query.length >= 3) {
+        const filtered = AIRPORTS_DATABASE.filter(airport =>
+          airport.city.toLowerCase().includes(query.toLowerCase()) ||
+          airport.name.toLowerCase().includes(query.toLowerCase()) ||
+          airport.code.toLowerCase().includes(query.toLowerCase())
+        );
+        
+        // Smart sorting: Popular airports first, then group by city
+        const sorted = filtered.sort((a, b) => {
+          if (a.city !== b.city) {
+            return a.city.localeCompare(b.city);
+          }
+          if (a.popular !== b.popular) {
+            return b.popular - a.popular;
+          }
+          return a.name.localeCompare(b.name);
+        });
+        
+        setFilteredAirports(sorted.slice(0, 8));
+      } else {
+        setFilteredAirports([]);
+      }
+    }, 250); // 250ms debounce
+
+    return () => clearTimeout(debounceTimer);
+  }, [query]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
+        setQuery('');
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -384,30 +441,56 @@ const AirportAutocomplete = ({
   }, []);
 
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    const newValue = e.target.value;
+    setQuery(newValue);
+    setInputValue(newValue);
+    setSelectedAirport(null);
+    setIsOpen(true);
   };
 
-  const handleInputFocus = () => {
-    if (!inputValue) {
-      const popular = AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6);
-      setFilteredAirports(popular);
+  const handleInputClick = () => {
+    // Re-open dropdown on click (no text cursor if value exists)
+    if (selectedAirport) {
+      // Field has value - re-open dropdown
       setIsOpen(true);
+      setQuery(''); // Clear query to show recents + popular
+      if (inputRef.current) {
+        inputRef.current.blur(); // Remove text cursor
+      }
+    } else {
+      // Empty field - normal behavior
+      setIsOpen(true);
+      setQuery('');
     }
     onFocus && onFocus();
   };
 
-  const handleSelect = (airport) => {
-    // Enhanced format: City – Airport (CODE)
-    const selectedValue = `${airport.city} – ${airport.name} (${airport.code})`;
-    setInputValue(selectedValue);
-    onChange(airport);
-    setIsOpen(false);
+  const handleInputFocus = () => {
+    if (!selectedAirport) {
+      setIsOpen(true);
+      setQuery('');
+    }
   };
 
-  // Check if current city has multiple airports
-  const getMultipleAirportsInfo = (city) => {
-    const cityAirports = AIRPORTS_DATABASE.filter(a => a.city === city);
-    return cityAirports.length > 1 ? cityAirports.length : null;
+  const handleSelect = (airport) => {
+    setSelectedAirport(airport);
+    setInputValue(''); // Clear input for display component
+    setQuery('');
+    setIsOpen(false);
+    
+    // Save to recent searches
+    saveRecent(airport);
+    
+    onChange(airport);
+  };
+
+  const handleKeyDown = (e) => {
+    // Keyboard navigation
+    if (e.key === 'Escape') {
+      setIsOpen(false);
+      setQuery('');
+    }
+    // TODO: Add Up/Down arrow navigation
   };
 
   // Group airports by city for better display
@@ -424,50 +507,145 @@ const AirportAutocomplete = ({
     <div className="input-field" ref={dropdownRef}>
       <label className="input-label">{label}</label>
       <div className="input-container">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          placeholder={placeholder}
-          className={`input-box ${highlight ? 'input-highlight' : ''}`}
-          autoComplete="off"
-        />
+        {selectedAirport ? (
+          // Display selected airport with enhanced typography
+          <div
+            onClick={handleInputClick}
+            className={`airport-display ${highlight ? 'input-highlight' : ''}`}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isOpen}
+            aria-controls="airport-dropdown"
+            onKeyDown={handleKeyDown}
+          >
+            <div className="airport-display-content">
+              <div className="airport-city">{selectedAirport.city}</div>
+              <div className="airport-details">
+                {selectedAirport.name} — {selectedAirport.code}
+              </div>
+            </div>
+            <span className="dropdown-icon">▼</span>
+          </div>
+        ) : (
+          // Input field for typing
+          <input
+            ref={inputRef}
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            onClick={handleInputClick}
+            onKeyDown={handleKeyDown}
+            placeholder={placeholder}
+            className={`input-box ${highlight ? 'input-highlight' : ''}`}
+            autoComplete="off"
+            role="combobox"
+            aria-expanded={isOpen}
+            aria-controls="airport-dropdown"
+            aria-autocomplete="list"
+          />
+        )}
         
-        {/* Enhanced dropdown with multiple airports grouping */}
+        {/* Enhanced dropdown with recents */}
         {isOpen && (
-          <div className="autocomplete-dropdown">
-            {Object.entries(groupedAirports).map(([city, airports]) => (
-              <div key={city} className="city-group">
-                {/* City header for multiple airports */}
-                {airports.length > 1 && (
-                  <div className="city-header">
-                    <span className="city-name">{city}</span>
-                    <span className="airport-count">{airports.length} airports</span>
-                  </div>
-                )}
-                
-                {/* Airport options */}
-                {airports.map((airport) => (
-                  <div
-                    key={airport.code}
-                    onClick={() => handleSelect(airport)}
-                    className={`dropdown-item ${airports.length > 1 ? 'grouped-item' : ''}`}
+          <div className="autocomplete-dropdown" id="airport-dropdown" role="listbox">
+            {/* Recent Searches Section */}
+            {recents.length > 0 && (
+              <div className="recents-section">
+                <div className="recents-header">
+                  <span className="recents-title" aria-label="Recent searches">Recent</span>
+                  <button
+                    type="button"
+                    onClick={clearRecents}
+                    className="clear-recents"
+                    aria-label="Clear recent searches"
                   >
-                    <div className="item-primary">
-                      {airports.length > 1 ? airport.name : `${airport.city} – ${airport.name}`}
-                    </div>
-                    <div className="item-secondary">
-                      <span className="airport-code">({airport.code})</span>
-                      {airport.popular && <span className="popular-badge">Popular</span>}
-                      {!airport.popular && airports.length > 1 && (
-                        <span className="airport-type">Secondary</span>
-                      )}
+                    Clear
+                  </button>
+                </div>
+                
+                {recents.map((airport) => (
+                  <div
+                    key={`recent-${airport.code}`}
+                    onClick={() => handleSelect(airport)}
+                    className="dropdown-item recent-item"
+                    role="option"
+                    tabIndex={0}
+                  >
+                    <div className="item-primary recent-city">{airport.city}</div>
+                    <div className="item-secondary recent-airport">
+                      {airport.name} — {airport.code}
                     </div>
                   </div>
                 ))}
               </div>
-            ))}
+            )}
+
+            {/* Live Suggestions */}
+            {query.length >= 3 && Object.keys(groupedAirports).length > 0 && (
+              <div className="suggestions-section">
+                {recents.length > 0 && (
+                  <div className="section-divider"></div>
+                )}
+                
+                {Object.entries(groupedAirports).map(([city, airports]) => (
+                  <div key={city} className="city-group">
+                    {/* City header for multiple airports */}
+                    {airports.length > 1 && (
+                      <div className="city-header">
+                        <span className="city-name">{city}</span>
+                        <span className="airport-count">{airports.length} airports</span>
+                      </div>
+                    )}
+                    
+                    {/* Airport options */}
+                    {airports.map((airport) => (
+                      <div
+                        key={airport.code}
+                        onClick={() => handleSelect(airport)}
+                        className={`dropdown-item ${airports.length > 1 ? 'grouped-item' : ''}`}
+                        role="option"
+                        tabIndex={0}
+                      >
+                        <div className="item-primary">
+                          {airports.length > 1 ? airport.name : `${airport.city} – ${airport.name}`}
+                        </div>
+                        <div className="item-secondary">
+                          <span className="airport-code">({airport.code})</span>
+                          {airport.popular && <span className="popular-badge">Popular</span>}
+                          {!airport.popular && airports.length > 1 && (
+                            <span className="airport-type">Secondary</span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Show popular airports when no query and no recents or empty query */}
+            {query.length < 3 && (
+              <div className="popular-section">
+                {recents.length > 0 && (
+                  <div className="section-divider"></div>
+                )}
+                
+                <div className="section-header">Popular Destinations</div>
+                {AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6).map((airport) => (
+                  <div
+                    key={`popular-${airport.code}`}
+                    onClick={() => handleSelect(airport)}
+                    className="dropdown-item popular-item"
+                    role="option"
+                    tabIndex={0}
+                  >
+                    <div className="item-primary">{airport.city} – {airport.name}</div>
+                    <div className="item-secondary">({airport.code})</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
