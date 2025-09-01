@@ -850,7 +850,7 @@ const FlightSearchForm = () => {
 
   const handleSearch = () => {
     if (!departure || !destination || !departureDate || (tripType === 'round-trip' && !returnDate)) {
-      alert('Please fill all required fields');
+      console.log('Please fill all required fields');
       return;
     }
 
