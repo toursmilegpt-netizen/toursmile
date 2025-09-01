@@ -1255,10 +1255,14 @@ const FlightSearchForm = () => {
         </button>
       </div>
 
-      {/* Calendar Overlay */}
+      {/* Calendar Overlay - Center Screen Debug */}
+      {console.log('Calendar render check:', { showCalendar, calendarType })}
       <CalendarOverlay
         isOpen={showCalendar}
-        onClose={() => setShowCalendar(false)}
+        onClose={() => {
+          console.log('Calendar closing'); // Debug
+          setShowCalendar(false);
+        }}
         onDateSelect={calendarType === 'departure' ? handleDepartureDateSelect : handleReturnDateSelect}
         selectedDate={calendarType === 'departure' ? departureDate : returnDate}
         minDate={calendarType === 'departure' ? new Date() : departureDate}
