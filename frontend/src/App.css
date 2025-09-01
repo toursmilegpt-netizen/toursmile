@@ -1586,8 +1586,8 @@ body {
 }
 
 .sheet-content {
-  padding: var(--space-4); /* Reduced padding */
-  max-height: calc(60vh - 60px); /* Adjusted for reduced header */
+  padding: var(--space-3); /* Further reduced padding */
+  max-height: calc(50vh - 50px); /* Adjusted for smaller header */
   overflow-y: auto;
   overflow-x: hidden;
 }
