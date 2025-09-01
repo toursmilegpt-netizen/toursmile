@@ -327,7 +327,7 @@ const AIRPORTS_DATABASE = [
   { code: 'NAN', name: 'Nadi International Airport', city: 'Nadi', country: 'Fiji', popular: true }
 ];
 
-// Enhanced Airport Selector Component - COMPREHENSIVE UX CONSOLIDATION
+// Enhanced Airport Selector Component - BUTTON-AS-COMBOBOX APPROACH
 const EnhancedAirportSelector = ({ 
   value, 
   selectedAirport,
@@ -339,12 +339,15 @@ const EnhancedAirportSelector = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
   const [filteredAirports, setFilteredAirports] = useState([]);
   const [recents, setRecents] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
+  const listboxId = `${label.toLowerCase()}-listbox`;
 
-  // Recent searches utilities - localStorage ts_recent_airports_v1
+  // Recent searches utilities
   const loadRecents = () => {
     try {
       const stored = localStorage.getItem('ts_recent_airports_v1');
@@ -361,11 +364,7 @@ const EnhancedAirportSelector = ({
   const saveRecent = (airport) => {
     try {
       let currentRecents = loadRecents();
-      
-      // De-duplicate by IATA code
       currentRecents = currentRecents.filter(item => item.code !== airport.code);
-      
-      // Add to front (most recent first)
       currentRecents.unshift({
         code: airport.code,
         name: airport.name,
@@ -373,10 +372,7 @@ const EnhancedAirportSelector = ({
         country: airport.country,
         timestamp: Date.now()
       });
-      
-      // Keep max 6 items
       currentRecents = currentRecents.slice(0, 6);
-      
       localStorage.setItem('ts_recent_airports_v1', JSON.stringify(currentRecents));
       setRecents(currentRecents);
     } catch (error) {
@@ -393,7 +389,6 @@ const EnhancedAirportSelector = ({
     }
   };
 
-  // Load recents on mount
   useEffect(() => {
     setRecents(loadRecents());
   }, []);
@@ -409,12 +404,8 @@ const EnhancedAirportSelector = ({
         );
         
         const sorted = filtered.sort((a, b) => {
-          if (a.city !== b.city) {
-            return a.city.localeCompare(b.city);
-          }
-          if (a.popular !== b.popular) {
-            return b.popular - a.popular;
-          }
+          if (a.city !== b.city) return a.city.localeCompare(b.city);
+          if (a.popular !== b.popular) return b.popular - a.popular;
           return a.name.localeCompare(b.name);
         });
         
@@ -422,7 +413,7 @@ const EnhancedAirportSelector = ({
       } else {
         setFilteredAirports([]);
       }
-    }, 250); // 250ms debounce
+    }, 250);
 
     return () => clearTimeout(debounceTimer);
   }, [query]);
@@ -432,24 +423,21 @@ const EnhancedAirportSelector = ({
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
         setQuery('');
+        setIsEditMode(false);
+        setActiveIndex(-1);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleInputChange = (e) => {
-    const newValue = e.target.value;
-    setQuery(newValue);
+  const handleButtonClick = () => {
+    // Button-as-Combobox: Always open dropdown, announce "Dropdown opened"
     setIsOpen(true);
-  };
-
-  const handleFieldClick = () => {
-    // Button-as-Control approach: Always open dropdown, never show text cursor
-    setIsOpen(true);
-    setQuery(''); // Clear query to show recents + popular
+    setQuery('');
+    setActiveIndex(-1);
     
-    // Announce dropdown opening for screen readers
+    // Announce dropdown opening
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance('Dropdown opened');
       utterance.volume = 0;
@@ -459,13 +447,31 @@ const EnhancedAirportSelector = ({
     onFocus && onFocus();
   };
 
+  const handleEditMode = () => {
+    setIsEditMode(true);
+    setIsOpen(true);
+    setQuery(selectedAirport?.city || '');
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 0);
+  };
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+    setIsOpen(true);
+    setActiveIndex(-1);
+  };
+
   const handleSelect = (airport) => {
     setQuery('');
     setIsOpen(false);
+    setIsEditMode(false);
+    setActiveIndex(-1);
     
-    // Save to recent searches on successful selection
+    // Save to recent searches
     saveRecent(airport);
-    
     onSelect(airport);
   };
 
@@ -473,77 +479,108 @@ const EnhancedAirportSelector = ({
     if (e.key === 'Escape') {
       setIsOpen(false);
       setQuery('');
+      setIsEditMode(false);
+      setActiveIndex(-1);
     }
-    // TODO: Arrow key navigation can be added here
+    // TODO: Implement Up/Down arrow navigation with activeIndex
   };
 
-  // Group airports by city
-  const groupedAirports = filteredAirports.reduce((groups, airport) => {
-    const city = airport.city;
-    if (!groups[city]) {
-      groups[city] = [];
+  // Get all available options for keyboard nav
+  const getAllOptions = () => {
+    const options = [];
+    
+    // Add recents
+    recents.forEach(airport => {
+      options.push({ type: 'recent', ...airport });
+    });
+    
+    // Add live suggestions or popular
+    if (query.length >= 3) {
+      filteredAirports.forEach(airport => {
+        options.push({ type: 'suggestion', ...airport });
+      });
+    } else {
+      AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6).forEach(airport => {
+        options.push({ type: 'popular', ...airport });
+      });
     }
-    groups[city].push(airport);
-    return groups;
-  }, {});
+    
+    return options;
+  };
 
   return (
     <div className="enhanced-airport-field" ref={dropdownRef}>
       <label className="input-label">{label}</label>
       <div className="input-container">
-        {selectedAirport ? (
-          // Button-as-Control: No text cursor, always opens dropdown
+        {selectedAirport && !isEditMode ? (
+          // BUTTON-AS-COMBOBOX: No text cursor, always opens dropdown
           <button
             type="button"
-            onClick={handleFieldClick}
-            className={`airport-display-enhanced ${highlight ? 'input-highlight' : ''}`}
+            onClick={handleButtonClick}
+            className={`airport-button-combobox ${highlight ? 'input-highlight' : ''}`}
             role="combobox"
             aria-expanded={isOpen}
-            aria-controls={`${label.toLowerCase()}-dropdown`}
+            aria-controls={listboxId}
             aria-label={`Selected airport: ${selectedAirport.city}. Click to change.`}
           >
             <div className="airport-display-content">
-              {/* City - Large Primary (text-lg font-semibold) */}
-              <div className="airport-city-enhanced">{selectedAirport.city}</div>
-              {/* Airport + IATA - Small Secondary (text-xs text-gray-500) */}
-              <div className="airport-details-enhanced">
-                {selectedAirport.name} — {selectedAirport.code}
+              {/* City - text-base md:text-lg font-semibold leading-tight */}
+              <div className="airport-city-display">{selectedAirport.city}</div>
+              {/* Airport + IATA - Enhanced visual hierarchy */}
+              <div className="airport-details-display">
+                <span className="airport-name">{selectedAirport.name}</span>
+                {' — '}
+                <span className="airport-iata">{selectedAirport.code}</span>
               </div>
             </div>
-            <span className="dropdown-icon">▼</span>
+            <div className="field-actions">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditMode();
+                }}
+                className="edit-icon"
+                aria-label="Edit selection"
+                title="Type to search"
+              >
+                ✏️
+              </button>
+              <span className="dropdown-icon">▼</span>
+            </div>
           </button>
         ) : (
-          // Input field for typing (only when no selection)
+          // Normal input for typing (when no selection or edit mode)
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={handleInputChange}
-            onClick={handleFieldClick}
+            onClick={() => setIsOpen(true)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             className={`input-box ${highlight ? 'input-highlight' : ''}`}
             autoComplete="off"
             role="combobox"
             aria-expanded={isOpen}
-            aria-controls={`${label.toLowerCase()}-dropdown`}
+            aria-controls={listboxId}
             aria-autocomplete="list"
           />
         )}
         
-        {/* Enhanced Dropdown with Recent Searches */}
+        {/* Enhanced dropdown */}
         {isOpen && (
           <div 
             className="autocomplete-dropdown-enhanced" 
-            id={`${label.toLowerCase()}-dropdown`} 
+            id={listboxId}
             role="listbox"
             aria-label={`${label} airport options`}
           >
-            {/* Recent Searches Section */}
+            {/* Recent Searches */}
             {recents.length > 0 && (
               <div className="recents-section">
                 <div className="recents-header">
-                  <span className="recents-title" aria-label="Recent searches">RECENT</span>
+                  <span className="recents-title">RECENT</span>
                   <button
                     type="button"
                     onClick={clearRecents}
@@ -554,17 +591,19 @@ const EnhancedAirportSelector = ({
                   </button>
                 </div>
                 
-                {recents.map((airport) => (
+                {recents.map((airport, index) => (
                   <div
                     key={`recent-${airport.code}`}
                     onClick={() => handleSelect(airport)}
-                    className="dropdown-item-enhanced recent-item"
+                    className="dropdown-item-final recent-item"
                     role="option"
                     tabIndex={0}
                     aria-label={`Recent: ${airport.city}, ${airport.name}`}
                   >
-                    <div className="item-primary-enhanced recent-city">{airport.city}</div>
-                    <div className="item-secondary-enhanced recent-airport">
+                    {/* Line 1 City: text-sm font-medium */}
+                    <div className="item-city-final">{airport.city}</div>
+                    {/* Line 2 Airport + IATA: text-xs text-muted-foreground */}
+                    <div className="item-details-final">
                       {airport.name} — {airport.code}
                     </div>
                   </div>
@@ -573,40 +612,24 @@ const EnhancedAirportSelector = ({
             )}
 
             {/* Live Suggestions */}
-            {query.length >= 3 && Object.keys(groupedAirports).length > 0 && (
+            {query.length >= 3 && filteredAirports.length > 0 && (
               <div className="suggestions-section">
                 {recents.length > 0 && <div className="section-divider"></div>}
                 
-                {Object.entries(groupedAirports).map(([city, airports]) => (
-                  <div key={city} className="city-group">
-                    {airports.length > 1 && (
-                      <div className="city-header">
-                        <span className="city-name">{city}</span>
-                        <span className="airport-count">{airports.length} airports</span>
-                      </div>
-                    )}
-                    
-                    {airports.map((airport) => (
-                      <div
-                        key={airport.code}
-                        onClick={() => handleSelect(airport)}
-                        className={`dropdown-item-enhanced ${airports.length > 1 ? 'grouped-item' : ''}`}
-                        role="option"
-                        tabIndex={0}
-                        aria-label={`${airport.city}, ${airport.name}, ${airport.code}`}
-                      >
-                        <div className="item-primary-enhanced">
-                          {airports.length > 1 ? airport.name : `${airport.city} – ${airport.name}`}
-                        </div>
-                        <div className="item-secondary-enhanced">
-                          <span className="airport-code">({airport.code})</span>
-                          {airport.popular && <span className="popular-badge">Popular</span>}
-                          {!airport.popular && airports.length > 1 && (
-                            <span className="airport-type">Secondary</span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
+                {filteredAirports.map((airport) => (
+                  <div
+                    key={airport.code}
+                    onClick={() => handleSelect(airport)}
+                    className="dropdown-item-final suggestion-item"
+                    role="option"
+                    tabIndex={0}
+                    aria-label={`${airport.city}, ${airport.name}, ${airport.code}`}
+                  >
+                    <div className="item-city-final">{airport.city}</div>
+                    <div className="item-details-final">
+                      {airport.name} — {airport.code}
+                      {airport.popular && <span className="popular-badge">Popular</span>}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -622,13 +645,15 @@ const EnhancedAirportSelector = ({
                   <div
                     key={`popular-${airport.code}`}
                     onClick={() => handleSelect(airport)}
-                    className="dropdown-item-enhanced popular-item"
+                    className="dropdown-item-final popular-item"
                     role="option"
                     tabIndex={0}
                     aria-label={`Popular: ${airport.city}, ${airport.name}`}
                   >
-                    <div className="item-primary-enhanced">{airport.city} – {airport.name}</div>
-                    <div className="item-secondary-enhanced">({airport.code})</div>
+                    <div className="item-city-final">{airport.city}</div>
+                    <div className="item-details-final">
+                      {airport.name} — {airport.code}
+                    </div>
                   </div>
                 ))}
               </div>
