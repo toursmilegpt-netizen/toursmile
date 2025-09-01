@@ -444,6 +444,140 @@ body {
 }
 
 /* ========================================= */
+/* ENHANCED AIRPORT AUTOCOMPLETE - WITH RECENTS */
+/* ========================================= */
+
+/* Selected Airport Display - Enhanced Typography */
+.airport-display {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-elevated);
+  transition: all var(--transition-base);
+  min-height: var(--tap-target-min);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  box-shadow: var(--shadow-xs);
+}
+
+.airport-display:hover, .airport-display:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
+  background-color: var(--color-background);
+}
+
+.airport-display-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Primary: City (large) - Tailwind text-lg font-semibold */
+.airport-city {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Secondary: Airport name + IATA (small) - Tailwind text-xs text-gray-500 */
+.airport-details {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.2;
+}
+
+/* Recent Searches Section */
+.recents-section {
+  background-color: var(--color-surface);
+  border-bottom: 2px solid var(--color-divider);
+}
+
+.recents-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(37, 99, 235, 0.03) 100%);
+  border-bottom: 1px solid var(--color-divider);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.recents-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.clear-recents {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+  transition: all var(--transition-base);
+  min-height: var(--tap-target-min);
+}
+
+.clear-recents:hover {
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--color-primary-hover);
+}
+
+.recent-item {
+  background-color: var(--color-surface);
+  border-left: 3px solid var(--color-primary);
+  min-height: var(--tap-target-min);
+}
+
+.recent-item:hover {
+  background-color: rgba(37, 99, 235, 0.05);
+  border-left: 3px solid var(--color-primary-hover);
+}
+
+.recent-city {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.recent-airport {
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+}
+
+/* Section Dividers */
+.section-divider {
+  height: 1px;
+  background-color: var(--color-divider);
+  margin: 0;
+}
+
+.section-header {
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-surface);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+/* ========================================= */
 /* SMART AUTOCOMPLETE - MULTIPLE AIRPORTS ENHANCED */
 /* ========================================= */
 
