@@ -464,6 +464,18 @@ const EnhancedAirportSelector = ({
     setActiveIndex(-1);
   };
 
+  // Helper function to shorten airport names
+  const shortenAirportName = (name) => {
+    return name
+      .replace('International Airport', 'Intl')
+      .replace('International', 'Intl')
+      .replace('Airport', '')
+      .replace('Chhatrapati Shivaji Maharaj', 'Chhatrapati Shivaji')
+      .replace('Indira Gandhi', 'Indira Gandhi')
+      .replace('Kempegowda', 'Kempegowda')
+      .trim();
+  };
+
   const handleSelect = (airport) => {
     setQuery('');
     setIsOpen(false);
