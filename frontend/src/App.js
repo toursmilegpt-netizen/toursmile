@@ -980,7 +980,23 @@ const FlightSearchForm = () => {
           className={`traveller-input-compact ${getFieldHighlight('travellers') ? 'input-highlight' : ''}`}
         >
           <span className="traveller-value">
-            {getDisplayText()}
+            {(() => {
+              const { adults, children, infants } = travellers;
+              const parts = [];
+              
+              if (adults > 0) {
+                parts.push(`${adults} Adult${adults > 1 ? 's' : ''}`);
+              }
+              if (children > 0) {
+                parts.push(`${children} Child${children > 1 ? 'ren' : ''}`);
+              }
+              if (infants > 0) {
+                parts.push(`${infants} Infant${infants > 1 ? 's' : ''}`);
+              }
+              
+              const passengerText = parts.length > 0 ? parts.join(', ') : '1 Adult';
+              return `${passengerText}, ${travelClass}`;
+            })()}
           </span>
           <span className="dropdown-icon">▼</span>
         </button>
