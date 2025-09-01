@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Social Media
+Allow: /og-image.png
+Allow: /favicon*
+
+Sitemap: https://beta.vimanpravas.com/sitemap.xml
