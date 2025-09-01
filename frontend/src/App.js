@@ -492,16 +492,15 @@ const EnhancedAirportSelector = ({
       <label className="input-label">{label}</label>
       <div className="input-container">
         {selectedAirport ? (
-          // Enhanced Selected Display - City large, Airport small
-          <div
+          // Button-as-Control: No text cursor, always opens dropdown
+          <button
+            type="button"
             onClick={handleFieldClick}
             className={`airport-display-enhanced ${highlight ? 'input-highlight' : ''}`}
-            role="button"
-            tabIndex={0}
+            role="combobox"
             aria-expanded={isOpen}
             aria-controls={`${label.toLowerCase()}-dropdown`}
-            onKeyDown={handleKeyDown}
-            aria-label={`Selected airport: ${selectedAirport.city}`}
+            aria-label={`Selected airport: ${selectedAirport.city}. Click to change.`}
           >
             <div className="airport-display-content">
               {/* City - Large Primary (text-lg font-semibold) */}
@@ -512,9 +511,9 @@ const EnhancedAirportSelector = ({
               </div>
             </div>
             <span className="dropdown-icon">▼</span>
-          </div>
+          </button>
         ) : (
-          // Input field for typing
+          // Input field for typing (only when no selection)
           <input
             ref={inputRef}
             type="text"
