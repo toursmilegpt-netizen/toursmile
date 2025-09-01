@@ -541,26 +541,28 @@ body {
 
 /* From: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */
 .route-field-from {
-  flex-basis: 45%; /* basis-[45%] */
-  min-width: 240px; /* min-w-[240px] */
-  scroll-snap-align: start; /* snap-start */
+  flex-basis: 45% !important; /* Force basis */
+  min-width: 200px !important; /* Reduce min-width for mobile */
+  scroll-snap-align: start;
+  flex-shrink: 0;
 }
 
 /* Swap: basis-10 shrink-0 snap-start */
 .swap-container {
-  flex-basis: 40px; /* basis-10 equivalent */
-  flex-shrink: 0; /* shrink-0 */
-  scroll-snap-align: start; /* snap-start */
+  flex-basis: 40px !important;
+  flex-shrink: 0 !important;
+  scroll-snap-align: start;
   display: flex;
   align-items: flex-end;
-  padding-bottom: var(--space-1); /* Align with field bottom */
+  padding-bottom: var(--space-1);
 }
 
 /* To: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */
 .route-field-to {
-  flex-basis: 45%; /* basis-[45%] */
-  min-width: 240px; /* min-w-[240px] */
-  scroll-snap-align: start; /* snap-start */
+  flex-basis: 45% !important; /* Force basis */
+  min-width: 200px !important; /* Reduce min-width for mobile */
+  scroll-snap-align: start;
+  flex-shrink: 0;
 }
 
 /* Swap Button - h-10 w-10 rounded-full bg-neutral-100 hover:bg-neutral-200 shadow-sm */
