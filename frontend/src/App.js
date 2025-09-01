@@ -1024,6 +1024,18 @@ const FlightSearchForm = () => {
         </label>
       </div>
 
+      {/* Inline Search Button - Subtle within form */}
+      <div className="inline-search">
+        <button
+          type="button"
+          onClick={handleSearch}
+          disabled={!isFormValid}
+          className={`search-btn-inline ${isFormValid ? 'enabled' : 'disabled'}`}
+        >
+          <span className="search-text">Search Flights</span>
+        </button>
+      </div>
+
       {/* Calendar Overlay */}
       <CalendarOverlay
         isOpen={showCalendar}
