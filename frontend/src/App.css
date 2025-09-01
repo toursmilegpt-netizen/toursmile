@@ -202,12 +202,12 @@ body {
 /* ========================================= */
 /* MAIN CONTAINER - MOBILE-FIRST OPTIMIZATION */
 /* ========================================= */
-/* ENHANCED HEADER - GLOBAL TRAVEL PLATFORM */
+/* COMPACT HEADER - BIGGER LOGO, MINIMAL SPACING */
 /* ========================================= */
 
 .app-header {
   background-color: var(--color-surface-elevated);
-  padding: var(--space-4);
+  padding: var(--space-3) var(--space-4); /* Reduced padding */
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
@@ -229,58 +229,58 @@ body {
 .header-main {
   display: flex;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-6); /* Reduced gap */
 }
 
 .logo-main {
-  height: 32px;
+  height: 40px; /* Bigger logo - mobile */
   width: auto;
   object-fit: contain;
 }
 
 .main-navigation {
   display: flex;
-  gap: var(--space-6);
+  gap: var(--space-4); /* Reduced gap */
 }
 
 .nav-link {
   font-family: var(--font-family);
   font-size: var(--text-base);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-normal); /* Delicate weight */
   color: var(--color-text-secondary);
   cursor: pointer;
   transition: all var(--transition-base);
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-3); /* Reduced padding */
   border-radius: var(--radius);
   text-decoration: none;
 }
 
 .nav-link.active {
   color: var(--color-primary);
-  background-color: rgba(37, 99, 235, 0.1);
-  font-weight: var(--font-weight-semibold);
+  background-color: rgba(37, 99, 235, 0.08);
+  font-weight: var(--font-weight-medium); /* Slightly emphasized */
 }
 
 .nav-link:hover:not(.active) {
   color: var(--color-primary);
-  background-color: rgba(37, 99, 235, 0.05);
+  background-color: rgba(37, 99, 235, 0.04);
 }
 
 .header-actions {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-2); /* Reduced gap */
   align-items: center;
 }
 
 .header-btn {
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-2) var(--space-3); /* Compact */
   border: 1px solid var(--color-border);
   background-color: var(--color-surface-elevated);
   color: var(--color-text-primary);
   border-radius: var(--radius);
   font-family: var(--font-family);
   font-size: var(--text-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-normal); /* Delicate */
   cursor: pointer;
   transition: all var(--transition-base);
   min-height: var(--tap-target-min);
@@ -290,6 +290,7 @@ body {
   background: linear-gradient(135deg, var(--color-success) 0%, #059669 100%);
   color: var(--color-text-inverse);
   border-color: var(--color-success);
+  font-weight: var(--font-weight-medium);
 }
 
 .support-btn:hover {
@@ -300,7 +301,7 @@ body {
 
 .account-btn:hover {
   border-color: var(--color-primary);
-  background-color: rgba(37, 99, 235, 0.05);
+  background-color: rgba(37, 99, 235, 0.04);
   color: var(--color-primary);
 }
 
