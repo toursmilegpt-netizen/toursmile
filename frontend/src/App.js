@@ -327,7 +327,7 @@ const AIRPORTS_DATABASE = [
   { code: 'NAN', name: 'Nadi International Airport', city: 'Nadi', country: 'Fiji', popular: true }
 ];
 
-// Airport Autocomplete Component - EXACT Figma Specifications
+// Airport Autocomplete Component - ENHANCED MULTIPLE AIRPORTS LOGIC
 const AirportAutocomplete = ({ 
   value, 
   onChange, 
@@ -341,18 +341,34 @@ const AirportAutocomplete = ({
   const [filteredAirports, setFilteredAirports] = useState([]);
   const dropdownRef = useRef(null);
 
-  // Trigger after 3 characters as per Interactivity Handoff
+  // Enhanced filtering with multiple airports grouping
   useEffect(() => {
     if (inputValue.length >= 3) {
       const filtered = AIRPORTS_DATABASE.filter(airport =>
         airport.city.toLowerCase().includes(inputValue.toLowerCase()) ||
         airport.name.toLowerCase().includes(inputValue.toLowerCase()) ||
         airport.code.toLowerCase().includes(inputValue.toLowerCase())
-      ).slice(0, 6);
-      setFilteredAirports(filtered);
-      setIsOpen(filtered.length > 0);
+      );
+      
+      // Smart sorting: Popular airports first, then group by city
+      const sorted = filtered.sort((a, b) => {
+        // First, sort by city to group airports together
+        if (a.city !== b.city) {
+          return a.city.localeCompare(b.city);
+        }
+        // Within the same city, popular airports first
+        if (a.popular !== b.popular) {
+          return b.popular - a.popular;
+        }
+        return a.name.localeCompare(b.name);
+      });
+      
+      setFilteredAirports(sorted.slice(0, 8)); // Show more results for multiple airports
+      setIsOpen(sorted.length > 0);
     } else {
-      setFilteredAirports([]);
+      // Show popular airports on focus
+      const popular = AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6);
+      setFilteredAirports(popular);
       setIsOpen(false);
     }
   }, [inputValue]);
@@ -373,19 +389,36 @@ const AirportAutocomplete = ({
 
   const handleInputFocus = () => {
     if (!inputValue) {
-      setFilteredAirports(AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6));
+      const popular = AIRPORTS_DATABASE.filter(a => a.popular).slice(0, 6);
+      setFilteredAirports(popular);
       setIsOpen(true);
     }
     onFocus && onFocus();
   };
 
   const handleSelect = (airport) => {
-    // City – Airport (IATA) format as per specs
+    // Enhanced format: City – Airport (CODE)
     const selectedValue = `${airport.city} – ${airport.name} (${airport.code})`;
     setInputValue(selectedValue);
     onChange(airport);
     setIsOpen(false);
   };
+
+  // Check if current city has multiple airports
+  const getMultipleAirportsInfo = (city) => {
+    const cityAirports = AIRPORTS_DATABASE.filter(a => a.city === city);
+    return cityAirports.length > 1 ? cityAirports.length : null;
+  };
+
+  // Group airports by city for better display
+  const groupedAirports = filteredAirports.reduce((groups, airport) => {
+    const city = airport.city;
+    if (!groups[city]) {
+      groups[city] = [];
+    }
+    groups[city].push(airport);
+    return groups;
+  }, {});
 
   return (
     <div className="input-field" ref={dropdownRef}>
@@ -401,17 +434,38 @@ const AirportAutocomplete = ({
           autoComplete="off"
         />
         
-        {/* Dropdown with 200ms fade/slide animation */}
+        {/* Enhanced dropdown with multiple airports grouping */}
         {isOpen && (
           <div className="autocomplete-dropdown">
-            {filteredAirports.map((airport) => (
-              <div
-                key={airport.code}
-                onClick={() => handleSelect(airport)}
-                className="dropdown-item"
-              >
-                <div className="item-primary">{airport.city} – {airport.name}</div>
-                <div className="item-secondary">({airport.code})</div>
+            {Object.entries(groupedAirports).map(([city, airports]) => (
+              <div key={city} className="city-group">
+                {/* City header for multiple airports */}
+                {airports.length > 1 && (
+                  <div className="city-header">
+                    <span className="city-name">{city}</span>
+                    <span className="airport-count">{airports.length} airports</span>
+                  </div>
+                )}
+                
+                {/* Airport options */}
+                {airports.map((airport) => (
+                  <div
+                    key={airport.code}
+                    onClick={() => handleSelect(airport)}
+                    className={`dropdown-item ${airports.length > 1 ? 'grouped-item' : ''}`}
+                  >
+                    <div className="item-primary">
+                      {airports.length > 1 ? airport.name : `${airport.city} – ${airport.name}`}
+                    </div>
+                    <div className="item-secondary">
+                      <span className="airport-code">({airport.code})</span>
+                      {airport.popular && <span className="popular-badge">Popular</span>}
+                      {!airport.popular && airports.length > 1 && (
+                        <span className="airport-type">Secondary</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
