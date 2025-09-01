@@ -711,34 +711,34 @@ body {
   overflow: hidden; /* Prevent text overflow */
 }
 
-/* City + IATA - "Mumbai (BOM)" - Clear hierarchy */
+/* City Name - LARGE like MakeMyTrip */
 .airport-city-display {
-  font-size: 15px; /* Base readable size */
-  font-weight: var(--font-weight-semibold);
+  font-size: 20px; /* Large prominent city name */
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  max-height: 18px;
+  max-height: 24px;
 }
 
-/* Airport Details - VERY delicate and small */
+/* Airport Details - Very delicate like MakeMyTrip */
 .airport-details-display {
-  font-size: 6px; /* Very small - 2.5:1 ratio with city */
-  color: var(--color-text-secondary);
-  font-weight: 300; /* Ultra-light font weight */
+  font-size: 6px; /* Very small - MakeMyTrip style */
+  color: #999999; /* Light gray like MakeMyTrip */
+  font-weight: 300; /* Ultra-light */
   line-height: 1.0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  max-width: 100%;
-  max-height: 8px; /* Very constrained height */
-  opacity: 0.4; /* Very subtle - combination of all */
-  letter-spacing: 0.02em; /* Slight spacing for readability */
+  max-height: 8px;
+  opacity: 0.7; /* Delicate visibility */
+  letter-spacing: 0.01em;
+  text-transform: none; /* Keep original case */
 }
 
 .field-actions {
