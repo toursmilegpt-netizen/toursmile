@@ -1089,19 +1089,9 @@ const FlightSearchForm = () => {
       {/* Enhanced Route Selection - TRUE HORIZONTAL LAYOUT */}
       <div className="route-section-enhanced">
         <div className="route-row-container">
-          <div 
-            className="route-fields-row"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 40px 1fr',
-              gap: '8px',
-              alignItems: 'end',
-              width: '100%'
-            }}
-          >
-            {/* FROM Field - Inline */}
+          <div className="route-fields-row">
+            {/* FROM Field - No duplicate label */}
             <div className="from-field-inline">
-              <label className="input-label">FROM</label>
               <EnhancedAirportSelector
                 value={departure?.city || ''}
                 selectedAirport={departure}
@@ -1113,13 +1103,13 @@ const FlightSearchForm = () => {
               />
             </div>
             
-            {/* SWAP Button - Centered */}
+            {/* SWAP Button - Polished and aligned */}
             <div className="swap-inline">
               <button
                 type="button"
                 onClick={handleSwap}
                 disabled={!departure || !destination}
-                className="swap-button-final"
+                className="swap-button-polished"
                 aria-label="Swap From and To"
                 title="Swap origin and destination"
               >
@@ -1127,9 +1117,8 @@ const FlightSearchForm = () => {
               </button>
             </div>
             
-            {/* TO Field - Inline */}
+            {/* TO Field - No duplicate label */}
             <div className="to-field-inline">
-              <label className="input-label">TO</label>
               <EnhancedAirportSelector
                 value={destination?.city || ''}
                 selectedAirport={destination}
