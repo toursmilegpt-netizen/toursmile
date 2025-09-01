@@ -1014,32 +1014,12 @@ const FlightSearchForm = () => {
       setIsSwapping(false);
       
       // Announce swap completion
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.SpeechSynthesisUtterance) {
-        const utterance = new window.SpeechSynthesisUtterance(announcement);
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(announcement);
         utterance.volume = 0; // Silent for privacy, but triggers screen reader
-        window.speechSynthesis.speak(utterance);
+        speechSynthesis.speak(utterance);
       }
     }, 150); // Half of 300ms for smooth transition
-  };
-
-  // Clear All Functionality
-  const handleClearAll = () => {
-    setDeparture(null);
-    setDestination(null);
-    setDepartureDate(null);
-    setReturnDate(null);
-    setTravellers({ adults: 1, children: 0, infants: 0 });
-    setTravelClass('Economy');
-    setDirectFlights(false);
-    setFlexibleDates(false);
-    setCurrentField('departure');
-    
-    // Announce for screen readers
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.SpeechSynthesisUtterance) {
-      const utterance = new window.SpeechSynthesisUtterance('All search fields cleared');
-      utterance.volume = 0;
-      window.speechSynthesis.speak(utterance);
-    }
   };
 
   const handleSearch = () => {
