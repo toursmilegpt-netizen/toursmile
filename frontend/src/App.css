@@ -519,76 +519,92 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 /* ========================================= */
-/* ENHANCED ROUTE SECTION - HORIZONTAL ONLY */
+/* ENFORCED HORIZONTAL LAYOUT - NO STACKING */
 /* ========================================= */
 
 .route-section-enhanced {
   margin-bottom: var(--space-4);
 }
 
-/* Horizontal layout at ALL breakpoints - flex with overflow */
-.route-fields-horizontal {
+/* Enforced horizontal: flex flex-row items-end gap-3 md:gap-4 flex-nowrap overflow-x-auto snap-x snap-mandatory */
+.route-fields-horizontal-enforced {
   display: flex;
-  align-items: stretch;
+  flex-direction: row; /* Always horizontal */
+  align-items: flex-end;
   gap: var(--space-3); /* gap-3 */
+  flex-wrap: nowrap; /* flex-nowrap */
   overflow-x: auto; /* overflow-x-auto */
   scroll-snap-type: x mandatory; /* snap-x snap-mandatory */
   -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--space-1); /* Prevent scroll cutoff */
 }
 
-.route-field-container {
-  flex: 1;
-  min-width: 45%; /* min-w-[45%] on small screens */
+/* From: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */
+.route-field-from {
+  flex-basis: 45%; /* basis-[45%] */
+  min-width: 240px; /* min-w-[240px] */
   scroll-snap-align: start; /* snap-start */
-  transition: all 300ms ease-out; /* 300ms swap animation */
 }
 
-.route-field-container.swapping {
-  opacity: 0.7;
-  transform: translateX(8px);
+/* Swap: basis-10 shrink-0 snap-start */
+.swap-container {
+  flex-basis: 40px; /* basis-10 equivalent */
+  flex-shrink: 0; /* shrink-0 */
+  scroll-snap-align: start; /* snap-start */
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: var(--space-1); /* Align with field bottom */
 }
 
-/* Enhanced Swap Button - 18-20px icon, unchanged specs */
-.swap-button-enhanced {
-  width: 40px;
+/* To: basis-[45%] md:basis-auto md:flex-1 min-w-[240px] snap-start */
+.route-field-to {
+  flex-basis: 45%; /* basis-[45%] */
+  min-width: 240px; /* min-w-[240px] */
+  scroll-snap-align: start; /* snap-start */
+}
+
+/* Swap Button - h-10 w-10 rounded-full bg-neutral-100 hover:bg-neutral-200 shadow-sm */
+.swap-button-final {
+  width: 40px; /* h-10 w-10 */
   height: 40px;
-  border-radius: 50%;
+  border-radius: 50%; /* rounded-full */
   background-color: #F5F5F5; /* bg-neutral-100 */
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 18px; /* 18-20px icon size */
+  font-size: 18px; /* 18-20px icon */
   font-weight: var(--font-weight-medium);
   transition: all var(--transition-base);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm); /* shadow-sm */
   color: var(--color-text-primary);
-  flex-shrink: 0; /* Don't shrink on small screens */
 }
 
-.swap-button-enhanced:hover:not(:disabled) {
+.swap-button-final:hover:not(:disabled) {
   background-color: #E5E5E5; /* hover:bg-neutral-200 */
   transform: translateY(-1px) scale(1.05);
   box-shadow: var(--shadow-md);
 }
 
-.swap-button-enhanced:active:not(:disabled) {
-  transform: scale(var(--scale-press));
-  box-shadow: var(--shadow-sm);
-}
-
-.swap-button-enhanced:disabled {
+.swap-button-final:disabled {
   opacity: 0.5; /* opacity-50 */
   cursor: not-allowed; /* cursor-not-allowed */
   background-color: #F5F5F5;
   transform: none;
 }
 
-/* Responsive adjustments - MAINTAIN HORIZONTAL */
+/* Responsive - maintain horizontal, adjust basis */
 @media (min-width: 768px) {
-  .route-field-container {
-    min-width: 0; /* md:min-w-0 - allow natural flex on larger screens */
+  .route-fields-horizontal-enforced {
+    gap: var(--space-4); /* md:gap-4 */
+  }
+  
+  /* md:basis-auto md:flex-1 */
+  .route-field-from,
+  .route-field-to {
+    flex-basis: auto; /* md:basis-auto */
+    flex: 1; /* md:flex-1 */
   }
 }
 
