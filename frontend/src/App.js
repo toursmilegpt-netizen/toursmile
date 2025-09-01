@@ -1032,51 +1032,218 @@ const FlightSearchForm = () => {
   );
 };
 
-// Main App Component - EXACT Figma Layout
+// Main App Component - COMPREHENSIVE TRAVEL HOMEPAGE
 function App() {
   return (
     <div className="App">
-      {/* Header with centered logo and nav chips */}
+      {/* Header - Global Navigation */}
       <header className="app-header">
         <div className="header-container">
-          <img
-            src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
-            alt="TourSmile"
-            className="logo-centered"
-          />
+          <div className="header-main">
+            <img
+              src="https://customer-assets.emergentagent.com/job_travelgenius/artifacts/ojpqneqb_FINAL%20LOGO.png"
+              alt="TourSmile"
+              className="logo-main"
+            />
+            
+            <nav className="main-navigation">
+              <span className="nav-link active">Flights</span>
+              <span className="nav-link">Hotels</span>
+              <span className="nav-link">Packages</span>
+              <span className="nav-link">Activities</span>
+            </nav>
+          </div>
           
-          <nav className="nav-chips">
-            <span className="nav-chip active">Flights</span>
-            <span className="nav-chip">Hotels</span>
-            <span className="nav-chip">Packages</span>
-          </nav>
+          <div className="header-actions">
+            <button className="header-btn support-btn">
+              <span>24×7 Support</span>
+            </button>
+            <button className="header-btn account-btn">
+              <span>Sign In</span>
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="main-container">
-        {/* Search Card with 12px radius and shadows per Figma */}
-        <div className="search-card">
-          <FlightSearchForm />
+      {/* Hero Section - Main Flight Search */}
+      <section className="hero-section">
+        <div className="hero-container">
+          <div className="hero-content">
+            <h1 className="hero-title">Book Your Perfect Flight</h1>
+            <p className="hero-subtitle">Search and compare flights from 100+ airlines worldwide</p>
+          </div>
+          
+          {/* Main Search Card */}
+          <div className="search-card-hero">
+            <FlightSearchForm />
+          </div>
         </div>
+      </section>
 
-        {/* Trust Strip - README.txt: Exact text below search card */}
-        <div className="trust-strip">
-          Trusted by travellers · 24×7 WhatsApp support · Secure payments
+      {/* Trust Indicators - Global Standards */}
+      <section className="trust-section">
+        <div className="trust-container">
+          <div className="trust-indicators">
+            <div className="trust-item">
+              <div className="trust-icon">🔒</div>
+              <div className="trust-content">
+                <h3>Secure Booking</h3>
+                <p>SSL encrypted payments</p>
+              </div>
+            </div>
+            <div className="trust-item">
+              <div className="trust-icon">📞</div>
+              <div className="trust-content">
+                <h3>24×7 Support</h3>
+                <p>WhatsApp & phone support</p>
+              </div>
+            </div>
+            <div className="trust-item">
+              <div className="trust-icon">✈️</div>
+              <div className="trust-content">
+                <h3>100+ Airlines</h3>
+                <p>Best prices guaranteed</p>
+              </div>
+            </div>
+            <div className="trust-item">
+              <div className="trust-icon">⚡</div>
+              <div className="trust-content">
+                <h3>Instant Booking</h3>
+                <p>Confirmed in seconds</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Popular Routes - README.txt: Exact routes */}
-        <section className="popular-routes">
-          <h2 className="section-title-centered">Popular Routes</h2>
-          <div className="route-chips">
-            {['Delhi–Mumbai', 'Bangalore–Hyderabad', 'Mumbai–Dubai', 'Delhi–Singapore'].map((route) => (
-              <div key={route} className="route-chip">
-                {route}
+      {/* Popular Destinations - Enhanced */}
+      <section className="destinations-section">
+        <div className="section-container">
+          <h2 className="section-title">Popular Destinations</h2>
+          <p className="section-subtitle">Discover trending routes and best deals</p>
+          
+          <div className="destinations-grid">
+            {[
+              { route: 'Delhi → Mumbai', price: '₹3,999', image: '🏙️', popular: true },
+              { route: 'Bangalore → Hyderabad', price: '₹4,299', image: '🌆', popular: true },
+              { route: 'Mumbai → Dubai', price: '₹12,999', image: '🏗️', popular: true },
+              { route: 'Delhi → Singapore', price: '₹18,999', image: '🌃', popular: true },
+              { route: 'Chennai → London', price: '₹45,999', image: '🏛️', popular: false },
+              { route: 'Kolkata → Bangkok', price: '₹15,999', image: '🏯', popular: false }
+            ].map((dest, index) => (
+              <div key={index} className={`destination-card ${dest.popular ? 'popular' : ''}`}>
+                <div className="dest-image">{dest.image}</div>
+                <div className="dest-content">
+                  <h3 className="dest-route">{dest.route}</h3>
+                  <p className="dest-price">Starting from {dest.price}</p>
+                  {dest.popular && <span className="popular-tag">Popular</span>}
+                </div>
               </div>
             ))}
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* Special Offers - Conversion Driver */}
+      <section className="offers-section">
+        <div className="section-container">
+          <h2 className="section-title">Special Offers</h2>
+          <p className="section-subtitle">Limited time deals you can't miss</p>
+          
+          <div className="offers-grid">
+            <div className="offer-card featured">
+              <div className="offer-badge">Limited Time</div>
+              <h3 className="offer-title">Flat ₹2000 OFF</h3>
+              <p className="offer-desc">On international flights above ₹25,000</p>
+              <div className="offer-code">Code: INTERNATIONAL2K</div>
+              <button className="offer-btn">Book Now</button>
+            </div>
+            
+            <div className="offer-card">
+              <div className="offer-badge">Weekend Deal</div>
+              <h3 className="offer-title">Extra 15% OFF</h3>
+              <p className="offer-desc">Weekend bookings on domestic flights</p>
+              <div className="offer-code">Code: WEEKEND15</div>
+              <button className="offer-btn">Grab Deal</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us - Value Propositions */}
+      <section className="features-section">
+        <div className="section-container">
+          <h2 className="section-title">Why Choose TourSmile?</h2>
+          
+          <div className="features-grid">
+            <div className="feature-item">
+              <div className="feature-icon">💰</div>
+              <h3 className="feature-title">Best Price Guarantee</h3>
+              <p className="feature-desc">Find a lower price? We'll match it and give you ₹500 extra</p>
+            </div>
+            
+            <div className="feature-item">
+              <div className="feature-icon">🎯</div>
+              <h3 className="feature-title">Smart Search</h3>
+              <p className="feature-desc">AI-powered search finds the best flights for your needs</p>
+            </div>
+            
+            <div className="feature-item">
+              <div className="feature-icon">📱</div>
+              <h3 className="feature-title">Mobile First</h3>
+              <p className="feature-desc">Book, manage, and check-in seamlessly on any device</p>
+            </div>
+            
+            <div className="feature-item">
+              <div className="feature-icon">⚡</div>
+              <h3 className="feature-title">Instant Confirmation</h3>
+              <p className="feature-desc">Get your e-ticket instantly with real-time booking</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer - Global Standard */}
+      <footer className="app-footer">
+        <div className="footer-container">
+          <div className="footer-main">
+            <div className="footer-section">
+              <h4 className="footer-title">TourSmile</h4>
+              <p className="footer-desc">Your trusted travel companion for flights, hotels, and experiences worldwide.</p>
+            </div>
+            
+            <div className="footer-section">
+              <h4 className="footer-title">Quick Links</h4>
+              <ul className="footer-links">
+                <li><a href="#flights">Flight Booking</a></li>
+                <li><a href="#hotels">Hotel Booking</a></li>
+                <li><a href="#packages">Travel Packages</a></li>
+                <li><a href="#support">Customer Support</a></li>
+              </ul>
+            </div>
+            
+            <div className="footer-section">
+              <h4 className="footer-title">Support</h4>
+              <ul className="footer-links">
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#terms">Terms & Conditions</a></li>
+                <li><a href="#privacy">Privacy Policy</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="footer-bottom">
+            <p className="footer-copyright">© 2025 TourSmile. All rights reserved.</p>
+            <div className="footer-social">
+              <span>Follow us:</span>
+              <a href="#" className="social-link">Facebook</a>
+              <a href="#" className="social-link">Twitter</a>
+              <a href="#" className="social-link">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
