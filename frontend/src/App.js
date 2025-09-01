@@ -445,12 +445,15 @@ const EnhancedAirportSelector = ({
   };
 
   const handleFieldClick = () => {
-    // Re-open dropdown on click - NO text cursor for filled fields
+    // Button-as-Control approach: Always open dropdown, never show text cursor
     setIsOpen(true);
     setQuery(''); // Clear query to show recents + popular
     
-    if (selectedAirport && inputRef.current) {
-      inputRef.current.blur(); // Remove text cursor
+    // Announce dropdown opening for screen readers
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance('Dropdown opened');
+      utterance.volume = 0;
+      speechSynthesis.speak(utterance);
     }
     
     onFocus && onFocus();
