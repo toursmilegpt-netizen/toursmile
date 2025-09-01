@@ -528,11 +528,11 @@ body {
 
 /* Enforced horizontal: flex flex-row items-end gap-3 md:gap-4 flex-nowrap overflow-x-auto snap-x snap-mandatory */
 .route-fields-horizontal-enforced {
-  display: flex;
-  flex-direction: row; /* Always horizontal */
-  align-items: flex-end;
-  gap: var(--space-3); /* gap-3 */
-  flex-wrap: nowrap; /* flex-nowrap */
+  display: flex !important;
+  flex-direction: row !important; /* Force horizontal - override any column rules */
+  align-items: flex-end !important;
+  gap: var(--space-3) !important; /* gap-3 */
+  flex-wrap: nowrap !important; /* flex-nowrap */
   overflow-x: auto; /* overflow-x-auto */
   scroll-snap-type: x mandatory; /* snap-x snap-mandatory */
   -webkit-overflow-scrolling: touch;
