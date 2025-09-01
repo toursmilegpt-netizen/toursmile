@@ -548,17 +548,56 @@ body {
   margin: 0 !important;
 }
 
+.from-field-inline .enhanced-airport-field {
+  margin-bottom: 0 !important;
+}
+
 .swap-inline {
   grid-area: swap !important;
   display: flex !important;
-  align-items: center !important;
+  align-items: flex-end !important;
   justify-content: center !important;
-  margin-top: var(--space-4) !important;
+  padding-bottom: var(--space-1) !important; /* Align with field bottoms */
 }
 
 .to-field-inline {
   grid-area: to !important;
   margin: 0 !important;
+}
+
+.to-field-inline .enhanced-airport-field {
+  margin-bottom: 0 !important;
+}
+
+/* Polished Swap Button */
+.swap-button-polished {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%) !important;
+  color: white !important;
+  border: none !important;
+  font-size: 16px !important;
+  font-weight: var(--font-weight-bold) !important;
+  cursor: pointer !important;
+  box-shadow: var(--shadow-md) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all var(--transition-base) !important;
+}
+
+.swap-button-polished:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-accent-hover) 0%, #B45309 100%) !important;
+  transform: translateY(-1px) scale(1.05) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.swap-button-polished:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  background: var(--color-surface) !important;
+  color: var(--color-text-tertiary) !important;
 }
 
 .swap-button-final {
