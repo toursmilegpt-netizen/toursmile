@@ -669,14 +669,15 @@ body {
 }
 
 /* ========================================= */
-/* BUTTON-AS-COMBOBOX - NO TEXT CURSOR */
+/* ENHANCED CITY/AIRPORT DISPLAY - PERFECT APPEARANCE */
 /* ========================================= */
 
 .enhanced-airport-field {
   margin-bottom: var(--space-3);
+  width: 100%;
 }
 
-/* Button-as-Combobox when selected */
+/* Button-as-Combobox - Enhanced visual hierarchy */
 .airport-button-combobox {
   width: 100%;
   height: 48px; /* h-12 */
@@ -691,17 +692,13 @@ body {
   cursor: pointer;
   outline: none;
   box-shadow: var(--shadow-xs);
-  text-align: left; /* Button content left-aligned */
+  text-align: left;
 }
 
 .airport-button-combobox:hover, .airport-button-combobox:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.3); /* ring-2 ring-neutral-300 */
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
   background-color: var(--color-background);
-}
-
-.airport-button-combobox:focus {
-  box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.4); /* focus:ring-neutral-400 */
 }
 
 .airport-display-content {
@@ -711,47 +708,40 @@ body {
   gap: 2px;
   justify-content: center;
   align-items: flex-start;
+  overflow: hidden; /* Prevent text overflow */
 }
 
-/* City - text-base md:text-lg font-semibold leading-tight */
+/* City + IATA - "Mumbai (BOM)" - Bigger, prominent */
 .airport-city-display {
-  font-size: var(--text-base); /* text-base */
-  font-weight: var(--font-weight-semibold); /* font-semibold */
+  font-size: var(--text-lg); /* Bigger for mobile */
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
-  line-height: 1.25; /* leading-tight */
+  line-height: 1.2;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
-/* Airport + IATA with enhanced hierarchy */
+/* Shortened Airport Name - Much smaller, truncated */
 .airport-details-display {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 2px;
-}
-
-/* Airport name - text-[11px] md:text-xs text-muted-foreground leading-snug */
-.airport-name {
-  font-size: 11px; /* text-[11px] */
-  color: var(--color-text-secondary); /* text-muted-foreground */
+  font-size: var(--text-xs); /* Much smaller */
+  color: var(--color-text-secondary);
   font-weight: var(--font-weight-normal);
-  line-height: 1.375; /* leading-snug */
-}
-
-/* IATA code - font-mono uppercase tracking-wide text-[10px] md:text-[11px] text-muted-foreground/80 */
-.airport-iata {
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace; /* font-mono */
-  text-transform: uppercase; /* uppercase */
-  letter-spacing: 0.1em; /* tracking-wide */
-  font-size: 10px; /* text-[10px] */
-  color: rgba(107, 114, 128, 0.8); /* text-muted-foreground/80 */
-  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Truncated with ellipsis */
+  width: 100%;
+  max-width: 200px; /* Limit width for truncation */
 }
 
 .field-actions {
   display: flex;
   align-items: center;
   gap: var(--space-1);
+  flex-shrink: 0;
 }
 
 .edit-icon {
@@ -770,18 +760,40 @@ body {
   color: var(--color-primary);
 }
 
-/* Responsive typography adjustments */
-@media (min-width: 768px) {
+.dropdown-icon {
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+}
+
+/* Mobile Layout - Compact */
+@media (max-width: 767px) {
   .airport-city-display {
-    font-size: var(--text-lg); /* md:text-lg */
+    font-size: var(--text-base); /* Slightly smaller on mobile */
   }
   
-  .airport-name {
-    font-size: var(--text-xs); /* md:text-xs */
+  .airport-details-display {
+    max-width: 150px; /* More compact on mobile */
+    font-size: 10px; /* Even smaller on mobile */
+  }
+}
+
+/* Desktop Layout - More detailed */
+@media (min-width: 1024px) {
+  .airport-city-display {
+    font-size: var(--text-xl); /* Larger on desktop */
+    font-weight: var(--font-weight-bold); /* Bolder on desktop */
   }
   
-  .airport-iata {
-    font-size: 11px; /* md:text-[11px] */
+  .airport-details-display {
+    font-size: var(--text-sm); /* Larger on desktop */
+    max-width: 280px; /* More space on desktop */
+    color: var(--color-text-tertiary); /* Lighter on desktop */
+  }
+  
+  .airport-button-combobox {
+    height: 52px; /* Taller on desktop */
+    padding: 12px 16px; /* More padding on desktop */
   }
 }
 
