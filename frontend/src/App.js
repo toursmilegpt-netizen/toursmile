@@ -918,10 +918,11 @@ const FlightSearchForm = () => {
         </div>
       </div>
 
-      {/* Date Selection */}
+      {/* Compact Date Selection - Single Row with Separator */}
       <div className="date-section">
-        <div className={`date-fields ${tripType === 'round-trip' ? 'two-dates' : 'one-date'}`}>
-          <div className="input-field">
+        <div className="date-row">
+          {/* Departure Date - Compact */}
+          <div className="date-field-compact">
             <label className="input-label">DEPARTURE</label>
             <button
               type="button"
@@ -929,30 +930,43 @@ const FlightSearchForm = () => {
                 setCalendarType('departure');
                 setShowCalendar(true);
               }}
-              className={`input-box date-selector ${getFieldHighlight('departureDate') ? 'input-highlight' : ''}`}
+              className={`date-input-compact ${getFieldHighlight('departureDate') ? 'input-highlight' : ''}`}
             >
-              <span className="input-value">
-                {departureDate ? departureDate.toLocaleDateString('en-GB') : 'Select Date'}
+              <span className="date-value">
+                {departureDate ? departureDate.toLocaleDateString('en-GB', { 
+                  day: 'numeric', 
+                  month: 'short', 
+                  year: 'numeric' 
+                }) : 'Select Date'}
               </span>
             </button>
           </div>
 
+          {/* Separator for Round Trip */}
           {tripType === 'round-trip' && (
-            <div className="input-field">
-              <label className="input-label">RETURN</label>
-              <button
-                type="button"
-                onClick={() => {
-                  setCalendarType('return');
-                  setShowCalendar(true);
-                }}
-                className={`input-box date-selector ${getFieldHighlight('return') ? 'input-highlight' : ''}`}
-              >
-                <span className="input-value">
-                  {returnDate ? returnDate.toLocaleDateString('en-GB') : 'Select Date'}
-                </span>
-              </button>
-            </div>
+            <>
+              <div className="date-separator">|</div>
+              
+              <div className="date-field-compact">
+                <label className="input-label">RETURN</label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCalendarType('return');
+                    setShowCalendar(true);
+                  }}
+                  className={`date-input-compact ${getFieldHighlight('return') ? 'input-highlight' : ''}`}
+                >
+                  <span className="date-value">
+                    {returnDate ? returnDate.toLocaleDateString('en-GB', { 
+                      day: 'numeric', 
+                      month: 'short', 
+                      year: 'numeric' 
+                    }) : 'Select Date'}
+                  </span>
+                </button>
+              </div>
+            </>
           )}
         </div>
       </div>
