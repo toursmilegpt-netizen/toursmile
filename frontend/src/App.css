@@ -584,8 +584,58 @@ body {
 }
 
 /* ========================================= */
-/* COMPACT DATE & TRAVELLER FIELDS - OVERLAY OPTIMIZED */
+/* COMPACT ROUTE SECTION */
 /* ========================================= */
+
+.route-section {
+  margin-bottom: var(--space-4);
+}
+
+.route-fields {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.swap-button {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-full);
+  width: 36px; /* Smaller for compact design */
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+  position: relative;
+}
+
+.swap-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-accent-hover) 0%, #B45309 100%);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-md);
+}
+
+.swap-button:active:not(:disabled) {
+  transform: scale(var(--scale-press));
+  box-shadow: var(--shadow-sm);
+}
+
+.swap-button:disabled {
+  background: var(--color-surface);
+  color: var(--color-text-tertiary);
+  cursor: not-allowed;
+  opacity: var(--opacity-disabled);
+  transform: none;
+  box-shadow: var(--shadow-xs);
+}
 
 .date-section {
   margin-bottom: var(--space-4);
