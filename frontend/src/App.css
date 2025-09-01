@@ -1934,25 +1934,40 @@ body {
 /* OPTIMAL RESPONSIVE DESIGN - EXPERT DECISIONS */
 /* ========================================= */
 
-/* MOBILE: 390px - Conversion-focused mobile experience */
+/* ========================================= */
+/* RESPONSIVE BREAKPOINTS - BIGGER LOGOS, COMPACT DESIGN */
+/* ========================================= */
+
+/* MOBILE: 390px - Compact mobile experience */
 @media (max-width: 767px) {
   .App {
     max-width: var(--breakpoint-xs);
     margin: 0 auto;
   }
   
-  /* Mobile header - simplified */
+  /* Mobile header - compact with bigger logo */
+  .header-container {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
   .header-main {
+    width: 100%;
+    justify-content: space-between;
     gap: var(--space-4);
   }
   
+  .logo-main {
+    height: 36px; /* Bigger on mobile */
+  }
+  
   .main-navigation {
-    gap: var(--space-3);
+    gap: var(--space-2);
   }
   
   .nav-link {
     font-size: var(--text-sm);
-    padding: var(--space-2);
+    padding: var(--space-1) var(--space-2);
   }
   
   .header-actions {
@@ -1960,87 +1975,73 @@ body {
   }
   
   .header-btn {
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-1) var(--space-2);
     font-size: var(--text-xs);
   }
   
-  /* Mobile hero - focused */
+  /* Mobile hero - compact */
   .hero-section {
-    padding: var(--space-8) var(--space-4) var(--space-12);
+    padding: var(--space-5) var(--space-3) var(--space-6);
   }
   
   .hero-title {
-    font-size: var(--text-xl);
+    font-size: var(--text-lg);
   }
   
   .hero-subtitle {
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
   }
   
   .search-card-hero {
-    padding: var(--space-6);
-  }
-  
-  /* Mobile trust section - stacked */
-  .trust-indicators {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-  
-  .trust-item {
     padding: var(--space-4);
   }
   
-  /* Mobile destinations - 2 columns */
-  .destinations-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
+  /* Mobile sections - minimal gaps */
+  .trust-section, .destinations-section, .offers-section, .features-section {
+    padding: var(--space-4) var(--space-3);
+  }
+  
+  .trust-indicators, .destinations-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
   }
   
   .destination-card {
-    padding: var(--space-4);
+    padding: var(--space-3);
   }
   
-  /* Mobile offers - stacked */
-  .offers-grid {
+  .offers-grid, .features-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-5);
+    gap: var(--space-3);
   }
   
-  /* Mobile features - stacked */
-  .features-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-  
-  /* Mobile footer - stacked */
   .footer-main {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
+    gap: var(--space-4);
   }
   
   .footer-bottom {
     flex-direction: column;
     text-align: center;
-    gap: var(--space-3);
+    gap: var(--space-2);
   }
   
   /* Stack route fields on very small screens */
   @media (max-width: 360px) {
     .route-fields {
       grid-template-columns: 1fr;
-      gap: var(--space-4);
+      gap: var(--space-3);
     }
     
     .swap-button {
       order: 1;
       justify-self: center;
-      margin: var(--space-2) 0;
+      margin: var(--space-1) 0;
     }
     
     .date-fields.two-dates {
       grid-template-columns: 1fr;
-      gap: var(--space-4);
+      gap: var(--space-3);
     }
     
     .destinations-grid {
@@ -2049,49 +2050,47 @@ body {
   }
 }
 
-/* TABLET: 768px - Bridge experience with smart layout */
+/* TABLET: 768px - Bridge experience */
 @media (min-width: 768px) and (max-width: 1023px) {
   .App {
     max-width: var(--breakpoint-sm);
     margin: 0 auto;
-    padding: 0 var(--space-6);
+    padding: 0 var(--space-4);
+  }
+  
+  .logo-main {
+    height: 40px; /* Bigger on tablet */
   }
   
   .main-container {
-    padding: var(--space-8);
-    padding-bottom: var(--space-12);
+    padding: var(--space-5);
+    padding-bottom: var(--space-10);
   }
   
-  .search-card {
-    padding: var(--space-8);
+  .search-card, .search-card-hero {
+    padding: var(--space-6);
     max-width: 600px;
-    margin: 0 auto var(--space-6) auto;
+    margin: 0 auto var(--space-4) auto;
   }
   
-  /* Enhanced header for tablet */
-  .app-header {
-    padding: var(--space-5) var(--space-8);
+  .trust-indicators {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
   }
   
-  .header-container {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: var(--space-6);
+  .destinations-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
   }
   
-  .logo-centered {
-    height: 32px;
+  .offers-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
   }
   
-  /* 4-column popular routes on tablet */
-  .route-chips {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-3);
-  }
-  
-  /* Larger touch targets for tablet */
-  .nav-chip, .segment-option {
-    min-height: var(--tap-target-comfortable);
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
   }
 }
 
@@ -2102,49 +2101,31 @@ body {
     margin: 0 auto;
   }
   
+  .logo-main {
+    height: 44px; /* Bigger on desktop */
+  }
+  
   .main-container {
-    padding: var(--space-12) var(--space-8);
-    padding-bottom: var(--space-8);
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: var(--space-12);
-    align-items: start;
+    padding: var(--space-8) var(--space-6);
+    padding-bottom: var(--space-6);
   }
   
-  /* Desktop search card - prominent but not overwhelming */
-  .search-card {
-    padding: var(--space-10);
+  .search-card, .search-card-hero {
+    padding: var(--space-8);
     margin-bottom: 0;
-    box-shadow: var(--shadow-lg);
-  }
-  
-  /* Desktop header - horizontal layout */
-  .app-header {
-    padding: var(--space-6) var(--space-12);
+    box-shadow: var(--shadow-md);
   }
   
   .header-container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-8);
+    padding: 0 var(--space-6);
   }
   
-  .logo-centered {
-    height: 36px;
-  }
-  
-  /* Desktop navigation - more spacious */
-  .nav-chips {
-    gap: var(--space-4);
-  }
-  
-  .nav-chip {
-    padding: var(--space-3) var(--space-6);
+  .nav-link {
+    padding: var(--space-2) var(--space-4);
     font-size: var(--text-base);
   }
   
-  /* Desktop CTA - inline, prominent */
+  /* Desktop CTA - inline */
   .sticky-cta {
     position: static;
     padding: 0;
@@ -2152,85 +2133,64 @@ body {
     border: none;
     box-shadow: none;
     backdrop-filter: none;
-    margin-top: var(--space-8);
+    margin-top: var(--space-6);
   }
   
   .cta-button {
-    max-width: 320px;
+    max-width: 300px;
     margin: 0 auto;
-    padding: var(--space-5) var(--space-8);
-    font-size: var(--text-xl);
-    min-height: 60px;
-  }
-  
-  /* Desktop form enhancements */
-  .input-box {
-    padding: var(--space-5);
+    padding: var(--space-4) var(--space-6);
     font-size: var(--text-lg);
+    min-height: 52px;
   }
   
-  .input-label {
-    font-size: var(--text-sm);
-    margin-bottom: var(--space-3);
-  }
-  
-  /* Desktop popular routes */
-  .popular-routes {
-    margin-top: var(--space-10);
-  }
-  
-  .route-chips {
+  /* Desktop sections - efficient spacing */
+  .trust-indicators {
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-4);
-    max-width: 800px;
-    margin: 0 auto;
+    gap: var(--space-5);
   }
   
-  .route-chip {
-    padding: var(--space-4);
-    font-size: var(--text-base);
-    min-height: var(--tap-target-comfortable);
+  .destinations-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
   }
   
-  /* Desktop sidebar content (future: ads, tips, etc.) */
-  .desktop-sidebar {
-    background-color: var(--color-surface);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-sm);
-    height: fit-content;
-    position: sticky;
-    top: calc(var(--space-16) + 80px); /* Account for header */
+  .offers-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
   }
 }
 
-/* LARGE DESKTOP: 1440px+ - Enhanced desktop experience */
+/* LARGE DESKTOP: 1440px+ - Enhanced experience */
 @media (min-width: 1440px) {
+  .logo-main {
+    height: 48px; /* Biggest on large desktop */
+  }
+  
   .main-container {
-    padding: var(--space-16) var(--space-12);
+    padding: var(--space-10) var(--space-8);
     max-width: 1200px;
     margin: 0 auto;
   }
   
-  .search-card {
-    padding: var(--space-12);
+  .search-card, .search-card-hero {
+    padding: var(--space-10);
   }
   
-  .app-header {
-    padding: var(--space-8) var(--space-16);
+  .header-container {
+    padding: 0 var(--space-8);
   }
   
-  .logo-centered {
-    height: 40px;
-  }
-  
-  /* Enhanced spacing for large screens */
   .input-field {
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-5);
   }
   
   .route-section, .date-section {
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-6);
   }
 }
