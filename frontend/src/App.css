@@ -734,35 +734,53 @@ body {
 
 /* Enhanced passenger categories - reduced gaps */
 .passenger-categories {
-  margin-bottom: var(--space-4); /* Reduced from space-6 */
+  margin-bottom: var(--space-3); /* Further reduced */
 }
 
 .passenger-category {
-  padding: var(--space-3) 0; /* Reduced from space-4 */
+  padding: var(--space-2) 0; /* Further reduced */
   border-bottom: 1px solid var(--color-divider);
 }
 
 .passenger-category:last-of-type {
   border-bottom: none;
-  margin-bottom: var(--space-3); /* Reduced from space-5 */
+  margin-bottom: var(--space-2); /* Minimal margin */
 }
 
 .category-stepper {
-  gap: var(--space-3); /* Reduced from space-4 */
-  padding: var(--space-1); /* Reduced */
+  gap: var(--space-2); /* Further reduced */
+  padding: var(--space-1);
+}
+
+.stepper-btn {
+  width: 32px; /* Smaller buttons */
+  height: 32px;
+  font-size: 18px;
+}
+
+.stepper-count {
+  min-width: 24px; /* Smaller */
+  font-size: var(--text-base);
 }
 
 .class-section {
   border-top: 1px solid var(--color-divider);
-  padding-top: var(--space-4); /* Reduced from space-5 */
+  padding-top: var(--space-3); /* Reduced */
 }
 
 .class-title {
-  margin-bottom: var(--space-3); /* Reduced from space-5 */
+  margin-bottom: var(--space-2); /* Reduced */
+  font-size: var(--text-lg);
 }
 
 .class-options {
-  gap: var(--space-2); /* Reduced from space-3 */
+  gap: var(--space-2);
+}
+
+.class-option {
+  padding: var(--space-2) var(--space-3); /* Smaller padding */
+  min-height: 32px; /* Reduced height */
+  font-size: var(--text-xs); /* Smaller text */
 }
 
 /* ========================================= */
