@@ -868,7 +868,6 @@ const FlightSearchForm = () => {
   };
 
   const isFormValid = departure && destination && departureDate && (tripType === 'one-way' || returnDate);
-  const getTotalTravellers = () => travellers.adults + travellers.children + travellers.infants;
 
   return (
     <div className="search-form">
