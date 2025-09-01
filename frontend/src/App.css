@@ -711,30 +711,33 @@ body {
   overflow: hidden; /* Prevent text overflow */
 }
 
-/* City + IATA - "Mumbai (BOM)" - Bigger, prominent */
+/* City + IATA - "Mumbai (BOM)" - Prominent but controlled */
 .airport-city-display {
-  font-size: var(--text-lg); /* Bigger for mobile */
+  font-size: var(--text-base); /* Controlled size for mobile */
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
-  line-height: 1.2;
+  line-height: 1.1; /* Tight line height */
   letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+  max-height: 18px; /* Constrain height */
 }
 
-/* Shortened Airport Name - Much smaller, truncated */
+/* Airport Details - MUCH smaller to fit in space */
 .airport-details-display {
-  font-size: var(--text-xs); /* Much smaller */
+  font-size: 9px; /* Very small - much smaller */
   color: var(--color-text-secondary);
   font-weight: var(--font-weight-normal);
-  line-height: 1.2;
+  line-height: 1.0; /* Very tight */
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Truncated with ellipsis */
+  text-overflow: ellipsis;
   width: 100%;
-  max-width: 200px; /* Limit width for truncation */
+  max-width: 100%; /* Use full available width */
+  max-height: 12px; /* Constrain height to fit */
+  opacity: 0.8; /* Subtle visibility */
 }
 
 .field-actions {
