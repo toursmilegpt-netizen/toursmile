@@ -1212,13 +1212,12 @@ const FlightSearchForm = () => {
         departureDate={departureDate}
       />
 
-      {/* Travellers Bottom Sheet */}
-      <TravellersBottomSheet
+      {/* Travellers Bottom Sheet - Premium Overlay */}
+      <PremiumPassengerSelector
         travellers={travellers}
         onTravellersChange={setTravellers}
         travelClass={travelClass}
         onClassChange={setTravelClass}
-        highlight={getFieldHighlight('travellers')}
         isOpen={showTravellers}
         onClose={() => setShowTravellers(false)}
       />
