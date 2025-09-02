@@ -623,11 +623,12 @@ const EnhancedAirportSelector = ({
                     tabIndex={0}
                     aria-label={`Recent: ${airport.city}, ${airport.name}`}
                   >
-                    {/* Line 1 City: text-sm font-medium */}
+                    {/* City line: text-sm font-medium color-neutral-900 */}
                     <div className="item-city-final">{airport.city}</div>
-                    {/* Line 2 Airport + IATA: text-xs text-muted-foreground */}
+                    {/* Airport + IATA line: text-xs color-neutral-500 */}
                     <div className="item-details-final">
-                      {airport.name} — {airport.code}
+                      <span className="airport-name">{shortenAirportName(airport.name)}</span>
+                      <span className="airport-iata">{airport.code}</span>
                     </div>
                   </div>
                 ))}
