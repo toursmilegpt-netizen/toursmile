@@ -494,7 +494,7 @@ export default function App() {
             <div key={i} className="rounded-xl border border-neutral-200 p-4 bg-white hover:shadow-sm transition-shadow">
               <div className="text-2xl mb-2" aria-hidden>{b.icon}</div>
               <div className="text-sm font-medium" style={{ fontWeight: '500' }}>{b.t}</div>
-              <div className="text-xs text-neutral-600 mt-0.5">{b.s}</div>
+              <div className="text-xs text-neutral-600 mt-0.5" style={{ fontWeight: '300' }}>{b.s}</div>
             </div>
           ))}
         </section>
