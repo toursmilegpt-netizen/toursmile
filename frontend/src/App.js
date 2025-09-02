@@ -475,7 +475,7 @@ export default function App() {
     <Container>
       <main className="mx-auto max-w-7xl px-4 pb-24">
         <section className="text-center pt-14 md:pt-20 pb-8">
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight" style={{ letterSpacing: '-0.75px' }}>
             Book Your Perfect Flight
           </h1>
           <p className="mt-3 text-neutral-600">
