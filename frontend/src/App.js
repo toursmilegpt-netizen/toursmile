@@ -1238,11 +1238,7 @@ const FlightSearchForm = () => {
               gridTemplateAreas: '"from swap to"'
             }}
           >
-            {/* FROM Field */}
-            <div 
-              className="from-field-inline"
-              style={{ gridArea: 'from', margin: 0 }}
-            >
+            <div className="from-field-inline">
               <WorldClassCityPicker
                 value={departure?.city || ''}
                 selectedAirport={departure}
@@ -1254,17 +1250,8 @@ const FlightSearchForm = () => {
               />
             </div>
             
-            {/* SWAP Button */}
-            <div 
-              className="swap-inline"
-              style={{ 
-                gridArea: 'swap', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                paddingBottom: '4px'
-              }}
-            >
+            {/* SWAP Button - Polished and aligned */}
+            <div className="swap-inline">
               <button
                 type="button"
                 onClick={handleSwap}
@@ -1273,7 +1260,7 @@ const FlightSearchForm = () => {
                   width: '36px',
                   height: '36px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                  background: 'linear-gradient(135deg, #FFB700 0%, #E6A500 100%)',
                   color: 'white',
                   border: 'none',
                   fontSize: '16px',
@@ -1293,10 +1280,7 @@ const FlightSearchForm = () => {
             </div>
             
             {/* TO Field */}
-            <div 
-              className="to-field-inline"
-              style={{ gridArea: 'to', margin: 0 }}
-            >
+            <div className="to-field-inline">
               <WorldClassCityPicker
                 value={destination?.city || ''}
                 selectedAirport={destination}
