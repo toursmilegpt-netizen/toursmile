@@ -904,39 +904,24 @@ const FlightSearchForm = () => {
             }}
           >
             <div className="from-field-inline">
-              <WorldClassCityPicker
+              <DirectTypingCityPicker
                 value={departure?.city || ''}
                 selectedAirport={departure}
                 onSelect={handleDepartureSelect}
                 label="FROM"
-                placeholder="Departure city"
+                placeholder="City or airport"
                 highlight={getFieldHighlight('departure')}
                 onFocus={() => setCurrentField('departure')}
               />
             </div>
             
-            {/* SWAP Button - Polished and aligned */}
+            {/* SWAP Button - Sunrise gold */}
             <div className="swap-inline">
               <button
                 type="button"
                 onClick={handleSwap}
                 disabled={!departure || !destination}
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #FFB700 0%, #E6A500 100%)',
-                  color: 'white',
-                  border: 'none',
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.2s ease'
-                }}
+                className="swap-button-fresh"
                 aria-label="Swap From and To"
                 title="Swap origin and destination"
               >
@@ -946,12 +931,12 @@ const FlightSearchForm = () => {
             
             {/* TO Field */}
             <div className="to-field-inline">
-              <WorldClassCityPicker
+              <DirectTypingCityPicker
                 value={destination?.city || ''}
                 selectedAirport={destination}
                 onSelect={handleDestinationSelect}
                 label="TO"
-                placeholder="Destination city"
+                placeholder="City or airport"
                 highlight={getFieldHighlight('destination')}
                 onFocus={() => setCurrentField('destination')}
               />
