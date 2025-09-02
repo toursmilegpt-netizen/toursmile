@@ -492,8 +492,8 @@ function Footer() {
   );
 }
 
-// Main App Component - EXACT IMPLEMENTATION
-export default function App() {
+// Main App Component - EXACT IMPLEMENTATION  
+function App() {
   return (
     <Container>
       <main className="mx-auto max-w-7xl px-4 pb-24" style={{ maxWidth: '100vw', overflowX: 'hidden' }}>
