@@ -443,7 +443,7 @@ function Footer() {
           </ul>
         </div>
         <div>
-          <div className="font-medium mb-2">Policies</div>
+          <div className="font-medium mb-2" style={{ fontWeight: '500' }}>Policies</div>
           <ul className="space-y-1 text-neutral-600">
             <li><a href="#" className="hover:text-neutral-900">Terms & Conditions</a></li>
             <li><a href="#" className="hover:text-neutral-900">Privacy Policy</a></li>
