@@ -1189,21 +1189,20 @@ const FlightSearchForm = () => {
         </div>
       </div>
 
-      {/* Compact Date Selection - Single Row with Separator */}
+      {/* Clean Date Selection - No Labels, Placeholders Only */}
       <div className="date-section">
         <div className="date-row">
-          {/* Departure Date - Compact */}
+          {/* Departure Date - Clean placeholder */}
           <div className="date-field-compact">
-            <label className="input-label">DEPARTURE</label>
             <button
               type="button"
               onClick={() => {
-                console.log('Departure date clicked'); // Debug
+                console.log('Departure date clicked');
                 setCalendarType('departure');
                 setShowCalendar(true);
-                console.log('Calendar state set:', { calendarType: 'departure', showCalendar: true }); // Debug
+                console.log('Calendar state set:', { calendarType: 'departure', showCalendar: true });
               }}
-              className={`date-input-compact ${getFieldHighlight('departureDate') ? 'input-highlight' : ''}`}
+              className={`date-input-clean ${getFieldHighlight('departureDate') ? 'input-highlight' : ''}`}
             >
               <span className="date-value">
                 {departureDate ? departureDate.toLocaleDateString('en-GB', { 
@@ -1212,6 +1211,7 @@ const FlightSearchForm = () => {
                   year: 'numeric' 
                 }) : 'Select Date'}
               </span>
+              <span className="calendar-icon">📅</span>
             </button>
           </div>
 
@@ -1221,16 +1221,15 @@ const FlightSearchForm = () => {
               <div className="date-separator">|</div>
               
               <div className="date-field-compact">
-                <label className="input-label">RETURN</label>
                 <button
                   type="button"
                   onClick={() => {
-                    console.log('Return date clicked'); // Debug
+                    console.log('Return date clicked');
                     setCalendarType('return');
                     setShowCalendar(true);
-                    console.log('Calendar state set:', { calendarType: 'return', showCalendar: true }); // Debug
+                    console.log('Calendar state set:', { calendarType: 'return', showCalendar: true });
                   }}
-                  className={`date-input-compact ${getFieldHighlight('return') ? 'input-highlight' : ''}`}
+                  className={`date-input-clean ${getFieldHighlight('return') ? 'input-highlight' : ''}`}
                 >
                   <span className="date-value">
                     {returnDate ? returnDate.toLocaleDateString('en-GB', { 
@@ -1239,6 +1238,7 @@ const FlightSearchForm = () => {
                       year: 'numeric' 
                     }) : 'Select Date'}
                   </span>
+                  <span className="calendar-icon">📅</span>
                 </button>
               </div>
             </>
