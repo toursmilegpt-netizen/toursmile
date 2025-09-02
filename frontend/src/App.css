@@ -1207,10 +1207,6 @@ body {
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 32px !important; /* Mobile size */
-  }
-  
   .header-container {
     flex-direction: column;
     gap: var(--space-4);
