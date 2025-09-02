@@ -516,7 +516,6 @@ function App() {
             }}
           >
           {[
-          {[
             { icon: "🔒", t: "Secure Booking", s: "SSL encrypted payments" },
             { icon: "💬", t: "24×7 Support", s: "WhatsApp & phone support" },
             { icon: "🎯", t: "Personal Travel Assistant", s: "AI-powered recommendations just for you" },
@@ -528,6 +527,7 @@ function App() {
               <div className="text-xs text-neutral-600 mt-0.5" style={{ fontWeight: '300' }}>{b.s}</div>
             </div>
           ))}
+          </div>
         </section>
 
         <Footer />
