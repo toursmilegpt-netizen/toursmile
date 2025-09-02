@@ -1,94 +1,82 @@
-/* TOURSMILE WORLD-CLASS HOMEPAGE - PREMIUM TRAVEL PLATFORM */
-/* Rivaling Airbnb, Booking.com, Kayak - Luxurious yet accessible */
-/* Inspiring wanderlust with functional excellence */
+/* TOURSMILE HOMEPAGE - FRESH PREMIUM WHITE THEME */
+/* Light, airy design with balanced whitespace and soft accents */
+/* Direct typing city picker, center screen modals, emoji icons */
 
 /* ========================================= */
-/* PREMIUM COLOR PALETTE & VISUAL IDENTITY */
+/* FRESH WHITE THEME DESIGN SYSTEM */
 /* ========================================= */
 
 :root {
-  /* PRIMARY COLORS - LUXURY TRAVEL PALETTE */
-  --deep-ocean-blue: #0F4C75;     /* Trust, reliability, depth */
-  --sunrise-gold: #FFB700;        /* Adventure, optimism, premium feel */
-  --pure-white: #FFFFFF;          /* Clean, spacious, modern */
-  --soft-cloud-gray: #F8F9FA;     /* Subtle backgrounds, gentle contrast */
+  /* WHITE THEME BASE COLORS */
+  --white: #FFFFFF;
+  --neutral-50: #FAFAFA;
+  --neutral-100: #F5F5F5;
+  --neutral-200: #E5E5E5;
+  --neutral-300: #D4D4D4;
+  --neutral-400: #A3A3A3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
   
-  /* SECONDARY/ACCENT COLORS */
-  --success-green: #28A745;       /* Confirmations, positive actions */
-  --warm-coral: #FF6B6B;          /* CTA highlights, urgent deals */
-  --midnight-blue: #1A252F;       /* Deep text, premium elements */
-  --light-sky: #E3F2FD;           /* Hover states, subtle highlights */
+  /* TOURSMILE SOFT ACCENTS */
+  --blue-50: #EFF6FF;
+  --blue-100: #DBEAFE;
+  --blue-200: #BFDBFE; /* Ring colors */
+  --blue-300: #93C5FD; /* Focus rings */
+  --blue-600: #2D7BE5; /* CTAs */
+  --blue-700: #1D4ED8;
   
-  /* EXTENDED PALETTE FOR RICHNESS */
-  --ocean-blue-50: #F0F8FF;
-  --ocean-blue-100: #E6F3FF;
-  --ocean-blue-200: #BAE0FF;
-  --ocean-blue-500: var(--deep-ocean-blue);
-  --ocean-blue-600: #0A3A5C;
-  --ocean-blue-700: #082E47;
+  --orange-400: #F5A623; /* Tiny highlights only */
+  --orange-500: #F59E0B;
   
-  --gold-50: #FFFCF0;
-  --gold-100: #FFF8E1;
-  --gold-200: #FFE082;
-  --gold-500: var(--sunrise-gold);
-  --gold-600: #E6A500;
-  --gold-700: #CC9400;
+  /* TYPOGRAPHY - LIGHT & AIRY */
+  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Roboto", system-ui, sans-serif;
   
-  /* TYPOGRAPHY SYSTEM - PREMIUM FONTS */
-  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-  --font-display: "Poppins", "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "SF Mono", "Monaco", monospace;
+  /* LIGHT/MEDIUM WEIGHTS ONLY */
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600; /* Only for headlines/CTAs */
   
-  /* FONT WEIGHTS - REFINED HIERARCHY */
-  --weight-light: 300;     /* Elegant touches */
-  --weight-normal: 400;    /* Body text */
-  --weight-medium: 500;    /* Body text emphasis */
-  --weight-semibold: 600;  /* Headings */
-  --weight-bold: 700;      /* Hero headlines */
+  /* TYPOGRAPHY SCALE */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
   
-  /* TYPOGRAPHY SCALE - WORLD CLASS */
-  --text-hero: 48px;       /* Hero headline - mobile: 32px */
-  --text-section: 36px;    /* Section headers - mobile: 28px */
-  --text-card: 20px;       /* Card titles - mobile: 18px */
-  --text-body: 16px;       /* Body text - mobile: 14px */
-  --text-small: 14px;      /* Small text - mobile: 12px */
-  --text-xs: 12px;         /* Tiny text */
-  
-  /* SPACING SYSTEM - 8PX BASELINE GRID */
+  /* SPACING RHYTHM - 8/12/16 GRID */
   --space-1: 4px;
-  --space-2: 8px;          /* Baseline */
+  --space-2: 8px;
   --space-3: 12px;
-  --space-4: 16px;         /* Standard */
+  --space-4: 16px;
   --space-6: 24px;
-  --space-8: 32px;         /* Loose */
-  --space-12: 48px;        /* Section spacing */
-  --space-16: 64px;        /* Large sections */
-  --space-20: 80px;        /* Desktop margins */
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
   
-  /* MODERN RADIUS SYSTEM */
-  --radius-sm: 4px;
-  --radius-md: 8px;        /* Buttons, cards */
-  --radius-lg: 16px;       /* Search widget, major cards */
-  --radius-xl: 24px;       /* Hero elements */
+  /* SOFT RADIUS */
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
   
-  /* PREMIUM SHADOWS */
-  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-card: 0 4px 12px rgba(15, 76, 117, 0.08);
-  --shadow-search: 0 10px 40px rgba(0, 0, 0, 0.1);
-  --shadow-hero: 0 20px 60px rgba(15, 76, 117, 0.15);
-  --shadow-overlay: 0 20px 60px rgba(0, 0, 0, 0.15); /* Premium overlay shadow */
+  /* SOFT SHADOWS */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   
-  /* PREMIUM TRANSITIONS */
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* SMOOTH TRANSITIONS */
   --duration-fast: 150ms;
-  --duration-smooth: 300ms;
-  --duration-slow: 500ms;
-  
-  /* RESPONSIVE BREAKPOINTS */
-  --mobile-max: 768px;
-  --tablet-max: 1024px;
-  --desktop-min: 1025px;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ========================================= */
