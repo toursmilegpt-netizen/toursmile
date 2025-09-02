@@ -488,7 +488,7 @@ export default function App() {
           {[
             { icon: "🔒", t: "Secure Booking", s: "SSL encrypted payments" },
             { icon: "💬", t: "24×7 Support", s: "WhatsApp & phone support" },
-            { icon: "✈️", t: "100+ Airlines", s: "Best prices guaranteed" },
+            { icon: "🎯", t: "Personal Travel Assistant", s: "AI-powered recommendations just for you" },
             { icon: "⚡", t: "Instant Booking", s: "Confirmed in seconds" },
           ].map((b, i) => (
             <div key={i} className="rounded-xl border border-neutral-200 p-4 bg-white hover:shadow-sm transition-shadow">
