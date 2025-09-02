@@ -473,7 +473,7 @@ function Footer() {
 export default function App() {
   return (
     <Container>
-      <main className="mx-auto max-w-7xl px-4 pb-24">
+      <main className="mx-auto max-w-7xl px-4 pb-24" style={{ maxWidth: '100vw', overflowX: 'hidden' }}>
         <section className="text-center pt-14 md:pt-20 pb-8">
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight" style={{ letterSpacing: '-0.75px' }}>
             Book Your Perfect Flight
