@@ -238,112 +238,61 @@ body {
 }
 
 /* ========================================= */
-/* HERO SECTION - 100VH INSPIRING WANDERLUST */
+/* LIGHT HERO SECTION - NEUTRAL-50 BACKGROUND */
 /* ========================================= */
 
 .hero-section {
-  min-height: 100vh;
-  background: linear-gradient(135deg, 
-    var(--deep-ocean-blue) 0%, 
-    var(--ocean-blue-600) 50%, 
-    var(--midnight-blue) 100%
-  );
+  background-color: var(--neutral-50); /* Light neutral-50 background */
+  padding: var(--space-16) var(--space-6);
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* Premium overlay for text readability */
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, 
-    rgba(15, 76, 117, 0.4) 0%, 
-    rgba(26, 37, 47, 0.3) 100%
-  );
-  z-index: 1;
 }
 
 .hero-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-6);
   position: relative;
-  z-index: 2;
   text-align: center;
 }
 
 .hero-content {
   margin-bottom: var(--space-12);
-  animation: hero-fade-in 1s var(--ease-smooth);
 }
 
-@keyframes hero-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Hero headline - 48px desktop, 32px mobile */
+/* Hero headline - text-4xl md:text-5xl font-semibold tracking-tight */
 .hero-title {
-  font-family: var(--font-display);
-  font-size: 32px; /* Mobile size */
-  font-weight: var(--weight-bold);
-  color: var(--pure-white);
+  font-family: var(--font-family);
+  font-size: var(--text-4xl); /* text-4xl */
+  font-weight: var(--weight-semibold); /* font-semibold only */
+  color: var(--neutral-900);
   margin-bottom: var(--space-4);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
+  letter-spacing: -0.025em; /* tracking-tight */
 }
 
 .hero-subtitle {
-  font-size: var(--text-body);
-  font-weight: var(--weight-light);
-  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-normal); /* Light weight */
+  color: var(--neutral-700); /* text-neutral-700 */
   line-height: 1.6;
   max-width: 600px;
   margin: 0 auto;
-  animation: hero-fade-in 1s var(--ease-smooth) 0.3s both;
 }
 
-/* ========================================= */
-/* PREMIUM SEARCH WIDGET - HERO FOCUS */
-/* ========================================= */
-
+/* White Search Card - rounded-2xl with soft elevation */
 .search-card-hero {
-  background: var(--pure-white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-search); /* 0 10px 40px rgba(0,0,0,0.1) */
-  padding: var(--space-8); /* 32px */
-  border: 1px solid rgba(15, 76, 117, 0.1);
-  max-width: 900px;
+  background: var(--white);
+  border-radius: var(--radius-2xl); /* rounded-2xl */
+  box-shadow: var(--shadow-md); /* Soft elevation on hover */
+  padding: var(--space-8);
+  border: 1px solid var(--neutral-200);
+  max-width: 1024px; /* max-w-5xl equivalent */
   margin: 0 auto;
   position: relative;
-  animation: search-slide-up 1s var(--ease-smooth) 0.6s both;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  transition: box-shadow var(--duration-normal) var(--ease);
 }
 
-@keyframes search-slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(40px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.search-card-hero:hover {
+  box-shadow: var(--shadow-lg); /* Soft elevation on hover */
 }
 
 /* ========================================= */
