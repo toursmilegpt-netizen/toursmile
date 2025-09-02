@@ -86,7 +86,7 @@
 }
 
 /* ========================================= */
-/* WORLD-CLASS BASE STYLES - PREMIUM OTA */
+/* FRESH VIBRANT BASE STYLES */
 /* ========================================= */
 
 * {
@@ -97,10 +97,10 @@
 
 body {
   font-family: var(--font-family);
-  background-color: #FFFFFF; /* Pure white */
-  color: var(--color-neutral-900);
+  background-color: var(--surface-white);
+  color: var(--text-primary);
   font-size: var(--text-base);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--weight-normal);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -109,7 +109,7 @@ body {
 
 .App {
   min-height: 100vh;
-  background-color: #FFFFFF;
+  background: linear-gradient(135deg, var(--surface-white) 0%, var(--surface-light) 100%);
   max-width: var(--breakpoint-xs);
   margin: 0 auto;
   position: relative;
