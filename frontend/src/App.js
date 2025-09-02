@@ -44,7 +44,7 @@ const Container = ({ children }) => (
           <img 
             src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
             alt="TourSmile"
-            className="h-8 w-auto"
+            className="h-10 w-auto"
           />
         </div>
         <nav className="hidden md:flex items-center gap-2">
