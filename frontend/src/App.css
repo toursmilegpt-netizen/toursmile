@@ -877,13 +877,24 @@ body {
   gap: 4px;
 }
 
+/* Airport name within details */
+.airport-name {
+  color: var(--color-neutral-500);
+  font-weight: var(--font-weight-normal);
+  margin-right: 6px;
+}
+
 /* IATA Code - uppercase, font-mono, tracking-wide, color-neutral-600 */
 .airport-iata {
-  font-family: var(--font-mono); /* font-mono */
-  text-transform: uppercase; /* uppercase */
+  font-family: var(--font-mono);
+  text-transform: uppercase;
   letter-spacing: 0.1em; /* tracking-wide */
-  color: var(--color-neutral-600); /* color-neutral-600 */
-  font-weight: var(--font-weight-medium); /* slightly bolder than airport text */
+  color: var(--color-neutral-600);
+  font-weight: var(--font-weight-medium); /* slightly bolder */
+  background-color: var(--color-neutral-100);
+  padding: 1px 4px;
+  border-radius: var(--radius-sm);
+  font-size: 10px; /* Slightly smaller for IATA codes */
 }
 
 .field-actions {
