@@ -541,11 +541,12 @@ const EnhancedAirportSelector = ({
             aria-label={`Selected airport: ${selectedAirport.city}. Click to change.`}
           >
             <div className="airport-display-content">
-              {/* Line 1 City: text-base md:text-lg font-semibold leading-tight */}
+              {/* City - text-base md:text-lg font-semibold color-neutral-900 */}
               <div className="airport-city-display">{selectedAirport.city}</div>
-              {/* Line 2 Airport + IATA: text-[11px] md:text-xs text-muted-foreground leading-snug */}
+              {/* Airport + IATA - text-[11px] md:text-xs color-neutral-500 leading-snug */}
               <div className="airport-details-display">
-                {selectedAirport.code}, {shortenAirportName(selectedAirport.name)} {selectedAirport.country}
+                <span className="airport-name">{shortenAirportName(selectedAirport.name)}</span>
+                <span className="airport-iata">{selectedAirport.code}</span>
               </div>
             </div>
             <div className="field-actions">
