@@ -509,12 +509,13 @@ export default function App() {
 
         <section className="mt-12">
           <div 
-            className="grid gap-4"
+            className="grid gap-4 px-4"
             style={{
-              gridTemplateColumns: window.innerWidth < 768 ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))',
+              gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))',
               maxWidth: '100%'
             }}
           >
+          {[
           {[
             { icon: "🔒", t: "Secure Booking", s: "SSL encrypted payments" },
             { icon: "💬", t: "24×7 Support", s: "WhatsApp & phone support" },
