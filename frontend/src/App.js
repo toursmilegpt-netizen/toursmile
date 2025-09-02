@@ -479,7 +479,7 @@ export default function App() {
             Book Your Perfect Flight
           </h1>
           <p className="mt-3 text-neutral-600">
-            Search and compare flights from 100+ airlines worldwide
+            Smart search, best fares, effortless travel
           </p>
         </section>
         <SearchCard />
