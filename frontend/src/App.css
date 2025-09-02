@@ -711,33 +711,97 @@ body {
   overflow: hidden; /* Prevent text overflow */
 }
 
-/* City Name - LARGE like MakeMyTrip */
-.airport-city-display {
-  font-size: 20px; /* Large prominent city name */
-  font-weight: var(--font-weight-bold);
+/* ========================================= */
+/* CLEAN DATE INPUTS - NO LABELS, CALENDAR ICONS */
+/* ========================================= */
+
+.date-input-clean {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
   color: var(--color-text-primary);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  background-color: var(--color-surface-elevated);
+  transition: all var(--transition-base);
+  min-height: 40px; /* Compact clean height */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  box-shadow: var(--shadow-xs);
+  text-align: left;
+}
+
+.date-input-clean:hover, .date-input-clean:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
+  background-color: var(--color-background);
+}
+
+.date-value {
+  flex: 1;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
+}
+
+.calendar-icon {
+  font-size: 14px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* ========================================= */
+/* ENHANCED AIRPORT TYPOGRAPHY - MINIMALIST */
+/* ========================================= */
+
+/* City Name - text-base md:text-lg font-semibold leading-tight */
+.airport-city-display {
+  font-size: var(--text-base); /* text-base */
+  font-weight: var(--font-weight-semibold); /* font-semibold */
+  color: var(--color-text-primary);
+  line-height: 1.25; /* leading-tight */
+  letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  max-height: 24px;
+  max-height: 20px;
 }
 
-/* Airport Details - EXACTLY like MakeMyTrip delicate style */
+/* Airport + IATA - text-[11px] md:text-xs text-muted-foreground leading-snug */
 .airport-details-display {
-  font-size: 9px !important; /* MakeMyTrip-size details */
-  color: #888888 !important; /* Light gray like MakeMyTrip */
-  font-weight: 400 !important; /* Normal weight */
-  line-height: 1.0 !important;
+  font-size: 11px !important; /* text-[11px] */
+  color: var(--color-text-secondary) !important; /* text-muted-foreground */
+  font-weight: var(--font-weight-normal) !important;
+  line-height: 1.375 !important; /* leading-snug */
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   width: 100% !important;
-  max-height: 10px !important;
-  opacity: 0.8 !important; /* Visible but delicate */
-  letter-spacing: 0.01em !important;
+  max-height: 14px !important;
+  opacity: 0.8 !important; /* Minimalist visibility */
+}
+
+/* IATA codes - font-mono tracking-wide */
+.airport-details-display {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace; /* Include mono fonts */
+  letter-spacing: 0.05em; /* tracking-wide for IATA codes */
+}
+
+/* Responsive typography - md: sizes */
+@media (min-width: 768px) {
+  .airport-city-display {
+    font-size: var(--text-lg); /* md:text-lg */
+  }
+  
+  .airport-details-display {
+    font-size: var(--text-xs) !important; /* md:text-xs */
+  }
 }
 
 .field-actions {
