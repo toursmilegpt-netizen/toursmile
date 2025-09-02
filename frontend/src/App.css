@@ -119,13 +119,13 @@ body {
 }
 
 /* ========================================= */
-/* COMPACT HEADER - BIGGER LOGO, MINIMAL SPACING */
+/* ENHANCED HEADER - WORLD-CLASS OTA WITH ICONS */
 /* ========================================= */
 
 .app-header {
-  background-color: var(--color-surface-elevated);
-  padding: var(--space-3) var(--space-4); /* Reduced padding */
-  border-bottom: 1px solid var(--color-border);
+  background-color: #FFFFFF;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-neutral-200);
   position: sticky;
   top: 0;
   z-index: 40;
@@ -146,67 +146,95 @@ body {
 .header-main {
   display: flex;
   align-items: center;
-  gap: var(--space-6); /* Reduced gap */
+  gap: var(--space-6);
 }
 
 .logo-main {
-  height: 40px; /* Bigger logo - mobile */
+  height: 40px; /* Bigger logo */
   width: auto;
   object-fit: contain;
 }
 
 .main-navigation {
   display: flex;
-  gap: var(--space-4); /* Reduced gap */
+  gap: var(--space-4);
+  background-color: var(--color-neutral-50);
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-neutral-200);
 }
 
 .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* gap-1.5 Tailwind equivalent */
   font-family: var(--font-family);
   font-size: var(--text-base);
-  font-weight: var(--font-weight-normal); /* Delicate weight */
-  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-neutral-700);
   cursor: pointer;
   transition: all var(--transition-base);
-  padding: var(--space-2) var(--space-3); /* Reduced padding */
+  padding: var(--space-2) var(--space-3);
   border-radius: var(--radius);
   text-decoration: none;
+  white-space: nowrap;
 }
 
+/* Navigation Icons - Sweet, rounded style */
+.nav-icon {
+  width: 16px; /* 16px-18px size */
+  height: 16px;
+  color: var(--color-neutral-500); /* Default neutral-500 */
+  transition: color 200ms ease; /* transition-colors duration-200 */
+  flex-shrink: 0;
+}
+
+/* Active state - Brand accent colors */
 .nav-link.active {
-  color: var(--color-primary);
-  background-color: rgba(37, 99, 235, 0.08);
-  font-weight: var(--font-weight-medium); /* Slightly emphasized */
+  color: var(--brand-500); /* TourSmile soft blue */
+  background-color: var(--brand-50);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid var(--brand-200);
 }
 
+.nav-link.active .nav-icon {
+  color: var(--brand-500); /* Brand accent for active icon */
+}
+
+/* Hover state - Slightly darker shade */
 .nav-link:hover:not(.active) {
-  color: var(--color-primary);
-  background-color: rgba(37, 99, 235, 0.04);
+  color: var(--color-neutral-800);
+  background-color: var(--color-neutral-100);
+}
+
+.nav-link:hover:not(.active) .nav-icon {
+  color: var(--color-neutral-600); /* Slightly darker on hover */
 }
 
 .header-actions {
   display: flex;
-  gap: var(--space-2); /* Reduced gap */
+  gap: var(--space-2);
   align-items: center;
 }
 
 .header-btn {
-  padding: var(--space-2) var(--space-3); /* Compact */
-  border: 1px solid var(--color-border);
-  background-color: var(--color-surface-elevated);
-  color: var(--color-text-primary);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-neutral-300);
+  background-color: #FFFFFF;
+  color: var(--color-neutral-700);
   border-radius: var(--radius);
   font-family: var(--font-family);
   font-size: var(--text-sm);
-  font-weight: var(--font-weight-normal); /* Delicate */
+  font-weight: var(--font-weight-normal);
   cursor: pointer;
   transition: all var(--transition-base);
   min-height: var(--tap-target-min);
 }
 
 .support-btn {
-  background: linear-gradient(135deg, var(--color-success) 0%, #059669 100%);
-  color: var(--color-text-inverse);
-  border-color: var(--color-success);
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  border-color: #10B981;
   font-weight: var(--font-weight-medium);
 }
 
@@ -217,9 +245,9 @@ body {
 }
 
 .account-btn:hover {
-  border-color: var(--color-primary);
-  background-color: rgba(37, 99, 235, 0.04);
-  color: var(--color-primary);
+  border-color: var(--brand-500);
+  background-color: var(--brand-50);
+  color: var(--brand-500);
 }
 
 /* ========================================= */
