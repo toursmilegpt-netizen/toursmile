@@ -432,7 +432,7 @@ const EnhancedAirportSelector = ({
   }, []);
 
   const handleButtonClick = () => {
-    // Button-as-Combobox: Always open dropdown, announce "Dropdown opened"
+    // Button-as-Combobox: Always open dropdown, announce opening
     setIsOpen(true);
     setQuery('');
     setActiveIndex(-1);
@@ -447,15 +447,12 @@ const EnhancedAirportSelector = ({
     onFocus && onFocus();
   };
 
-  const handleEditMode = () => {
-    setIsEditMode(true);
-    setIsOpen(true);
-    setQuery(selectedAirport?.city || '');
-    setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, 0);
+  const handleKeyPress = (e) => {
+    // Fresh query from first alphabet when typing
+    if (isOpen && /^[a-zA-Z]$/.test(e.key)) {
+      setQuery(e.key.toLowerCase()); // Start fresh query from typed letter
+      setIsEditMode(false); // Stay in dropdown mode
+    }
   };
 
   const handleInputChange = (e) => {
