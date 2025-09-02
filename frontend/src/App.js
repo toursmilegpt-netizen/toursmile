@@ -655,32 +655,161 @@ const TravellersBottomSheet = ({
     return `${passengerText}, ${travelClass}`;
   };
 
-  // Interactivity Handoff.txt: Group Booking Form Modal for >9 passengers
-  const GroupBookingModal = () => (
-    <div className="group-booking-overlay">
-      <div className="group-backdrop" onClick={() => setShowGroupBooking(false)}></div>
-      <div className="group-modal">
-        <h3>Group Booking Request</h3>
-        <p>For 10 or more passengers, please request a Group Booking</p>
-        <form className="group-form">
-          <input type="text" placeholder="Name" required />
-          <input type="tel" placeholder="Phone" required />
-          <input type="email" placeholder="Email" required />
-          <input type="text" placeholder="Route" required />
-          <input type="text" placeholder="Dates" required />
-          <input type="number" placeholder="Passengers" min="10" required />
-          <div className="form-buttons">
-            <button type="button" onClick={() => setShowGroupBooking(false)} className="btn-cancel">
-              Cancel
-            </button>
-            <button type="submit" className="btn-submit">
-              Request Group Booking
+// Premium Passenger Selector Component - Fresh White Theme Overlay
+const PremiumPassengerSelector = ({ 
+  travellers,
+  onTravellersChange, 
+  travelClass, 
+  onClassChange,
+  isOpen,
+  onClose 
+}) => {
+  const [showGroupBooking, setShowGroupBooking] = useState(false);
+
+  const getTotalPassengers = () => {
+    return travellers.adults + travellers.children + travellers.infants;
+  };
+
+  const updateCount = (type, increment) => {
+    const current = travellers[type];
+    let newCount;
+    
+    if (increment) {
+      newCount = current + 1;
+    } else {
+      newCount = Math.max(type === 'adults' ? 1 : 0, current - 1);
+    }
+    
+    const newTravellers = { ...travellers, [type]: newCount };
+    
+    // Validation: infants ≤ adults
+    if (type === 'infants' && newTravellers.infants > newTravellers.adults) {
+      return;
+    }
+    
+    // Maximum 9 passengers total
+    const total = newTravellers.adults + newTravellers.children + newTravellers.infants;
+    if (total > 9) {
+      setShowGroupBooking(true);
+      return;
+    }
+    
+    onTravellersChange(newTravellers);
+  };
+
+  const handleApply = () => {
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="passenger-overlay">
+      <div className="passenger-backdrop" onClick={onClose}></div>
+      <div className="passenger-modal">
+        {/* Header */}
+        <div className="passenger-header">
+          <h3 className="passenger-title">Travelers & Class</h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="passenger-close"
+            aria-label="Close passenger selector"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="passenger-content">
+          {/* Passenger Categories */}
+          <div className="passenger-categories-fresh">
+            {[
+              { key: 'adults', label: 'Adults', age: '12+ years', min: 1 },
+              { key: 'children', label: 'Children', age: '2–11 years', min: 0 },
+              { key: 'infants', label: 'Infants', age: 'Under 2 years', min: 0 }
+            ].map(({ key, label, age, min }) => (
+              <div key={key} className="passenger-row-fresh">
+                <div className="passenger-info">
+                  <div className="passenger-label">{label}</div>
+                  <div className="passenger-age">{age}</div>
+                </div>
+                <div className="passenger-stepper">
+                  <button
+                    type="button"
+                    onClick={() => updateCount(key, false)}
+                    disabled={travellers[key] <= min}
+                    className="stepper-btn minus"
+                    aria-label={`Decrease ${label.toLowerCase()}`}
+                  >
+                    −
+                  </button>
+                  <span className="stepper-count">{travellers[key]}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateCount(key, true)}
+                    disabled={getTotalPassengers() >= 9}
+                    className="stepper-btn plus"
+                    aria-label={`Increase ${label.toLowerCase()}`}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Travel Class */}
+          <div className="class-section-fresh">
+            <h4 className="class-title">Travel Class</h4>
+            <div className="class-options-fresh">
+              {['Economy', 'Premium Economy', 'Business', 'First'].map((cls) => (
+                <button
+                  key={cls}
+                  type="button"
+                  onClick={() => onClassChange(cls)}
+                  className={`class-option-fresh ${travelClass === cls ? 'active' : ''}`}
+                >
+                  {cls}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Apply Button */}
+          <div className="passenger-actions">
+            <button
+              type="button"
+              onClick={handleApply}
+              className="apply-button"
+            >
+              Apply Selection
             </button>
           </div>
-        </form>
+        </div>
       </div>
+
+      {/* Group Booking Modal */}
+      {showGroupBooking && (
+        <div className="group-booking-overlay">
+          <div className="group-backdrop" onClick={() => setShowGroupBooking(false)}></div>
+          <div className="group-modal">
+            <h3>Group Booking Request</h3>
+            <p>For 10 or more passengers, please request a Group Booking</p>
+            <button 
+              onClick={() => setShowGroupBooking(false)}
+              className="group-close-btn"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
+};
 
   if (!isOpen) return null;
 
