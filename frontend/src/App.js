@@ -651,7 +651,8 @@ const EnhancedAirportSelector = ({
                   >
                     <div className="item-city-final">{airport.city}</div>
                     <div className="item-details-final">
-                      {airport.name} — {airport.code}
+                      <span className="airport-name">{shortenAirportName(airport.name)}</span>
+                      <span className="airport-iata">{airport.code}</span>
                       {airport.popular && <span className="popular-badge">Popular</span>}
                     </div>
                   </div>
