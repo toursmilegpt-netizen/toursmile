@@ -47,7 +47,7 @@ const Container = ({ children }) => (
             className="h-10 w-auto"
           />
         </div>
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden md:flex items-center gap-2" style={{ display: window.innerWidth >= 768 ? 'flex' : 'none' }}>
           {[
             { label: "Flights", icon: "✈️" },
             { label: "Hotels", icon: "🏨" },
