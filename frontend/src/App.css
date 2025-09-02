@@ -1194,26 +1194,14 @@ body {
 /* RESPONSIVE DESIGN - PREMIUM ACROSS DEVICES */
 /* ========================================= */
 
-/* Desktop typography scaling */
+/* Desktop hero typography scaling */
 @media (min-width: 768px) {
   .hero-title {
-    font-size: var(--text-hero) !important; /* 48px desktop */
+    font-size: var(--text-5xl); /* md:text-5xl */
   }
   
   .hero-subtitle {
-    font-size: var(--text-lg) !important;
-  }
-  
-  .search-card-hero {
-    padding: var(--space-12) !important; /* Larger desktop padding */
-  }
-  
-  .App {
-    max-width: 100vw !important; /* Full width on desktop */
-  }
-  
-  .search-input-field {
-    height: 60px; /* Larger on desktop */
+    font-size: var(--text-xl);
   }
 }
 
