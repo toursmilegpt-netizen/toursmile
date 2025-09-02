@@ -702,21 +702,37 @@ body {
 }
 
 /* ========================================= */
-/* CLEAN DATE INPUTS - NO LABELS, CALENDAR ICONS */
+/* CLEAN DATE INPUTS - MINIMALIST OTA STYLE */
 /* ========================================= */
+
+.date-section {
+  margin-bottom: var(--space-4);
+}
+
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: nowrap;
+}
+
+.date-field-compact {
+  flex: 1;
+  min-width: 120px;
+}
 
 .date-input-clean {
   width: 100%;
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
+  padding: 8px 12px; /* px-3 py-2 consistent */
+  border: 1px solid var(--color-neutral-300);
   border-radius: var(--radius-md);
   font-family: var(--font-family);
   font-size: var(--text-base);
   font-weight: var(--font-weight-normal);
-  color: var(--color-text-primary);
-  background-color: var(--color-surface-elevated);
+  color: var(--color-neutral-900);
+  background-color: #FFFFFF;
   transition: all var(--transition-base);
-  min-height: 40px; /* Compact clean height */
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -726,23 +742,62 @@ body {
   text-align: left;
 }
 
-.date-input-clean:hover, .date-input-clean:focus {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-focus);
-  background-color: var(--color-background);
+/* Hover/Focus - Outline ring only (flat background) */
+.date-input-clean:hover {
+  border-color: var(--color-neutral-400);
+  box-shadow: var(--ring-brand-200); /* ring-2 ring-brand-200 */
+}
+
+.date-input-clean:focus {
+  border-color: var(--brand-500);
+  box-shadow: var(--ring-brand-300); /* focus:ring-brand-300 */
 }
 
 .date-value {
   flex: 1;
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
+  color: var(--color-neutral-900);
   font-size: var(--text-base);
 }
 
 .calendar-icon {
   font-size: 14px;
-  opacity: 0.6;
+  color: var(--color-neutral-500);
+  opacity: 0.8;
   flex-shrink: 0;
+}
+
+.date-separator {
+  font-size: var(--text-lg);
+  color: var(--color-neutral-400);
+  font-weight: var(--font-weight-normal);
+  padding: 0 var(--space-2);
+  flex-shrink: 0;
+}
+
+/* ========================================= */
+/* RESPONSIVE TYPOGRAPHY - OTA BREAKPOINTS */
+/* ========================================= */
+
+/* Desktop typography - md:text-lg for cities */
+@media (min-width: 768px) {
+  .airport-city-display {
+    font-size: var(--text-lg); /* md:text-lg */
+  }
+  
+  .airport-details-display {
+    font-size: var(--text-xs); /* md:text-xs */
+  }
+  
+  .airport-button-combobox {
+    height: 52px; /* More space on desktop */
+    padding: 10px 14px;
+  }
+  
+  .date-input-clean {
+    height: 48px; /* Desktop date field height */
+    padding: 10px 14px;
+  }
 }
 
 /* ========================================= */
