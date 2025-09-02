@@ -41,7 +41,11 @@ const Container = ({ children }) => (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-neutral-200">
       <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2 font-semibold text-xl">
-          <span className="text-blue-600">tour</span>smile
+          <img 
+            src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
+            alt="TourSmile"
+            className="h-8 w-auto"
+          />
         </div>
         <nav className="hidden md:flex items-center gap-2">
           {[
