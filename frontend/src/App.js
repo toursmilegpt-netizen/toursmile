@@ -328,8 +328,8 @@ const AIRPORTS_DATABASE = [
 ];
 
 // Enhanced Airport Selector Component - BUTTON-AS-COMBOBOX APPROACH
-// World-Class City Picker Component - Global OTA Standards
-const WorldClassCityPicker = ({ 
+// Direct Typing City Picker - Fresh White Theme
+const DirectTypingCityPicker = ({ 
   value, 
   selectedAirport,
   onSelect, 
@@ -338,465 +338,130 @@ const WorldClassCityPicker = ({
   highlight = false,
   onFocus 
 }) => {
+  const [inputValue, setInputValue] = useState(selectedAirport?.city || '');
+  const [suggestions, setSuggestions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [recentSearches, setRecentSearches] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const inputRef = useRef(null);
-  const overlayRef = useRef(null);
+  const dropdownRef = useRef(null);
 
-  // Enhanced airport data with multi-airport support
-  const getEnhancedAirportData = () => {
-    // Group airports by city for multi-airport display
-    const cityGroups = {};
-    
-    AIRPORTS_DATABASE.forEach(airport => {
-      const cityKey = `${airport.city}, ${airport.country}`;
-      if (!cityGroups[cityKey]) {
-        cityGroups[cityKey] = {
-          cityName: airport.city,
-          country: airport.country,
-          cityCode: airport.city.substring(0, 3).toUpperCase(),
-          isMultiAirport: false,
-          airports: []
-        };
-      }
-      cityGroups[cityKey].airports.push({
-        name: airport.name,
-        code: airport.code,
-        isPrimary: airport.popular || false
-      });
-    });
-
-    // Mark multi-airport cities
-    Object.values(cityGroups).forEach(cityGroup => {
-      if (cityGroup.airports.length > 1) {
-        cityGroup.isMultiAirport = true;
-      }
-    });
-
-    return Object.values(cityGroups);
-  };
-
-  const enhancedData = getEnhancedAirportData();
-
-  // Recent searches utilities
-  const loadRecentSearches = () => {
-    try {
-      const stored = localStorage.getItem('ts_recent_searches_v2');
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        return Array.isArray(parsed) ? parsed.slice(0, 5) : [];
-      }
-    } catch (error) {
-      console.warn('Failed to load recent searches:', error);
-    }
-    return [];
-  };
-
-  const saveRecentSearch = (selection) => {
-    try {
-      let recents = loadRecentSearches();
-      
-      // Remove duplicate
-      recents = recents.filter(item => 
-        !(item.cityName === selection.cityName && item.code === selection.code)
-      );
-      
-      // Add to front
-      recents.unshift({
-        cityName: selection.cityName,
-        country: selection.country,
-        code: selection.code,
-        name: selection.name,
-        timestamp: Date.now()
-      });
-      
-      // Keep last 5
-      recents = recents.slice(0, 5);
-      
-      localStorage.setItem('ts_recent_searches_v2', JSON.stringify(recents));
-      setRecentSearches(recents);
-    } catch (error) {
-      console.warn('Failed to save recent search:', error);
-    }
-  };
-
-  const clearRecentSearches = () => {
-    try {
-      localStorage.removeItem('ts_recent_searches_v2');
-      setRecentSearches([]);
-    } catch (error) {
-      console.warn('Failed to clear recent searches:', error);
-    }
-  };
-
-  // World-class search algorithm
-  const performSearch = async (searchQuery) => {
-    if (!searchQuery || searchQuery.length < 1) {
-      setSearchResults([]);
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      // Simulate API delay for realistic UX
-      await new Promise(resolve => setTimeout(resolve, 150));
-
-      const results = [];
-      const query = searchQuery.toLowerCase();
-
-      enhancedData.forEach(cityGroup => {
-        const cityMatch = cityGroup.cityName.toLowerCase().includes(query);
-        const countryMatch = cityGroup.country.toLowerCase().includes(query);
-        const airportMatches = cityGroup.airports.some(airport => 
-          airport.code.toLowerCase().includes(query) ||
-          airport.name.toLowerCase().includes(query)
-        );
-
-        if (cityMatch || countryMatch || airportMatches) {
-          // Add "All Airports" option for multi-airport cities
-          if (cityGroup.isMultiAirport) {
-            results.push({
-              type: 'city-all',
-              cityName: cityGroup.cityName,
-              country: cityGroup.country,
-              cityCode: cityGroup.cityCode,
-              displayText: `${cityGroup.cityName}, ${cityGroup.country} - All Airports`,
-              airports: cityGroup.airports
-            });
-          }
-
-          // Add individual airports
-          cityGroup.airports.forEach(airport => {
-            results.push({
-              type: 'airport',
-              cityName: cityGroup.cityName,
-              country: cityGroup.country,
-              code: airport.code,
-              name: airport.name,
-              isPrimary: airport.isPrimary,
-              displayText: `${cityGroup.cityName}, ${cityGroup.country}`,
-              airportText: `${airport.name} (${airport.code})`
-            });
-          });
-        }
-      });
-
-      // Sort by relevance: exact matches first, then alphabetical
-      results.sort((a, b) => {
-        const aExact = a.cityName.toLowerCase().startsWith(query);
-        const bExact = b.cityName.toLowerCase().startsWith(query);
-        
-        if (aExact && !bExact) return -1;
-        if (!aExact && bExact) return 1;
-        
-        return a.displayText.localeCompare(b.displayText);
-      });
-
-      setSearchResults(results.slice(0, 8)); // Show top 8 results
-      setIsLoading(false);
-    } catch (err) {
-      setError('Unable to search. Please try again.');
-      setIsLoading(false);
-    }
-  };
-
-  // Debounced search
+  // Debounced search - 250ms
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
-      performSearch(query);
-    }, 150);
+      if (inputValue.length >= 1) {
+        setIsLoading(true);
+        
+        // Search algorithm
+        const filtered = AIRPORTS_DATABASE.filter(airport =>
+          airport.city.toLowerCase().includes(inputValue.toLowerCase()) ||
+          airport.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+          airport.code.toLowerCase().includes(inputValue.toLowerCase())
+        );
+        
+        // Sort by relevance
+        const sorted = filtered.sort((a, b) => {
+          const aExact = a.city.toLowerCase().startsWith(inputValue.toLowerCase());
+          const bExact = b.city.toLowerCase().startsWith(inputValue.toLowerCase());
+          
+          if (aExact && !bExact) return -1;
+          if (!aExact && bExact) return 1;
+          
+          return a.city.localeCompare(b.city);
+        });
+        
+        setSuggestions(sorted.slice(0, 6));
+        setIsOpen(sorted.length > 0);
+        setIsLoading(false);
+      } else {
+        setSuggestions([]);
+        setIsOpen(false);
+        setIsLoading(false);
+      }
+    }, 250);
 
     return () => clearTimeout(debounceTimer);
-  }, [query]);
-
-  // Load recent searches on mount
-  useEffect(() => {
-    setRecentSearches(loadRecentSearches());
-  }, []);
+  }, [inputValue]);
 
   // Handle outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (overlayRef.current && !overlayRef.current.contains(event.target)) {
-        handleClose();
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
       }
     };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = 'hidden'; // Prevent scroll
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-
-  const handleOpen = () => {
-    setIsOpen(true);
-    setQuery('');
-    setError(null);
-    
-    // Focus input after animation
-    setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, 300);
-
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
     onFocus && onFocus();
   };
 
-  const handleClose = () => {
+  const handleSelect = (airport) => {
+    setInputValue(airport.city);
     setIsOpen(false);
-    setQuery('');
-    setSearchResults([]);
-    setError(null);
-  };
-
-  const handleSelect = (selection) => {
-    // Save to recent searches
-    saveRecentSearch(selection);
-    
-    // Close overlay with animation
-    setIsOpen(false);
-    
-    // Call parent handler
-    onSelect({
-      city: selection.cityName,
-      country: selection.country,
-      code: selection.code,
-      name: selection.name || `${selection.cityName} - All Airports`
-    });
-  };
-
-  const handleInputChange = (e) => {
-    setQuery(e.target.value);
+    onSelect(airport);
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Escape') {
-      handleClose();
+      setIsOpen(false);
     }
     // TODO: Arrow key navigation
   };
 
   return (
-    <div className="world-class-city-field">
-      <label className="city-field-label">{label}</label>
+    <div className="direct-typing-field" ref={dropdownRef}>
+      <label className="field-label">{label}</label>
       
-      {/* Selected City Display or Input */}
-      {selectedAirport ? (
-        <button
-          type="button"
-          onClick={handleOpen}
-          className={`selected-city-display ${highlight ? 'highlight' : ''}`}
-          aria-label={`Selected: ${selectedAirport.city}. Click to change.`}
-        >
-          <div className="selected-city-content">
-            <div className="selected-city-name">{selectedAirport.city}</div>
-            <div className="selected-airport-details">{selectedAirport.name}</div>
-          </div>
-          <svg className="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      ) : (
-        <button
-          type="button"
-          onClick={handleOpen}
-          className={`city-search-trigger ${highlight ? 'highlight' : ''}`}
-          aria-label="Select departure city"
-        >
-          <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-            <path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="2"/>
-          </svg>
-          <span className="search-placeholder">{placeholder}</span>
-        </button>
-      )}
-
-      {/* World-Class City Picker Overlay */}
+      {/* Direct typing input - h-12 px-4 rounded-xl */}
+      <input
+        ref={inputRef}
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        placeholder={placeholder}
+        className={`city-input ${highlight ? 'highlight' : ''}`}
+        autoComplete="off"
+        role="combobox"
+        aria-expanded={isOpen}
+        aria-autocomplete="list"
+      />
+      
+      {/* Anchored dropdown with suggestions */}
       {isOpen && (
-        <div className="city-picker-overlay">
-          <div className="city-picker-backdrop" onClick={handleClose}></div>
-          <div className="city-picker-container" ref={overlayRef}>
-            {/* Header */}
-            <div className="city-picker-header">
-              <h3 className="picker-title">Select {label}</h3>
-              <button
-                type="button"
-                onClick={handleClose}
-                className="close-button"
-                aria-label="Close city picker"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </button>
+        <div className="suggestions-dropdown" role="listbox">
+          {isLoading && (
+            <div className="loading-suggestions">
+              <div className="loading-text">Searching...</div>
             </div>
-
-            {/* Premium Search Input */}
-            <div className="search-input-container">
-              <svg className="search-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-                <path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-              <input
-                ref={inputRef}
-                type="text"
-                value={query}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-                placeholder="Search cities or airports..."
-                className="search-input-field"
-                autoComplete="off"
-              />
-              {query && (
-                <button
-                  type="button"
-                  onClick={() => setQuery('')}
-                  className="clear-search-button"
-                  aria-label="Clear search"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                </button>
-              )}
+          )}
+          
+          {!isLoading && suggestions.map((airport) => (
+            <div
+              key={airport.code}
+              onClick={() => handleSelect(airport)}
+              onMouseDown={(e) => e.preventDefault()} // Prevent input blur
+              className="suggestion-item"
+              role="option"
+              tabIndex={0}
+            >
+              {/* Line 1 City: text-sm font-medium text-neutral-900 */}
+              <div className="suggestion-city">{airport.city}</div>
+              {/* Line 2 Airport + IATA: text-xs text-neutral-600 */}
+              <div className="suggestion-details">
+                {airport.name} <span className="iata-code">({airport.code})</span>
+              </div>
             </div>
-
-            {/* Results Container */}
-            <div className="search-results-container">
-              {/* Recent Searches */}
-              {!query && recentSearches.length > 0 && (
-                <div className="recent-searches-section">
-                  <div className="recent-header">
-                    <span className="recent-title">Recent Searches</span>
-                    <button
-                      type="button"
-                      onClick={clearRecentSearches}
-                      className="clear-recent-button"
-                    >
-                      Clear
-                    </button>
-                  </div>
-                  {recentSearches.map((recent, index) => (
-                    <div
-                      key={`recent-${index}`}
-                      onClick={() => handleSelect(recent)}
-                      className="search-result-item recent-item"
-                    >
-                      <svg className="recent-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <polyline points="12,6 12,12 16,14" stroke="currentColor" strokeWidth="2"/>
-                      </svg>
-                      <div className="result-content">
-                        <div className="result-primary">{recent.cityName}, {recent.country}</div>
-                        <div className="result-secondary">{recent.name} ({recent.code})</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Search Results */}
-              {query && (
-                <div className="search-results-section">
-                  {isLoading && (
-                    <div className="loading-skeleton">
-                      {[...Array(6)].map((_, i) => (
-                        <div key={i} className="skeleton-item">
-                          <div className="skeleton-icon"></div>
-                          <div className="skeleton-content">
-                            <div className="skeleton-primary"></div>
-                            <div className="skeleton-secondary"></div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {error && (
-                    <div className="error-state">
-                      <svg className="error-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" strokeWidth="2"/>
-                        <line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" strokeWidth="2"/>
-                      </svg>
-                      <p className="error-message">{error}</p>
-                    </div>
-                  )}
-
-                  {!isLoading && !error && searchResults.length === 0 && (
-                    <div className="no-results-state">
-                      <svg className="no-results-icon" width="32" height="32" viewBox="0 0 24 24" fill="none">
-                        <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-                        <path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="2"/>
-                      </svg>
-                      <p className="no-results-message">No cities found for "{query}"</p>
-                      <p className="no-results-suggestion">Try searching for a different city or airport code</p>
-                    </div>
-                  )}
-
-                  {!isLoading && !error && searchResults.map((result, index) => (
-                    <div
-                      key={`${result.type}-${result.code || result.cityCode}-${index}`}
-                      onClick={() => handleSelect(result)}
-                      className={`search-result-item ${result.type === 'city-all' ? 'city-all-item' : 'airport-item'}`}
-                      role="option"
-                      tabIndex={0}
-                    >
-                      {/* Icon based on type */}
-                      {result.type === 'city-all' ? (
-                        <svg className="city-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                          <path d="M3 21h18M5 21V7l8-4v18M19 21V9l-6-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      ) : (
-                        <svg className="airport-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
-                          <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="currentColor"/>
-                        </svg>
-                      )}
-
-                      <div className="result-content">
-                        <div className="result-primary">
-                          {result.type === 'city-all' 
-                            ? `${result.cityName}, ${result.country} - All Airports`
-                            : `${result.cityName}, ${result.country}`
-                          }
-                        </div>
-                        {result.type === 'airport' && (
-                          <div className="result-secondary">{result.airportText}</div>
-                        )}
-                      </div>
-
-                      {result.isPrimary && (
-                        <span className="primary-badge">Popular</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Empty state when focused but no query */}
-              {!query && recentSearches.length === 0 && (
-                <div className="empty-state">
-                  <svg className="empty-icon" width="48" height="48" viewBox="0 0 24 24" fill="none">
-                    <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-                    <path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="2"/>
-                  </svg>
-                  <p className="empty-message">Start typing to search cities...</p>
-                </div>
-              )}
+          ))}
+          
+          {!isLoading && suggestions.length === 0 && inputValue && (
+            <div className="no-suggestions">
+              <div className="no-suggestions-text">No cities found for "{inputValue}"</div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </div>
