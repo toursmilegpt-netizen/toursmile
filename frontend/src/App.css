@@ -89,7 +89,7 @@
 }
 
 /* ========================================= */
-/* COMPACT BASE STYLES - MINIMAL SPACING */
+/* WORLD-CLASS BASE STYLES - PREMIUM OTA */
 /* ========================================= */
 
 * {
@@ -100,11 +100,11 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
+  background-color: #FFFFFF; /* Pure white */
+  color: var(--color-neutral-900);
   font-size: var(--text-base);
-  font-weight: var(--font-weight-normal); /* Delicate default */
-  line-height: 1.4; /* Tighter line height */
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -112,7 +112,7 @@ body {
 
 .App {
   min-height: 100vh;
-  background-color: var(--color-background);
+  background-color: #FFFFFF;
   max-width: var(--breakpoint-xs);
   margin: 0 auto;
   position: relative;
