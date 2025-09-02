@@ -269,7 +269,7 @@ function PaxOverlay({ value, onChange, onClose }) {
     <div className="fixed inset-0 z-40 bg-black/20 flex items-end md:items-center md:justify-center">
       <div ref={ref} className="w-full md:w-[32rem] bg-white rounded-t-2xl md:rounded-2xl shadow-lg p-4 md:p-6">
         <div className="flex items-center justify-between mb-2">
-          <div className="text-base font-medium">Travellers & Class</div>
+          <div className="text-base font-medium" style={{ fontWeight: '500' }}>Travellers & Class</div>
           <button 
             onClick={onClose} 
             className="text-sm text-neutral-600 hover:text-neutral-900"
