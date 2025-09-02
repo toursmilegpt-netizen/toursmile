@@ -1378,10 +1378,34 @@ function App() {
             />
             
             <nav className="main-navigation">
-              <span className="nav-link active">Flights</span>
-              <span className="nav-link">Hotels</span>
-              <span className="nav-link">Packages</span>
-              <span className="nav-link">Activities</span>
+              <span className="nav-link active" aria-label="Flights booking and search">
+                <svg className="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" 
+                        fill="currentColor"/>
+                </svg>
+                Flights
+              </span>
+              <span className="nav-link" aria-label="Hotels booking and accommodation">
+                <svg className="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V6H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z" 
+                        fill="currentColor"/>
+                </svg>
+                Hotels
+              </span>
+              <span className="nav-link" aria-label="Travel packages and deals">
+                <svg className="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" 
+                        fill="currentColor"/>
+                </svg>
+                Packages
+              </span>
+              <span className="nav-link" aria-label="Activities and experiences">
+                <svg className="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M22 10v6c0 1.11-.89 2-2 2H4c-1.11 0-2-.89-2-2v-6c0-1.11.89-2 2-2h16c1.11 0 2 .89 2 2zm-2 0H4v6h16v-6zM6 11h2v2H6v-2zm0 3h8v1H6v-1z" 
+                        fill="currentColor"/>
+                </svg>
+                Activities
+              </span>
             </nav>
           </div>
           
