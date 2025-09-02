@@ -353,7 +353,7 @@ function PaxRow({ label, hint, value, onInc, onDec }) {
   );
 }
 
-// Search Card Component - EXACT IMPLEMENTATION
+// Search Card Component - RESPONSIVE TRUST GRID FIX
 function SearchCard() {
   const [trip, setTrip] = useState("RT");
   const [from, setFrom] = useState(CITIES[0]);
@@ -362,6 +362,17 @@ function SearchCard() {
   const [ret, setRet] = useState(null);
   const [openPax, setOpenPax] = useState(false);
   const [pax, setPax] = useState({ adt: 1, chd: 0, inf: 0, cabin: "Economy" });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <div className="mx-auto max-w-5xl">
