@@ -826,7 +826,7 @@ body {
 }
 
 /* ========================================= */
-/* WORLD-CLASS AIRPORT SELECTOR - OTA STANDARDS */
+/* ONE-LINE CITY PICKER - FRESH & VIBRANT */
 /* ========================================= */
 
 .enhanced-airport-field {
@@ -834,52 +834,52 @@ body {
   width: 100%;
 }
 
-/* Button-as-Combobox - Premium interaction */
+/* City Button - One line, fresh design */
 .airport-button-combobox {
   width: 100%;
   height: 48px;
-  padding: 8px 12px; /* px-3 py-2 consistent */
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-md);
-  background-color: #FFFFFF;
-  transition: all var(--transition-base);
+  padding: 12px 16px; /* px-4 py-3 - generous padding */
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--surface-white) 0%, var(--surface-light) 100%);
+  transition: all var(--transition-smooth);
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
   outline: none;
-  box-shadow: var(--shadow-xs);
+  box-shadow: var(--shadow-soft);
   text-align: left;
   font-family: var(--font-family);
 }
 
-/* Hover/Focus - Outline ring only (flat background) */
+/* Fresh hover/focus - vibrant blue accent */
 .airport-button-combobox:hover {
-  border-color: var(--color-neutral-400);
-  box-shadow: var(--ring-brand-200); /* ring-2 ring-brand-200 */
+  border-color: var(--primary-blue);
+  box-shadow: var(--ring-focus);
+  background: linear-gradient(135deg, var(--surface-white) 0%, var(--primary-blue-light) 100%);
 }
 
 .airport-button-combobox:focus {
-  border-color: var(--brand-500);
-  box-shadow: var(--ring-brand-300); /* focus:ring-brand-300 */
+  border-color: var(--primary-blue-dark);
+  box-shadow: var(--ring-focus);
+  background: var(--surface-white);
 }
 
+/* One-line city display - clean and readable */
 .airport-display-content {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-  justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   overflow: hidden;
 }
 
-/* City - text-base mobile, md:text-lg, font-semibold, color-neutral-900 */
+/* City Only - One line, clear readable size */
 .airport-city-display {
-  font-size: var(--text-base); /* text-base on mobile */
-  font-weight: var(--font-weight-semibold); /* font-semibold */
-  color: var(--color-neutral-900); /* color-neutral-900 */
-  line-height: 1.25; /* leading-tight */
+  font-size: var(--text-base); /* Clear readable size - not too big */
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  line-height: 1.2;
   letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
@@ -887,141 +887,137 @@ body {
   width: 100%;
 }
 
-/* Airport + IATA - text-[11px] mobile, md:text-xs, color-neutral-500, leading-snug */
+/* Remove airport details - city only */
 .airport-details-display {
-  font-size: var(--text-11); /* text-[11px] on mobile */
-  color: var(--color-neutral-500); /* color-neutral-500 muted grayscale */
-  font-weight: var(--font-weight-normal);
-  line-height: 1.375; /* leading-snug */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* Airport name within details */
-.airport-name {
-  color: var(--color-neutral-500);
-  font-weight: var(--font-weight-normal);
-  margin-right: 6px;
-}
-
-/* IATA Code - uppercase, font-mono, tracking-wide, color-neutral-600 */
-.airport-iata {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.1em; /* tracking-wide */
-  color: var(--color-neutral-600);
-  font-weight: var(--font-weight-medium); /* slightly bolder */
-  background-color: var(--color-neutral-100);
-  padding: 1px 4px;
-  border-radius: var(--radius-sm);
-  font-size: 10px; /* Slightly smaller for IATA codes */
+  display: none; /* Hide airport details for one-line design */
 }
 
 .field-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   flex-shrink: 0;
 }
 
 .edit-icon {
-  background: none;
-  border: none;
+  background: var(--surface-light);
+  border: 1px solid var(--border-light);
   cursor: pointer;
   padding: var(--space-1);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-size: 12px;
   transition: all var(--transition-fast);
-  color: var(--color-neutral-500);
+  color: var(--text-secondary);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .edit-icon:hover {
-  background-color: var(--color-neutral-100);
-  color: var(--brand-500);
+  background-color: var(--primary-blue-light);
+  border-color: var(--primary-blue);
+  color: var(--primary-blue-dark);
 }
 
 .dropdown-icon {
-  color: var(--color-neutral-500);
-  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-size: 14px;
   flex-shrink: 0;
+  transition: transform var(--transition-smooth);
 }
 
-/* Enhanced Dropdown - Premium OTA styling */
+.airport-button-combobox:hover .dropdown-icon {
+  color: var(--primary-blue);
+  transform: rotate(180deg);
+}
+
+/* ========================================= */
+/* OVERLAY-STYLE DROPDOWN - WORLD CLASS OTA */
+/* ========================================= */
+
 .autocomplete-dropdown-enhanced {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: #FFFFFF;
-  border: 1px solid var(--color-neutral-200);
-  border-top: none;
-  border-radius: 0 0 var(--radius-md) var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  z-index: 50;
-  max-height: 320px;
+  position: fixed; /* Overlay manner - fixed positioning */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 400px;
+  max-height: 70vh;
+  background: linear-gradient(135deg, var(--surface-white) 0%, var(--surface-light) 100%);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-overlay);
+  z-index: 1000;
   overflow-y: auto;
-  animation: dropdown-appear var(--transition-base);
+  animation: dropdown-overlay var(--transition-slow);
 }
 
-@keyframes dropdown-appear {
+@keyframes dropdown-overlay {
   from {
     opacity: 0;
-    transform: translateY(-4px) scale(0.98);
+    transform: translate(-50%, -60%) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-/* Dropdown Items - Premium scan-ability */
+/* Overlay backdrop for dropdown */
+.autocomplete-dropdown-enhanced::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-dark);
+  z-index: -1;
+}
+
+/* World-class dropdown items - one line cities */
 .dropdown-item-final {
-  padding: 8px 12px; /* py-2 px-3 consistent */
+  padding: 12px 16px; /* py-3 px-4 - generous touch targets */
   cursor: pointer;
   transition: all var(--transition-fast);
   display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  min-height: var(--tap-target-min);
-  justify-content: center;
-  border: none; /* No borders for clean look */
+  align-items: center;
+  min-height: 48px; /* Large touch target */
+  border-radius: var(--radius-md);
+  margin: var(--space-1);
 }
 
-/* Hover/Focus - Outline only (no background fill) */
+/* Hover - fresh blue accent */
 .dropdown-item-final:hover {
-  background: none; /* Flat background */
-  outline: 2px solid var(--brand-200); /* Outline ring only */
-  outline-offset: -2px;
+  background: linear-gradient(135deg, var(--primary-blue-light) 0%, var(--primary-blue) 10%);
+  color: var(--primary-blue-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
 }
 
 .dropdown-item-final:focus {
-  background: none; /* Flat background */
-  outline: 2px solid var(--brand-300); /* Focus ring */
+  outline: 2px solid var(--primary-blue);
   outline-offset: -2px;
+  background: var(--primary-blue-light);
 }
 
-/* City line - text-sm font-medium color-neutral-900 */
+/* City only - one line, world class OTA style */
 .item-city-final {
-  font-size: var(--text-sm); /* text-sm */
-  font-weight: var(--font-weight-medium); /* font-medium */
-  color: var(--color-neutral-900); /* color-neutral-900 */
+  font-size: var(--text-base); /* Clear readable */
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
   line-height: 1.3;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Airport + IATA line - text-xs color-neutral-500 */
+/* Hide airport details in dropdown for clean one-line design */
 .item-details-final {
-  font-size: var(--text-xs); /* text-xs */
-  color: var(--color-neutral-500); /* color-neutral-500 */
-  font-weight: var(--font-weight-normal);
-  line-height: 1.2;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  display: none;
 }
 
 .field-actions {
