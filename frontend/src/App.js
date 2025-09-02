@@ -375,7 +375,7 @@ function SearchCard() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-5xl" style={{ maxWidth: isMobile ? '100vw' : '80rem', padding: isMobile ? '0 1rem' : '0' }}>
       <div className="rounded-2xl shadow-sm border border-neutral-200 bg-white p-4 md:p-6">
         <div className="inline-flex rounded-full bg-neutral-100 p-1">
           {[
