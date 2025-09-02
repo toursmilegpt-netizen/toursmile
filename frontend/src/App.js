@@ -1243,7 +1243,7 @@ const FlightSearchForm = () => {
               className="from-field-inline"
               style={{ gridArea: 'from', margin: 0 }}
             >
-              <EnhancedAirportSelector
+              <WorldClassCityPicker
                 value={departure?.city || ''}
                 selectedAirport={departure}
                 onSelect={handleDepartureSelect}
