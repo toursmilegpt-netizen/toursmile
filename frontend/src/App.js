@@ -35,20 +35,32 @@ function useDebounced(value, delay = 250) {
   return debouncedValue;
 }
 
-// Container Component - EXACT AS PREVIEW
-const Container = ({ children }) => (
-  <div className="min-h-screen bg-white text-neutral-900">
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-neutral-200">
-      <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-2 font-semibold text-xl">
-          <img 
-            src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
-            alt="TourSmile"
-            className="h-10 w-auto"
-          />
-        </div>
-        <nav className="hidden md:flex items-center gap-2" style={{ display: window.innerWidth >= 768 ? 'flex' : 'none' }}>
-          {[
+const Container = ({ children }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-white text-neutral-900">
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-neutral-200">
+        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 font-semibold text-xl">
+            <img 
+              src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
+              alt="TourSmile"
+              className="h-10 w-auto"
+            />
+          </div>
+          <nav className={`items-center gap-2 ${isMobile ? 'hidden' : 'flex'}`}>
+            {[
             { label: "Flights", icon: "✈️" },
             { label: "Hotels", icon: "🏨" },
             { label: "Packages", icon: "🎁" },
