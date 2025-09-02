@@ -526,10 +526,14 @@ const EnhancedAirportSelector = ({
       <label className="input-label">{label}</label>
       <div className="input-container">
         {selectedAirport && !isEditMode ? (
-          // BUTTON-AS-COMBOBOX: No text cursor, always opens dropdown
+          // BUTTON-AS-COMBOBOX: No text cursor, immediate dropdown
           <button
             type="button"
             onClick={handleButtonClick}
+            onKeyDown={(e) => {
+              handleKeyDown(e);
+              handleKeyPress(e); // Handle fresh query typing
+            }}
             className={`airport-button-combobox ${highlight ? 'input-highlight' : ''}`}
             role="combobox"
             aria-expanded={isOpen}
@@ -537,11 +541,9 @@ const EnhancedAirportSelector = ({
             aria-label={`Selected airport: ${selectedAirport.city}. Click to change.`}
           >
             <div className="airport-display-content">
-              {/* City Name - LARGE like MakeMyTrip */}
-              <div className="airport-city-display">
-                {selectedAirport.city}
-              </div>
-              {/* Airport Details - IATA, Name Country format like MakeMyTrip */}
+              {/* Line 1 City: text-base md:text-lg font-semibold leading-tight */}
+              <div className="airport-city-display">{selectedAirport.city}</div>
+              {/* Line 2 Airport + IATA: text-[11px] md:text-xs text-muted-foreground leading-snug */}
               <div className="airport-details-display">
                 {selectedAirport.code}, {shortenAirportName(selectedAirport.name)} {selectedAirport.country}
               </div>
@@ -551,7 +553,14 @@ const EnhancedAirportSelector = ({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleEditMode();
+                  setIsEditMode(true);
+                  setIsOpen(true);
+                  setQuery(selectedAirport?.city || '');
+                  setTimeout(() => {
+                    if (inputRef.current) {
+                      inputRef.current.focus();
+                    }
+                  }, 0);
                 }}
                 className="edit-icon"
                 aria-label="Edit selection"
@@ -563,13 +572,13 @@ const EnhancedAirportSelector = ({
             </div>
           </button>
         ) : (
-          // Normal input for typing (when no selection or edit mode)
+          // Input for typing (empty field or edit mode)
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={handleInputChange}
-            onClick={() => setIsOpen(true)}
+            onClick={handleButtonClick}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             className={`input-box ${highlight ? 'input-highlight' : ''}`}
