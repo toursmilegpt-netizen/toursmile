@@ -494,6 +494,18 @@ function Footer() {
 
 // Main App Component - EXACT IMPLEMENTATION  
 function App() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <Container>
       <main className="mx-auto max-w-7xl px-4 pb-24" style={{ maxWidth: '100vw', overflowX: 'hidden' }}>
