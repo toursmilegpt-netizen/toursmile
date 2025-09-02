@@ -429,7 +429,7 @@ function Footer() {
     <footer className="mt-16 border-t border-neutral-200 pt-8">
       <div className="mx-auto max-w-7xl px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
         <div>
-          <div className="font-medium mb-2">About</div>
+          <div className="font-medium mb-2" style={{ fontWeight: '500' }}>About</div>
           <ul className="space-y-1 text-neutral-600">
             <li><a href="#" className="hover:text-neutral-900">Company</a></li>
             <li><a href="#" className="hover:text-neutral-900">Contact</a></li>
