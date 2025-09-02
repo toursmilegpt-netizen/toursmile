@@ -746,52 +746,191 @@ body {
 }
 
 /* ========================================= */
-/* ENHANCED AIRPORT TYPOGRAPHY - MINIMALIST */
+/* WORLD-CLASS AIRPORT SELECTOR - OTA STANDARDS */
 /* ========================================= */
 
-/* City Name - text-base md:text-lg font-semibold leading-tight */
+.enhanced-airport-field {
+  margin-bottom: var(--space-3);
+  width: 100%;
+}
+
+/* Button-as-Combobox - Premium interaction */
+.airport-button-combobox {
+  width: 100%;
+  height: 48px;
+  padding: 8px 12px; /* px-3 py-2 consistent */
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  background-color: #FFFFFF;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  box-shadow: var(--shadow-xs);
+  text-align: left;
+  font-family: var(--font-family);
+}
+
+/* Hover/Focus - Outline ring only (flat background) */
+.airport-button-combobox:hover {
+  border-color: var(--color-neutral-400);
+  box-shadow: var(--ring-brand-200); /* ring-2 ring-brand-200 */
+}
+
+.airport-button-combobox:focus {
+  border-color: var(--brand-500);
+  box-shadow: var(--ring-brand-300); /* focus:ring-brand-300 */
+}
+
+.airport-display-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+/* City - text-base mobile, md:text-lg, font-semibold, color-neutral-900 */
 .airport-city-display {
-  font-size: var(--text-base); /* text-base */
+  font-size: var(--text-base); /* text-base on mobile */
   font-weight: var(--font-weight-semibold); /* font-semibold */
-  color: var(--color-text-primary);
+  color: var(--color-neutral-900); /* color-neutral-900 */
   line-height: 1.25; /* leading-tight */
   letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  max-height: 20px;
 }
 
-/* Airport + IATA - text-[11px] md:text-xs text-muted-foreground leading-snug */
+/* Airport + IATA - text-[11px] mobile, md:text-xs, color-neutral-500, leading-snug */
 .airport-details-display {
-  font-size: 11px !important; /* text-[11px] */
-  color: var(--color-text-secondary) !important; /* text-muted-foreground */
-  font-weight: var(--font-weight-normal) !important;
-  line-height: 1.375 !important; /* leading-snug */
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  width: 100% !important;
-  max-height: 14px !important;
-  opacity: 0.8 !important; /* Minimalist visibility */
+  font-size: var(--text-11); /* text-[11px] on mobile */
+  color: var(--color-neutral-500); /* color-neutral-500 muted grayscale */
+  font-weight: var(--font-weight-normal);
+  line-height: 1.375; /* leading-snug */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-/* IATA codes - font-mono tracking-wide */
-.airport-details-display {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace; /* Include mono fonts */
-  letter-spacing: 0.05em; /* tracking-wide for IATA codes */
+/* IATA Code - uppercase, font-mono, tracking-wide, color-neutral-600 */
+.airport-iata {
+  font-family: var(--font-mono); /* font-mono */
+  text-transform: uppercase; /* uppercase */
+  letter-spacing: 0.1em; /* tracking-wide */
+  color: var(--color-neutral-600); /* color-neutral-600 */
+  font-weight: var(--font-weight-medium); /* slightly bolder than airport text */
 }
 
-/* Responsive typography - md: sizes */
-@media (min-width: 768px) {
-  .airport-city-display {
-    font-size: var(--text-lg); /* md:text-lg */
+.field-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.edit-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius);
+  font-size: 12px;
+  transition: all var(--transition-fast);
+  color: var(--color-neutral-500);
+}
+
+.edit-icon:hover {
+  background-color: var(--color-neutral-100);
+  color: var(--brand-500);
+}
+
+.dropdown-icon {
+  color: var(--color-neutral-500);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+}
+
+/* Enhanced Dropdown - Premium OTA styling */
+.autocomplete-dropdown-enhanced {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-neutral-200);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 50;
+  max-height: 320px;
+  overflow-y: auto;
+  animation: dropdown-appear var(--transition-base);
+}
+
+@keyframes dropdown-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
   }
-  
-  .airport-details-display {
-    font-size: var(--text-xs) !important; /* md:text-xs */
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
+}
+
+/* Dropdown Items - Premium scan-ability */
+.dropdown-item-final {
+  padding: 8px 12px; /* py-2 px-3 consistent */
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: var(--tap-target-min);
+  justify-content: center;
+  border: none; /* No borders for clean look */
+}
+
+/* Hover/Focus - Outline only (no background fill) */
+.dropdown-item-final:hover {
+  background: none; /* Flat background */
+  outline: 2px solid var(--brand-200); /* Outline ring only */
+  outline-offset: -2px;
+}
+
+.dropdown-item-final:focus {
+  background: none; /* Flat background */
+  outline: 2px solid var(--brand-300); /* Focus ring */
+  outline-offset: -2px;
+}
+
+/* City line - text-sm font-medium color-neutral-900 */
+.item-city-final {
+  font-size: var(--text-sm); /* text-sm */
+  font-weight: var(--font-weight-medium); /* font-medium */
+  color: var(--color-neutral-900); /* color-neutral-900 */
+  line-height: 1.3;
+}
+
+/* Airport + IATA line - text-xs color-neutral-500 */
+.item-details-final {
+  font-size: var(--text-xs); /* text-xs */
+  color: var(--color-neutral-500); /* color-neutral-500 */
+  font-weight: var(--font-weight-normal);
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .field-actions {
