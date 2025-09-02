@@ -484,7 +484,14 @@ export default function App() {
         </section>
         <SearchCard />
 
-        <section className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <section className="mt-12">
+          <div 
+            className="grid gap-4"
+            style={{
+              gridTemplateColumns: window.innerWidth < 768 ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))',
+              maxWidth: '100%'
+            }}
+          >
           {[
             { icon: "🔒", t: "Secure Booking", s: "SSL encrypted payments" },
             { icon: "💬", t: "24×7 Support", s: "WhatsApp & phone support" },
