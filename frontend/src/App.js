@@ -320,7 +320,7 @@ function PaxRow({ label, hint, value, onInc, onDec }) {
     <div className="flex items-center justify-between">
       <div>
         <div className="text-sm font-medium" style={{ fontWeight: '500' }}>{label}</div>
-        <div className="text-xs text-neutral-500">{hint}</div>
+        <div className="text-xs text-neutral-500" style={{ fontWeight: '300' }}>{hint}</div>
       </div>
       <div className="flex items-center gap-2">
         <button 
