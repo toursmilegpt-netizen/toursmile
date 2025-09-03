@@ -811,13 +811,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Priority 2 Features Frontend Testing"
-    - "Promotional Banner Visibility Fix"
-    - "Recent Search History Population"
-    - "Price Variation Display Enhancement"
+    - "Backend: Tripjack Flight Search route /api/flights/search"
+    - "Frontend: Hook Search Button to Backend API"
   stuck_tasks:
-    - "Critical React Hooks Error Resolution"
-    - "Homepage Guidance Fixes Implementation"
+    - "None"
   test_all: false
   test_priority: "high_first"
 
