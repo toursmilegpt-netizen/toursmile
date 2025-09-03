@@ -304,7 +304,8 @@ function SearchCard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const backendBase = (typeof process !== 'undefined' && process.env && process.env.REACT_APP_BACKEND_URL) || (typeof importMeta !== 'undefined' && import.meta.env && import.meta.env.REACT_APP_BACKEND_URL) || undefined;
+  // Backend base URL from environment (must be defined in frontend/.env as REACT_APP_BACKEND_URL)
+  const backendBase = process.env.REACT_APP_BACKEND_URL;
 
   return (
     <div className="mx-auto max-w-5xl px-4">
