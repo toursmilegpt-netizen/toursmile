@@ -553,10 +553,13 @@ async def search_flights(request: FlightSearchRequest):
             if tripjack_flight_service.api_key:
                 logging.info(f"Using Tripjack API for route: {request.origin} → {request.destination}")
                 real_flights = tripjack_flight_service.search_flights(
-                    request.origin,
-                    request.destination, 
-                    request.departure_date,
-                    request.passengers if hasattr(request, 'passengers') and isinstance(request.passengers, int) else 1
+                    origin=request.origin,
+                    destination=request.destination,
+                    departure_date=request.departure_date,
+                    passengers=(request.passengers if hasattr(request, 'passengers') and isinstance(request.passengers, int) else 1),
+                    class_type=(request.class_type if hasattr(request, 'class_type') else 'economy'),
+                    trip_type=('roundtrip' if getattr(request, 'return_date', None) else 'oneway'),
+                    return_date=(request.return_date if getattr(request, 'return_date', None) else None)
                 )
                 if real_flights:
                     use_real_api = True
