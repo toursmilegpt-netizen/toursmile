@@ -827,9 +827,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Homepage Search Flow Integration"
+    - "Results page: dedicated view + sorting & core filters"
+    - "Flexible dates ±3d & Nearby airports end-to-end"
+    - "Booking flow: selection → passengers → payment → confirmation"
   stuck_tasks:
-    - "Homepage Search Flow Integration"
+    - "None"
   test_all: false
   test_priority: "high_first"
 
