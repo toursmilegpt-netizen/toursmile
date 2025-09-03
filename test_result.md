@@ -486,8 +486,8 @@ backend:
 
 frontend:
   - task: "Hook Search Button to Backend API"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: true
     file: "/app/frontend/src/App.js"
     stuck_count: 0
     priority: "high"
