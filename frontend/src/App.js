@@ -300,6 +300,11 @@ function SearchCard() {
   const [ret, setRet] = useState(null);
   const [openPax, setOpenPax] = useState(false);
   const [pax, setPax] = useState({ adt: 1, chd: 0, inf: 0, cabin: "Economy" });
+  const [results, setResults] = useState(null); // { flights: [], total_found, data_source, ai_recommendation }
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const backendBase = (typeof process !== 'undefined' && process.env && process.env.REACT_APP_BACKEND_URL) || (typeof importMeta !== 'undefined' && import.meta.env && import.meta.env.REACT_APP_BACKEND_URL) || undefined;
 
   return (
     <div className="mx-auto max-w-5xl px-4">
