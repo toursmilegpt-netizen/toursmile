@@ -378,10 +378,98 @@ function SearchCard() {
 
         {/* Search Button */}
         <div className="mt-4">
-          <button className="w-full h-12 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors">
-            Search Flights
+          <button
+            onClick={async () => {
+              setError(null);
+              setResults(null);
+              if (!depart) {
+                alert('Please select a departure date');
+                return;
+              }
+              try {
+                setLoading(true);
+                const urlBase = backendBase || (window.__BACKEND_URL__ || (window.ENV && window.ENV.REACT_APP_BACKEND_URL));
+                if (!urlBase) {
+                  throw new Error('Backend URL not configured');
+                }
+                const payload = {
+                  origin: from.city,
+                  destination: to.city,
+                  departure_date: depart,
+                  return_date: trip !== 'OW' ? ret : null,
+                  passengers: pax.adt + pax.chd + pax.inf,
+                  class_type: (pax.cabin || 'Economy').toLowerCase().includes('business') ? 'business' : (pax.cabin || 'Economy').toLowerCase().includes('first') ? 'first' : 'economy',
+                  timePreference: null,
+                  flexibleDates: false,
+                  nearbyAirports: false,
+                  corporateBooking: false,
+                  budgetRange: null
+                };
+                const res = await fetch(`${urlBase}/api/flights/search`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload)
+                });
+                if (!res.ok) {
+                  const txt = await res.text();
+                  throw new Error(`Search failed (${res.status}): ${txt}`);
+                }
+                const data = await res.json();
+                setResults(data);
+              } catch (e) {
+                console.error('Search error', e);
+                setError(e.message || 'Search failed');
+              } finally {
+                setLoading(false);
+              }
+            }}
+            className="w-full h-12 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-60"
+            disabled={loading}
+          >
+            {loading ? 'Searching…' : 'Search Flights'}
           </button>
         </div>
+
+        {/* Results */}
+        {error && (
+          <div className="mt-4 p-3 rounded-lg border border-red-200 text-red-700 bg-red-50 text-sm">
+            {error}
+          </div>
+        )}
+        {results && (
+          <div className="mt-6">
+            <div className="text-sm text-neutral-700 mb-2">
+              {results.total_found} flights found · Source: {results.data_source}
+            </div>
+            <div className="grid grid-cols-1 gap-3">
+              {(results.flights || []).map((f, idx) => (
+                <div key={idx} className="rounded-xl border border-neutral-200 p-4 bg-white">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-medium">{f.airline || f.airline_name || 'Flight'}</div>
+                    <div className="text-sm font-semibold">₹{(f.price || f.lowest_fare || 0).toLocaleString()}</div>
+                  </div>
+                  <div className="text-xs text-neutral-600 mt-1">
+                    {f.origin} → {f.destination} · {f.departure_time} → {f.arrival_time} · {f.duration}
+                  </div>
+                  {f.fare_options && f.fare_options.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-2 text-xs">
+                      {f.fare_options.slice(0, 3).map((fo, i) => (
+                        <span key={i} className="px-2 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                          {fo.fareType || fo.name}: ₹{fo.totalPrice?.toLocaleString?.() || fo.totalPrice}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            {results.ai_recommendation && (
+              <div className="mt-4 p-3 rounded-lg border border-blue-200 bg-blue-50 text-sm text-blue-800">
+                💡 {results.ai_recommendation}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
