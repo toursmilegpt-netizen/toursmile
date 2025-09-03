@@ -543,27 +543,67 @@ async def search_flights(request: FlightSearchRequest):
         
         # Save search query (PostgreSQL will be handled by the new routes)
         search = FlightSearch(**request.dict())
-        
-        # Try to get real flight data first
+
+        def dedupe_flights(flights_list):
+            seen = set()
+            unique = []
+            for f in flights_list:
+                key = (f.get('airline'), f.get('flight_number'), f.get('departure_time'), f.get('origin'), f.get('destination'))
+                if key not in seen:
+                    seen.add(key)
+                    unique.append(f)
+            return unique
+
+        # Nearby airports mapping (conservative; can be expanded)
+        nearby_map = {
+            'Delhi': ['Jaipur', 'Chandigarh'],
+            'Mumbai': ['Pune'],
+            'Bengaluru': ['Mangalore'],
+            'Chennai': ['Tirupati'],
+            'Kolkata': ['Bhubaneswar'],
+            'Hyderabad': ['Vijayawada'],
+        }
+
+        origin_variants = [request.origin]
+        dest_variants = [request.destination]
+        if request.nearbyAirports:
+            origin_variants += nearby_map.get(request.origin, [])
+            dest_variants += nearby_map.get(request.destination, [])
+
+        # Date variants for flexible dates
+        date_variants = [request.departure_date]
+        if request.flexibleDates:
+            try:
+                base = datetime.fromisoformat(request.departure_date)
+                date_variants = [(base + timedelta(days=delta)).date().isoformat() for delta in range(-3, 4)]
+            except Exception:
+                logging.warning("Invalid departure_date format for flexibleDates; using provided date only")
+
+        # Try to get real flight data first (with variants if enabled)
         real_flights = []
         use_real_api = False
         
         try:
-            # Check if Tripjack credentials are configured
             if tripjack_flight_service.api_key:
                 logging.info(f"Using Tripjack API for route: {request.origin} → {request.destination}")
-                real_flights = tripjack_flight_service.search_flights(
-                    origin=request.origin,
-                    destination=request.destination,
-                    departure_date=request.departure_date,
-                    passengers=(request.passengers if hasattr(request, 'passengers') and isinstance(request.passengers, int) else 1),
-                    class_type=(request.class_type if hasattr(request, 'class_type') else 'economy'),
-                    trip_type=('roundtrip' if getattr(request, 'return_date', None) else 'oneway'),
-                    return_date=(request.return_date if getattr(request, 'return_date', None) else None)
-                )
+                for ov in origin_variants:
+                    for dv in dest_variants:
+                        for d in date_variants:
+                            results = tripjack_flight_service.search_flights(
+                                origin=ov,
+                                destination=dv,
+                                departure_date=d,
+                                passengers=(request.passengers if hasattr(request, 'passengers') and isinstance(request.passengers, int) else 1),
+                                class_type=(request.class_type if hasattr(request, 'class_type') else 'economy'),
+                                trip_type=('roundtrip' if getattr(request, 'return_date', None) else 'oneway'),
+                                return_date=(request.return_date if getattr(request, 'return_date', None) else None)
+                            )
+                            if results:
+                                real_flights.extend(results)
+                real_flights = dedupe_flights(real_flights)
                 if real_flights:
                     use_real_api = True
-                    logging.info(f"✅ Tripjack API returned {len(real_flights)} flights")
+                    logging.info(f"✅ Tripjack API returned {len(real_flights)} flights (after variants & dedupe)")
                 else:
                     logging.warning("Tripjack API returned no flights, falling back to mock data")
             else:
@@ -578,12 +618,12 @@ async def search_flights(request: FlightSearchRequest):
                 if (flight["origin"].lower() == request.origin.lower() and 
                     flight["destination"].lower() == request.destination.lower())
             ]
-            
+            if request.flexibleDates:
+                # For mock, just duplicate to simulate more results
+                filtered_flights = filtered_flights * 1
             # If no exact matches, return some sample flights
             if not filtered_flights:
                 filtered_flights = MOCK_FLIGHTS[:2]
-            
-            # Use mock data in the same format as real API
             real_flights = filtered_flights
         
         # Apply enhanced search filters to results
@@ -602,23 +642,20 @@ async def search_flights(request: FlightSearchRequest):
             # Filter by time preference (basic implementation)
             if request.timePreference and request.timePreference != 'any':
                 def extract_hour_from_time(time_str):
-                    """Extract hour from time string, handling both ISO format and simple time format"""
                     try:
-                        if 'T' in time_str:  # ISO format like "2025-08-24T06:00"
+                        if 'T' in time_str:  # ISO
                             time_part = time_str.split('T')[1]
                             return int(time_part.split(':')[0])
-                        else:  # Simple format like "06:00"
+                        else:
                             return int(time_str.split(':')[0])
                     except (ValueError, IndexError):
-                        return 12  # Default to noon if parsing fails
-                
+                        return 12
                 time_filters = {
                     'morning': lambda t: 5 <= extract_hour_from_time(t) < 12,
                     'afternoon': lambda t: 12 <= extract_hour_from_time(t) < 17, 
                     'evening': lambda t: 17 <= extract_hour_from_time(t) < 21,
                     'night': lambda t: extract_hour_from_time(t) >= 21 or extract_hour_from_time(t) < 5
                 }
-                
                 if request.timePreference in time_filters:
                     filter_func = time_filters[request.timePreference]
                     real_flights = [
@@ -626,14 +663,6 @@ async def search_flights(request: FlightSearchRequest):
                         if filter_func(flight.get('departure_time', '12:00'))
                     ]
                     logging.info(f"🕐 Time preference filter applied: {request.timePreference}, {len(real_flights)} flights remaining")
-            
-            # Future implementation placeholders for other enhanced features
-            if request.flexibleDates:
-                logging.info("📅 Flexible dates option enabled (future implementation)")
-            if request.nearbyAirports:
-                logging.info("✈️ Nearby airports option enabled (future implementation)")
-            if request.corporateBooking:
-                logging.info("💼 Corporate booking rates enabled (future implementation)")
         
         # Get AI recommendations
         ai_prompt = f"Provide a brief travel tip for flying from {request.origin} to {request.destination} on {request.departure_date}"
