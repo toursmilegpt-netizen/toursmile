@@ -825,10 +825,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Backend: Tripjack Flight Search route /api/flights/search"
-    - "Frontend: Hook Search Button to Backend API"
+    - "Homepage Search Flow Integration"
   stuck_tasks:
-    - "None"
+    - "Homepage Search Flow Integration"
   test_all: false
   test_priority: "high_first"
 
