@@ -75,3 +75,8 @@ body {
 .meta { color: #666; }
 .small { font-size: 12px; margin-top: 6px; }
 @media (max-width: 480px) { .subtitle { font-size: 15px; } .btn { width: 100%; } }
+
+/* Mobile tap target minimums */
+@media (max-width: 430px){
+  .btn-gradient, .btn, .form-row input { min-height: 44px; }
+}
