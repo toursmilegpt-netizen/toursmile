@@ -52,6 +52,8 @@ body {
 @media(min-width:768px){ .cs-grid-4{ grid-template-columns: repeat(4,1fr);} }
 
 .cs-form{ max-width:760px; margin: 32px auto 8px; }
+@media(min-width:1024px){ .cs-grid-3{ grid-template-columns: repeat(3,1fr);} }
+
 .cs-form h3{ font-size:24px; margin: 0 0 8px; }
 .cs-form .hint{ color:#6b7280; margin:0 0 16px; }
 .form-row{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
