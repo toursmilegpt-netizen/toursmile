@@ -61,14 +61,14 @@ body {
 .cs-msg.error{ color:#dc2626; }
 .cs-form .fine{ color:#6b7280; font-size:12px; margin-top:6px; }
 
-.cs-section{ margin: 56px auto 0; max-width: 900px; }
-.cs-kicker{ color:#6b7280; text-transform: uppercase; letter-spacing:.12em; font-size:12px; margin-bottom: 18px; }
-.cs-grid-3{ display:grid; grid-template-columns: 1fr; gap:16px; }
+.cs-section{ margin: 48px auto 0; max-width: 900px; }
+.cs-kicker{ color:#6b7280; text-transform: uppercase; letter-spacing:.12em; font-size:12px; margin-bottom: 14px; }
+.cs-grid-3{ display:grid; grid-template-columns: 1fr; gap:12px; }
 @media(min-width:768px){ .cs-grid-3{ grid-template-columns: repeat(3,1fr);} }
-.card{ background:#f8fafc; border:1px solid #e5e7eb; border-radius:16px; padding:22px; }
-.card .ico{ font-size:26px; margin-bottom:8px; }
-.card .ct{ font-weight:600; margin-bottom:6px; }
-.card .cs{ color:#6b7280; }
+.card{ background:#f8fafc; border:1px solid #e5e7eb; border-radius:16px; padding:18px; }
+.card .ico{ font-size:22px; margin-bottom:6px; }
+.card .ct{ font-weight:600; margin-bottom:4px; font-size:14px; }
+.card .cs{ color:#6b7280; font-size:13px; line-height:1.45; }
 
 .cs-footer{ margin: 48px 0 8px; color:#6b7280; }
 .cs-footer .muted{ font-size:12px; }
