@@ -10,12 +10,12 @@ body {
 /* Legacy Coming Soon layout */
 .cs-wrapper { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
 .cs-inner { width: 100%; max-width: 1100px; text-align: center; }
-.cs-logo img{ height: 140px; width: auto; margin: 24px auto 8px; display: block; }
-@media(min-width:768px){ .cs-logo img{ height: 180px; } }
+.cs-logo img{ height: 160px; width: auto; margin: 24px auto 8px; display: block; }
+@media(min-width:768px){ .cs-logo img{ height: 200px; } }
 .badge-gradient { display:inline-flex; align-items:center; gap:8px; color:#fff; padding:8px 16px; border-radius:999px; font-weight:600; font-size:14px; background: linear-gradient(90deg,#2563EB,#F97316); }
 .badge-gradient .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; background:#fff; opacity:.9; }
-.cs-title { font-size: clamp(32px,6vw,64px); line-height:1.08; margin: 20px 0 12px; letter-spacing:-0.02em; }
-.text-gradient{ background: linear-gradient(90deg,#60A5FA,#FDBA74); -webkit-background-clip:text; background-clip:text; color: transparent; }
+.cs-title { font-size: clamp(30px,5.2vw,58px); line-height:1.08; margin: 20px 0 12px; letter-spacing:-0.02em; }
+.text-gradient{ background: linear-gradient(90deg,#93C5FD,#FBCFE8,#FED7AA); -webkit-background-clip:text; background-clip:text; color: transparent; }
 .cs-sub{ color:#4b5563; font-size: clamp(16px,2.8vw,22px); margin:0 auto 28px; max-width: 760px; }
 
 .cs-grid-4{ display:grid; grid-template-columns: repeat(2,1fr); gap:12px; max-width: 720px; margin: 0 auto 24px; }
