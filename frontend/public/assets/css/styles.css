@@ -8,9 +8,9 @@ body {
 }
 
 /* Legacy Coming Soon layout */
-.cs-wrapper { min-height: 100vh; display: grid; place-items: center; padding: 16px 24px 24px; }
+.cs-wrapper { min-height: 100vh; display: grid; place-items: center; padding: 8px 24px 24px; }
 .cs-inner { width: 100%; max-width: 1100px; text-align: center; }
-.cs-logo img{ height: 160px; width: auto; margin: 12px auto 8px; display: block; }
+.cs-logo img{ height: 160px; width: auto; margin: 4px auto 8px; display: block; }
 @media(min-width:768px){ .cs-logo img{ height: 200px; } }
 @media(min-width:1280px){ .cs-logo img{ height: 240px; } }
 .badge-gradient { display:inline-flex; align-items:center; gap:8px; color:#fff; padding:8px 16px; border-radius:999px; font-weight:600; font-size:14px; background: linear-gradient(90deg,#2563EB,#F97316); }
