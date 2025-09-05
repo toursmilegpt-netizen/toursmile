@@ -25,7 +25,7 @@ body {
 
 /* Emphasis for "simple" (no gradient, crisp, minimal) */
 .text-gradient{
-  background: linear-gradient(90deg, #8FB9FF 0%, #FFD5B8 100%);
+  background: linear-gradient(90deg, #7FB0FF 0%, #FFCDAA 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
