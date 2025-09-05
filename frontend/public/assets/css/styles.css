@@ -6,69 +6,60 @@ body {
   color: #0a0a0a;
   background: #ffffff;
 }
-.container {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
-.header {
-  padding: 16px 24px;
-  border-bottom: 1px solid #eee;
-}
-.brand {
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  font-size: 20px;
-}
-.hero {
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 56px 24px;
-}
-.title {
-  font-size: clamp(28px, 5vw, 40px);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin: 8px 0 12px;
-}
-.subtitle {
-  max-width: 720px;
-  margin: 0 auto 24px;
-  color: #555;
-  font-size: 16px;
-}
-.cta-row {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 8px 0 24px;
-}
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 14px;
-  border: 1px solid transparent;
-}
-.btn-whatsapp {
-  background: #25D366;
-  color: #fff;
-}
-.btn-outline {
-  background: #fff;
-  color: #0a0a0a;
-  border-color: #ddd;
-}
+
+/* Legacy Coming Soon layout */
+.cs-wrapper { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+.cs-inner { width: 100%; max-width: 1100px; text-align: center; }
+.cs-logo img{ height: 120px; width: auto; margin: 24px auto 8px; display: block; }
+.badge-gradient { display:inline-flex; align-items:center; gap:8px; color:#fff; padding:8px 16px; border-radius:999px; font-weight:600; font-size:14px; background: linear-gradient(90deg,#2563EB,#F97316); }
+.badge-gradient .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; background:#fff; opacity:.9; }
+.cs-title { font-size: clamp(32px,6vw,64px); line-height:1.08; margin: 20px 0 12px; letter-spacing:-0.02em; }
+.text-gradient{ background: linear-gradient(90deg,#2563EB,#F97316); -webkit-background-clip:text; background-clip:text; color: transparent; }
+.cs-sub{ color:#4b5563; font-size: clamp(16px,2.8vw,22px); margin:0 auto 28px; max-width: 760px; }
+
+.cs-grid-4{ display:grid; grid-template-columns: repeat(2,1fr); gap:12px; max-width: 720px; margin: 0 auto 24px; }
+.cs-tile{ background:#f8fafc; border:1px solid #e5e7eb; border-radius:16px; padding:16px; }
+.cs-tile .ico{ font-size:28px; margin-bottom:8px; }
+.cs-tile .t{ font-weight:600; }
+.cs-tile .s{ color:#6b7280; font-size:13px; }
+@media(min-width:768px){ .cs-grid-4{ grid-template-columns: repeat(4,1fr);} }
+
+.cs-form{ max-width:760px; margin: 32px auto 8px; }
+.cs-form h3{ font-size:24px; margin: 0 0 8px; }
+.cs-form .hint{ color:#6b7280; margin:0 0 16px; }
+.form-row{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+.form-row input{ flex:1 1 320px; min-width:260px; padding:14px 16px; border-radius:16px; border:1px solid #d1d5db; background:#f9fafb; font-size:16px; }
+.btn-gradient{ padding:14px 18px; border-radius:16px; color:#fff; font-weight:600; border:none; background: linear-gradient(90deg,#2563EB,#F97316); box-shadow: 0 8px 20px rgba(37,99,235,.25); cursor:pointer; }
+.btn-gradient:hover{ filter:brightness(.98); }
+.cs-msg{ margin-top:10px; font-size:14px; }
+.cs-msg.ok{ color:#16a34a; }
+.cs-msg.error{ color:#dc2626; }
+.cs-form .fine{ color:#6b7280; font-size:12px; margin-top:6px; }
+
+.cs-section{ margin: 56px auto 0; max-width: 900px; }
+.cs-kicker{ color:#6b7280; text-transform: uppercase; letter-spacing:.12em; font-size:12px; margin-bottom: 18px; }
+.cs-grid-3{ display:grid; grid-template-columns: 1fr; gap:16px; }
+@media(min-width:768px){ .cs-grid-3{ grid-template-columns: repeat(3,1fr);} }
+.card{ background:#f8fafc; border:1px solid #e5e7eb; border-radius:16px; padding:22px; }
+.card .ico{ font-size:26px; margin-bottom:8px; }
+.card .ct{ font-weight:600; margin-bottom:6px; }
+.card .cs{ color:#6b7280; }
+
+.cs-footer{ margin: 48px 0 8px; color:#6b7280; }
+.cs-footer .muted{ font-size:12px; }
+
+/* Minimal base (used by plain coming-soon.html) */
+.container { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
+.header { padding: 16px 24px; border-bottom: 1px solid #eee; }
+.brand { font-weight: 700; letter-spacing: -0.02em; font-size: 20px; }
+.hero { display: grid; place-items: center; text-align: center; padding: 56px 24px; }
+.title { font-size: clamp(28px, 5vw, 40px); line-height: 1.1; letter-spacing: -0.02em; margin: 8px 0 12px; }
+.subtitle { max-width: 720px; margin: 0 auto 24px; color: #555; font-size: 16px; }
+.cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 8px 0 24px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 16px; border-radius: 12px; font-weight: 600; text-decoration: none; font-size: 14px; border: 1px solid transparent; }
+.btn-whatsapp { background: #25D366; color: #fff; }
+.btn-outline { background: #fff; color: #0a0a0a; border-color: #ddd; }
 .btn:hover { opacity: 0.9; }
 .meta { color: #666; }
 .small { font-size: 12px; margin-top: 6px; }
-@media (max-width: 480px) {
-  .subtitle { font-size: 15px; }
-  .btn { width: 100%; }
-}
+@media (max-width: 480px) { .subtitle { font-size: 15px; } .btn { width: 100%; } }
