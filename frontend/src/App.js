@@ -214,6 +214,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
           value={displayValue}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
           onClick={handleInputClick}
           onKeyPress={handleKeyPress}
           placeholder="Type city or code"
@@ -224,7 +225,8 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
             border: 'none !important',
             minWidth: 0,
             maxWidth: '100%',
-            width: '100%'
+            width: '100%',
+            fontSize: '16px'
           }}
         />
         {value && value.iata && (
