@@ -75,6 +75,9 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   // Handle search when user types
   useEffect(() => {
     if (debouncedQuery && debouncedQuery.length >= 1) {
+      // Show dropdown when typing
+      setOpen(true);
+      
       // Search for suggestions but don't auto-populate
       const localMatches = popularAirports.filter(airport => 
         airport.city.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
@@ -92,6 +95,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
       setSuggestions(popularAirports);
     } else {
       setSuggestions([]);
+      setOpen(false);
     }
   }, [debouncedQuery, open]);
   
