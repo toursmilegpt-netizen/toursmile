@@ -174,10 +174,15 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     const inputValue = e.target.value;
     setQuery(inputValue);
     
-    // The useEffect will handle showing suggestions
+    // Only show suggestions when typing, not when field already has a value
     if (inputValue.length === 0) {
-      setSuggestions(popularAirports);
-      setOpen(true);
+      if (!value) {
+        setSuggestions(popularAirports);
+        setOpen(true);
+      } else {
+        setOpen(false);
+        setSuggestions([]);
+      }
     }
   };
 
