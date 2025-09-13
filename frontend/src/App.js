@@ -190,10 +190,13 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   const displayValue = query || (value && value.city ? value.city : "");
   
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative" style={{ minWidth: 0, maxWidth: '100%' }}>
       <label className="block text-xs font-medium text-neutral-600 mb-1">{label}</label>
-      <div className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors focus-within:border-neutral-400">
-        <span className="h-4 w-4 text-neutral-500 mr-2">✈️</span>
+      <div 
+        className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors focus-within:border-neutral-400"
+        style={{ minWidth: 0, maxWidth: '100%', width: '100%' }}
+      >
+        <span className="h-4 w-4 text-neutral-500 mr-2 flex-shrink-0">✈️</span>
         <input
           ref={inputRef}
           value={displayValue}
@@ -206,16 +209,19 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
           style={{ 
             boxShadow: 'none !important',
             outline: 'none !important',
-            border: 'none !important'
+            border: 'none !important',
+            minWidth: 0,
+            maxWidth: '100%',
+            width: '100%'
           }}
         />
         {value && value.iata && (
-          <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2">{value.iata}</span>
+          <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2 flex-shrink-0">{value.iata}</span>
         )}
         {query && (
           <button
             onClick={() => { setQuery(""); onChange(null); setOpen(false); }}
-            className="ml-1 text-neutral-400 hover:text-neutral-600"
+            className="ml-1 text-neutral-400 hover:text-neutral-600 flex-shrink-0"
           >
             ✕
           </button>
