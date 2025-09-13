@@ -255,8 +255,9 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     <div ref={containerRef} className="relative" style={{ minWidth: 0, maxWidth: '100%', position: 'relative' }}>
       <label className="block text-xs font-medium text-neutral-600 mb-1">{label}</label>
       <div 
-        className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors focus-within:border-neutral-400"
+        className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors focus-within:border-neutral-400 cursor-text"
         style={{ minWidth: 0, maxWidth: '100%', width: '100%', position: 'relative' }}
+        onClick={handleInputClick}
       >
         <span className="h-4 w-4 text-neutral-500 mr-2 flex-shrink-0">✈️</span>
         <input
