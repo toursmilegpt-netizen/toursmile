@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TourSmile – From/To Autocomplete Preview</title>
+  <link rel="stylesheet" href="/assets/css/airports-autocomplete.css">
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#fff;margin:0;padding:24px;color:#111827}
+    .wrap{max-width:960px;margin:0 auto}
+    h1{font-size:20px;margin:0 0 12px}
+    .bar{display:flex;align-items:center;gap:12px;margin:12px 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>From/To Autocomplete – Preview</h1>
+    <div class="ts-search">
+      <div class="ts-row" style="margin:12px 0;">
+        <div class="ts-field">
+          <label style="font-size:12px;color:#6b7280;">From</label>
+          <input id="tsFrom" class="ts-input" placeholder="Type city or code (e.g., PNQ, BOM)">
+        </div>
+        <button id="tsSwap" class="ts-swap" aria-label="Swap">⇄</button>
+        <div class="ts-field">
+          <label style="font-size:12px;color:#6b7280;">To</label>
+          <input id="tsTo" class="ts-input" placeholder="Type city or code (e.g., DEL, BOM)">
+        </div>
+      </div>
+
+      <div class="bar">
+        <label class="ts-toggle"><input id="tsDirect" type="checkbox"> Direct flights only</label>
+        <div class="ts-chip" onclick="document.getElementById('tsFrom').focus()">Popular: PNQ</div>
+        <div class="ts-chip" onclick="document.getElementById('tsTo').focus()">BOM</div>
+        <div class="ts-chip" onclick="document.getElementById('tsTo').focus()">DEL</div>
+        <div class="ts-chip" onclick="document.getElementById('tsTo').focus()">BLR</div>
+      </div>
+
+      <div class="ts-sticky" style="margin-top:10px;">
+        <button id="tsSearch" class="ts-btn ts-btn-primary" disabled>Search Flights</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/env.js"></script>
+  <script src="/assets/js/airports-autocomplete.js"></script>
+  <script>
+    TSInitSearch({
+      from: '#tsFrom',
+      to: '#tsTo',
+      searchBtn: '#tsSearch',
+      swapBtn: '#tsSwap',
+      directToggle: '#tsDirect'
+    });
+  </script>
+</body>
+</html>
