@@ -182,14 +182,25 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleCitySelect = (city) => {
+    // Set the selected city
     onChange(city);
     setQuery(city.city);
-    setOpen(false);
     
-    // Progress to next field
+    // IMMEDIATELY close dropdown
+    setOpen(false);
+    setSuggestions([]);
+    
+    // Clear any ongoing search
+    if (abortController.current) {
+      abortController.current.abort();
+    }
+    
+    // Progress to next field with slight delay for smooth UX
     setTimeout(() => {
-      if (onNext) onNext();
-    }, 300);
+      if (onNext) {
+        onNext();
+      }
+    }, 200);
   };
 
   const handleKeyPress = (e) => {
