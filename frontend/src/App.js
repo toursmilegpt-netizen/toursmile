@@ -182,11 +182,21 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   );
 }
 
-// Date Input Component
-function DateInput({ label, value, onChange, title, disabled }) {
+// Date Input Component with Auto-focus Support
+function DateInput({ label, value, onChange, title, disabled, autoFocus = false }) {
   const [open, setOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const ref = useRef(null);
+  const buttonRef = useRef(null);
+  
+  // Auto-focus when autoFocus prop changes
+  useEffect(() => {
+    if (autoFocus && buttonRef.current && !disabled) {
+      buttonRef.current.focus();
+      // Auto-open the calendar
+      setTimeout(() => setOpen(true), 200);
+    }
+  }, [autoFocus, disabled]);
   
   useEffect(() => {
     const handleClickOutside = (e) => {
