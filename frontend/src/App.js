@@ -266,7 +266,6 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
             width: '100%',
             fontSize: '16px'
           }}
-          readOnly={!!value} // Make input read-only if value is selected
         />
         {value && value.iata && (
           <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2 flex-shrink-0">{value.iata}</span>
