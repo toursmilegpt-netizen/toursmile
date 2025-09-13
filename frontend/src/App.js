@@ -263,6 +263,7 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
     <div ref={ref} className="relative">
       <label className="sr-only">{title}</label>
       <button 
+        ref={buttonRef}
         disabled={disabled} 
         onClick={() => !disabled && setOpen(true)} 
         className="h-12 w-full px-4 rounded-xl border border-neutral-300 text-left hover:bg-neutral-50 flex items-center justify-between disabled:opacity-50"
