@@ -133,6 +133,19 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     }
   };
 
+  // Reset mobile zoom when input loses focus
+  const handleInputBlur = () => {
+    // Reset zoom on mobile after input interaction
+    if (window.innerWidth <= 767) {
+      setTimeout(() => {
+        const viewport = document.querySelector('meta[name=viewport]');
+        if (viewport) {
+          viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        }
+      }, 100);
+    }
+  };
+
   const handleInputFocus = () => {
     // Don't auto-open dropdown on focus - only on click
     // setOpen(true);
