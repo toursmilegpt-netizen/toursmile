@@ -359,7 +359,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   );
 }
 
-// Date Input Component with Auto-focus Support
+// Date Input Component with FIXED date formatting and selection
 function DateInput({ label, value, onChange, title, disabled, autoFocus = false }) {
   const [open, setOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -389,6 +389,24 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
     return newDate;
   };
 
+  // Format date to DDMMYYYY
+  const formatDateDDMMYYYY = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}${month}${year}`;
+  };
+
+  // Convert date to display format DD MMM YYYY
+  const formatDateDisplay = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  };
+
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
@@ -413,18 +431,30 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
         </div>
         <div className="grid grid-cols-7 gap-1">
           {days.map((date, i) => {
-            const dateStr = date.toISOString().slice(0, 10);
+            // FIXED: Use local date string to avoid timezone issues
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const dateStr = `${year}-${month}-${day}`;
+            
             const isCurrentMonth = date.getMonth() === month;
-            const isSelected = value === dateStr;
+            const isSelected = value && value === dateStr;
+            const isToday = new Date().toDateString() === date.toDateString();
             
             return (
               <button 
                 key={i} 
-                onClick={() => { onChange(dateStr); setOpen(false); }}
+                onClick={() => { 
+                  console.log('Selected date:', dateStr); // Debug log
+                  onChange(dateStr); 
+                  setOpen(false); 
+                }}
                 className={`aspect-square rounded-md text-sm flex items-center justify-center transition-colors ${
-                  isCurrentMonth ? "text-neutral-900" : "text-neutral-400"
+                  date.getMonth() === currentMonth.getMonth() ? "text-neutral-900" : "text-neutral-400"
                 } ${
-                  isSelected ? "bg-blue-600 text-white" : "hover:bg-neutral-50"
+                  isSelected ? "bg-blue-600 text-white font-semibold" : 
+                  isToday ? "bg-blue-100 text-blue-700 font-medium" :
+                  "hover:bg-neutral-50"
                 }`}
               >
                 {date.getDate()}
@@ -445,7 +475,9 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
         onClick={() => !disabled && setOpen(true)} 
         className="h-12 w-full px-4 rounded-xl border border-neutral-300 text-left hover:bg-neutral-50 flex items-center justify-between disabled:opacity-50"
       >
-        <span className="text-sm text-neutral-700">{value || label}</span>
+        <span className="text-sm text-neutral-700">
+          {value ? formatDateDisplay(value) : label}
+        </span>
         <span className="h-4 w-4 text-neutral-500">📅</span>
       </button>
       {open && (
