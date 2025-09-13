@@ -75,10 +75,10 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   // Handle search when user types
   useEffect(() => {
     if (debouncedQuery && debouncedQuery.length >= 1) {
-      // Show dropdown when typing
+      // Show dropdown when typing and search for suggestions
       setOpen(true);
       
-      // Search for suggestions but don't auto-populate
+      // First try local matches from popularAirports
       const localMatches = popularAirports.filter(airport => 
         airport.city.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
         airport.iata.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
@@ -92,10 +92,10 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         searchAirports(debouncedQuery);
       }
     } else if (open && debouncedQuery.length === 0) {
+      // Show popular destinations when field is empty but dropdown is open
       setSuggestions(popularAirports);
-    } else {
+    } else if (!open) {
       setSuggestions([]);
-      setOpen(false);
     }
   }, [debouncedQuery, open]);
   
