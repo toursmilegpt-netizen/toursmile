@@ -30,19 +30,21 @@ function useDebounced(value, delay = 250) {
   return debouncedValue;
 }
 
-// City Input Component with Direct Typing and Auto-focus
+// City Input Component with Direct Typing + Dropdown (No Blue Boxes)
 function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
+  const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const debouncedQuery = useDebounced(query, 300);
   const inputRef = useRef(null);
+  const containerRef = useRef(null);
   const abortController = useRef(null);
   
   // Backend base URL from environment
   const backendBase = process.env.REACT_APP_BACKEND_URL;
   
-  // Popular airports for smart suggestions
+  // Popular airports for dropdown display
   const popularAirports = [
     { city: "Pune", airport: "Pune Intl", iata: "PNQ", country: "IN" },
     { city: "Mumbai", airport: "Chhatrapati Shivaji Maharaj Intl", iata: "BOM", country: "IN" },
@@ -52,6 +54,17 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     { city: "Chennai", airport: "Chennai Intl", iata: "MAA", country: "IN" }
   ];
   
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!containerRef.current?.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+  
   // Auto-focus when autoFocus prop changes
   useEffect(() => {
     if (autoFocus && inputRef.current) {
@@ -59,16 +72,18 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     }
   }, [autoFocus]);
   
+  // Handle search when user types
   useEffect(() => {
     if (debouncedQuery && debouncedQuery.length >= 2) {
       searchAirports(debouncedQuery);
+    } else if (open && debouncedQuery.length === 0) {
+      setSuggestions(popularAirports);
     } else {
       setSuggestions([]);
     }
-  }, [debouncedQuery]);
+  }, [debouncedQuery, open]);
   
   const searchAirports = async (searchQuery) => {
-    // Abort previous request
     if (abortController.current) {
       abortController.current.abort();
     }
@@ -90,16 +105,13 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         }
       );
       
-      if (!response.ok) {
-        throw new Error('Search failed');
-      }
+      if (!response.ok) throw new Error('Search failed');
       
       const data = await response.json();
       setSuggestions(data.results || []);
     } catch (error) {
       if (error.name !== 'AbortError') {
         console.error('Airport search error:', error);
-        // Fallback to popular airports
         setSuggestions(popularAirports.filter(airport => 
           (airport.city + " " + airport.iata + " " + airport.airport).toLowerCase().includes(searchQuery.toLowerCase())
         ));
@@ -109,11 +121,18 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     }
   };
 
+  const handleInputFocus = () => {
+    setOpen(true);
+    if (!query) {
+      setSuggestions(popularAirports);
+    }
+  };
+
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     setQuery(inputValue);
     
-    // Auto-complete logic for direct city population
+    // Direct typing auto-complete logic
     if (inputValue.length >= 2) {
       const matches = popularAirports.filter(airport => 
         airport.city.toLowerCase().startsWith(inputValue.toLowerCase()) ||
@@ -122,13 +141,13 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
       
       if (matches.length > 0) {
         const match = matches[0];
-        // Auto-populate if we have a clear match
         if (match.city.toLowerCase().startsWith(inputValue.toLowerCase()) || 
             match.iata.toLowerCase() === inputValue.toLowerCase()) {
           onChange(match);
           setQuery(match.city);
+          setOpen(false);
           
-          // Auto-progress to next field after a short delay
+          // Auto-progress to next field
           setTimeout(() => {
             if (onNext) onNext();
           }, 500);
@@ -137,14 +156,22 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     }
   };
 
+  const handleCitySelect = (city) => {
+    onChange(city);
+    setQuery(city.city);
+    setOpen(false);
+    
+    // Progress to next field
+    setTimeout(() => {
+      if (onNext) onNext();
+    }, 300);
+  };
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       if (suggestions.length > 0) {
-        const match = suggestions[0];
-        onChange(match);
-        setQuery(match.city);
-        if (onNext) onNext();
+        handleCitySelect(suggestions[0]);
       } else if (onNext) {
         onNext();
       }
@@ -154,30 +181,63 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   const displayValue = query || (value && value.city ? value.city : "");
   
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative">
       <label className="block text-xs font-medium text-neutral-600 mb-1">{label}</label>
-      <div className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 focus-within:ring-2 focus-within:ring-blue-200">
+      <div className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors">
         <span className="h-4 w-4 text-neutral-500 mr-2">✈️</span>
         <input
           ref={inputRef}
           value={displayValue}
           onChange={handleInputChange}
+          onFocus={handleInputFocus}
           onKeyPress={handleKeyPress}
           placeholder="Type city or code"
-          className="outline-none bg-transparent text-sm flex-1"
+          className="outline-none bg-transparent text-sm flex-1 border-none"
+          style={{ boxShadow: 'none' }}
         />
         {value && value.iata && (
           <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2">{value.iata}</span>
         )}
         {query && (
           <button
-            onClick={() => { setQuery(""); onChange(null); }}
+            onClick={() => { setQuery(""); onChange(null); setOpen(false); }}
             className="ml-1 text-neutral-400 hover:text-neutral-600"
           >
             ✕
           </button>
         )}
       </div>
+      
+      {/* Dropdown - Works alongside direct typing */}
+      {open && suggestions.length > 0 && (
+        <div className="absolute z-30 mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-lg overflow-hidden max-h-80 overflow-y-auto">
+          {!query && (
+            <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100">
+              Popular Destinations
+            </div>
+          )}
+          {suggestions.map((airport, i) => (
+            <button
+              key={`${airport.iata}-${i}`}
+              onClick={() => handleCitySelect(airport)}
+              className="w-full text-left px-3 py-2 hover:bg-neutral-50 flex items-center justify-between"
+            >
+              <div>
+                <div className="text-sm font-medium text-neutral-900">
+                  {airport.city} — {airport.iata}
+                </div>
+                <div className="text-xs text-neutral-600">{airport.airport}</div>
+              </div>
+              <div className="text-xs font-bold text-neutral-700">{airport.iata}</div>
+            </button>
+          ))}
+          {loading && (
+            <div className="px-3 py-2 text-xs text-neutral-500 text-center">
+              Searching...
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
