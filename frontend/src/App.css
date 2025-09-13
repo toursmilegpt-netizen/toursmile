@@ -201,100 +201,140 @@ html {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
   
-  /* Fix search card on mobile */
+  /* Fix search card on mobile - CRITICAL WIDTH CONSTRAINTS */
   .max-w-5xl {
     max-width: 100% !important;
-    padding: 0 1rem !important;
-  }
-  
-  /* FORCE HORIZONTAL FROM/TO ON MOBILE - OVERRIDE ALL CLASSES */
-  .mobile-horizontal,
-  .grid[class*="grid-cols-[1fr_auto_1fr]"],
-  .grid[class*="grid-cols-\\[1fr_auto_1fr\\]"],
-  .mt-4.grid.grid-cols-\\[1fr_auto_1fr\\].gap-3.items-end.mobile-horizontal {
-    display: grid !important;
-    grid-template-columns: 1fr 50px 1fr !important;
-    gap: 8px !important;
-    align-items: end !important;
-  }
-  
-  /* Compact spacing for mobile form */
-  .rounded-2xl.shadow-sm.border.border-neutral-200.bg-white {
-    padding: 16px !important;
+    padding: 0 12px !important;
     margin: 0 !important;
   }
   
-  /* Compact trip type tabs on mobile */
-  .inline-flex.rounded-full.bg-neutral-100 {
-    padding: 3px !important;
-    margin-bottom: 16px !important;
+  /* MOBILE FROM/TO LAYOUT - FORCE CONSTRAINTS */
+  .mobile-horizontal {
+    display: grid !important;
+    grid-template-columns: 1fr 44px 1fr !important;
+    gap: 6px !important;
+    align-items: end !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
   }
   
-  .inline-flex.rounded-full.bg-neutral-100 button {
-    padding: 8px 16px !important;
+  /* PREVENT OVERFLOW ON MOBILE */
+  .mobile-horizontal > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  /* MOBILE INPUT FIELD CONSTRAINTS */
+  .mobile-horizontal .h-12.rounded-xl.border {
+    height: 48px !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  /* MOBILE INPUT INNER CONSTRAINTS */
+  .mobile-horizontal input {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
     font-size: 14px !important;
   }
   
-  /* Compact field labels on mobile */
-  .text-xs.font-medium.text-neutral-600 {
-    font-size: 11px !important;
-    margin-bottom: 4px !important;
-  }
-  
-  /* Compact input fields on mobile */
-  .h-12.rounded-xl.border {
-    height: 48px !important;
-    min-width: 0 !important;
-  }
-  
-  /* Smaller swap button on mobile */
-  .h-11.w-11.rounded-full {
-    height: 40px !important;
-    width: 40px !important;
+  /* MOBILE SWAP BUTTON FIXED SIZE */
+  .mobile-horizontal .h-11.w-11.rounded-full {
+    height: 44px !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
     flex-shrink: 0 !important;
   }
   
-  /* Compact date/passenger grid on mobile - single column */
+  /* MOBILE SEARCH CARD PADDING */
+  .rounded-2xl.shadow-sm.border.border-neutral-200.bg-white {
+    padding: 16px 12px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* MOBILE TRIP TABS */
+  .inline-flex.rounded-full.bg-neutral-100 {
+    padding: 3px !important;
+    margin-bottom: 16px !important;
+    width: fit-content !important;
+  }
+  
+  .inline-flex.rounded-full.bg-neutral-100 button {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+  }
+  
+  /* MOBILE LABELS */
+  .text-xs.font-medium.text-neutral-600 {
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  /* MOBILE DATE/PASSENGER ROW */
   .mt-3.grid.grid-cols-1.md\\:grid-cols-3 {
     grid-template-columns: 1fr !important;
     gap: 12px !important;
     margin-top: 16px !important;
   }
   
-  /* Compact options on mobile */
+  /* MOBILE OPTIONS */
   .mt-3.flex.flex-wrap {
     margin-top: 12px !important;
-    gap: 16px !important;
+    gap: 12px !important;
   }
   
-  /* Compact search button on mobile */
+  /* MOBILE SEARCH BUTTON */
   .mt-4.flex.justify-center {
     margin-top: 16px !important;
   }
   
   .px-8.py-3.rounded-xl {
-    padding: 12px 32px !important;
-    font-size: 16px !important;
+    padding: 12px 24px !important;
+    font-size: 15px !important;
   }
 }
 
-/* Very small mobile */
+/* EXTRA SMALL MOBILE - ADDITIONAL CONSTRAINTS */
 @media (max-width: 480px) {
-  .grid.grid-cols-2.md\\:grid-cols-4 {
-    grid-template-columns: 1fr !important;
+  .max-w-5xl {
+    padding: 0 8px !important;
   }
   
-  /* Maintain horizontal layout even on very small screens */
-  .mobile-horizontal,
-  .grid[class*="grid-cols-[1fr_auto_1fr]"],
-  .grid[class*="grid-cols-\\[1fr_auto_1fr\\]"] {
-    display: grid !important;
-    grid-template-columns: 1fr 45px 1fr !important;
-    gap: 6px !important;
+  .mobile-horizontal {
+    grid-template-columns: 1fr 40px 1fr !important;
+    gap: 4px !important;
   }
   
-  /* Extra compact on very small screens */
+  .mobile-horizontal .h-11.w-11.rounded-full {
+    height: 40px !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+  }
+  
   .rounded-2xl.shadow-sm.border.border-neutral-200.bg-white {
-    padding: 12px !important;
+    padding: 12px 8px !important;
+  }
+}
+
+/* FORCE MOBILE LAYOUT OVERRIDES */
+@media (max-width: 767px) {
+  * {
+    box-sizing: border-box !important;
+  }
+  
+  .grid.grid-cols-\\[1fr_auto_1fr\\] {
+    display: grid !important;
+    grid-template-columns: 1fr 44px 1fr !important;
+    gap: 6px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
   }
 }
