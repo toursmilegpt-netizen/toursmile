@@ -43,11 +43,33 @@
   border-color: inherit !important;
 }
 
+/* PREVENT MOBILE ZOOM ON INPUT FOCUS */
 input:focus {
   outline: none !important;
   box-shadow: none !important;
   border: none !important;
   ring: none !important;
+  font-size: 16px !important; /* Prevents zoom on iOS */
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+/* Force input font size on mobile to prevent zoom */
+@media (max-width: 767px) {
+  input {
+    font-size: 16px !important;
+  }
+  
+  input:focus {
+    font-size: 16px !important;
+    zoom: 1 !important;
+    transform: scale(1) !important;
+  }
+}
+
+/* Prevent zoom on any form elements */
+input, select, textarea, button {
+  font-size: 16px !important;
 }
 
 /* Remove Tailwind focus rings specifically */
