@@ -122,6 +122,15 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleInputFocus = () => {
+    // Don't auto-open dropdown on focus - only on click
+    // setOpen(true);
+    // if (!query) {
+    //   setSuggestions(popularAirports);
+    // }
+  };
+
+  const handleInputClick = () => {
+    // Only open dropdown when user clicks, not on focus
     setOpen(true);
     if (!query) {
       setSuggestions(popularAirports);
