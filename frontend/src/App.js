@@ -159,7 +159,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleInputClick = () => {
-    // Only open dropdown when user clicks, not on focus
+    // Show dropdown immediately on click with popular destinations
     setOpen(true);
     if (!query) {
       setSuggestions(popularAirports);
@@ -170,11 +170,13 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     const inputValue = e.target.value;
     setQuery(inputValue);
     
-    // DON'T auto-populate directly - just show suggestions in dropdown
-    // This gives users better control on mobile for corrections
+    // Show suggestions as user types - don't auto-populate the field
     if (inputValue.length >= 1) {
       setOpen(true);
-      // Let the useEffect handle the API search for suggestions
+      // Let the useEffect handle the search for suggestions
+    } else if (inputValue.length === 0) {
+      setOpen(true);
+      setSuggestions(popularAirports); // Show popular destinations when field is empty
     } else {
       setOpen(false);
       setSuggestions([]);
