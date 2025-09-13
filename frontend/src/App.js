@@ -635,7 +635,15 @@ function SearchCard() {
   };
 
   const handleDateComplete = () => {
-    setCurrentStep(3); // Enable search button focus
+    setCurrentStep(3); // Move to passenger selection
+    // Auto-open passenger selector after date selection
+    setTimeout(() => {
+      setOpenPax(true);
+    }, 300);
+  };
+
+  const handlePassengerComplete = () => {
+    setCurrentStep(4); // Enable search button glow
   };
 
   return (
