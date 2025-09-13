@@ -36,6 +36,31 @@
   border-color: hsl(var(--border));
 }
 
+/* Remove all focus outlines and rings globally */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+}
+
+input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  ring: none !important;
+}
+
+/* Remove Tailwind focus rings specifically */
+.focus\:ring-0:focus {
+  --tw-ring-offset-shadow: none !important;
+  --tw-ring-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.focus\:outline-none:focus {
+  outline: none !important;
+}
+
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
