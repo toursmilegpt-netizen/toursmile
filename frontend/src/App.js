@@ -428,8 +428,8 @@ function SearchCard() {
           ))}
         </div>
 
-        {/* From/To Row - Responsive Grid */}
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-3 items-end">
+        {/* From/To Row - Horizontal on both mobile and desktop */}
+        <div className="mt-4 grid grid-cols-[1fr_auto_1fr] gap-3 items-end">
           <CityInput label="From" value={from} onChange={setFrom} />
           
           <button
