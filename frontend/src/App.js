@@ -246,58 +246,72 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         )}
       </div>
       
-      {/* Dropdown - ENHANCED VISIBILITY */}
+      {/* Dropdown - PORTAL APPROACH FOR VISIBILITY */}
       {open && suggestions.length > 0 && (
-        <div 
-          className="fixed mt-2 w-full rounded-xl border-2 border-blue-200 bg-white shadow-2xl overflow-hidden max-h-80 overflow-y-auto"
-          style={{ 
-            position: 'absolute',
-            top: 'calc(100% + 4px)',
-            left: '0',
-            right: '0',
-            zIndex: 99999,
-            backgroundColor: 'white',
-            border: '2px solid #3b82f6',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-            display: 'block',
-            visibility: 'visible',
-            opacity: '1',
-            minHeight: '100px'
-          }}
-        >
-          <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-semibold">
-            {!query ? '✈️ Popular Destinations' : `🔍 Search results for "${query}"`}
-          </div>
-          
-          {suggestions.map((airport, i) => (
-            <button
-              key={`${airport.iata}-${i}`}
-              onClick={() => handleCitySelect(airport)}
-              className="w-full text-left px-4 py-4 hover:bg-blue-50 flex items-center justify-between border-b border-neutral-100 last:border-b-0 transition-all duration-200"
-              style={{ 
-                display: 'flex',
-                backgroundColor: 'white',
-                minHeight: '60px'
-              }}
-            >
-              <div className="flex-1">
-                <div className="text-base font-bold text-neutral-900 mb-1">
-                  {airport.city}
-                </div>
-                <div className="text-xs text-neutral-600">{airport.airport}</div>
-              </div>
-              <div className="text-lg font-bold text-white bg-blue-500 px-3 py-2 rounded-lg">
-                {airport.iata}
-              </div>
-            </button>
-          ))}
-          
-          {loading && (
-            <div className="px-4 py-4 text-sm text-neutral-500 text-center bg-yellow-50">
-              ⏳ Searching airports...
+        <>
+          {/* Invisible positioning div */}
+          <div 
+            id={`dropdown-anchor-${label.toLowerCase()}`}
+            style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              right: 0,
+              height: '1px',
+              zIndex: 1
+            }}
+          />
+          {/* Visible dropdown with fixed positioning */}
+          <div 
+            className="suggestions-dropdown"
+            style={{ 
+              position: 'fixed',
+              top: `${(containerRef.current?.getBoundingClientRect().bottom || 0) + 4}px`,
+              left: `${containerRef.current?.getBoundingClientRect().left || 0}px`,
+              width: `${containerRef.current?.getBoundingClientRect().width || 300}px`,
+              zIndex: 99999,
+              backgroundColor: 'white',
+              border: '2px solid #3b82f6',
+              borderRadius: '12px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+              maxHeight: '320px',
+              overflowY: 'auto'
+            }}
+          >
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-semibold rounded-t-lg">
+              {!query ? '✈️ Popular Destinations' : `🔍 Search results for "${query}"`}
             </div>
-          )}
-        </div>
+            
+            {suggestions.map((airport, i) => (
+              <button
+                key={`${airport.iata}-${i}`}
+                onClick={() => handleCitySelect(airport)}
+                className="w-full text-left px-4 py-4 hover:bg-blue-50 flex items-center justify-between border-b border-neutral-100 last:border-b-0 transition-all duration-200"
+                style={{ 
+                  display: 'flex',
+                  backgroundColor: 'white',
+                  minHeight: '60px'
+                }}
+              >
+                <div className="flex-1">
+                  <div className="text-base font-bold text-neutral-900 mb-1">
+                    {airport.city}
+                  </div>
+                  <div className="text-xs text-neutral-600">{airport.airport}</div>
+                </div>
+                <div className="text-lg font-bold text-white bg-blue-500 px-3 py-2 rounded-lg">
+                  {airport.iata}
+                </div>
+              </button>
+            ))}
+            
+            {loading && (
+              <div className="px-4 py-4 text-sm text-neutral-500 text-center bg-yellow-50">
+                ⏳ Searching airports...
+              </div>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
