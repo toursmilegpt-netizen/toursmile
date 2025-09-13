@@ -737,7 +737,17 @@ function SearchCard() {
               <span className="h-4 w-4 text-neutral-500">▼</span>
             </button>
             {openPax && (
-              <PaxOverlay onClose={() => setOpenPax(false)} value={pax} onChange={setPax} />
+              <PaxOverlay 
+                onClose={() => {
+                  setOpenPax(false);
+                  handlePassengerComplete();
+                }} 
+                value={pax} 
+                onChange={(newPax) => {
+                  setPax(newPax);
+                  handlePassengerComplete();
+                }} 
+              />
             )}
           </div>
         </div>
