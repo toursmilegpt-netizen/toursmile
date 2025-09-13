@@ -163,8 +163,8 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleInputClick = () => {
-    // Show popular destinations on click
-    if (!query) {
+    // Show popular destinations on click only if field is empty
+    if (!query && !value) {
       setSuggestions(popularAirports);
       setOpen(true);
     }
