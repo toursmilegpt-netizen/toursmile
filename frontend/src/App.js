@@ -74,8 +74,20 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   
   // Handle search when user types
   useEffect(() => {
-    if (debouncedQuery && debouncedQuery.length >= 2) {
-      searchAirports(debouncedQuery);
+    if (debouncedQuery && debouncedQuery.length >= 1) {
+      // Search for suggestions but don't auto-populate
+      const localMatches = popularAirports.filter(airport => 
+        airport.city.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+        airport.iata.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+        airport.airport.toLowerCase().includes(debouncedQuery.toLowerCase())
+      );
+      
+      if (localMatches.length > 0) {
+        setSuggestions(localMatches.slice(0, 6));
+      } else {
+        // Search via API if no local matches
+        searchAirports(debouncedQuery);
+      }
     } else if (open && debouncedQuery.length === 0) {
       setSuggestions(popularAirports);
     } else {
