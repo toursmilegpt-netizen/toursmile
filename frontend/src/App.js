@@ -183,7 +183,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   return (
     <div ref={containerRef} className="relative">
       <label className="block text-xs font-medium text-neutral-600 mb-1">{label}</label>
-      <div className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors">
+      <div className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors focus-within:border-neutral-400">
         <span className="h-4 w-4 text-neutral-500 mr-2">✈️</span>
         <input
           ref={inputRef}
@@ -192,8 +192,12 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
           onFocus={handleInputFocus}
           onKeyPress={handleKeyPress}
           placeholder="Type city or code"
-          className="outline-none bg-transparent text-sm flex-1 border-none"
-          style={{ boxShadow: 'none' }}
+          className="outline-none bg-transparent text-sm flex-1 border-none focus:outline-none focus:ring-0 focus:border-none"
+          style={{ 
+            boxShadow: 'none !important',
+            outline: 'none !important',
+            border: 'none !important'
+          }}
         />
         {value && value.iata && (
           <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2">{value.iata}</span>
