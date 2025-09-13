@@ -476,8 +476,8 @@ function SearchCard() {
           </label>
         </div>
 
-        {/* Search Button */}
-        <div className="mt-4">
+        {/* Search Button - Compact & Centered */}
+        <div className="mt-4 flex justify-center">
           <button
             onClick={async () => {
               setError(null);
@@ -523,7 +523,7 @@ function SearchCard() {
                 setLoading(false);
               }
             }}
-            className="w-full h-12 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-60"
+            className="px-8 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-60"
             disabled={loading}
           >
             {loading ? 'Searching…' : 'Search Flights'}
