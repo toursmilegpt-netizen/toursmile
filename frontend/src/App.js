@@ -499,7 +499,7 @@ function PaxOverlay({ value, onChange, onClose }) {
 // Search Card Component
 // Search Card Component with Auto-focus Guidance
 function SearchCard() {
-  const [trip, setTrip] = useState("RT");
+  const [trip, setTrip] = useState("OW"); // Default to One Way
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
   const [depart, setDepart] = useState(null);
