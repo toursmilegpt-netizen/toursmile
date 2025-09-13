@@ -525,31 +525,49 @@ function SearchCard() {
           ))}
         </div>
 
-        {/* From/To Row - FORCED Horizontal on both mobile and desktop */}
-        <div className="mt-4 grid grid-cols-[1fr_auto_1fr] gap-3 items-end mobile-horizontal">
-          <CityInput 
-            label="From" 
-            value={from} 
-            onChange={setFrom}
-            onNext={handleFromComplete}
-            autoFocus={currentStep === 0}
-          />
+        {/* From/To Row - MOBILE OPTIMIZED Horizontal Layout */}
+        <div className="mt-4 mobile-horizontal" style={{ 
+          display: 'grid', 
+          gridTemplateColumns: '1fr 44px 1fr', 
+          gap: '6px', 
+          alignItems: 'end',
+          maxWidth: '100%',
+          overflow: 'hidden'
+        }}>
+          <div style={{ minWidth: 0, maxWidth: '100%' }}>
+            <CityInput 
+              label="From" 
+              value={from} 
+              onChange={setFrom}
+              onNext={handleFromComplete}
+              autoFocus={currentStep === 0}
+            />
+          </div>
           
           <button
             aria-label="Swap From and To"
             onClick={() => { const temp = from; setFrom(to); setTo(temp); }}
             className="h-11 w-11 mx-auto rounded-full border border-neutral-300 bg-white hover:bg-neutral-50 flex items-center justify-center"
+            style={{ 
+              flexShrink: 0,
+              minWidth: '44px',
+              maxWidth: '44px',
+              height: '44px',
+              width: '44px'
+            }}
           >
             <span className="text-lg">⇄</span>
           </button>
           
-          <CityInput 
-            label="To" 
-            value={to} 
-            onChange={setTo}
-            onNext={handleToComplete}
-            autoFocus={currentStep === 1}
-          />
+          <div style={{ minWidth: 0, maxWidth: '100%' }}>
+            <CityInput 
+              label="To" 
+              value={to} 
+              onChange={setTo}
+              onNext={handleToComplete}
+              autoFocus={currentStep === 1}
+            />
+          </div>
         </div>
 
         {/* Date and Passenger Row */}
