@@ -72,6 +72,16 @@ input, select, textarea, button {
   font-size: 16px !important;
 }
 
+/* ENSURE DROPDOWN VISIBILITY */
+.absolute[style*="z-index: 9999"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: absolute !important;
+  background-color: white !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
 /* Remove Tailwind focus rings specifically */
 .focus\:ring-0:focus {
   --tw-ring-offset-shadow: none !important;
