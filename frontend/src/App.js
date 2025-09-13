@@ -5,17 +5,17 @@ import './App.css';
 // Mobile-first responsive with proper breakpoints
 
 // Airport data
-const CITIES = [
-  { city: "Mumbai", iata: "BOM", airport: "Chhatrapati Shivaji Maharaj Intl" },
-  { city: "Delhi", iata: "DEL", airport: "Indira Gandhi Intl" },
-  { city: "Bengaluru", iata: "BLR", airport: "Kempegowda Intl" },
-  { city: "Hyderabad", iata: "HYD", airport: "Rajiv Gandhi Intl" },
-  { city: "Pune", iata: "PNQ", airport: "Lohegaon" },
-  { city: "Chennai", iata: "MAA", airport: "Chennai Intl" },
-  { city: "Kolkata", iata: "CCU", airport: "Netaji Subhas Chandra Bose Intl" },
-  { city: "Dubai", iata: "DXB", airport: "Dubai International" },
-  { city: "Singapore", iata: "SIN", airport: "Singapore Changi" },
-  { city: "Bangkok", iata: "BKK", airport: "Suvarnabhumi" }
+const POPULAR_AIRPORTS = [
+  { city: "Mumbai", iata: "BOM", airport: "Chhatrapati Shivaji Maharaj Intl", country: "IN" },
+  { city: "Delhi", iata: "DEL", airport: "Indira Gandhi Intl", country: "IN" },
+  { city: "Bengaluru", iata: "BLR", airport: "Kempegowda Intl", country: "IN" },
+  { city: "Hyderabad", iata: "HYD", airport: "Rajiv Gandhi Intl", country: "IN" },
+  { city: "Pune", iata: "PNQ", airport: "Pune Intl", country: "IN" },
+  { city: "Chennai", iata: "MAA", airport: "Chennai Intl", country: "IN" },
+  { city: "Kolkata", iata: "CCU", airport: "Netaji Subhas Chandra Bose Intl", country: "IN" },
+  { city: "Dubai", iata: "DXB", airport: "Dubai International", country: "AE" },
+  { city: "Singapore", iata: "SIN", airport: "Singapore Changi", country: "SG" },
+  { city: "Bangkok", iata: "BKK", airport: "Suvarnabhumi", country: "TH" }
 ];
 
 // Debounced hook
