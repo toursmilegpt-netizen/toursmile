@@ -515,8 +515,8 @@ function SearchCard() {
           ))}
         </div>
 
-        {/* From/To Row - Horizontal on both mobile and desktop */}
-        <div className="mt-4 grid grid-cols-[1fr_auto_1fr] gap-3 items-end">
+        {/* From/To Row - FORCED Horizontal on both mobile and desktop */}
+        <div className="mt-4 grid grid-cols-[1fr_auto_1fr] gap-3 items-end mobile-horizontal">
           <CityInput 
             label="From" 
             value={from} 
