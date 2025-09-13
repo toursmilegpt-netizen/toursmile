@@ -166,8 +166,13 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleInputFocus = () => {
-    // Always allow focus to show dropdown if field is empty
-    if (!value && !query) {
+    // If field has a selected value, clear it when focused
+    if (value) {
+      setQuery("");
+      onChange(null);
+      setSuggestions(popularAirports);
+      setOpen(true);
+    } else if (!query) {
       setSuggestions(popularAirports);
       setOpen(true);
     }
