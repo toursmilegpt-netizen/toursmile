@@ -393,8 +393,8 @@ function PaxOverlay({ value, onChange, onClose }) {
 // Search Card Component
 function SearchCard() {
   const [trip, setTrip] = useState("RT");
-  const [from, setFrom] = useState(CITIES[0]);
-  const [to, setTo] = useState(CITIES[1]);
+  const [from, setFrom] = useState(POPULAR_AIRPORTS[0]);
+  const [to, setTo] = useState(POPULAR_AIRPORTS[1]);
   const [depart, setDepart] = useState(null);
   const [ret, setRet] = useState(null);
   const [openPax, setOpenPax] = useState(false);
