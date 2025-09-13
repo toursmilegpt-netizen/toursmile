@@ -199,6 +199,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
           value={displayValue}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
+          onClick={handleInputClick}
           onKeyPress={handleKeyPress}
           placeholder="Type city or code"
           className="outline-none bg-transparent text-sm flex-1 border-none focus:outline-none focus:ring-0 focus:border-none"
