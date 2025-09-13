@@ -206,11 +206,11 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   const displayValue = query || (value && value.city ? value.city : "");
   
   return (
-    <div ref={containerRef} className="relative" style={{ minWidth: 0, maxWidth: '100%' }}>
+    <div ref={containerRef} className="relative" style={{ minWidth: 0, maxWidth: '100%', position: 'relative' }}>
       <label className="block text-xs font-medium text-neutral-600 mb-1">{label}</label>
       <div 
         className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors focus-within:border-neutral-400"
-        style={{ minWidth: 0, maxWidth: '100%', width: '100%' }}
+        style={{ minWidth: 0, maxWidth: '100%', width: '100%', position: 'relative' }}
       >
         <span className="h-4 w-4 text-neutral-500 mr-2 flex-shrink-0">✈️</span>
         <input
@@ -246,57 +246,55 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         )}
       </div>
       
-      {/* Dropdown - Fixed visibility and positioning */}
+      {/* Dropdown - ENHANCED VISIBILITY */}
       {open && suggestions.length > 0 && (
         <div 
-          className="absolute mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-xl overflow-hidden max-h-80 overflow-y-auto"
+          className="fixed mt-2 w-full rounded-xl border-2 border-blue-200 bg-white shadow-2xl overflow-hidden max-h-80 overflow-y-auto"
           style={{ 
             position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            zIndex: 9999,
+            top: 'calc(100% + 4px)',
+            left: '0',
+            right: '0',
+            zIndex: 99999,
             backgroundColor: 'white',
-            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
+            border: '2px solid #3b82f6',
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
             display: 'block',
             visibility: 'visible',
-            opacity: 1
+            opacity: '1',
+            minHeight: '100px'
           }}
         >
-          {!query && (
-            <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100 bg-neutral-50">
-              ✈️ Popular Destinations
-            </div>
-          )}
-          {query && (
-            <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100 bg-blue-50">
-              🔍 Search results for "{query}"
-            </div>
-          )}
+          <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-semibold">
+            {!query ? '✈️ Popular Destinations' : `🔍 Search results for "${query}"`}
+          </div>
+          
           {suggestions.map((airport, i) => (
             <button
               key={`${airport.iata}-${i}`}
               onClick={() => handleCitySelect(airport)}
-              className="w-full text-left px-3 py-3 hover:bg-blue-50 flex items-center justify-between border-b border-neutral-50 last:border-b-0 transition-colors"
+              className="w-full text-left px-4 py-4 hover:bg-blue-50 flex items-center justify-between border-b border-neutral-100 last:border-b-0 transition-all duration-200"
               style={{ 
                 display: 'flex',
-                backgroundColor: 'white'
+                backgroundColor: 'white',
+                minHeight: '60px'
               }}
             >
               <div className="flex-1">
-                <div className="text-sm font-semibold text-neutral-900">
+                <div className="text-base font-bold text-neutral-900 mb-1">
                   {airport.city}
                 </div>
                 <div className="text-xs text-neutral-600">{airport.airport}</div>
               </div>
-              <div className="text-sm font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded">
+              <div className="text-lg font-bold text-white bg-blue-500 px-3 py-2 rounded-lg">
                 {airport.iata}
               </div>
             </button>
           ))}
+          
           {loading && (
-            <div className="px-3 py-3 text-xs text-neutral-500 text-center bg-yellow-50">
-              ⏳ Searching...
+            <div className="px-4 py-4 text-sm text-neutral-500 text-center bg-yellow-50">
+              ⏳ Searching airports...
             </div>
           )}
         </div>
