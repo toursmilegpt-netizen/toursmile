@@ -141,27 +141,14 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     const inputValue = e.target.value;
     setQuery(inputValue);
     
-    // Direct typing auto-complete logic
-    if (inputValue.length >= 2) {
-      const matches = popularAirports.filter(airport => 
-        airport.city.toLowerCase().startsWith(inputValue.toLowerCase()) ||
-        airport.iata.toLowerCase().startsWith(inputValue.toLowerCase())
-      );
-      
-      if (matches.length > 0) {
-        const match = matches[0];
-        if (match.city.toLowerCase().startsWith(inputValue.toLowerCase()) || 
-            match.iata.toLowerCase() === inputValue.toLowerCase()) {
-          onChange(match);
-          setQuery(match.city);
-          setOpen(false);
-          
-          // Auto-progress to next field
-          setTimeout(() => {
-            if (onNext) onNext();
-          }, 500);
-        }
-      }
+    // DON'T auto-populate directly - just show suggestions in dropdown
+    // This gives users better control on mobile for corrections
+    if (inputValue.length >= 1) {
+      setOpen(true);
+      // Let the useEffect handle the API search for suggestions
+    } else {
+      setOpen(false);
+      setSuggestions([]);
     }
   };
 
