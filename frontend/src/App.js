@@ -30,12 +30,28 @@ function useDebounced(value, delay = 250) {
   return debouncedValue;
 }
 
-// City Input Component
+// City Input Component with Airport API Integration
 function CityInput({ label, value, onChange }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounced(query, 250);
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const debouncedQuery = useDebounced(query, 260);
   const ref = useRef(null);
+  const abortController = useRef(null);
+  
+  // Backend base URL from environment
+  const backendBase = process.env.REACT_APP_BACKEND_URL;
+  
+  // Popular airports for initial display
+  const popularAirports = [
+    { city: "Pune", airport: "Pune Intl", iata: "PNQ", country: "IN" },
+    { city: "Mumbai", airport: "Chhatrapati Shivaji Maharaj Intl", iata: "BOM", country: "IN" },
+    { city: "Delhi", airport: "Indira Gandhi Intl", iata: "DEL", country: "IN" },
+    { city: "Bengaluru", airport: "Kempegowda Intl", iata: "BLR", country: "IN" },
+    { city: "Hyderabad", airport: "Rajiv Gandhi Intl", iata: "HYD", country: "IN" },
+    { city: "Chennai", airport: "Chennai Intl", iata: "MAA", country: "IN" }
+  ];
   
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -45,12 +61,72 @@ function CityInput({ label, value, onChange }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   
-  const filteredCities = useMemo(() => {
-    if (!debouncedQuery) return [];
-    return CITIES.filter(c => 
-      (c.city + " " + c.iata + " " + c.airport).toLowerCase().includes(debouncedQuery.toLowerCase())
-    ).slice(0, 6);
+  useEffect(() => {
+    if (debouncedQuery && debouncedQuery.length >= 2) {
+      searchAirports(debouncedQuery);
+    } else if (debouncedQuery.length === 0) {
+      setSuggestions(popularAirports);
+    } else {
+      setSuggestions([]);
+    }
   }, [debouncedQuery]);
+  
+  const searchAirports = async (searchQuery) => {
+    // Abort previous request
+    if (abortController.current) {
+      abortController.current.abort();
+    }
+    
+    abortController.current = new AbortController();
+    setLoading(true);
+    
+    try {
+      const urlBase = backendBase || (window.__BACKEND_URL__ || (window.ENV && window.ENV.REACT_APP_BACKEND_URL));
+      if (!urlBase) {
+        throw new Error('Backend URL not configured');
+      }
+      
+      const response = await fetch(
+        `${urlBase}/api/airports/search?query=${encodeURIComponent(searchQuery)}&limit=10`,
+        {
+          signal: abortController.current.signal,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+      
+      if (!response.ok) {
+        throw new Error('Search failed');
+      }
+      
+      const data = await response.json();
+      setSuggestions(data.results || []);
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        console.error('Airport search error:', error);
+        // Fallback to popular airports
+        setSuggestions(popularAirports.filter(airport => 
+          (airport.city + " " + airport.iata + " " + airport.airport).toLowerCase().includes(searchQuery.toLowerCase())
+        ));
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleInputFocus = () => {
+    setQuery("");
+    setOpen(true);
+    setSuggestions(popularAirports);
+  };
+  
+  const handleCitySelect = (city) => {
+    onChange(city);
+    setOpen(false);
+    setQuery("");
+    setSuggestions([]);
+  };
+  
+  const displayValue = query || (value && value.city ? `${value.city}` : "");
   
   return (
     <div ref={ref} className="relative">
@@ -58,28 +134,51 @@ function CityInput({ label, value, onChange }) {
       <div className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 focus-within:ring-2 focus-within:ring-blue-200">
         <span className="h-4 w-4 text-neutral-500 mr-2">✈️</span>
         <input
-          value={query || value.city}
+          value={displayValue}
           onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => { setQuery(""); setOpen(true); }}
-          placeholder="City or airport"
+          onFocus={handleInputFocus}
+          placeholder="Type city or code (e.g., PNQ, BOM)"
           className="outline-none bg-transparent text-sm flex-1"
         />
-        <span className="text-[11px] text-neutral-500 font-mono uppercase">{value.iata}</span>
+        {value && value.iata && (
+          <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2">{value.iata}</span>
+        )}
+        {query && (
+          <button
+            onClick={() => { setQuery(""); setSuggestions(popularAirports); }}
+            className="ml-1 text-neutral-400 hover:text-neutral-600"
+          >
+            ✕
+          </button>
+        )}
       </div>
-      {open && filteredCities.length > 0 && (
-        <div className="absolute z-30 mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-md overflow-hidden">
-          {filteredCities.map((c, i) => (
+      {open && suggestions.length > 0 && (
+        <div className="absolute z-30 mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-lg overflow-hidden max-h-80 overflow-y-auto">
+          {suggestions.length > 0 && !query && (
+            <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100">
+              Popular Destinations
+            </div>
+          )}
+          {suggestions.map((airport, i) => (
             <button
-              key={i}
-              onClick={() => { onChange(c); setOpen(false); setQuery(""); }}
-              className="w-full text-left px-3 py-2 hover:bg-neutral-50"
+              key={`${airport.iata}-${i}`}
+              onClick={() => handleCitySelect(airport)}
+              className="w-full text-left px-3 py-2 hover:bg-neutral-50 flex items-center justify-between"
             >
-              <div className="text-sm font-medium text-neutral-900">
-                {c.city} <span className="text-xs text-neutral-500">({c.iata})</span>
+              <div>
+                <div className="text-sm font-medium text-neutral-900">
+                  {airport.city} — {airport.iata}
+                </div>
+                <div className="text-xs text-neutral-600">{airport.airport}</div>
               </div>
-              <div className="text-xs text-neutral-600">{c.airport}</div>
+              <div className="text-xs font-bold text-neutral-700">{airport.iata}</div>
             </button>
           ))}
+          {loading && (
+            <div className="px-3 py-2 text-xs text-neutral-500 text-center">
+              Searching...
+            </div>
+          )}
         </div>
       )}
     </div>
