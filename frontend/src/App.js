@@ -248,9 +248,9 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         )}
       </div>
       
-      {/* Dropdown - Works alongside direct typing */}
+      {/* Dropdown - Shows on click and while typing */}
       {open && suggestions.length > 0 && (
-        <div className="absolute z-30 mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-lg overflow-hidden max-h-80 overflow-y-auto">
+        <div className="absolute z-50 mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-lg overflow-hidden max-h-80 overflow-y-auto">
           {!query && (
             <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100">
               Popular Destinations
