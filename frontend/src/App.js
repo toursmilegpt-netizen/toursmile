@@ -262,13 +262,25 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
             width: '100%',
             fontSize: '16px'
           }}
+          readOnly={!!value} // Make input read-only if value is selected
         />
         {value && value.iata && (
           <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2 flex-shrink-0">{value.iata}</span>
         )}
-        {query && (
+        {(query || value) && (
           <button
-            onClick={() => { setQuery(""); onChange(null); setOpen(false); }}
+            onClick={() => { 
+              setQuery(""); 
+              onChange(null); 
+              setOpen(false); 
+              setSuggestions([]);
+              // Focus the input after clearing
+              setTimeout(() => {
+                if (inputRef.current) {
+                  inputRef.current.focus();
+                }
+              }, 100);
+            }}
             className="ml-1 text-neutral-400 hover:text-neutral-600 flex-shrink-0"
           >
             ✕
