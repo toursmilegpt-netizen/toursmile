@@ -246,10 +246,10 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         )}
       </div>
       
-      {/* Dropdown - Fixed positioning and visibility */}
+      {/* Dropdown - Fixed visibility and positioning */}
       {open && suggestions.length > 0 && (
         <div 
-          className="absolute z-50 mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-xl overflow-hidden max-h-80 overflow-y-auto"
+          className="absolute mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-xl overflow-hidden max-h-80 overflow-y-auto"
           style={{ 
             position: 'absolute',
             top: '100%',
@@ -257,32 +257,46 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
             right: 0,
             zIndex: 9999,
             backgroundColor: 'white',
-            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)'
+            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
+            display: 'block',
+            visibility: 'visible',
+            opacity: 1
           }}
         >
           {!query && (
-            <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100">
-              Popular Destinations
+            <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100 bg-neutral-50">
+              ✈️ Popular Destinations
+            </div>
+          )}
+          {query && (
+            <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100 bg-blue-50">
+              🔍 Search results for "{query}"
             </div>
           )}
           {suggestions.map((airport, i) => (
             <button
               key={`${airport.iata}-${i}`}
               onClick={() => handleCitySelect(airport)}
-              className="w-full text-left px-3 py-3 hover:bg-neutral-50 flex items-center justify-between border-b border-neutral-50 last:border-b-0"
+              className="w-full text-left px-3 py-3 hover:bg-blue-50 flex items-center justify-between border-b border-neutral-50 last:border-b-0 transition-colors"
+              style={{ 
+                display: 'flex',
+                backgroundColor: 'white'
+              }}
             >
-              <div>
-                <div className="text-sm font-medium text-neutral-900">
+              <div className="flex-1">
+                <div className="text-sm font-semibold text-neutral-900">
                   {airport.city}
                 </div>
                 <div className="text-xs text-neutral-600">{airport.airport}</div>
               </div>
-              <div className="text-sm font-bold text-blue-600">{airport.iata}</div>
+              <div className="text-sm font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded">
+                {airport.iata}
+              </div>
             </button>
           ))}
           {loading && (
-            <div className="px-3 py-3 text-xs text-neutral-500 text-center">
-              Searching...
+            <div className="px-3 py-3 text-xs text-neutral-500 text-center bg-yellow-50">
+              ⏳ Searching...
             </div>
           )}
         </div>
