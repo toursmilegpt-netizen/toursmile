@@ -388,20 +388,35 @@ function PaxOverlay({ value, onChange, onClose }) {
 }
 
 // Search Card Component
+// Search Card Component with Auto-focus Guidance
 function SearchCard() {
   const [trip, setTrip] = useState("RT");
-  const [from, setFrom] = useState(POPULAR_AIRPORTS[0]);
-  const [to, setTo] = useState(POPULAR_AIRPORTS[1]);
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
   const [depart, setDepart] = useState(null);
   const [ret, setRet] = useState(null);
   const [openPax, setOpenPax] = useState(false);
   const [pax, setPax] = useState({ adt: 1, chd: 0, inf: 0, cabin: "Economy" });
-  const [results, setResults] = useState(null); // { flights: [], total_found, data_source, ai_recommendation }
+  const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentStep, setCurrentStep] = useState(0); // 0: from, 1: to, 2: date, 3: search
 
-  // Backend base URL from environment (must be defined in frontend/.env as REACT_APP_BACKEND_URL)
+  // Backend base URL from environment
   const backendBase = process.env.REACT_APP_BACKEND_URL;
+
+  // Auto-focus progression handlers
+  const handleFromComplete = () => {
+    setCurrentStep(1); // Move to "To" field
+  };
+
+  const handleToComplete = () => {
+    setCurrentStep(2); // Move to date field  
+  };
+
+  const handleDateComplete = () => {
+    setCurrentStep(3); // Enable search button focus
+  };
 
   return (
     <div className="mx-auto max-w-5xl px-4">
@@ -427,7 +442,13 @@ function SearchCard() {
 
         {/* From/To Row - Horizontal on both mobile and desktop */}
         <div className="mt-4 grid grid-cols-[1fr_auto_1fr] gap-3 items-end">
-          <CityInput label="From" value={from} onChange={setFrom} />
+          <CityInput 
+            label="From" 
+            value={from} 
+            onChange={setFrom}
+            onNext={handleFromComplete}
+            autoFocus={currentStep === 0}
+          />
           
           <button
             aria-label="Swap From and To"
@@ -437,12 +458,24 @@ function SearchCard() {
             <span className="text-lg">⇄</span>
           </button>
           
-          <CityInput label="To" value={to} onChange={setTo} />
+          <CityInput 
+            label="To" 
+            value={to} 
+            onChange={setTo}
+            onNext={handleToComplete}
+            autoFocus={currentStep === 1}
+          />
         </div>
 
         {/* Date and Passenger Row */}
         <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
-          <DateInput label="Select Date" value={depart} onChange={setDepart} title="Departure" />
+          <DateInput 
+            label="Select Date" 
+            value={depart} 
+            onChange={(date) => { setDepart(date); handleDateComplete(); }}
+            title="Departure" 
+            autoFocus={currentStep === 2}
+          />
           {trip !== "OW" && (
             <DateInput label="Select Date" value={ret} onChange={setRet} title="Return" disabled={trip === "OW"} />
           )}
@@ -473,12 +506,16 @@ function SearchCard() {
           </label>
         </div>
 
-        {/* Search Button - Compact & Centered */}
+        {/* Search Button - Compact & Centered with Glow Effect */}
         <div className="mt-4 flex justify-center">
           <button
             onClick={async () => {
               setError(null);
               setResults(null);
+              if (!from || !to) {
+                alert('Please select both departure and destination cities');
+                return;
+              }
               if (!depart) {
                 alert('Please select a departure date');
                 return;
@@ -520,7 +557,9 @@ function SearchCard() {
                 setLoading(false);
               }
             }}
-            className="px-8 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-60"
+            className={`px-8 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-60 ${
+              currentStep === 3 && from && to && depart ? 'ring-2 ring-blue-300 shadow-lg' : ''
+            }`}
             disabled={loading}
           >
             {loading ? 'Searching…' : 'Search Flights'}
