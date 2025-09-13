@@ -469,7 +469,7 @@ function SearchCard() {
         {/* Options */}
         <div className="mt-3 flex flex-wrap items-center gap-4">
           <label className="flex items-center gap-2 text-sm text-neutral-700">
-            <input type="checkbox" className="h-4 w-4" /> Direct flights
+            <input type="checkbox" className="h-4 w-4" /> Direct flights only
           </label>
           <label className="flex items-center gap-2 text-sm text-neutral-700">
             <input type="checkbox" className="h-4 w-4" /> Flexible dates ±3 days
