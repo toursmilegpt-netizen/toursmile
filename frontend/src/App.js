@@ -620,7 +620,7 @@ function SearchCard() {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [currentStep, setCurrentStep] = useState(0); // 0: from, 1: to, 2: date, 3: search
+  const [currentStep, setCurrentStep] = useState(0); // 0: from, 1: to, 2: date, 3: passenger, 4: search
 
   // Backend base URL from environment
   const backendBase = process.env.REACT_APP_BACKEND_URL;
