@@ -813,8 +813,8 @@ function SearchCard() {
                 setLoading(false);
               }
             }}
-            className={`px-8 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-60 ${
-              currentStep === 3 && from && to && depart ? 'ring-2 ring-blue-300 shadow-lg' : ''
+            className={`px-8 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all duration-300 disabled:opacity-60 ${
+              currentStep === 4 && from && to && depart ? 'ring-4 ring-blue-300 shadow-2xl bg-blue-700 scale-105' : ''
             }`}
             disabled={loading}
           >
