@@ -30,7 +30,7 @@ function useDebounced(value, delay = 250) {
   return debouncedValue;
 }
 
-// City Input Component with Direct Typing + Dropdown (No Blue Boxes)
+// City Input Component with Working Dropdown Suggestions
 function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -51,7 +51,11 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     { city: "Delhi", airport: "Indira Gandhi Intl", iata: "DEL", country: "IN" },
     { city: "Bengaluru", airport: "Kempegowda Intl", iata: "BLR", country: "IN" },
     { city: "Hyderabad", airport: "Rajiv Gandhi Intl", iata: "HYD", country: "IN" },
-    { city: "Chennai", airport: "Chennai Intl", iata: "MAA", country: "IN" }
+    { city: "Chennai", airport: "Chennai Intl", iata: "MAA", country: "IN" },
+    { city: "Kolkata", airport: "Netaji Subhash Chandra Bose Intl", iata: "CCU", country: "IN" },
+    { city: "Ahmedabad", airport: "Sardar Vallabhbhai Patel Intl", iata: "AMD", country: "IN" },
+    { city: "Goa", airport: "Manohar Intl", iata: "GOX", country: "IN" },
+    { city: "Kochi", airport: "Cochin Intl", iata: "COK", country: "IN" }
   ];
   
   // Handle click outside to close dropdown
@@ -72,30 +76,33 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     }
   }, [autoFocus]);
   
-  // Handle search when user types
+  // Handle search when user types - FIXED LOGIC
   useEffect(() => {
     if (debouncedQuery && debouncedQuery.length >= 1) {
-      // Show dropdown when typing and search for suggestions
-      setOpen(true);
+      console.log('Searching for:', debouncedQuery); // Debug log
       
-      // First try local matches from popularAirports
+      // Search in popular airports first
       const localMatches = popularAirports.filter(airport => 
         airport.city.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
         airport.iata.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
         airport.airport.toLowerCase().includes(debouncedQuery.toLowerCase())
       );
       
+      console.log('Local matches found:', localMatches); // Debug log
+      
       if (localMatches.length > 0) {
-        setSuggestions(localMatches.slice(0, 6));
+        setSuggestions(localMatches);
+        setOpen(true);
       } else {
         // Search via API if no local matches
         searchAirports(debouncedQuery);
       }
-    } else if (open && debouncedQuery.length === 0) {
-      // Show popular destinations when field is empty but dropdown is open
+    } else if (open && !debouncedQuery) {
+      // Show popular destinations when dropdown is open but no query
       setSuggestions(popularAirports);
-    } else if (!open) {
+    } else if (!debouncedQuery) {
       setSuggestions([]);
+      setOpen(false);
     }
   }, [debouncedQuery, open]);
   
@@ -125,12 +132,14 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
       
       const data = await response.json();
       setSuggestions(data.results || []);
+      setOpen(true);
     } catch (error) {
       if (error.name !== 'AbortError') {
         console.error('Airport search error:', error);
         setSuggestions(popularAirports.filter(airport => 
           (airport.city + " " + airport.iata + " " + airport.airport).toLowerCase().includes(searchQuery.toLowerCase())
         ));
+        setOpen(true);
       }
     } finally {
       setLoading(false);
@@ -139,7 +148,6 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
 
   // Reset mobile zoom when input loses focus
   const handleInputBlur = () => {
-    // Reset zoom on mobile after input interaction
     if (window.innerWidth <= 767) {
       setTimeout(() => {
         const viewport = document.querySelector('meta[name=viewport]');
@@ -151,18 +159,14 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleInputFocus = () => {
-    // Don't auto-open dropdown on focus - only on click
-    // setOpen(true);
-    // if (!query) {
-    //   setSuggestions(popularAirports);
-    // }
+    // Don't auto-open on focus, only on click or typing
   };
 
   const handleInputClick = () => {
-    // Show dropdown immediately on click with popular destinations
-    setOpen(true);
+    // Show popular destinations on click
     if (!query) {
       setSuggestions(popularAirports);
+      setOpen(true);
     }
   };
 
@@ -170,16 +174,10 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     const inputValue = e.target.value;
     setQuery(inputValue);
     
-    // Show suggestions as user types - don't auto-populate the field
-    if (inputValue.length >= 1) {
+    // The useEffect will handle showing suggestions
+    if (inputValue.length === 0) {
+      setSuggestions(popularAirports);
       setOpen(true);
-      // Let the useEffect handle the search for suggestions
-    } else if (inputValue.length === 0) {
-      setOpen(true);
-      setSuggestions(popularAirports); // Show popular destinations when field is empty
-    } else {
-      setOpen(false);
-      setSuggestions([]);
     }
   };
 
@@ -248,9 +246,20 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         )}
       </div>
       
-      {/* Dropdown - Shows on click and while typing */}
+      {/* Dropdown - Fixed positioning and visibility */}
       {open && suggestions.length > 0 && (
-        <div className="absolute z-50 mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-lg overflow-hidden max-h-80 overflow-y-auto">
+        <div 
+          className="absolute z-50 mt-2 w-full rounded-xl border border-neutral-200 bg-white shadow-xl overflow-hidden max-h-80 overflow-y-auto"
+          style={{ 
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            zIndex: 9999,
+            backgroundColor: 'white',
+            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)'
+          }}
+        >
           {!query && (
             <div className="px-3 py-2 text-xs text-neutral-500 border-b border-neutral-100">
               Popular Destinations
@@ -260,19 +269,19 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
             <button
               key={`${airport.iata}-${i}`}
               onClick={() => handleCitySelect(airport)}
-              className="w-full text-left px-3 py-2 hover:bg-neutral-50 flex items-center justify-between"
+              className="w-full text-left px-3 py-3 hover:bg-neutral-50 flex items-center justify-between border-b border-neutral-50 last:border-b-0"
             >
               <div>
                 <div className="text-sm font-medium text-neutral-900">
-                  {airport.city} — {airport.iata}
+                  {airport.city}
                 </div>
                 <div className="text-xs text-neutral-600">{airport.airport}</div>
               </div>
-              <div className="text-xs font-bold text-neutral-700">{airport.iata}</div>
+              <div className="text-sm font-bold text-blue-600">{airport.iata}</div>
             </button>
           ))}
           {loading && (
-            <div className="px-3 py-2 text-xs text-neutral-500 text-center">
+            <div className="px-3 py-3 text-xs text-neutral-500 text-center">
               Searching...
             </div>
           )}
