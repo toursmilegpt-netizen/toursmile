@@ -533,8 +533,8 @@ function SearchCard() {
         {/* Trip Type Tabs */}
         <div className="inline-flex rounded-full bg-neutral-100 p-1">
           {[
-            { id: "RT", label: "Round Trip" },
             { id: "OW", label: "One Way" },
+            { id: "RT", label: "Round Trip" },
             { id: "MC", label: "Multi City" },
           ].map((tab) => (
             <button
