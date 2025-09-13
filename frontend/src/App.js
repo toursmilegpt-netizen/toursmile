@@ -174,13 +174,20 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleInputClick = () => {
-    // Always allow clicking to edit - clear current selection and show dropdown
+    // Always allow clicking anywhere in the input to edit
     if (value) {
-      // If field has a selected city, clear it and show popular destinations
+      // If field has a selected city, clear it and show popular destinations immediately
       setQuery("");
       onChange(null);
       setSuggestions(popularAirports);
       setOpen(true);
+      
+      // Focus the input for immediate typing
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 50);
     } else if (!query) {
       // If field is empty, show popular destinations
       setSuggestions(popularAirports);
