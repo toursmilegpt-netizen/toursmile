@@ -521,6 +521,76 @@ def parse_query_fallback(query):
             "parsed": {}
         }
 
+@api_router.get("/airports/search")
+async def search_airports(query: str, limit: int = 10):
+    """Search airports by name, city, or IATA code"""
+    try:
+        # Airport database with comprehensive Indian and international airports
+        airports_db = [
+            {"city": "Mumbai", "airport": "Chhatrapati Shivaji Maharaj Intl", "iata": "BOM", "country": "IN"},
+            {"city": "Delhi", "airport": "Indira Gandhi Intl", "iata": "DEL", "country": "IN"},
+            {"city": "Bengaluru", "airport": "Kempegowda Intl", "iata": "BLR", "country": "IN"},
+            {"city": "Hyderabad", "airport": "Rajiv Gandhi Intl", "iata": "HYD", "country": "IN"},
+            {"city": "Pune", "airport": "Pune Intl", "iata": "PNQ", "country": "IN"},
+            {"city": "Chennai", "airport": "Chennai Intl", "iata": "MAA", "country": "IN"},
+            {"city": "Kolkata", "airport": "Netaji Subhash Chandra Bose Intl", "iata": "CCU", "country": "IN"},
+            {"city": "Ahmedabad", "airport": "Sardar Vallabhbhai Patel Intl", "iata": "AMD", "country": "IN"},
+            {"city": "Goa", "airport": "Manohar Intl", "iata": "GOX", "country": "IN"},
+            {"city": "Kochi", "airport": "Cochin Intl", "iata": "COK", "country": "IN"},
+            {"city": "Jaipur", "airport": "Jaipur Intl", "iata": "JAI", "country": "IN"},
+            {"city": "Lucknow", "airport": "Chaudhary Charan Singh Intl", "iata": "LKO", "country": "IN"},
+            {"city": "Chandigarh", "airport": "Chandigarh Intl", "iata": "IXC", "country": "IN"},
+            {"city": "Srinagar", "airport": "Sheikh ul-Alam Intl", "iata": "SXR", "country": "IN"},
+            {"city": "Amritsar", "airport": "Sri Guru Ram Dass Jee Intl", "iata": "ATQ", "country": "IN"},
+            {"city": "Indore", "airport": "Devi Ahilya Bai Holkar", "iata": "IDR", "country": "IN"},
+            {"city": "Bhubaneswar", "airport": "Biju Patnaik Intl", "iata": "BBI", "country": "IN"},
+            {"city": "Coimbatore", "airport": "Coimbatore Intl", "iata": "CJB", "country": "IN"},
+            {"city": "Mangalore", "airport": "Mangalore Intl", "iata": "IXE", "country": "IN"},
+            {"city": "Thiruvananthapuram", "airport": "Trivandrum Intl", "iata": "TRV", "country": "IN"},
+            {"city": "Nagpur", "airport": "Dr. Babasaheb Ambedkar Intl", "iata": "NAG", "country": "IN"},
+            {"city": "Vadodara", "airport": "Vadodara", "iata": "BDQ", "country": "IN"},
+            {"city": "Visakhapatnam", "airport": "Visakhapatnam", "iata": "VTZ", "country": "IN"},
+            {"city": "Patna", "airport": "Jay Prakash Narayan", "iata": "PAT", "country": "IN"},
+            {"city": "Raipur", "airport": "Swami Vivekananda", "iata": "RPR", "country": "IN"},
+            # International airports
+            {"city": "Dubai", "airport": "Dubai International", "iata": "DXB", "country": "AE"},
+            {"city": "Singapore", "airport": "Singapore Changi", "iata": "SIN", "country": "SG"},
+            {"city": "Bangkok", "airport": "Suvarnabhumi", "iata": "BKK", "country": "TH"},
+            {"city": "London", "airport": "Heathrow", "iata": "LHR", "country": "GB"},
+            {"city": "Paris", "airport": "Charles de Gaulle", "iata": "CDG", "country": "FR"},
+            {"city": "New York", "airport": "John F. Kennedy Intl", "iata": "JFK", "country": "US"},
+            {"city": "Amsterdam", "airport": "Amsterdam Schiphol", "iata": "AMS", "country": "NL"},
+            {"city": "Frankfurt", "airport": "Frankfurt am Main", "iata": "FRA", "country": "DE"},
+            {"city": "Tokyo", "airport": "Narita Intl", "iata": "NRT", "country": "JP"},
+            {"city": "Hong Kong", "airport": "Hong Kong Intl", "iata": "HKG", "country": "HK"},
+            {"city": "Kuala Lumpur", "airport": "Kuala Lumpur Intl", "iata": "KUL", "country": "MY"},
+            {"city": "Doha", "airport": "Hamad Intl", "iata": "DOH", "country": "QA"},
+            {"city": "Abu Dhabi", "airport": "Abu Dhabi Intl", "iata": "AUH", "country": "AE"},
+            {"city": "Sydney", "airport": "Kingsford Smith", "iata": "SYD", "country": "AU"},
+            {"city": "Melbourne", "airport": "Melbourne", "iata": "MEL", "country": "AU"},
+            {"city": "Toronto", "airport": "Pearson Intl", "iata": "YYZ", "country": "CA"}
+        ]
+        
+        # Filter airports based on query
+        query = query.lower().strip()
+        if not query:
+            return {"results": []}
+        
+        results = []
+        for airport in airports_db:
+            # Search in city name, airport name, and IATA code
+            search_text = f"{airport['city']} {airport['airport']} {airport['iata']}".lower()
+            if query in search_text:
+                results.append(airport)
+                if len(results) >= limit:
+                    break
+        
+        return {"results": results}
+        
+    except Exception as e:
+        logging.error(f"Airport search error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to search airports")
+
 @api_router.post("/flights/search")
 async def search_flights(request: FlightSearchRequest):
     """Search for flights with Tripjack API integration and AI recommendations"""
