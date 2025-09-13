@@ -166,7 +166,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleInputFocus = () => {
-    // Only show dropdown if field is completely empty (no value selected)
+    // Always allow focus to show dropdown if field is empty
     if (!value && !query) {
       setSuggestions(popularAirports);
       setOpen(true);
@@ -174,8 +174,15 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   };
 
   const handleInputClick = () => {
-    // Show popular destinations on click only if field is completely empty
-    if (!query && !value) {
+    // Always allow clicking to edit - clear current selection and show dropdown
+    if (value) {
+      // If field has a selected city, clear it and show popular destinations
+      setQuery("");
+      onChange(null);
+      setSuggestions(popularAirports);
+      setOpen(true);
+    } else if (!query) {
+      // If field is empty, show popular destinations
       setSuggestions(popularAirports);
       setOpen(true);
     }
@@ -185,17 +192,14 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     const inputValue = e.target.value;
     setQuery(inputValue);
     
-    // Only show suggestions when actively typing in THIS field and field has no selected value
+    // Clear any selected value when user starts typing
+    if (value) {
+      onChange(null);
+    }
+    
+    // Show suggestions when typing
     if (inputValue.length === 0) {
-      if (!value) {
-        setSuggestions(popularAirports);
-        setOpen(true);
-      } else {
-        setOpen(false);
-        setSuggestions([]);
-      }
-    } else if (!value) {
-      // Only show suggestions if no city is already selected
+      setSuggestions(popularAirports);
       setOpen(true);
     }
   };
