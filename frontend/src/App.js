@@ -76,8 +76,15 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     }
   }, [autoFocus]);
   
-  // Handle search when user types - FIXED LOGIC
+  // Handle search when user types - FIXED LOGIC with value check
   useEffect(() => {
+    // Don't show suggestions if field already has a selected value
+    if (value) {
+      setOpen(false);
+      setSuggestions([]);
+      return;
+    }
+    
     if (debouncedQuery && debouncedQuery.length >= 1) {
       console.log('Searching for:', debouncedQuery); // Debug log
       
@@ -104,7 +111,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
       setSuggestions([]);
       setOpen(false);
     }
-  }, [debouncedQuery, open]);
+  }, [debouncedQuery, open, value]); // Added value to dependency array
   
   const searchAirports = async (searchQuery) => {
     if (abortController.current) {
