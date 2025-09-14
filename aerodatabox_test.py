@@ -24,7 +24,7 @@ load_dotenv('/app/backend/.env')
 
 class AeroDataBoxTester:
     def __init__(self):
-        self.backend_url = os.environ.get('REACT_APP_BACKEND_URL', 'https://tripwise-19.preview.emergentagent.com')
+        self.backend_url = os.environ.get('REACT_APP_BACKEND_URL', 'https://flightsearch-ui.preview.emergentagent.com')
         self.api_endpoint = f"{self.backend_url}/api/flights/search"
         
     def test_environment_variables(self):
