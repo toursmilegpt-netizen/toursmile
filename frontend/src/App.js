@@ -190,8 +190,8 @@ function useDebounced(value, delay = 250) {
   return debouncedValue;
 }
 
-// City Input Component with Working Dropdown Suggestions
-function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
+// City Input Component with Working Dropdown Suggestions - Integrated Design
+function CityInput({ label, value, onChange, onNext, autoFocus = false, integrated = false }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
