@@ -364,26 +364,24 @@ html {
   }
 }
 
-/* EXTRA SMALL MOBILE - ADDITIONAL CONSTRAINTS */
+/* EXTRA SMALL MOBILE - UNIFIED CONTAINER ADJUSTMENTS */
 @media (max-width: 480px) {
   .max-w-5xl {
     padding: 0 8px !important;
   }
   
-  .mobile-horizontal {
-    grid-template-columns: 1fr 40px 1fr !important;
-    gap: 4px !important;
+  .unified-flight-container {
+    border-radius: 8px !important;
   }
   
-  .mobile-horizontal .h-11.w-11.rounded-full {
-    height: 40px !important;
-    width: 40px !important;
-    min-width: 40px !important;
-    max-width: 40px !important;
+  .integrated-city-input {
+    padding: 6px 10px !important;
   }
   
-  .rounded-2xl.shadow-sm.border.border-neutral-200.bg-white {
-    padding: 12px 8px !important;
+  .swap-button-integrated {
+    height: 28px !important;
+    width: 28px !important;
+    font-size: 12px !important;
   }
 }
 
