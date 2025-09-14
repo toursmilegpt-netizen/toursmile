@@ -1235,6 +1235,11 @@ function Footer() {
 
 // Main App Component
 function App() {
+  // Navigation state
+  const [currentPage, setCurrentPage] = useState('search'); // 'search', 'results', 'selection', 'passenger', 'payment', 'confirmation'
+  const [searchResults, setSearchResults] = useState(null);
+  const [selectedFlight, setSelectedFlight] = useState(null);
+  const [searchParams, setSearchParams] = useState(null);
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       {/* Header */}
