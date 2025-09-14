@@ -215,10 +215,70 @@ html {
   scroll-behavior: smooth;
 }
 
-/* MOBILE HORIZONTAL FORCE CLASS */
-.mobile-horizontal {
-  display: grid !important;
-  grid-template-columns: 1fr auto 1fr !important;
+/* UNIFIED FLIGHT CONTAINER - SINGLE BOX DESIGN */
+.unified-flight-container {
+  transition: all 0.15s ease;
+}
+
+.unified-flight-container:hover {
+  border-color: #9ca3af !important;
+}
+
+.unified-flight-container:focus-within {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Integrated City Input Styling */
+.integrated-city-input {
+  transition: all 0.15s ease;
+}
+
+.swap-button-integrated {
+  z-index: 10;
+  position: relative;
+}
+
+/* MOBILE RESPONSIVENESS FOR UNIFIED CONTAINER */
+@media (max-width: 767px) {
+  .unified-flight-container {
+    flex-direction: row !important;
+    min-height: 56px !important;
+    border-radius: 10px !important;
+  }
+  
+  .unified-flight-container > div:first-child,
+  .unified-flight-container > div:last-child {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  
+  .unified-flight-container > div:nth-child(2) {
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+  }
+  
+  .integrated-city-input {
+    padding: 8px 12px !important;
+    min-height: 56px !important;
+  }
+  
+  .integrated-city-input label {
+    font-size: 9px !important;
+    margin-bottom: 2px !important;
+  }
+  
+  .integrated-city-input input {
+    font-size: 14px !important;
+  }
+  
+  .swap-button-integrated {
+    height: 32px !important;
+    width: 32px !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+  }
 }
 
 /* MOBILE RESPONSIVENESS CRITICAL FIXES */
