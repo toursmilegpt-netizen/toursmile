@@ -379,9 +379,9 @@ html {
     padding: 6px 10px !important;
   }
   
-  .swap-button-integrated {
-    height: 28px !important;
-    width: 28px !important;
+  .swap-button-seamless {
+    height: 24px !important;
+    width: 24px !important;
     font-size: 12px !important;
   }
 }
