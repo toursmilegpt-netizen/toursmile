@@ -848,47 +848,97 @@ function SearchCard() {
           ))}
         </div>
 
-        {/* From/To Row - MOBILE OPTIMIZED Horizontal Layout */}
-        <div className="mt-4 mobile-horizontal" style={{ 
-          display: 'grid', 
-          gridTemplateColumns: '1fr 44px 1fr', 
-          gap: '6px', 
-          alignItems: 'end',
-          maxWidth: '100%',
-          overflow: 'hidden'
+        {/* Unified From/To Container - Single Box Design */}
+        <div className="mt-4 unified-flight-container" style={{ 
+          position: 'relative',
+          background: 'white',
+          border: '1px solid #d1d5db',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'stretch',
+          minHeight: '64px'
         }}>
-          <div style={{ minWidth: 0, maxWidth: '100%' }}>
+          {/* From Field - Left Side */}
+          <div style={{ 
+            flex: '1', 
+            minWidth: 0, 
+            maxWidth: '100%',
+            position: 'relative',
+            borderRight: '1px solid #f3f4f6'
+          }}>
             <CityInput 
               label="From" 
               value={from} 
               onChange={setFrom}
               onNext={handleFromComplete}
               autoFocus={currentStep === 0}
+              integrated={true}
             />
           </div>
           
-          <button
-            aria-label="Swap From and To"
-            onClick={() => { const temp = from; setFrom(to); setTo(temp); }}
-            className="h-11 w-11 mx-auto rounded-full border border-neutral-300 bg-white hover:bg-neutral-50 flex items-center justify-center"
-            style={{ 
-              flexShrink: 0,
-              minWidth: '44px',
-              maxWidth: '44px',
-              height: '44px',
-              width: '44px'
-            }}
-          >
-            <span className="text-lg">⇄</span>
-          </button>
+          {/* Integrated Swap Button - Center Divider */}
+          <div style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '52px',
+            minWidth: '52px',
+            maxWidth: '52px',
+            background: '#f9fafb',
+            borderLeft: '1px solid #f3f4f6',
+            borderRight: '1px solid #f3f4f6'
+          }}>
+            <button
+              aria-label="Swap From and To"
+              onClick={() => { const temp = from; setFrom(to); setTo(temp); }}
+              className="swap-button-integrated"
+              style={{ 
+                height: '36px',
+                width: '36px',
+                borderRadius: '8px',
+                border: '1px solid #d1d5db',
+                background: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '16px',
+                color: '#6b7280',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+                boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)'
+              }}
+              onMouseOver={(e) => {
+                e.target.style.background = '#f3f4f6';
+                e.target.style.color = '#374151';
+                e.target.style.transform = 'scale(1.05)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.background = 'white';
+                e.target.style.color = '#6b7280';
+                e.target.style.transform = 'scale(1)';
+              }}
+            >
+              ⇄
+            </button>
+          </div>
           
-          <div style={{ minWidth: 0, maxWidth: '100%' }}>
+          {/* To Field - Right Side */}
+          <div style={{ 
+            flex: '1', 
+            minWidth: 0, 
+            maxWidth: '100%', 
+            position: 'relative',
+            borderLeft: '1px solid #f3f4f6'
+          }}>
             <CityInput 
               label="To" 
               value={to} 
               onChange={setTo}
               onNext={handleToComplete}
               autoFocus={currentStep === 1}
+              integrated={true}
             />
           </div>
         </div>
