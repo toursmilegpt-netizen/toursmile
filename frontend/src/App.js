@@ -872,7 +872,7 @@ function PaxOverlay({ value, onChange, onClose }) {
 
 // Search Card Component
 // Search Card Component with Auto-focus Guidance
-function SearchCard() {
+function SearchCard({ onSearch }) {
   const [trip, setTrip] = useState("OW"); // Default to One Way
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
