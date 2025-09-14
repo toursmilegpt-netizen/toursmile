@@ -274,7 +274,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         setSuggestions(localMatches);
         setOpen(true);
       } else {
-        // Search via API if no local matches
+        // Search via API if no local matches, fallback to comprehensive database
         searchAirports(debouncedQuery);
       }
     } else if (open && !debouncedQuery) {
