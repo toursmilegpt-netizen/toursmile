@@ -1255,84 +1255,148 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white text-neutral-900">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-neutral-200">
-        <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-semibold text-xl">
-            <img 
-              src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
-              alt="TourSmile"
-              className="h-10 w-auto"
-            />
-          </div>
-          
-          {/* Navigation - Hidden on mobile, flex on desktop */}
-          <nav className="hidden md:flex items-center gap-2">
-            {[
-              { label: "Flights", icon: "✈️" },
-              { label: "Hotels", icon: "🏨" },
-              { label: "Packages", icon: "🎁" },
-              { label: "Activities", icon: "🎟️" },
-            ].map((tab, i) => (
-              <button
-                key={i}
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded-full transition-colors ${
-                  i === 0 ? "bg-blue-50 text-blue-700" : "text-neutral-700 hover:bg-neutral-50"
-                }`}
-              >
-                <span className="opacity-90">{tab.icon}</span>
-                <span className="text-sm font-medium">{tab.label}</span>
-              </button>
-            ))}
-          </nav>
-          
-          <div className="flex items-center gap-2">
-            <button className="px-3 py-1.5 rounded-full border border-neutral-300 text-sm hover:bg-neutral-50">
-              24×7 Support
-            </button>
-            <button className="px-3 py-1.5 rounded-full bg-neutral-100 hover:bg-neutral-200 text-sm">
-              Sign In
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="mx-auto max-w-5xl px-4 pb-24">
-        {/* Hero Section */}
-        <section className="text-center pt-14 md:pt-20 pb-8">
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight" style={{ letterSpacing: '-0.75px' }}>
-            Book Your Perfect Flight
-          </h1>
-          <p className="mt-3 text-neutral-600">
-            Smart Travel, Best Prices
-          </p>
-        </section>
-        
-        {/* Search Card */}
-        <SearchCard onSearch={handleSearch} />
-
-        {/* Trust Section - Responsive Grid */}
-        <section className="mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
-            {[
-              { icon: "🔒", t: "Secure Booking", s: "SSL encrypted payments" },
-              { icon: "💬", t: "24×7 Support", s: "WhatsApp & phone support" },
-              { icon: "🎯", t: "Personal Travel Assistant", s: "AI-powered recommendations just for you" },
-              { icon: "⚡", t: "Instant Booking", s: "Confirmed in seconds" },
-            ].map((item, i) => (
-              <div key={i} className="rounded-xl border border-neutral-200 p-4 bg-white hover:shadow-sm transition-shadow">
-                <div className="text-2xl mb-2" aria-hidden>{item.icon}</div>
-                <div className="text-sm font-medium" style={{ fontWeight: '500' }}>{item.t}</div>
-                <div className="text-xs text-neutral-600 mt-0.5" style={{ fontWeight: '300' }}>{item.s}</div>
+      {/* Render different pages based on current state */}
+      {currentPage === 'search' && (
+        <>
+          {/* Header */}
+          <header className="border-b border-neutral-100">
+            <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center space-x-6">
+                <div className="text-xl font-bold text-blue-600">TourSmile</div>
+                <div className="hidden md:flex space-x-6 text-sm font-medium">
+                  <span className="text-blue-600 border-b-2 border-blue-600 pb-1">Flights</span>
+                  <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Hotels</span>
+                  <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Activities</span>
+                </div>
               </div>
-            ))}
-          </div>
-        </section>
+              <div className="flex items-center space-x-4">
+                <div className="hidden md:flex space-x-6 text-sm">
+                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Instant</span>
+                  <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">Secure</span>
+                  <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-medium">Easy</span>
+                </div>
+              </div>
+            </div>
+          </header>
 
-        {/* Footer */}
-        <Footer />
-      </main>
+          {/* Main Content */}
+          <main className="mx-auto max-w-5xl px-4 pb-24">
+            {/* Hero */}
+            <section className="text-center pt-16 pb-8">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-neutral-900">
+                Smart Travel, Best Prices
+              </h1>
+              <p className="text-lg text-neutral-600 mb-8">
+                Book flights with confidence. Best deals, instant confirmation.
+              </p>
+            </section>
+            
+            {/* Search Card */}
+            <SearchCard onSearch={handleSearch} />
+
+            {/* Trust Section */}
+            <section className="mt-12">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                {[
+                  { icon: "🔒", title: "Secure Booking", desc: "SSL encrypted transactions" },
+                  { icon: "📞", title: "24x7 Support", desc: "Round the clock assistance" },
+                  { icon: "👨‍💼", title: "Personal Travel Assistant", desc: "Dedicated support executive" },
+                  { icon: "⚡", title: "Instant Booking", desc: "Confirmed tickets in seconds" }
+                ].map(item => (
+                  <div key={item.title} className="p-4 rounded-xl hover:shadow-lg transition-shadow">
+                    <div className="text-3xl mb-2">{item.icon}</div>
+                    <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
+                    <p className="text-xs text-neutral-600">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </main>
+
+          {/* Footer */}
+          <Footer />
+        </>
+      )}
+      
+      {/* Results Page */}
+      {currentPage === 'results' && (
+        <>
+          {/* Header with Back Button */}
+          <header className="border-b border-neutral-100">
+            <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <button 
+                  onClick={handleBackToSearch}
+                  className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  ← Back to Search
+                </button>
+                <div className="text-xl font-bold text-blue-600">TourSmile</div>
+              </div>
+            </div>
+          </header>
+          
+          <FlightResults 
+            searchParams={searchParams}
+            onFlightSelect={handleFlightSelect}
+          />
+        </>
+      )}
+      
+      {/* Flight Selection Page */}
+      {currentPage === 'selection' && (
+        <>
+          <header className="border-b border-neutral-100">
+            <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <button 
+                  onClick={handleBackToResults}
+                  className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  ← Back to Results
+                </button>
+                <div className="text-xl font-bold text-blue-600">TourSmile</div>
+              </div>
+            </div>
+          </header>
+          
+          <div className="mx-auto max-w-5xl px-4 py-6">
+            <h1 className="text-2xl font-bold mb-4">Flight Selection</h1>
+            <p className="text-gray-600 mb-8">Choose your fare option and proceed to passenger details</p>
+            
+            {selectedFlight && (
+              <div className="bg-white border rounded-xl p-6 mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">{selectedFlight.logo}</span>
+                    <div>
+                      <div className="font-semibold text-lg">{selectedFlight.airline}</div>
+                      <div className="text-gray-600">{selectedFlight.flightNumber}</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {selectedFlight.fareOptions?.map((option, index) => (
+                    <div key={index} className="border rounded-lg p-4 hover:border-blue-500 cursor-pointer">
+                      <div className="font-semibold mb-2">{option.type}</div>
+                      <div className="text-2xl font-bold text-blue-600 mb-2">₹{option.price.toLocaleString()}</div>
+                      <div className="text-sm text-gray-600 space-y-1">
+                        <div>🧳 {option.baggage}</div>
+                        <div>{option.meal ? '🍽️ Meal included' : '🚫 No meal'}</div>
+                        <div>{option.refundable ? '↩️ Refundable' : '🚫 Non-refundable'}</div>
+                      </div>
+                      <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                        Select This Fare
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
