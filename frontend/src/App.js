@@ -949,51 +949,52 @@ function SearchCard() {
             />
           </div>
           
-          {/* Integrated Swap Button - Center Divider */}
+          {/* Integrated Swap Button - Seamless Design */}
           <div style={{
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '52px',
-            minWidth: '52px',
-            maxWidth: '52px',
-            background: '#f9fafb',
-            borderLeft: '1px solid #f3f4f6',
-            borderRight: '1px solid #f3f4f6'
+            width: '48px',
+            minWidth: '48px',
+            maxWidth: '48px',
+            background: 'white',
+            borderLeft: 'none',
+            borderRight: 'none'
           }}>
             <button
               aria-label="Swap From and To"
               onClick={(e) => { 
                 e.preventDefault();
                 e.stopPropagation();
-                const temp = from; 
-                setFrom(to); 
-                setTo(temp); 
+                // Swap complete airport objects, not just codes
+                const tempFrom = from; 
+                const tempTo = to;
+                setFrom(tempTo); 
+                setTo(tempFrom); 
               }}
-              className="swap-button-integrated"
+              className="swap-button-seamless"
               style={{ 
-                height: '36px',
-                width: '36px',
-                borderRadius: '8px',
-                border: '1px solid #d1d5db',
-                background: 'white',
+                height: '32px',
+                width: '32px',
+                borderRadius: '6px',
+                border: 'none',
+                background: 'transparent',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '16px',
                 color: '#6b7280',
                 cursor: 'pointer',
-                transition: 'all 0.15s ease',
-                boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)'
+                transition: 'all 0.15s ease'
               }}
               onMouseOver={(e) => {
-                e.target.style.background = '#f3f4f6';
+                e.target.style.background = '#f9fafb';
                 e.target.style.color = '#374151';
-                e.target.style.transform = 'scale(1.05)';
+                e.target.style.transform = 'scale(1.1)';
               }}
               onMouseOut={(e) => {
-                e.target.style.background = 'white';
+                e.target.style.background = 'transparent';
                 e.target.style.color = '#6b7280';
                 e.target.style.transform = 'scale(1)';
               }}
