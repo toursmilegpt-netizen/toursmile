@@ -304,68 +304,57 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
         )}
       </div>
       
-      {/* Dropdown - PORTAL APPROACH FOR VISIBILITY */}
+      {/* Dropdown - ELEGANT & COMPACT Design like MakeMyTrip */}
       {open && suggestions.length > 0 && (
         <>
-          {/* Invisible positioning div */}
           <div 
-            id={`dropdown-anchor-${label.toLowerCase()}`}
-            style={{
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              right: 0,
-              height: '1px',
-              zIndex: 1
-            }}
-          />
-          {/* Visible dropdown with fixed positioning */}
-          <div 
-            className="suggestions-dropdown"
+            className="suggestions-dropdown-elegant"
             style={{ 
               position: 'fixed',
-              top: `${(containerRef.current?.getBoundingClientRect().bottom || 0) + 4}px`,
+              top: `${(containerRef.current?.getBoundingClientRect().bottom || 0) + 8}px`,
               left: `${containerRef.current?.getBoundingClientRect().left || 0}px`,
               width: `${containerRef.current?.getBoundingClientRect().width || 300}px`,
               zIndex: 99999,
               backgroundColor: 'white',
-              border: '2px solid #3b82f6',
+              border: '1px solid #e5e7eb',
               borderRadius: '12px',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-              maxHeight: '320px',
-              overflowY: 'auto'
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+              maxHeight: '280px',
+              overflowY: 'auto',
+              padding: '8px 0'
             }}
           >
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-semibold rounded-t-lg">
-              {!query ? '✈️ Popular Destinations' : `🔍 Search results for "${query}"`}
-            </div>
+            {!query && (
+              <div className="px-3 py-2 text-xs font-medium text-neutral-400 uppercase tracking-wide border-b border-neutral-100">
+                Popular Cities
+              </div>
+            )}
             
             {suggestions.map((airport, i) => (
               <button
                 key={`${airport.iata}-${i}`}
                 onClick={() => handleCitySelect(airport)}
-                className="w-full text-left px-4 py-4 hover:bg-blue-50 flex items-center justify-between border-b border-neutral-100 last:border-b-0 transition-all duration-200"
+                className="w-full text-left px-3 py-2 hover:bg-neutral-50 flex items-center justify-between transition-colors duration-150"
                 style={{ 
-                  display: 'flex',
-                  backgroundColor: 'white',
-                  minHeight: '60px'
+                  minHeight: '44px',
+                  borderBottom: i < suggestions.length - 1 ? '1px solid #f3f4f6' : 'none'
                 }}
               >
-                <div className="flex-1">
-                  <div className="text-base font-bold text-neutral-900 mb-1">
-                    {airport.city}
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-neutral-900 truncate">
+                    {airport.city}, {airport.country === 'IN' ? 'India' : airport.country}
                   </div>
-                  <div className="text-xs text-neutral-600">{airport.airport}</div>
+                  <div className="text-xs text-neutral-500 truncate">{airport.airport}</div>
                 </div>
-                <div className="text-lg font-bold text-white bg-blue-500 px-3 py-2 rounded-lg">
+                <div className="text-xs font-bold text-neutral-600 bg-neutral-100 px-2 py-1 rounded ml-2 flex-shrink-0">
                   {airport.iata}
                 </div>
               </button>
             ))}
             
             {loading && (
-              <div className="px-4 py-4 text-sm text-neutral-500 text-center bg-yellow-50">
-                ⏳ Searching airports...
+              <div className="px-3 py-3 text-xs text-neutral-400 text-center">
+                Searching...
               </div>
             )}
           </div>
