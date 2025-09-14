@@ -964,7 +964,13 @@ function SearchCard() {
           }}>
             <button
               aria-label="Swap From and To"
-              onClick={() => { const temp = from; setFrom(to); setTo(temp); }}
+              onClick={(e) => { 
+                e.preventDefault();
+                e.stopPropagation();
+                const temp = from; 
+                setFrom(to); 
+                setTo(temp); 
+              }}
               className="swap-button-integrated"
               style={{ 
                 height: '36px',
