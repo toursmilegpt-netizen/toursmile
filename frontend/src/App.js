@@ -1086,51 +1086,25 @@ function SearchCard({ onSearch }) {
         <div className="mt-4 flex justify-center">
           <button
             onClick={async () => {
-              setError(null);
-              setResults(null);
               if (!from || !to) {
-                alert('Please select both departure and destination cities');
+                alert('Please select both From and To airports');
                 return;
               }
               if (!depart) {
                 alert('Please select a departure date');
                 return;
               }
-              try {
-                setLoading(true);
-                const urlBase = backendBase || (window.__BACKEND_URL__ || (window.ENV && window.ENV.REACT_APP_BACKEND_URL));
-                if (!urlBase) {
-                  throw new Error('Backend URL not configured');
-                }
-                const payload = {
-                  origin: from.city,
-                  destination: to.city,
-                  departure_date: depart,
-                  return_date: trip !== 'OW' ? ret : null,
-                  passengers: pax.adt + pax.chd + pax.inf,
-                  class_type: (pax.cabin || 'Economy').toLowerCase().includes('business') ? 'business' : (pax.cabin || 'Economy').toLowerCase().includes('first') ? 'first' : 'economy',
-                  timePreference: null,
-                  flexibleDates: false,
-                  nearbyAirports: false,
-                  corporateBooking: false,
-                  budgetRange: null
-                };
-                const res = await fetch(`${urlBase}/api/flights/search`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(payload)
+              
+              // Call the parent's search handler
+              if (onSearch) {
+                await onSearch({
+                  from,
+                  to,
+                  depart,
+                  return: ret,
+                  trip,
+                  pax
                 });
-                if (!res.ok) {
-                  const txt = await res.text();
-                  throw new Error(`Search failed (${res.status}): ${txt}`);
-                }
-                const data = await res.json();
-                setResults(data);
-              } catch (e) {
-                console.error('Search error', e);
-                setError(e.message || 'Search failed');
-              } finally {
-                setLoading(false);
               }
             }}
             className={`px-8 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all duration-300 disabled:opacity-60 ${
