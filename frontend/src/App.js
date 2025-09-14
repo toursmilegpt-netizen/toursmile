@@ -1,5 +1,9 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import './App.css';
+import FlightResults from './FlightResults';
+
+// Import existing comprehensive airport database and components...
 
 // TOURSMILE HOMEPAGE - CLEAN WORKING IMPLEMENTATION
 // Mobile-first responsive with proper breakpoints
