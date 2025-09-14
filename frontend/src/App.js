@@ -204,18 +204,31 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
   // Backend base URL from environment
   const backendBase = process.env.REACT_APP_BACKEND_URL;
   
-  // Popular airports for dropdown display
+  // Popular airports for dropdown display - Top Indian + International
   const popularAirports = [
-    { city: "Pune", airport: "Pune Intl", iata: "PNQ", country: "IN" },
+    // Top Indian Airports
     { city: "Mumbai", airport: "Chhatrapati Shivaji Maharaj Intl", iata: "BOM", country: "IN" },
     { city: "Delhi", airport: "Indira Gandhi Intl", iata: "DEL", country: "IN" },
     { city: "Bengaluru", airport: "Kempegowda Intl", iata: "BLR", country: "IN" },
     { city: "Hyderabad", airport: "Rajiv Gandhi Intl", iata: "HYD", country: "IN" },
     { city: "Chennai", airport: "Chennai Intl", iata: "MAA", country: "IN" },
-    { city: "Kolkata", airport: "Netaji Subhash Chandra Bose Intl", iata: "CCU", country: "IN" },
+    { city: "Kolkata", airport: "Netaji Subhas Chandra Bose Intl", iata: "CCU", country: "IN" },
+    { city: "Pune", airport: "Pune Intl", iata: "PNQ", country: "IN" },
     { city: "Ahmedabad", airport: "Sardar Vallabhbhai Patel Intl", iata: "AMD", country: "IN" },
-    { city: "Goa", airport: "Manohar Intl", iata: "GOX", country: "IN" },
-    { city: "Kochi", airport: "Cochin Intl", iata: "COK", country: "IN" }
+    { city: "Kochi", airport: "Cochin Intl", iata: "COK", country: "IN" },
+    { city: "Goa", airport: "Manohar Intl", iata: "GOI", country: "IN" },
+    
+    // Top International Airports
+    { city: "Dubai", airport: "Dubai International", iata: "DXB", country: "AE" },
+    { city: "Singapore", airport: "Singapore Changi", iata: "SIN", country: "SG" },
+    { city: "Bangkok", airport: "Suvarnabhumi", iata: "BKK", country: "TH" },
+    { city: "London", airport: "Heathrow Airport", iata: "LHR", country: "GB" },
+    { city: "New York", airport: "John F Kennedy Intl", iata: "JFK", country: "US" },
+    { city: "Paris", airport: "Charles de Gaulle Airport", iata: "CDG", country: "FR" },
+    { city: "Tokyo", airport: "Narita International", iata: "NRT", country: "JP" },
+    { city: "Hong Kong", airport: "Hong Kong International", iata: "HKG", country: "HK" },
+    { city: "Sydney", airport: "Kingsford Smith Airport", iata: "SYD", country: "AU" },
+    { city: "Toronto", airport: "Lester B Pearson Intl", iata: "YYZ", country: "CA" }
   ];
   
   // Handle click outside to close dropdown
