@@ -880,12 +880,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Critical Swap Functionality Fix"
+    - "Comprehensive Flight Booking Flow Testing"
     - "Results page: dedicated view + sorting & core filters"
-    - "Flexible dates ±3d & Nearby airports end-to-end"
-    - "Booking flow: selection → passengers → payment → confirmation"
+    - "Flight selection and fare options"
+    - "Mobile responsive design testing"
   stuck_tasks:
-    - "Critical Swap Functionality Fix"
+    - "Search button click interaction (overlay issues)"
   test_all: false
   test_priority: "high_first"
 
