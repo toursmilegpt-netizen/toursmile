@@ -229,12 +229,8 @@ html {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
 }
 
-/* Integrated City Input Styling */
-.integrated-city-input {
-  transition: all 0.15s ease;
-}
-
-.swap-button-integrated {
+/* Seamless Swap Button Styling */
+.swap-button-seamless {
   z-index: 10;
   position: relative;
 }
@@ -254,9 +250,9 @@ html {
   }
   
   .unified-flight-container > div:nth-child(2) {
-    width: 44px !important;
-    min-width: 44px !important;
-    max-width: 44px !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
   }
   
   .integrated-city-input {
@@ -273,10 +269,10 @@ html {
     font-size: 14px !important;
   }
   
-  .swap-button-integrated {
-    height: 32px !important;
-    width: 32px !important;
-    border-radius: 6px !important;
+  .swap-button-seamless {
+    height: 28px !important;
+    width: 28px !important;
+    border-radius: 4px !important;
     font-size: 14px !important;
   }
 }
