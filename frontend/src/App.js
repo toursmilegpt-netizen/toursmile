@@ -970,7 +970,15 @@ function SearchCard() {
                 const tempFrom = from; 
                 const tempTo = to;
                 setFrom(tempTo); 
-                setTo(tempFrom); 
+                setTo(tempFrom);
+                
+                // Force re-render of input fields by triggering a state update
+                // This ensures the display values (city names) are properly updated
+                setTimeout(() => {
+                  // Force component refresh to update display values
+                  if (tempTo) setFrom({...tempTo});
+                  if (tempFrom) setTo({...tempFrom});
+                }, 10);
               }}
               className="swap-button-seamless"
               style={{ 
