@@ -261,12 +261,12 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false }) {
     if (debouncedQuery && debouncedQuery.length >= 1) {
       console.log('Searching for:', debouncedQuery); // Debug log
       
-      // Search in popular airports first
-      const localMatches = popularAirports.filter(airport => 
+      // Search in comprehensive airport database first
+      const localMatches = POPULAR_AIRPORTS.filter(airport => 
         airport.city.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
         airport.iata.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
         airport.airport.toLowerCase().includes(debouncedQuery.toLowerCase())
-      );
+      ).slice(0, 8); // Limit to 8 results for better UX
       
       console.log('Local matches found:', localMatches); // Debug log
       
