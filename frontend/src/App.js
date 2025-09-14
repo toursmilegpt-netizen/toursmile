@@ -939,6 +939,7 @@ function SearchCard() {
             position: 'relative'
           }}>
             <CityInput 
+              key={`from-${from ? from.iata : 'empty'}`}
               label="From" 
               value={from} 
               onChange={setFrom}
