@@ -983,7 +983,7 @@ function App() {
             Book Your Perfect Flight
           </h1>
           <p className="mt-3 text-neutral-600">
-            Smart search, best fares, effortless travel
+            Smart Travel, Best Prices
           </p>
         </section>
         
