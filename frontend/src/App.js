@@ -1310,7 +1310,7 @@ function App() {
         </section>
         
         {/* Search Card */}
-        <SearchCard />
+        <SearchCard onSearch={handleSearch} />
 
         {/* Trust Section - Responsive Grid */}
         <section className="mt-12">
