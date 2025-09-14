@@ -911,7 +911,7 @@ function Footer() {
           </ul>
         </div>
       </div>
-      <div className="mx-auto max-w-7xl px-4 py-6 text-xs text-neutral-500">
+      <div className="mx-auto max-w-5xl px-4 py-6 text-xs text-neutral-500">
         © {new Date().getFullYear()} TourSmile. All rights reserved.
       </div>
     </footer>
