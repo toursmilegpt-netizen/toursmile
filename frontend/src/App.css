@@ -215,18 +215,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* UNIFIED FLIGHT CONTAINER - SINGLE BOX DESIGN */
-.unified-flight-container {
+/* Integrated City Input Styling */
+.integrated-city-input {
   transition: all 0.15s ease;
-}
-
-.unified-flight-container:hover {
-  border-color: #9ca3af !important;
-}
-
-.unified-flight-container:focus-within {
-  border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
 }
 
 /* Seamless Swap Button Styling */
