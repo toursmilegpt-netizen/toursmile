@@ -1240,6 +1240,45 @@ function App() {
   const [searchResults, setSearchResults] = useState(null);
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [searchParams, setSearchParams] = useState(null);
+  
+  const handleSearch = async (searchData) => {
+    try {
+      setSearchParams({
+        from: searchData.from,
+        to: searchData.to,
+        departDate: searchData.depart,
+        returnDate: searchData.return,
+        passengers: `${searchData.pax.adt} Adult${searchData.pax.adt > 1 ? 's' : ''}${searchData.pax.chd > 0 ? `, ${searchData.pax.chd} Child${searchData.pax.chd > 1 ? 'ren' : ''}` : ''}${searchData.pax.inf > 0 ? `, ${searchData.pax.inf} Infant${searchData.pax.inf > 1 ? 's' : ''}` : ''}`,
+        class: searchData.pax.cabin,
+        tripType: searchData.trip
+      });
+      
+      // Mock search delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Navigate to results page
+      setCurrentPage('results');
+    } catch (error) {
+      console.error('Search failed:', error);
+    }
+  };
+
+  const handleFlightSelect = (flight) => {
+    setSelectedFlight(flight);
+    setCurrentPage('selection');
+  };
+
+  const handleBackToSearch = () => {
+    setCurrentPage('search');
+    setSearchResults(null);
+    setSelectedFlight(null);
+  };
+
+  const handleBackToResults = () => {
+    setCurrentPage('results');
+    setSelectedFlight(null);
+  };
+
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       {/* Header */}
