@@ -220,6 +220,20 @@ html {
   transition: all 0.15s ease;
 }
 
+/* UNIFIED FLIGHT CONTAINER - SINGLE BOX DESIGN */
+.unified-flight-container {
+  transition: all 0.15s ease;
+}
+
+.unified-flight-container:hover {
+  border-color: #9ca3af !important;
+}
+
+.unified-flight-container:focus-within {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
 /* Seamless Swap Button Styling */
 .swap-button-seamless {
   z-index: 10;
