@@ -1007,8 +1007,7 @@ function SearchCard() {
             flex: '1', 
             minWidth: 0, 
             maxWidth: '100%', 
-            position: 'relative',
-            borderLeft: '1px solid #f3f4f6'
+            position: 'relative'
           }}>
             <CityInput 
               label="To" 
