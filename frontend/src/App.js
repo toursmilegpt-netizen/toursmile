@@ -249,6 +249,13 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     }
   }, [autoFocus]);
   
+  // Reset query when value prop changes (important for swap functionality)
+  useEffect(() => {
+    if (value && value.city) {
+      setQuery("");
+    }
+  }, [value]);
+  
   // Handle search when user types - FIXED LOGIC with value check
   useEffect(() => {
     // Don't show suggestions if field already has a selected value
