@@ -191,7 +191,7 @@ const GLOBAL_AIRPORTS_DATABASE = [
   { city: "Mexico City", iata: "MEX", airport: "Mexico City International Airport", country: "MX", countryName: "Mexico" },
   { city: "Cancún", iata: "CUN", airport: "Cancún International Airport", country: "MX", countryName: "Mexico" },
 
-  // ADDITIONAL POPULAR DESTINATIONS
+  // ADDITIONAL WORLDWIDE DESTINATIONS - COMPREHENSIVE COVERAGE
   { city: "Phuket", iata: "HKT", airport: "Phuket International Airport", country: "TH", countryName: "Thailand" },
   { city: "Colombo", iata: "CMB", airport: "Bandaranaike International Airport", country: "LK", countryName: "Sri Lanka" },
   { city: "Dhaka", iata: "DAC", airport: "Hazrat Shahjalal International Airport", country: "BD", countryName: "Bangladesh" },
@@ -201,7 +201,56 @@ const GLOBAL_AIRPORTS_DATABASE = [
   { city: "Bahrain", iata: "BAH", airport: "Bahrain International Airport", country: "BH", countryName: "Bahrain" },
   { city: "Tehran", iata: "IKA", airport: "Imam Khomeini International Airport", country: "IR", countryName: "Iran" },
   { city: "Almaty", iata: "ALA", airport: "Almaty International Airport", country: "KZ", countryName: "Kazakhstan" },
-  { city: "Tashkent", iata: "TAS", airport: "Islam Karimov Tashkent International Airport", country: "UZ", countryName: "Uzbekistan" }
+  { city: "Tashkent", iata: "TAS", airport: "Islam Karimov Tashkent International Airport", country: "UZ", countryName: "Uzbekistan" },
+  
+  // USER REQUESTED MISSING AIRPORTS
+  { city: "Islamabad", iata: "ISB", airport: "Islamabad International Airport", country: "PK", countryName: "Pakistan" },
+  { city: "Karachi", iata: "KHI", airport: "Jinnah International Airport", country: "PK", countryName: "Pakistan" },
+  { city: "Lahore", iata: "LHE", airport: "Allama Iqbal International Airport", country: "PK", countryName: "Pakistan" },
+  { city: "Sharm El Sheikh", iata: "SSH", airport: "Sharm El Sheikh International Airport", country: "EG", countryName: "Egypt" },
+  { city: "Ulaanbaatar", iata: "ULN", airport: "Chinggis Khaan International Airport", country: "MN", countryName: "Mongolia" },
+  { city: "Guilin", iata: "KWL", airport: "Guilin Liangjiang International Airport", country: "CN", countryName: "China" },
+  
+  // ADDITIONAL MAJOR DESTINATIONS WORLDWIDE  
+  { city: "Abuja", iata: "ABV", airport: "Nnamdi Azikiwe International Airport", country: "NG", countryName: "Nigeria" },
+  { city: "Accra", iata: "ACC", airport: "Kotoka International Airport", country: "GH", countryName: "Ghana" },
+  { city: "Adelaide", iata: "ADL", airport: "Adelaide Airport", country: "AU", countryName: "Australia" },
+  { city: "Algiers", iata: "ALG", airport: "Houari Boumediene Airport", country: "DZ", countryName: "Algeria" },
+  { city: "Amman", iata: "AMM", airport: "Queen Alia International Airport", country: "JO", countryName: "Jordan" },
+  { city: "Ankara", iata: "ESB", airport: "Esenboğa Airport", country: "TR", countryName: "Turkey" },
+  { city: "Antalya", iata: "AYT", airport: "Antalya Airport", country: "TR", countryName: "Turkey" },
+  { city: "Astana", iata: "NUR", airport: "Nur-Sultan Nazarbayev International Airport", country: "KZ", countryName: "Kazakhstan" },
+  { city: "Baku", iata: "GYD", airport: "Heydar Aliyev International Airport", country: "AZ", countryName: "Azerbaijan" },
+  { city: "Bangalore", iata: "BLR", airport: "Kempegowda International Airport", country: "IN", countryName: "India" },
+  { city: "Beirut", iata: "BEY", airport: "Rafic Hariri International Airport", country: "LB", countryName: "Lebanon" },
+  { city: "Belgrade", iata: "BEG", airport: "Belgrade Nikola Tesla Airport", country: "RS", countryName: "Serbia" },
+  { city: "Bishkek", iata: "FRU", airport: "Manas International Airport", country: "KG", countryName: "Kyrgyzstan" },
+  { city: "Bucharest", iata: "OTP", airport: "Henri Coandă International Airport", country: "RO", countryName: "Romania" },
+  { city: "Chengdu", iata: "CTU", airport: "Chengdu Shuangliu International Airport", country: "CN", countryName: "China" },
+  { city: "Chisinau", iata: "KIV", airport: "Chișinău International Airport", country: "MD", countryName: "Moldova" },
+  { city: "Cork", iata: "ORK", airport: "Cork Airport", country: "IE", countryName: "Ireland" },
+  { city: "Dakar", iata: "DKR", airport: "Blaise Diagne International Airport", country: "SN", countryName: "Senegal" },
+  { city: "Damascus", iata: "DAM", airport: "Damascus International Airport", country: "SY", countryName: "Syria" },
+  { city: "Dar es Salaam", iata: "DAR", airport: "Julius Nyerere International Airport", country: "TZ", countryName: "Tanzania" },
+  { city: "Dushanbe", iata: "DYU", airport: "Dushanbe Airport", country: "TJ", countryName: "Tajikistan" },
+  { city: "Grozny", iata: "GRV", airport: "Grozny Airport", country: "RU", countryName: "Russia" },
+  { city: "Harare", iata: "HRE", airport: "Robert Gabriel Mugabe International Airport", country: "ZW", countryName: "Zimbabwe" },
+  { city: "Havana", iata: "HAV", airport: "José Martí International Airport", country: "CU", countryName: "Cuba" },
+  { city: "Khartoum", iata: "KRT", airport: "Khartoum International Airport", country: "SD", countryName: "Sudan" },
+  { city: "Kiev", iata: "KBP", airport: "Boryspil International Airport", country: "UA", countryName: "Ukraine" },
+  { city: "Kingston", iata: "KIN", airport: "Norman Manley International Airport", country: "JM", countryName: "Jamaica" },
+  { city: "Ljubljana", iata: "LJU", airport: "Ljubljana Jože Pučnik Airport", country: "SI", countryName: "Slovenia" },
+  { city: "Minsk", iata: "MSQ", airport: "Minsk National Airport", country: "BY", countryName: "Belarus" },
+  { city: "Montevideo", iata: "MVD", airport: "Carrasco International Airport", country: "UY", countryName: "Uruguay" },
+  { city: "Riga", iata: "RIX", airport: "Riga International Airport", country: "LV", countryName: "Latvia" },
+  { city: "Skopje", iata: "SKP", airport: "Skopje Alexander the Great Airport", country: "MK", countryName: "North Macedonia" },
+  { city: "Sofia", iata: "SOF", airport: "Sofia Airport", country: "BG", countryName: "Bulgaria" },
+  { city: "Tallinn", iata: "TLL", airport: "Lennart Meri Tallinn Airport", country: "EE", countryName: "Estonia" },
+  { city: "Tbilisi", iata: "TBS", airport: "Shota Rustaveli Tbilisi International Airport", country: "GE", countryName: "Georgia" },
+  { city: "Tunis", iata: "TUN", airport: "Tunis-Carthage International Airport", country: "TN", countryName: "Tunisia" },
+  { city: "Vilnius", iata: "VNO", airport: "Vilnius Airport", country: "LT", countryName: "Lithuania" },
+  { city: "Yerevan", iata: "EVN", airport: "Zvartnots International Airport", country: "AM", countryName: "Armenia" },
+  { city: "Zagreb", iata: "ZAG", airport: "Franjo Tuđman Airport", country: "HR", countryName: "Croatia" }
 ];
 
 // Create indexed lookup for fast performance
