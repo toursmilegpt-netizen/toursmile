@@ -194,6 +194,21 @@ function useDebounced(value, delay = 250) {
   return debouncedValue;
 }
 
+// Window width hook for responsive design
+function useWindowWidth() {
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  return windowWidth;
+}
+
 // City Input Component - Updated for Overlay Support
 function CityInput({ label, value, onChange, onNext, autoFocus = false, integrated = false, overlay = false }) {
   const [open, setOpen] = useState(false);
