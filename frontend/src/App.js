@@ -992,16 +992,18 @@ function PaxRow({ label, hint, value, onInc, onDec }) {
 }
 
 // Passenger Overlay Component
-function PaxOverlay({ value, onChange, onClose }) {
+function PaxOverlay({ value, onChange, onClose, compact = false }) {
   const [pax, setPax] = useState(value);
   const ref = useRef(null);
   
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (!ref.current?.contains(e.target)) onClose();
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (onClose) {
+      const handleClickOutside = (e) => {
+        if (!ref.current?.contains(e.target)) onClose();
+      };
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
   }, [onClose]);
   
   const updatePax = (key, newValue) => setPax(prev => ({ ...prev, [key]: newValue }));
@@ -1013,6 +1015,51 @@ function PaxOverlay({ value, onChange, onClose }) {
     if (pax.adt < 1) updatePax('adt', 1);
   }, [pax.adt, pax.inf]);
 
+  // Compact mode for overlay
+  if (compact) {
+    return (
+      <div>
+        <div className="space-y-4">
+          <PaxRow label="Adults (12+)" hint="Ages 12+" value={pax.adt} onInc={() => increment('adt')} onDec={() => decrement('adt')} />
+          <PaxRow label="Children (2–11)" hint="Ages 2–11" value={pax.chd} onInc={() => increment('chd')} onDec={() => decrement('chd')} />
+          <PaxRow label="Infants (0–1)" hint="On lap" value={pax.inf} onInc={() => increment('inf')} onDec={() => decrement('inf')} />
+          
+          <div className="pt-4 border-t border-neutral-200">
+            <div className="text-sm font-medium mb-3" style={{ fontWeight: '500' }}>Cabin Class</div>
+            <div className="grid grid-cols-2 gap-2">
+              {["Economy", "Premium Economy", "Business", "First"].map((cabin) => (
+                <button 
+                  key={cabin} 
+                  onClick={() => updatePax('cabin', cabin)} 
+                  className={`px-3 py-2 rounded-lg text-sm border transition-colors ${
+                    pax.cabin === cabin ? "border-blue-400 bg-blue-50 text-blue-700" : "border-neutral-300 hover:bg-neutral-50"
+                  }`}
+                >
+                  {cabin}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        <div className="mt-6 pt-4 border-t border-neutral-200">
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-neutral-700">
+              {pax.adt} Adult{pax.adt > 1 ? 's' : ''}, {pax.chd} Child{pax.chd > 1 ? 'ren' : ''}, {pax.inf} Infant{pax.inf > 1 ? 's' : ''} · {pax.cabin}
+            </div>
+            <button 
+              onClick={() => onChange(pax)} 
+              className="px-6 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700"
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Original modal mode
   return (
     <div className="fixed inset-0 z-40 bg-black/20 flex items-end md:items-center md:justify-center">
       <div ref={ref} className="w-full md:w-[32rem] bg-white rounded-t-2xl md:rounded-2xl shadow-lg p-4 md:p-6">
