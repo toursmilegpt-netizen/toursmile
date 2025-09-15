@@ -707,7 +707,7 @@ async def search_airports(query: str, limit: int = 10):
             {"city": "Mexico City", "airport": "Mexico City International Airport", "iata": "MEX", "country": "MX"},
             {"city": "Cancún", "airport": "Cancún International Airport", "iata": "CUN", "country": "MX"},
 
-            # ADDITIONAL POPULAR DESTINATIONS
+            # ADDITIONAL WORLDWIDE DESTINATIONS - COMPREHENSIVE COVERAGE
             {"city": "Phuket", "airport": "Phuket International Airport", "iata": "HKT", "country": "TH"},
             {"city": "Colombo", "airport": "Bandaranaike International Airport", "iata": "CMB", "country": "LK"},
             {"city": "Dhaka", "airport": "Hazrat Shahjalal International Airport", "iata": "DAC", "country": "BD"},
@@ -717,7 +717,54 @@ async def search_airports(query: str, limit: int = 10):
             {"city": "Bahrain", "airport": "Bahrain International Airport", "iata": "BAH", "country": "BH"},
             {"city": "Tehran", "airport": "Imam Khomeini International Airport", "iata": "IKA", "country": "IR"},
             {"city": "Almaty", "airport": "Almaty International Airport", "iata": "ALA", "country": "KZ"},
-            {"city": "Tashkent", "airport": "Islam Karimov Tashkent International Airport", "iata": "TAS", "country": "UZ"}
+            {"city": "Tashkent", "airport": "Islam Karimov Tashkent International Airport", "iata": "TAS", "country": "UZ"},
+            
+            # USER REQUESTED MISSING AIRPORTS
+            {"city": "Islamabad", "airport": "Islamabad International Airport", "iata": "ISB", "country": "PK"},
+            {"city": "Karachi", "airport": "Jinnah International Airport", "iata": "KHI", "country": "PK"},
+            {"city": "Lahore", "airport": "Allama Iqbal International Airport", "iata": "LHE", "country": "PK"},
+            {"city": "Sharm El Sheikh", "airport": "Sharm El Sheikh International Airport", "iata": "SSH", "country": "EG"},
+            {"city": "Ulaanbaatar", "airport": "Chinggis Khaan International Airport", "iata": "ULN", "country": "MN"},
+            {"city": "Guilin", "airport": "Guilin Liangjiang International Airport", "iata": "KWL", "country": "CN"},
+            
+            # ADDITIONAL MAJOR DESTINATIONS WORLDWIDE
+            {"city": "Abuja", "airport": "Nnamdi Azikiwe International Airport", "iata": "ABV", "country": "NG"},
+            {"city": "Accra", "airport": "Kotoka International Airport", "iata": "ACC", "country": "GH"},
+            {"city": "Algiers", "airport": "Houari Boumediene Airport", "iata": "ALG", "country": "DZ"},
+            {"city": "Amman", "airport": "Queen Alia International Airport", "iata": "AMM", "country": "JO"},
+            {"city": "Ankara", "airport": "Esenboğa Airport", "iata": "ESB", "country": "TR"},
+            {"city": "Antalya", "airport": "Antalya Airport", "iata": "AYT", "country": "TR"},
+            {"city": "Astana", "airport": "Nur-Sultan Nazarbayev International Airport", "iata": "NUR", "country": "KZ"},
+            {"city": "Baku", "airport": "Heydar Aliyev International Airport", "iata": "GYD", "country": "AZ"},
+            {"city": "Beirut", "airport": "Rafic Hariri International Airport", "iata": "BEY", "country": "LB"},
+            {"city": "Belgrade", "airport": "Belgrade Nikola Tesla Airport", "iata": "BEG", "country": "RS"},
+            {"city": "Bishkek", "airport": "Manas International Airport", "iata": "FRU", "country": "KG"},
+            {"city": "Bucharest", "airport": "Henri Coandă International Airport", "iata": "OTP", "country": "RO"},
+            {"city": "Chengdu", "airport": "Chengdu Shuangliu International Airport", "iata": "CTU", "country": "CN"},
+            {"city": "Chisinau", "airport": "Chișinău International Airport", "iata": "KIV", "country": "MD"},
+            {"city": "Cork", "airport": "Cork Airport", "iata": "ORK", "country": "IE"},
+            {"city": "Dakar", "airport": "Blaise Diagne International Airport", "iata": "DKR", "country": "SN"},
+            {"city": "Damascus", "airport": "Damascus International Airport", "iata": "DAM", "country": "SY"},
+            {"city": "Dar es Salaam", "airport": "Julius Nyerere International Airport", "iata": "DAR", "country": "TZ"},
+            {"city": "Dushanbe", "airport": "Dushanbe Airport", "iata": "DYU", "country": "TJ"},
+            {"city": "Grozny", "airport": "Grozny Airport", "iata": "GRV", "country": "RU"},
+            {"city": "Harare", "airport": "Robert Gabriel Mugabe International Airport", "iata": "HRE", "country": "ZW"},
+            {"city": "Havana", "airport": "José Martí International Airport", "iata": "HAV", "country": "CU"},
+            {"city": "Khartoum", "airport": "Khartoum International Airport", "iata": "KRT", "country": "SD"},
+            {"city": "Kiev", "airport": "Boryspil International Airport", "iata": "KBP", "country": "UA"},
+            {"city": "Kingston", "airport": "Norman Manley International Airport", "iata": "KIN", "country": "JM"},
+            {"city": "Ljubljana", "airport": "Ljubljana Jože Pučnik Airport", "iata": "LJU", "country": "SI"},
+            {"city": "Minsk", "airport": "Minsk National Airport", "iata": "MSQ", "country": "BY"},
+            {"city": "Montevideo", "airport": "Carrasco International Airport", "iata": "MVD", "country": "UY"},
+            {"city": "Riga", "airport": "Riga International Airport", "iata": "RIX", "country": "LV"},
+            {"city": "Skopje", "airport": "Skopje Alexander the Great Airport", "iata": "SKP", "country": "MK"},
+            {"city": "Sofia", "airport": "Sofia Airport", "iata": "SOF", "country": "BG"},
+            {"city": "Tallinn", "airport": "Lennart Meri Tallinn Airport", "iata": "TLL", "country": "EE"},
+            {"city": "Tbilisi", "airport": "Shota Rustaveli Tbilisi International Airport", "iata": "TBS", "country": "GE"},
+            {"city": "Tunis", "airport": "Tunis-Carthage International Airport", "iata": "TUN", "country": "TN"},
+            {"city": "Vilnius", "airport": "Vilnius Airport", "iata": "VNO", "country": "LT"},
+            {"city": "Yerevan", "airport": "Zvartnots International Airport", "iata": "EVN", "country": "AM"},
+            {"city": "Zagreb", "airport": "Franjo Tuđman Airport", "iata": "ZAG", "country": "HR"}
         ]
         
         # City code mappings for multi-airport cities
