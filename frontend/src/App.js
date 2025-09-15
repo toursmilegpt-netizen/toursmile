@@ -2821,6 +2821,7 @@ function App() {
               compact={true}
             />
           </div>
+          </div>
         </div>
       </div>
       </>
