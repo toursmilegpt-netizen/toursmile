@@ -797,7 +797,7 @@ async def search_airports(query: str, limit: int = 10):
             "dxb": "Dubai", "dubai": "Dubai",
             "bjs": "Beijing", "beijing": "Beijing",
             "sha": "Shanghai", "shanghai": "Shanghai",
-            "ist": "Istanbul", "istanbul": "Istanbul",
+            "istanbul": "Istanbul",
             "yto": "Toronto", "toronto": "Toronto",
         }
         
