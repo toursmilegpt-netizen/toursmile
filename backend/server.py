@@ -719,13 +719,25 @@ async def search_airports(query: str, limit: int = 10):
             {"city": "Almaty", "airport": "Almaty International Airport", "iata": "ALA", "country": "KZ"},
             {"city": "Tashkent", "airport": "Islam Karimov Tashkent International Airport", "iata": "TAS", "country": "UZ"},
             
-            # USER REQUESTED MISSING AIRPORTS
+            # USER REQUESTED MISSING AIRPORTS - CRITICAL BUG FIXES
             {"city": "Islamabad", "airport": "Islamabad International Airport", "iata": "ISB", "country": "PK"},
             {"city": "Karachi", "airport": "Jinnah International Airport", "iata": "KHI", "country": "PK"},
             {"city": "Lahore", "airport": "Allama Iqbal International Airport", "iata": "LHE", "country": "PK"},
             {"city": "Sharm El Sheikh", "airport": "Sharm El Sheikh International Airport", "iata": "SSH", "country": "EG"},
             {"city": "Ulaanbaatar", "airport": "Chinggis Khaan International Airport", "iata": "ULN", "country": "MN"},
             {"city": "Guilin", "airport": "Guilin Liangjiang International Airport", "iata": "KWL", "country": "CN"},
+            
+            # CRITICAL BUG FIX: MISSING BRATISLAVA AND OTHER IATA AIRPORTS
+            {"city": "Bratislava", "airport": "M. R. Štefánik Airport", "iata": "BTS", "country": "SK"},
+            {"city": "Luxembourg", "airport": "Luxembourg Airport", "iata": "LUX", "country": "LU"},
+            {"city": "Malta", "airport": "Malta International Airport", "iata": "MLA", "country": "MT"},
+            {"city": "Reykjavik", "airport": "Keflavík International Airport", "iata": "KEF", "country": "IS"},
+            {"city": "Dublin", "airport": "Dublin Airport", "iata": "DUB", "country": "IE"},
+            {"city": "Nice", "airport": "Nice Côte d'Azur Airport", "iata": "NCE", "country": "FR"},
+            {"city": "Venice", "airport": "Venice Marco Polo Airport", "iata": "VCE", "country": "IT"},
+            {"city": "Florence", "airport": "Florence Airport", "iata": "FLR", "country": "IT"},
+            {"city": "Naples", "airport": "Naples International Airport", "iata": "NAP", "country": "IT"},
+            {"city": "Palermo", "airport": "Falcone-Borsellino Airport", "iata": "PMO", "country": "IT"},
             
             # ADDITIONAL MAJOR DESTINATIONS WORLDWIDE
             {"city": "Abuja", "airport": "Nnamdi Azikiwe International Airport", "iata": "ABV", "country": "NG"},
