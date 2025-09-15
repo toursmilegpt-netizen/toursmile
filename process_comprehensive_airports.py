@@ -157,10 +157,11 @@ def generate_frontend_js(airports):
         js_entry = f'  {{ city: "{city}", iata: "{airport["iata"]}", airport: "{airport_name}", country: "{airport["country"]}", countryName: "{country_name}" }}'
         js_entries.append(js_entry)
     
+    entries_joined = ',\n'.join(js_entries)
     js_content = f"""const COMPREHENSIVE_GLOBAL_AIRPORTS_DATABASE = [
   // 🌍 COMPREHENSIVE IATA AIRPORT DATABASE - {len(airports)} AIRPORTS FOR 100% OTA COVERAGE
   // This database includes ALL IATA airports worldwide ensuring professional OTA functionality
-{',\\n'.join(js_entries)}
+{entries_joined}
 ];"""
     
     return js_content
