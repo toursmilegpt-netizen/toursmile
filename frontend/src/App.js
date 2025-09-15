@@ -1953,29 +1953,15 @@ function App() {
 
   const openFromOverlay = () => {
     setShowFromOverlay(true);
-    // Initialize with popular airports
-    const popularResults = GLOBAL_AIRPORTS_DATABASE
-      .filter(airport => ['BOM', 'DEL', 'BLR', 'HYD', 'MAA', 'CCU', 'PNQ', 'AMD', 'DXB', 'SIN'].includes(airport.iata))
-      .map(airport => ({
-        ...airport,
-        displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`,
-        matchScore: 0
-      }));
-    setOverlayResults(popularResults);
+    // Start with empty results - user must type to search
+    setOverlayResults([]);
     setOverlayQuery('');
   };
 
   const openToOverlay = () => {
     setShowToOverlay(true);
-    // Initialize with popular airports
-    const popularResults = GLOBAL_AIRPORTS_DATABASE
-      .filter(airport => ['BOM', 'DEL', 'BLR', 'HYD', 'MAA', 'CCU', 'PNQ', 'AMD', 'DXB', 'SIN'].includes(airport.iata))
-      .map(airport => ({
-        ...airport,
-        displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`,
-        matchScore: 0
-      }));
-    setOverlayResults(popularResults);
+    // Start with empty results - user must type to search  
+    setOverlayResults([]);
     setOverlayQuery('');
   };
 
