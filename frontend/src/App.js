@@ -365,11 +365,11 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
         // Search via API if no local matches, fallback to comprehensive database
         searchAirports(debouncedQuery);
       }
-    } else if (open && !debouncedQuery) {
+    } else if (open && (!debouncedQuery || debouncedQuery.length === 0)) {
       // Show popular destinations when dropdown is open but no query
       console.log('Showing popular airports because debouncedQuery is empty');
       setSuggestions(popularAirports);
-    } else if (!debouncedQuery) {
+    } else if (!debouncedQuery || debouncedQuery.length === 0) {
       console.log('Clearing suggestions because debouncedQuery is empty');
       setSuggestions([]);
       setOpen(false);
