@@ -2515,19 +2515,21 @@ function App() {
     
     {/* OVERLAYS - App Level for Full-Screen Display */}
     
-    {/* City Selection Overlay - Ixigo Style */}
+    {/* City Selection Overlay - Smart Desktop/Mobile Behavior */}
     {(showFromOverlay || showToOverlay) && (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'white',
-        zIndex: 9999,
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
+      <>
+        {/* Backdrop - semi-transparent on desktop, hidden on mobile */}
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden md:block"
+          onClick={() => {
+            setShowFromOverlay(false);
+            setShowToOverlay(false);
+          }}
+        />
+        
+        {/* Overlay Container - Responsive Design */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6">
+          <div className="w-full h-full md:w-[28rem] md:h-[32rem] bg-white md:rounded-2xl md:shadow-2xl flex flex-col md:max-h-[80vh]">
         {/* Header */}
         <div style={{
           padding: '16px',
