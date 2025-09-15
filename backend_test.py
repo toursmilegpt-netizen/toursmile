@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 import time
 
 # Configuration
-BACKEND_URL = "https://flightsearch-ui.preview.emergentagent.com/api"
+BACKEND_URL = "https://travel-search-app.preview.emergentagent.com/api"
 TEST_TIMEOUT = 30
 
 class Colors:
