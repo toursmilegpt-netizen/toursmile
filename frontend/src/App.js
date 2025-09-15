@@ -1829,37 +1829,58 @@ function App() {
     return cityCodeMap[cityName] || cityName.substring(0, 3).toUpperCase();
   };
 
-  // Calculate match score for relevance ranking
+  // Calculate match score for relevance ranking - FIXED
   const calculateMatchScore = (airport, searchTerm) => {
     let score = 0;
     
-    // Exact IATA code match (highest priority)
-    if (airport.iata.toLowerCase() === searchTerm) {
-      score += 100;
-    } else if (airport.iata.toLowerCase().startsWith(searchTerm)) {
-      score += 80;
+    const airportIata = airport.iata.toLowerCase();
+    const airportCity = airport.city.toLowerCase();
+    const airportName = airport.airport.toLowerCase();
+    const countryName = (airport.countryName || '').toLowerCase();
+    const term = searchTerm.toLowerCase();
+    
+    // EXACT IATA CODE MATCH (HIGHEST PRIORITY - 1000 points)
+    if (airportIata === term) {
+      return 1000;
     }
     
-    // City name matches
-    if (airport.city.toLowerCase() === searchTerm) {
-      score += 90;
-    } else if (airport.city.toLowerCase().startsWith(searchTerm)) {
-      score += 70;
-    } else if (airport.city.toLowerCase().includes(searchTerm)) {
-      score += 50;
+    // IATA CODE STARTS WITH SEARCH TERM (900 points)
+    if (airportIata.startsWith(term)) {
+      return 900;
     }
     
-    // Airport name matches
-    if (airport.airport.toLowerCase().includes(searchTerm)) {
-      score += 30;
+    // EXACT CITY NAME MATCH (800 points)  
+    if (airportCity === term) {
+      return 800;
     }
     
-    // Country name matches
-    if (airport.countryName && airport.countryName.toLowerCase().includes(searchTerm)) {
-      score += 20;
+    // CITY NAME STARTS WITH SEARCH TERM (700 points)
+    if (airportCity.startsWith(term)) {
+      return 700;
     }
     
-    return score;
+    // AIRPORT NAME STARTS WITH SEARCH TERM (600 points)
+    if (airportName.startsWith(term)) {
+      return 600;
+    }
+    
+    // CITY NAME CONTAINS SEARCH TERM (500 points)
+    if (airportCity.includes(term)) {
+      return 500;
+    }
+    
+    // AIRPORT NAME CONTAINS SEARCH TERM (400 points)
+    if (airportName.includes(term)) {
+      return 400;
+    }
+    
+    // COUNTRY NAME CONTAINS SEARCH TERM (300 points)
+    if (countryName.includes(term)) {
+      return 300;
+    }
+    
+    // NO MATCH - Return 0 (will be filtered out)
+    return 0;
   };
 
   // Highlight matching text in results
