@@ -595,7 +595,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     if (e.key === 'Enter') {
       e.preventDefault();
       if (suggestions.length > 0) {
-        handleCitySelect(suggestions[0]);
+        handleAirportSelect(suggestions[0]);
       } else if (onNext) {
         onNext();
       }
