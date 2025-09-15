@@ -1636,9 +1636,10 @@ function App() {
                 />
               </div>
               <div className="flex items-center space-x-3">
-                <button className="px-4 py-2 rounded-full border border-neutral-300 text-black text-sm font-medium hover:bg-neutral-50 hover:border-neutral-400 transition-colors">
-                  24×7 Support
-                </button>
+                <a href="https://wa.me/+918447738229" target="_blank" rel="noopener noreferrer" className="flex items-center px-4 py-2 rounded-full border border-neutral-300 text-black text-sm font-medium hover:bg-green-50 hover:border-green-400 transition-colors">
+                  <span className="mr-2">📱</span>
+                  WhatsApp
+                </a>
                 <button className="px-4 py-2 rounded-full border border-neutral-300 text-black text-sm font-medium hover:bg-neutral-50 hover:border-neutral-400 transition-colors">
                   Sign In
                 </button>
