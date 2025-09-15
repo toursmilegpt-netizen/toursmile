@@ -439,126 +439,205 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
   
   return (
     <div ref={containerRef} className="relative" style={{ minWidth: 0, maxWidth: '100%', position: 'relative' }}>
-      {/* Integrated Design - Label inside the container */}
-      {integrated ? (
-        <div 
-          className="integrated-city-input"
-          style={{ 
-            padding: '12px 16px',
-            height: '100%',
-            minHeight: '64px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            cursor: 'text',
-            position: 'relative'
-          }}
-          onClick={handleInputClick}
-        >
-          <label className="block text-[10px] font-medium text-neutral-500 mb-1 uppercase tracking-wide">{label}</label>
-          <div className="flex items-center" style={{ minWidth: 0, maxWidth: '100%' }}>
-            <span className="h-3 w-3 text-neutral-400 mr-2 flex-shrink-0 text-xs">✈️</span>
-            <input
-              ref={inputRef}
-              value={displayValue}
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-              onClick={handleInputClick}
-              onKeyPress={handleKeyPress}
-              placeholder="Type city or code"
-              className="outline-none bg-transparent text-sm flex-1 border-none focus:outline-none focus:ring-0 focus:border-none"
-              style={{ 
-                boxShadow: 'none !important',
-                outline: 'none !important',
-                border: 'none !important',
-                minWidth: 0,
-                maxWidth: '100%',
-                width: '100%',
-                fontSize: '15px',
-                fontWeight: '500',
-                color: value ? '#111827' : '#9ca3af'
-              }}
-            />
-            {value && value.iata && (
-              <span className="text-[10px] text-neutral-500 font-mono uppercase ml-2 flex-shrink-0 bg-neutral-100 px-1.5 py-0.5 rounded">
-                {value.iata}
-              </span>
-            )}
-            {(query || value) && (
-              <button
-                onClick={(e) => { 
-                  e.stopPropagation();
-                  setQuery(""); 
-                  onChange(null); 
-                  setOpen(false); 
-                  setSuggestions([]);
-                  setTimeout(() => {
-                    if (inputRef.current) {
-                      inputRef.current.focus();
-                    }
-                  }, 100);
-                }}
-                className="ml-2 text-neutral-400 hover:text-neutral-600 flex-shrink-0 text-xs"
-                style={{ padding: '2px' }}
-              >
-                ✕
-              </button>
-            )}
-          </div>
+      {/* Overlay Mode - Full search bar */}
+      {overlay ? (
+        <div style={{ position: 'relative' }}>
+          <input
+            ref={inputRef}
+            value={displayValue}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onKeyPress={handleKeyPress}
+            placeholder="Type city name or airport code"
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              fontSize: '16px',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
+              outline: 'none',
+              background: '#f9fafb'
+            }}
+            autoFocus={autoFocus}
+          />
+          
+          {/* Overlay Dropdown */}
+          {open && suggestions.length > 0 && (
+            <div style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              right: 0,
+              background: 'white',
+              border: '1px solid #e5e7eb',
+              borderRadius: '8px',
+              marginTop: '4px',
+              maxHeight: '300px',
+              overflowY: 'auto',
+              zIndex: 1000,
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+            }}>
+              {suggestions.map((suggestion, index) => (
+                <div
+                  key={suggestion.iata || suggestion.city}
+                  onClick={() => handleCitySelect(suggestion)}
+                  style={{
+                    padding: '12px 16px',
+                    borderBottom: index < suggestions.length - 1 ? '1px solid #f3f4f6' : 'none',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.15s ease'
+                  }}
+                  className="overlay-suggestion-hover"
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div style={{ fontSize: '16px', fontWeight: '500', color: '#111827' }}>
+                        {suggestion.city}
+                      </div>
+                      <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                        {suggestion.airport}
+                      </div>
+                    </div>
+                    <div style={{ 
+                      fontSize: '14px', 
+                      fontWeight: '600', 
+                      color: '#6b7280',
+                      fontFamily: 'monospace'
+                    }}>
+                      {suggestion.iata}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ) : (
-        // Original Design - Keep for backward compatibility
+        // Original integrated/standalone modes
         <>
-          <label className="block text-xs font-medium text-neutral-600 mb-1">{label}</label>
-          <div 
-            className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors focus-within:border-neutral-400 cursor-text"
-            style={{ minWidth: 0, maxWidth: '100%', width: '100%', position: 'relative' }}
-            onClick={handleInputClick}
-          >
-            <span className="h-4 w-4 text-neutral-500 mr-2 flex-shrink-0">✈️</span>
-            <input
-              ref={inputRef}
-              value={displayValue}
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-              onClick={handleInputClick}
-              onKeyPress={handleKeyPress}
-              placeholder="Type city or code"
-              className="outline-none bg-transparent text-sm flex-1 border-none focus:outline-none focus:ring-0 focus:border-none"
+          {/* Integrated Design - Label inside the container */}
+          {integrated ? (
+            <div 
+              className="integrated-city-input"
               style={{ 
-                boxShadow: 'none !important',
-                outline: 'none !important',
-                border: 'none !important',
-                minWidth: 0,
-                maxWidth: '100%',
-                width: '100%',
-                fontSize: '16px'
+                padding: '12px 16px',
+                height: '100%',
+                minHeight: '64px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                cursor: 'text',
+                position: 'relative'
               }}
-            />
-            {value && value.iata && (
-              <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2 flex-shrink-0">{value.iata}</span>
-            )}
-            {(query || value) && (
-              <button
-                onClick={() => { 
-                  setQuery(""); 
-                  onChange(null); 
-                  setOpen(false); 
-                  setSuggestions([]);
-                  setTimeout(() => {
-                    if (inputRef.current) {
-                      inputRef.current.focus();
-                    }
-                  }, 100);
-                }}
-                className="ml-1 text-neutral-400 hover:text-neutral-600 flex-shrink-0"
+              onClick={handleInputClick}
+            >
+              <label className="block text-[10px] font-medium text-neutral-500 mb-1 uppercase tracking-wide">{label}</label>
+              <div className="flex items-center" style={{ minWidth: 0, maxWidth: '100%' }}>
+                <span className="h-3 w-3 text-neutral-400 mr-2 flex-shrink-0 text-xs">✈️</span>
+                <input
+                  ref={inputRef}
+                  value={displayValue}
+                  onChange={handleInputChange}
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+                  onClick={handleInputClick}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Type city or code"
+                  className="outline-none bg-transparent text-sm flex-1 border-none focus:outline-none focus:ring-0 focus:border-none"
+                  style={{ 
+                    boxShadow: 'none !important',
+                    outline: 'none !important',
+                    border: 'none !important',
+                    minWidth: 0,
+                    maxWidth: '100%',
+                    width: '100%',
+                    fontSize: '15px',
+                    fontWeight: '500',
+                    color: value ? '#111827' : '#9ca3af'
+                  }}
+                />
+                {value && value.iata && (
+                  <span className="text-[10px] text-neutral-500 font-mono uppercase ml-2 flex-shrink-0 bg-neutral-100 px-1.5 py-0.5 rounded">
+                    {value.iata}
+                  </span>
+                )}
+                {(query || value) && (
+                  <button
+                    onClick={(e) => { 
+                      e.stopPropagation();
+                      setQuery(""); 
+                      onChange(null); 
+                      setOpen(false); 
+                      setSuggestions([]);
+                      setTimeout(() => {
+                        if (inputRef.current) {
+                          inputRef.current.focus();
+                        }
+                      }, 100);
+                    }}
+                    className="ml-2 text-neutral-400 hover:text-neutral-600 flex-shrink-0 text-xs"
+                    style={{ padding: '2px' }}
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            </div>
+          ) : (
+            // Original Design - Keep for backward compatibility
+            <>
+              <label className="block text-xs font-medium text-neutral-600 mb-1">{label}</label>
+              <div 
+                className="h-12 rounded-xl border border-neutral-300 flex items-center px-3 hover:border-neutral-400 transition-colors focus-within:border-neutral-400 cursor-text"
+                style={{ minWidth: 0, maxWidth: '100%', width: '100%', position: 'relative' }}
+                onClick={handleInputClick}
               >
-                ✕
-              </button>
-            )}
-          </div>
+                <span className="h-4 w-4 text-neutral-500 mr-2 flex-shrink-0">✈️</span>
+                <input
+                  ref={inputRef}
+                  value={displayValue}
+                  onChange={handleInputChange}
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+                  onClick={handleInputClick}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Type city or code"
+                  className="outline-none bg-transparent text-sm flex-1 border-none focus:outline-none focus:ring-0 focus:border-none"
+                  style={{ 
+                    boxShadow: 'none !important',
+                    outline: 'none !important',
+                    border: 'none !important',
+                    minWidth: 0,
+                    maxWidth: '100%',
+                    width: '100%',
+                    fontSize: '16px'
+                  }}
+                />
+                {value && value.iata && (
+                  <span className="text-[11px] text-neutral-500 font-mono uppercase ml-2 flex-shrink-0">{value.iata}</span>
+                )}
+                {(query || value) && (
+                  <button
+                    onClick={() => { 
+                      setQuery(""); 
+                      onChange(null); 
+                      setOpen(false); 
+                      setSuggestions([]);
+                      setTimeout(() => {
+                        if (inputRef.current) {
+                          inputRef.current.focus();
+                        }
+                      }, 100);
+                    }}
+                    className="ml-1 text-neutral-400 hover:text-neutral-600 flex-shrink-0"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            </>
+          )}
         </>
       )}
       
