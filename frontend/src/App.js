@@ -1975,32 +1975,34 @@ function App() {
         </div>
 
         {/* Compact Calendar */}
-        <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
-          <SimpleDatePicker 
-            label="Departure Date" 
-            value={depart} 
-            onChange={(date) => {
-              setDepart(date);
-              if (trip !== 'RT') {
-                setShowDateOverlay(false);
-              }
-            }}
-            overlay={true}
-          />
-          {trip === 'RT' && (
-            <div style={{ marginTop: '16px' }}>
-              <SimpleDatePicker 
-                label="Return Date" 
-                value={ret} 
-                onChange={(date) => {
-                  setRet(date);
+        <div style={{ flex: 1, padding: '12px', overflowY: 'auto' }}>
+          <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+            <SimpleDatePicker 
+              label="Departure Date" 
+              value={depart} 
+              onChange={(date) => {
+                setDepart(date);
+                if (trip !== 'RT') {
                   setShowDateOverlay(false);
-                }}
-                minDate={depart}
-                overlay={true}
-              />
-            </div>
-          )}
+                }
+              }}
+              overlay={true}
+            />
+            {trip === 'RT' && (
+              <div style={{ marginTop: '12px' }}>
+                <SimpleDatePicker 
+                  label="Return Date" 
+                  value={ret} 
+                  onChange={(date) => {
+                    setRet(date);
+                    setShowDateOverlay(false);
+                  }}
+                  minDate={depart}
+                  overlay={true}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     )}
