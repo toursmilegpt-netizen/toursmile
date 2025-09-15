@@ -648,7 +648,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
               {suggestions.map((suggestion, index) => (
                 <div
                   key={suggestion.iata || suggestion.city}
-                  onClick={() => handleCitySelect(suggestion)}
+                  onClick={() => handleAirportSelect(suggestion)}
                   style={{
                     padding: '12px 16px',
                     borderBottom: index < suggestions.length - 1 ? '1px solid #f3f4f6' : 'none',
