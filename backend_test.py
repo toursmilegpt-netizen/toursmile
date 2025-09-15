@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 """
-Backend Testing After UI/UX Improvements
-========================================
+Enhanced Airport Search Functionality Backend Testing
+====================================================
 
-Testing backend functionality after UI/UX improvements made to the TourSmile flight search page.
-Ensures all backend services remain functional and responsive after frontend changes.
+Testing comprehensive global airport database and "All Airports" functionality
+as requested in the review. Specifically testing:
 
-Test Focus (as per review request):
-1. Backend service health check
-2. Airport search API with various queries (Mumbai, Delhi, BOM, DEL, partial matches)
-3. Flight search functionality (end-to-end Mumbai to Delhi with date and passenger selection)
-4. API responsiveness verification
+1. Enhanced Airport Search API (/api/airports/search)
+2. Comprehensive Airport Database (150+ worldwide airports)
+3. Multi-Airport City Support (New York: JFK/LGA/EWR, London: LHR/LGW/STN/LTN/LCY, Paris: CDG/ORY)
+4. Backend Search Performance and Error Handling
+5. City codes like "LON", "NYC", "PAR"
 
-Expected: All backend functionality should work perfectly as changes were purely frontend UI/UX.
+Expected: All international destinations should be searchable, multi-airport cities should return all airports.
 """
 
 import requests
 import json
+import time
 import sys
 import os
 from datetime import datetime, timedelta
@@ -31,7 +32,7 @@ BACKEND_URL = os.getenv('REACT_APP_BACKEND_URL', 'http://localhost:8001')
 API_BASE_URL = f"{BACKEND_URL}/api"
 TEST_TIMEOUT = 15
 
-class BackendTester:
+class EnhancedAirportSearchTester:
     def __init__(self):
         self.test_results = []
         self.total_tests = 0
