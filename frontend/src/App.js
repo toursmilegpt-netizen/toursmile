@@ -326,7 +326,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
         return a.city.localeCompare(b.city);
       })
       .slice(0, 10);
-  }, []);
+  }, [getCityCode]);
 
   // Enhanced search logic with "All Airports" support
   useEffect(() => {
