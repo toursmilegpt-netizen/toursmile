@@ -874,8 +874,8 @@ function PaxOverlay({ value, onChange, onClose }) {
 // Search Card Component with Auto-focus Guidance
 function SearchCard({ onSearch }) {
   const [trip, setTrip] = useState("OW"); // Default to One Way
-  const [from, setFrom] = useState(null);
-  const [to, setTo] = useState(null);
+  const [from, setFrom] = useState({ city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' }); // Pre-filled Mumbai
+  const [to, setTo] = useState({ city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' }); // Pre-filled Delhi
   const [depart, setDepart] = useState(null);
   const [ret, setRet] = useState(null);
   const [openPax, setOpenPax] = useState(false);
@@ -884,6 +884,12 @@ function SearchCard({ onSearch }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentStep, setCurrentStep] = useState(0); // 0: from, 1: to, 2: date, 3: passenger, 4: search
+  
+  // Overlay states
+  const [showFromOverlay, setShowFromOverlay] = useState(false);
+  const [showToOverlay, setShowToOverlay] = useState(false);
+  const [showDateOverlay, setShowDateOverlay] = useState(false);
+  const [showPassengerOverlay, setShowPassengerOverlay] = useState(false);
 
   // Backend base URL from environment
   const backendBase = process.env.REACT_APP_BACKEND_URL;
