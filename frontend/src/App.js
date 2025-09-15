@@ -473,11 +473,9 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     } catch (error) {
       if (error.name !== 'AbortError') {
         console.error('Airport search error:', error);
-        // Fallback to comprehensive airport database search
-        const fallbackMatches = POPULAR_AIRPORTS.filter(airport => 
-          (airport.city + " " + airport.iata + " " + airport.airport).toLowerCase().includes(searchQuery.toLowerCase())
-        ).slice(0, 8);
-        setSuggestions(fallbackMatches);
+        // Fallback to enhanced airport database search
+        const enhancedFallback = createEnhancedSuggestions(searchQuery);
+        setSuggestions(enhancedFallback);
         setOpen(true);
       }
     } finally {
