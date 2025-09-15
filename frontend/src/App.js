@@ -1183,7 +1183,7 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
           ))}
         </div>
 
-        {/* Compact From/To Container - Ixigo Style */}
+        {/* Compact From/To Container - No Gridlines */}
         <div className="mt-3 compact-flight-container" style={{ 
           position: 'relative',
           background: 'white',
@@ -1234,15 +1234,15 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
             </div>
           </div>
           
-          {/* Swap Button - Center */}
+          {/* Swap Button - Enhanced Icon Design */}
           <div style={{
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '40px',
-            minWidth: '40px',
-            maxWidth: '40px',
+            width: '44px',
+            minWidth: '44px',
+            maxWidth: '44px',
             background: 'white'
           }}>
             <button
@@ -1255,31 +1255,36 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
                 setFrom(tempTo); 
                 setTo(tempFrom);
               }}
-              className="swap-button-compact"
+              className="swap-button-enhanced"
               style={{ 
-                height: '24px',
-                width: '24px',
-                borderRadius: '4px',
-                border: 'none',
-                background: 'transparent',
+                height: '32px',
+                width: '32px',
+                borderRadius: '8px',
+                border: '1px solid #e5e7eb',
+                background: 'white',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '14px',
-                color: '#6b7280',
+                fontSize: '16px',
+                color: '#374151',
                 cursor: 'pointer',
-                transition: 'all 0.15s ease'
+                transition: 'all 0.15s ease',
+                boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)'
               }}
               onMouseOver={(e) => {
-                e.target.style.background = '#f9fafb';
-                e.target.style.color = '#374151';
+                e.target.style.background = '#f3f4f6';
+                e.target.style.color = '#111827';
+                e.target.style.transform = 'scale(1.05)';
+                e.target.style.borderColor = '#9ca3af';
               }}
               onMouseOut={(e) => {
-                e.target.style.background = 'transparent';
-                e.target.style.color = '#6b7280';
+                e.target.style.background = 'white';
+                e.target.style.color = '#374151';
+                e.target.style.transform = 'scale(1)';
+                e.target.style.borderColor = '#e5e7eb';
               }}
             >
-              ⇄
+              🔄
             </button>
           </div>
           
@@ -1290,8 +1295,7 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
               minWidth: 0, 
               maxWidth: '100%', 
               position: 'relative',
-              cursor: 'pointer',
-              borderLeft: '1px solid #f3f4f6'
+              cursor: 'pointer'
             }}
             onClick={(e) => {
               e.preventDefault();
