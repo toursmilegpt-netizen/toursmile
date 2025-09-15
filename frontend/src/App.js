@@ -1777,7 +1777,7 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
 // Footer Component  
 function Footer() {
   return (
-    <footer className="mt-16 border-t border-neutral-200 pt-8">
+    <footer className="mt-16 border-t border-neutral-200 pt-8 bg-gradient-to-b from-transparent to-blue-50/20">
       <div className="mx-auto max-w-5xl px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
         <div>
           <div className="font-semibold mb-2 text-black">About</div>
