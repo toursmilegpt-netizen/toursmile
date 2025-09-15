@@ -405,3 +405,14 @@ html {
     overflow: hidden !important;
   }
 }
+
+/* Overlay Suggestion Hover Effect */
+.overlay-suggestion-hover:hover {
+  background-color: #f9fafb !important;
+}
+
+/* City Option Hover Effect */
+.city-option-hover:hover {
+  background-color: #f9fafb !important;
+  border-color: #d1d5db !important;
+}
