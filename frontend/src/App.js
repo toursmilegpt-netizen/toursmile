@@ -2132,7 +2132,7 @@ function App() {
             {/* Service Icons Section */}
             <section className="text-center pb-4">
               {/* Service Icons - Enhanced with depth and floating elements */}
-              <div className="flex justify-center items-center space-x-8 md:space-x-12 bg-white/50 rounded-xl py-6 px-8 relative overflow-hidden group">
+              <div className="flex justify-center items-center space-x-8 md:space-x-12 bg-white/50 rounded-xl py-4 px-6 relative overflow-hidden group">
                 {/* Floating decorative elements */}
                 <div className="absolute top-2 left-8 w-3 h-3 bg-blue-200/40 rounded-full animate-pulse"></div>
                 <div className="absolute bottom-2 right-12 w-2 h-2 bg-orange-200/50 rounded-full animate-pulse delay-1000"></div>
