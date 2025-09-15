@@ -902,6 +902,14 @@ function SearchCard({ onSearch }) {
   // Backend base URL from environment
   const backendBase = process.env.REACT_APP_BACKEND_URL;
 
+  // Simple date formatter for compact display
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    const options = { day: 'numeric', month: 'short' };
+    return date.toLocaleDateString('en-US', options);
+  };
+
   // Auto-focus progression handlers
   const handleFromComplete = () => {
     setCurrentStep(1); // Move to "To" field
