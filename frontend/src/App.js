@@ -803,8 +803,8 @@ const calculateMatchScore = (airport, searchTerm) => {
     return 600;
   }
   
-  // CITY NAME CONTAINS SEARCH TERM (500 points)
-  if (airportCity.includes(term)) {
+  // CITY NAME CONTAINS SEARCH TERM - including city code mapping (500 points)
+  if (airportCity.includes(mappedTerm)) {
     return 500;
   }
   
