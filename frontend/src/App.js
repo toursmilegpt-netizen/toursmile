@@ -2199,9 +2199,10 @@ function App() {
                     {/* Subtle background animation */}
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent to-white/20 group-hover:from-white/10 group-hover:to-transparent transition-all duration-500"></div>
                     <div className="relative z-10">
-                    <div className="text-3xl mb-2">{item.icon}</div>
-                    <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
-                    <p className="text-xs text-neutral-600">{item.desc}</p>
+                    <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
+                    <h3 className="font-semibold text-sm mb-2 text-gray-800">{item.title}</h3>
+                    <p className="text-xs text-neutral-600 leading-relaxed">{item.desc}</p>
+                    </div> {/* Close relative z-10 */}
                   </div>
                 ))}
               </div>
