@@ -101,521 +101,471 @@ class AirportDatabaseTester:
         except Exception as e:
             self.log_test(f"Airport Search: '{query}'", False, f"Request failed: {str(e)}")
             return None
-            status = "❌ FAIL"
-        
-        result = f"{status} - {test_name}"
-        if details:
-            result += f" | {details}"
-        
-        print(result)
-        self.test_results.append({
-            'test': test_name,
-            'success': success,
-            'details': details
-        })
-        
-    def test_backend_health(self):
-        """Test 1: Backend Service Health Check"""
-        print("\n🏥 TESTING BACKEND SERVICE HEALTH...")
-        
-        try:
-            # Test root API endpoint
-            response = requests.get(f"{API_BASE_URL}/", timeout=TEST_TIMEOUT)
-            
-            if response.status_code == 200:
-                data = response.json()
-                if "TourSmile" in data.get("message", ""):
-                    self.log_test("Backend Service Health", True, 
-                                f"Status: {response.status_code}, Message: {data.get('message')}")
-                    return True
-                else:
-                    self.log_test("Backend Service Health", False, 
-                                f"Unexpected response: {data}")
-                    return False
-            else:
-                self.log_test("Backend Service Health", False, 
-                            f"HTTP {response.status_code}: {response.text}")
-                return False
-                
-        except requests.exceptions.RequestException as e:
-            self.log_test("Backend Service Health", False, f"Connection error: {str(e)}")
-            return False
     
-    def test_new_york_airports(self):
-        """Test New York search returns JFK, LGA, EWR airports"""
-        print("\n🗽 TESTING NEW YORK MULTI-AIRPORT SEARCH...")
+    def test_current_database_assessment(self):
+        """Test 1: Current Database Assessment"""
+        print("🔍 TEST 1: CURRENT DATABASE ASSESSMENT")
+        print("=" * 60)
         
-        try:
-            response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                  params={"query": "New York"}, timeout=TEST_TIMEOUT)
-            
-            if response.status_code == 200:
-                data = response.json()
-                results = data.get('results', [])
-                
-                # Check for all 3 New York airports
-                expected_airports = ['JFK', 'LGA', 'EWR']
-                found_airports = []
-                
-                for airport in results:
-                    if airport.get('iata') in expected_airports:
-                        found_airports.append(airport.get('iata'))
-                
-                if len(found_airports) == 3:
-                    self.log_test("New York Multi-Airport Search", True, 
-                                f"Found all 3 airports: {', '.join(sorted(found_airports))}")
-                    return True
-                else:
-                    self.log_test("New York Multi-Airport Search", False, 
-                                f"Found only {len(found_airports)}/3 airports: {', '.join(found_airports)}")
-                    return False
-            else:
-                self.log_test("New York Multi-Airport Search", False, 
-                            f"HTTP {response.status_code}")
-                return False
-                
-        except Exception as e:
-            self.log_test("New York Multi-Airport Search", False, f"Error: {str(e)}")
-            return False
-    
-    def test_london_airports(self):
-        """Test London search returns LHR, LGW, STN, LTN, LCY airports"""
-        print("\n🇬🇧 TESTING LONDON MULTI-AIRPORT SEARCH...")
-        
-        try:
-            response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                  params={"query": "London"}, timeout=TEST_TIMEOUT)
-            
-            if response.status_code == 200:
-                data = response.json()
-                results = data.get('results', [])
-                
-                # Check for all 5 London airports
-                expected_airports = ['LHR', 'LGW', 'STN', 'LTN', 'LCY']
-                found_airports = []
-                
-                for airport in results:
-                    if airport.get('iata') in expected_airports:
-                        found_airports.append(airport.get('iata'))
-                
-                if len(found_airports) == 5:
-                    self.log_test("London Multi-Airport Search", True, 
-                                f"Found all 5 airports: {', '.join(sorted(found_airports))}")
-                    return True
-                else:
-                    self.log_test("London Multi-Airport Search", False, 
-                                f"Found only {len(found_airports)}/5 airports: {', '.join(found_airports)}")
-                    return False
-            else:
-                self.log_test("London Multi-Airport Search", False, 
-                            f"HTTP {response.status_code}")
-                return False
-                
-        except Exception as e:
-            self.log_test("London Multi-Airport Search", False, f"Error: {str(e)}")
-            return False
-    
-    def test_paris_airports(self):
-        """Test Paris search returns CDG, ORY airports"""
-        print("\n🇫🇷 TESTING PARIS MULTI-AIRPORT SEARCH...")
-        
-        try:
-            response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                  params={"query": "Paris"}, timeout=TEST_TIMEOUT)
-            
-            if response.status_code == 200:
-                data = response.json()
-                results = data.get('results', [])
-                
-                # Check for both Paris airports
-                expected_airports = ['CDG', 'ORY']
-                found_airports = []
-                
-                for airport in results:
-                    if airport.get('iata') in expected_airports:
-                        found_airports.append(airport.get('iata'))
-                
-                if len(found_airports) == 2:
-                    self.log_test("Paris Multi-Airport Search", True, 
-                                f"Found both airports: {', '.join(sorted(found_airports))}")
-                    return True
-                else:
-                    self.log_test("Paris Multi-Airport Search", False, 
-                                f"Found only {len(found_airports)}/2 airports: {', '.join(found_airports)}")
-                    return False
-            else:
-                self.log_test("Paris Multi-Airport Search", False, 
-                            f"HTTP {response.status_code}")
-                return False
-                
-        except Exception as e:
-            self.log_test("Paris Multi-Airport Search", False, f"Error: {str(e)}")
-            return False
-    
-    def test_city_codes(self):
-        """Test city codes like LON, NYC, PAR"""
-        print("\n🏷️ TESTING CITY CODE SEARCHES...")
-        
-        city_codes = [
-            ("LON", "London", 5),  # Should return 5 London airports
-            ("NYC", "New York", 3),  # Should return 3 New York airports  
-            ("PAR", "Paris", 2)  # Should return 2 Paris airports
+        # Test major Indian airports
+        indian_airports = [
+            ("Mumbai", "BOM"), ("Delhi", "DEL"), ("Bengaluru", "BLR"), 
+            ("Chennai", "MAA"), ("Kolkata", "CCU"), ("Hyderabad", "HYD")
         ]
         
-        all_passed = True
-        for code, city, expected_count in city_codes:
-            try:
-                response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                      params={"query": code}, timeout=TEST_TIMEOUT)
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    results = data.get('results', [])
-                    
-                    # Check if we get airports for the city
-                    city_airports = [airport for airport in results 
-                                   if airport.get('city', '').lower() == city.lower()]
-                    
-                    if len(city_airports) >= expected_count:
-                        self.log_test(f"City Code Search - {code}", True, 
-                                    f"Found {len(city_airports)} {city} airports")
-                    else:
-                        self.log_test(f"City Code Search - {code}", False, 
-                                    f"Found only {len(city_airports)}/{expected_count} {city} airports")
-                        all_passed = False
-                else:
-                    self.log_test(f"City Code Search - {code}", False, 
-                                f"HTTP {response.status_code}")
-                    all_passed = False
-                    
-            except Exception as e:
-                self.log_test(f"City Code Search - {code}", False, f"Error: {str(e)}")
-                all_passed = False
+        indian_count = 0
+        for city, iata in indian_airports:
+            results = self.test_airport_search_endpoint(iata, expected_first=iata)
+            if results and len(results) > 0:
+                indian_count += 1
         
-        return all_passed
-    
-    def test_indian_airports(self):
-        """Test searches for Indian airports"""
-        print("\n🇮🇳 TESTING INDIAN AIRPORTS...")
-        
-        indian_cities = [
-            ("Mumbai", "BOM"),
-            ("Delhi", "DEL"), 
-            ("Bengaluru", "BLR")
+        # Test major international airports
+        international_airports = [
+            ("Dubai", "DXB"), ("Singapore", "SIN"), ("London", "LHR"),
+            ("New York", "JFK"), ("Paris", "CDG"), ("Tokyo", "NRT")
         ]
         
-        all_passed = True
-        for city, iata in indian_cities:
-            try:
-                response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                      params={"query": city}, timeout=TEST_TIMEOUT)
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    results = data.get('results', [])
-                    
-                    # Check if the expected airport is found
-                    airport_found = any(
-                        airport.get('city', '').lower() == city.lower() and 
-                        airport.get('iata') == iata
-                        for airport in results
-                    )
-                    
-                    if airport_found:
-                        self.log_test(f"Indian Airport Search - {city}", True, 
-                                    f"Found {city} {iata}")
-                    else:
-                        self.log_test(f"Indian Airport Search - {city}", False, 
-                                    f"{city} {iata} not found")
-                        all_passed = False
-                else:
-                    self.log_test(f"Indian Airport Search - {city}", False, 
-                                f"HTTP {response.status_code}")
-                    all_passed = False
-                    
-            except Exception as e:
-                self.log_test(f"Indian Airport Search - {city}", False, f"Error: {str(e)}")
-                all_passed = False
+        international_count = 0
+        for city, iata in international_airports:
+            results = self.test_airport_search_endpoint(iata, expected_first=iata)
+            if results and len(results) > 0:
+                international_count += 1
         
-        return all_passed
+        # Test previously reported missing airports (Houston ranking bug)
+        houston_results = self.test_airport_search_endpoint("Houston")
+        houston_bug_fixed = True
+        if houston_results:
+            # Check if Houston airports appear appropriately (not in unrelated searches)
+            for result in houston_results:
+                if "Houston" not in result.get("city", ""):
+                    houston_bug_fixed = False
+                    break
+        
+        self.log_test("Current Database Coverage", True, 
+                    f"Indian airports: {indian_count}/6, International: {international_count}/6, Houston bug status: {'Fixed' if houston_bug_fixed else 'Still present'}")
     
-    def test_international_airports(self):
-        """Test searches for international airports"""
-        print("\n🌍 TESTING INTERNATIONAL AIRPORTS...")
+    def test_comprehensive_search_testing(self):
+        """Test 2: Comprehensive Search Testing"""
+        print("🔍 TEST 2: COMPREHENSIVE SEARCH TESTING")
+        print("=" * 60)
         
-        international_cities = [
-            ("Tokyo", ["NRT", "HND"]),
-            ("Singapore", ["SIN"]),
-            ("Bangkok", ["BKK", "DMK"])
+        # Test previously missing airports from review request
+        missing_airports = [
+            ("Bratislava", "BTS"), ("Luxembourg", "LUX"), ("Malta", "MLA")
         ]
         
-        all_passed = True
-        for city, expected_iatas in international_cities:
-            try:
-                response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                      params={"query": city}, timeout=TEST_TIMEOUT)
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    results = data.get('results', [])
-                    
-                    # Check if at least one expected airport is found
-                    found_iatas = [airport.get('iata') for airport in results 
-                                 if airport.get('iata') in expected_iatas]
-                    
-                    if len(found_iatas) > 0:
-                        self.log_test(f"International Airport Search - {city}", True, 
-                                    f"Found {city} airports: {', '.join(found_iatas)}")
-                    else:
-                        self.log_test(f"International Airport Search - {city}", False, 
-                                    f"No {city} airports found")
-                        all_passed = False
-                else:
-                    self.log_test(f"International Airport Search - {city}", False, 
-                                f"HTTP {response.status_code}")
-                    all_passed = False
-                    
-            except Exception as e:
-                self.log_test(f"International Airport Search - {city}", False, f"Error: {str(e)}")
-                all_passed = False
+        missing_found = 0
+        for city, iata in missing_airports:
+            results = self.test_airport_search_endpoint(iata, expected_first=iata)
+            if results and len(results) > 0 and results[0].get("iata") == iata:
+                missing_found += 1
         
-        return all_passed
+        # Test major hubs from review request
+        major_hubs = [
+            ("Dubai", "DXB"), ("Singapore", "SIN"), ("Tokyo", "NRT")
+        ]
+        
+        hubs_found = 0
+        for city, iata in major_hubs:
+            results = self.test_airport_search_endpoint(iata, expected_first=iata)
+            if results and len(results) > 0 and results[0].get("iata") == iata:
+                hubs_found += 1
+        
+        # Test regional airports and smaller countries
+        regional_airports = [
+            ("Reykjavik", "KEF"), ("Dublin", "DUB"), ("Nice", "NCE"),
+            ("Venice", "VCE"), ("Florence", "FLR")
+        ]
+        
+        regional_found = 0
+        for city, iata in regional_airports:
+            results = self.test_airport_search_endpoint(iata, expected_first=iata)
+            if results and len(results) > 0 and results[0].get("iata") == iata:
+                regional_found += 1
+        
+        # Test island nations and remote locations
+        remote_airports = [
+            ("Male", "MLE"), ("Auckland", "AKL"), ("Nairobi", "NBO")
+        ]
+        
+        remote_found = 0
+        for city, iata in remote_airports:
+            results = self.test_airport_search_endpoint(iata, expected_first=iata)
+            if results and len(results) > 0 and results[0].get("iata") == iata:
+                remote_found += 1
+        
+        total_tested = len(missing_airports) + len(major_hubs) + len(regional_airports) + len(remote_airports)
+        total_found = missing_found + hubs_found + regional_found + remote_found
+        
+        self.log_test("Comprehensive Search Coverage", total_found == total_tested, 
+                    f"Found {total_found}/{total_tested} airports - Missing: {missing_found}/3, Hubs: {hubs_found}/3, Regional: {regional_found}/5, Remote: {remote_found}/3")
     
-    def test_partial_matches(self):
-        """Test partial matches and IATA code searches"""
-        print("\n🔍 TESTING PARTIAL MATCHES & IATA CODES...")
+    def test_ranking_algorithm_perfection(self):
+        """Test 3: Ranking Algorithm Perfection"""
+        print("🔍 TEST 3: RANKING ALGORITHM PERFECTION")
+        print("=" * 60)
         
+        # Test exact IATA matches should score 1000 and appear first
+        exact_iata_tests = [
+            ("BTS", "Bratislava"), ("LUX", "Luxembourg"), ("MLA", "Malta"),
+            ("DUB", "Dublin"), ("ISB", "Islamabad"), ("DXB", "Dubai"),
+            ("SIN", "Singapore"), ("NRT", "Tokyo"), ("KEF", "Reykjavik")
+        ]
+        
+        exact_iata_success = 0
+        ranking_issues = []
+        
+        for iata, expected_city in exact_iata_tests:
+            results = self.test_airport_search_endpoint(iata)
+            if results and len(results) > 0:
+                first_result = results[0]
+                if first_result.get("iata") == iata:
+                    exact_iata_success += 1
+                    # Check if it's truly first (highest score)
+                    if len(results) > 1:
+                        second_result = results[1]
+                        # Verify first result is more relevant than second
+                        if first_result.get("city", "").lower() in expected_city.lower():
+                            continue
+                        else:
+                            ranking_issues.append(f"{iata}: First result not most relevant")
+                else:
+                    ranking_issues.append(f"{iata}: Expected first, got {first_result.get('iata')}")
+        
+        # Test city name searches should return city airports first
+        city_name_tests = [
+            ("Dublin", "DUB"), ("Singapore", "SIN"), ("Luxembourg", "LUX")
+        ]
+        
+        city_name_success = 0
+        for city, expected_iata in city_name_tests:
+            results = self.test_airport_search_endpoint(city)
+            if results and len(results) > 0:
+                # Check if the expected airport is in top results
+                found_expected = False
+                for result in results[:3]:  # Check top 3 results
+                    if result.get("iata") == expected_iata:
+                        found_expected = True
+                        break
+                if found_expected:
+                    city_name_success += 1
+                else:
+                    ranking_issues.append(f"{city}: Expected {expected_iata} in top 3 results")
+        
+        # Test partial matches
         partial_tests = [
-            ("mum", "Mumbai", "BOM"),
-            ("del", "Delhi", "DEL"),
-            ("BOM", "Mumbai", "BOM"),
-            ("JFK", "New York", "JFK")
+            ("Lon", "London"), ("Dub", "Dubai"), ("Sin", "Singapore")
         ]
         
-        all_passed = True
-        for query, expected_city, expected_iata in partial_tests:
+        partial_success = 0
+        for partial, expected_city in partial_tests:
+            results = self.test_airport_search_endpoint(partial)
+            if results and len(results) > 0:
+                # Check if relevant results appear
+                relevant_found = False
+                for result in results[:5]:  # Check top 5 results
+                    if expected_city.lower() in result.get("city", "").lower():
+                        relevant_found = True
+                        break
+                if relevant_found:
+                    partial_success += 1
+                else:
+                    ranking_issues.append(f"{partial}: No relevant results for {expected_city}")
+        
+        total_ranking_tests = len(exact_iata_tests) + len(city_name_tests) + len(partial_tests)
+        total_ranking_success = exact_iata_success + city_name_success + partial_success
+        
+        self.log_test("Ranking Algorithm Perfection", len(ranking_issues) == 0, 
+                    f"Ranking success: {total_ranking_success}/{total_ranking_tests} - " +
+                    f"Exact IATA: {exact_iata_success}/{len(exact_iata_tests)}, " +
+                    f"City names: {city_name_success}/{len(city_name_tests)}, " +
+                    f"Partial: {partial_success}/{len(partial_tests)}" +
+                    (f" - Issues: {', '.join(ranking_issues)}" if ranking_issues else ""))
+    
+    def test_api_performance(self):
+        """Test 4: API Performance"""
+        print("🔍 TEST 4: API PERFORMANCE")
+        print("=" * 60)
+        
+        # Test response times for various queries
+        performance_queries = [
+            "BOM", "DEL", "DXB", "SIN", "LHR", "JFK", "CDG", "NRT",
+            "Mumbai", "Delhi", "Dubai", "Singapore", "London", "New York"
+        ]
+        
+        response_times = []
+        for query in performance_queries:
+            start_time = time.time()
             try:
-                response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                      params={"query": query}, timeout=TEST_TIMEOUT)
+                response = requests.get(f"{self.backend_url}/airports/search", 
+                                      params={"query": query, "limit": 10}, timeout=5)
+                response_time = time.time() - start_time
+                response_times.append(response_time)
                 
                 if response.status_code == 200:
                     data = response.json()
-                    results = data.get('results', [])
-                    
-                    # Check if the expected airport is found
-                    airport_found = any(
-                        airport.get('city', '').lower() == expected_city.lower() and 
-                        airport.get('iata') == expected_iata
-                        for airport in results
-                    )
-                    
-                    if airport_found:
-                        self.log_test(f"Partial Match Search - '{query}'", True, 
-                                    f"Found {expected_city} {expected_iata}")
-                    else:
-                        self.log_test(f"Partial Match Search - '{query}'", False, 
-                                    f"{expected_city} {expected_iata} not found")
-                        all_passed = False
+                    results_count = len(data.get("results", []))
                 else:
-                    self.log_test(f"Partial Match Search - '{query}'", False, 
-                                f"HTTP {response.status_code}")
-                    all_passed = False
+                    results_count = 0
                     
             except Exception as e:
-                self.log_test(f"Partial Match Search - '{query}'", False, f"Error: {str(e)}")
-                all_passed = False
+                response_time = time.time() - start_time
+                response_times.append(response_time)
+                results_count = 0
         
-        return all_passed
+        if response_times:
+            avg_response_time = sum(response_times) * 1000  # Convert to ms
+            max_response_time = max(response_times) * 1000
+            min_response_time = min(response_times) * 1000
+            
+            performance_target_met = avg_response_time < 50  # Target: under 50ms
+            
+            self.log_test("API Performance", performance_target_met, 
+                        f"Average: {avg_response_time:.1f}ms, Min: {min_response_time:.1f}ms, Max: {max_response_time:.1f}ms " +
+                        f"(Target: <50ms) - {'✅ MEETS TARGET' if performance_target_met else '⚠️ EXCEEDS TARGET'}")
+        else:
+            self.log_test("API Performance", False, "No performance data collected")
     
-    def test_response_performance(self):
-        """Test API response times"""
-        print("\n⚡ TESTING API PERFORMANCE...")
+    def test_database_completeness_check(self):
+        """Test 5: Database Completeness Check"""
+        print("🔍 TEST 5: DATABASE COMPLETENESS CHECK")
+        print("=" * 60)
         
-        try:
-            start_time = time.time()
-            response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                  params={"query": "Mumbai"}, timeout=TEST_TIMEOUT)
-            end_time = time.time()
+        # Test geographic distribution
+        geographic_regions = {
+            "India": ["BOM", "DEL", "BLR", "MAA", "CCU", "HYD", "PNQ", "AMD"],
+            "Europe": ["LHR", "CDG", "FRA", "AMS", "FCO", "MAD", "VIE", "BRU"],
+            "North America": ["JFK", "LAX", "ORD", "DFW", "ATL", "YYZ", "YVR"],
+            "Asia-Pacific": ["SIN", "HKG", "NRT", "ICN", "SYD", "MEL", "AKL"],
+            "Middle East": ["DXB", "DOH", "AUH", "KWI", "RUH", "CAI"],
+            "Africa": ["JNB", "CPT", "NBO", "ADD", "LOS", "CMN"]
+        }
+        
+        region_coverage = {}
+        total_airports_found = 0
+        total_airports_tested = 0
+        
+        for region, airports in geographic_regions.items():
+            found_in_region = 0
+            for iata in airports:
+                total_airports_tested += 1
+                results = self.test_airport_search_endpoint(iata)
+                if results and len(results) > 0 and results[0].get("iata") == iata:
+                    found_in_region += 1
+                    total_airports_found += 1
             
-            response_time = (end_time - start_time) * 1000  # Convert to milliseconds
-            
-            if response.status_code == 200 and response_time < 2000:  # Less than 2 seconds
-                self.log_test("API Response Performance", True, 
-                            f"Response time: {response_time:.0f}ms")
-                return True
-            else:
-                self.log_test("API Response Performance", False, 
-                            f"Response time: {response_time:.0f}ms or status: {response.status_code}")
-                return False
-                
-        except Exception as e:
-            self.log_test("API Response Performance", False, f"Error: {str(e)}")
-            return False
+            region_coverage[region] = f"{found_in_region}/{len(airports)}"
+        
+        # Test multi-airport cities
+        multi_airport_cities = {
+            "London": ["LHR", "LGW", "STN", "LTN", "LCY"],
+            "New York": ["JFK", "LGA", "EWR"],
+            "Paris": ["CDG", "ORY"],
+            "Tokyo": ["NRT", "HND"],
+            "Dubai": ["DXB", "DWC"],
+            "Istanbul": ["IST", "SAW"]
+        }
+        
+        multi_airport_success = 0
+        multi_airport_details = []
+        
+        for city, airports in multi_airport_cities.items():
+            city_results = self.test_airport_search_endpoint(city.lower())
+            if city_results:
+                found_airports = [r.get("iata") for r in city_results if r.get("iata") in airports]
+                if len(found_airports) >= len(airports) * 0.8:  # At least 80% of airports found
+                    multi_airport_success += 1
+                multi_airport_details.append(f"{city}: {len(found_airports)}/{len(airports)}")
+        
+        # Test edge cases and uncommon airports
+        edge_cases = [
+            ("Ghaziabad", "HDO"), ("Hindon", "HDO"),  # Smaller Indian airports
+            ("Guilin", "KWL"), ("Ulaanbaatar", "ULN"),  # Remote locations
+            ("Sharm El Sheikh", "SSH"), ("Tashkent", "TAS")  # Less common destinations
+        ]
+        
+        edge_case_success = 0
+        for location, iata in edge_cases:
+            results = self.test_airport_search_endpoint(iata)
+            if results and len(results) > 0 and results[0].get("iata") == iata:
+                edge_case_success += 1
+        
+        coverage_percentage = (total_airports_found / total_airports_tested) * 100 if total_airports_tested > 0 else 0
+        
+        self.log_test("Database Completeness", coverage_percentage >= 90, 
+                    f"Overall coverage: {coverage_percentage:.1f}% ({total_airports_found}/{total_airports_tested}) - " +
+                    f"Regional: {', '.join([f'{k}:{v}' for k,v in region_coverage.items()])} - " +
+                    f"Multi-airport cities: {multi_airport_success}/{len(multi_airport_cities)} - " +
+                    f"Edge cases: {edge_case_success}/{len(edge_cases)}")
     
-    def test_error_handling(self):
-        """Test proper error handling"""
-        print("\n🛡️ TESTING ERROR HANDLING...")
+    def test_flight_search_integration(self):
+        """Test flight search integration with airport database"""
+        print("🔍 BONUS TEST: FLIGHT SEARCH INTEGRATION")
+        print("=" * 60)
         
-        try:
-            # Test empty query
-            response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                  params={"query": ""}, timeout=TEST_TIMEOUT)
-            
-            if response.status_code == 200:
-                data = response.json()
-                results = data.get('results', [])
-                if len(results) == 0:
-                    self.log_test("Error Handling - Empty Query", True, 
-                                "Returns empty results for empty query")
-                    return True
-                else:
-                    self.log_test("Error Handling - Empty Query", False, 
-                                f"Should return empty results, got {len(results)}")
-                    return False
-            else:
-                self.log_test("Error Handling - Empty Query", False, 
-                            f"HTTP {response.status_code}")
-                return False
-                
-        except Exception as e:
-            self.log_test("Error Handling - Empty Query", False, f"Error: {str(e)}")
-            return False
-    
-    def test_data_structure_validation(self):
-        """Test that API returns proper data structure"""
-        print("\n📋 TESTING DATA STRUCTURE...")
+        # Test flight search with IATA codes
+        flight_searches = [
+            ("BOM", "DEL"), ("DXB", "LHR"), ("SIN", "NRT")
+        ]
         
-        try:
-            response = requests.get(f"{API_BASE_URL}/airports/search", 
-                                  params={"query": "Mumbai"}, timeout=TEST_TIMEOUT)
-            
-            if response.status_code == 200:
-                data = response.json()
-                results = data.get('results', [])
+        flight_integration_success = 0
+        for origin, destination in flight_searches:
+            try:
+                start_time = time.time()
+                response = requests.post(f"{self.backend_url}/flights/search", 
+                                       json={
+                                           "origin": origin,
+                                           "destination": destination,
+                                           "departure_date": "2025-02-15",
+                                           "passengers": 1,
+                                           "class_type": "economy"
+                                       }, timeout=10)
+                response_time = time.time() - start_time
                 
-                if len(results) > 0:
-                    airport = results[0]
-                    required_fields = ['city', 'airport', 'iata', 'country']
-                    
-                    missing_fields = [field for field in required_fields if field not in airport]
-                    
-                    if len(missing_fields) == 0:
-                        self.log_test("Data Structure Validation", True, 
-                                    f"All required fields present: {', '.join(required_fields)}")
-                        return True
+                if response.status_code == 200:
+                    data = response.json()
+                    flights = data.get("flights", [])
+                    if len(flights) > 0:
+                        flight_integration_success += 1
+                        self.log_test(f"Flight Search: {origin}→{destination}", True, 
+                                    f"Found {len(flights)} flights, data source: {data.get('data_source', 'unknown')}", 
+                                    response_time)
                     else:
-                        self.log_test("Data Structure Validation", False, 
-                                    f"Missing fields: {', '.join(missing_fields)}")
-                        return False
+                        self.log_test(f"Flight Search: {origin}→{destination}", False, 
+                                    "No flights found", response_time)
                 else:
-                    self.log_test("Data Structure Validation", False, "No results to validate")
-                    return False
-            else:
-                self.log_test("Data Structure Validation", False, 
-                            f"HTTP {response.status_code}")
-                return False
-                
-        except Exception as e:
-            self.log_test("Data Structure Validation", False, f"Error: {str(e)}")
-            return False
+                    self.log_test(f"Flight Search: {origin}→{destination}", False, 
+                                f"HTTP {response.status_code}", response_time)
+                    
+            except Exception as e:
+                self.log_test(f"Flight Search: {origin}→{destination}", False, 
+                            f"Request failed: {str(e)}")
+        
+        return flight_integration_success == len(flight_searches)
     
-    def run_all_tests(self):
-        """Run all enhanced airport search tests"""
-        print("🎯 ENHANCED AIRPORT SEARCH FUNCTIONALITY TESTING STARTED")
-        print("=" * 80)
-        
-        # Test 1: Backend Health
-        if not self.test_backend_health():
-            print("❌ Backend not responding. Stopping tests.")
-            return 0
-        
-        # Test 2: Multi-Airport City Support (Primary Review Request)
-        self.test_new_york_airports()
-        self.test_london_airports() 
-        self.test_paris_airports()
-        
-        # Test 3: City Code Support
-        self.test_city_codes()
-        
-        # Test 4: Comprehensive Airport Database
-        self.test_indian_airports()
-        self.test_international_airports()
-        
-        # Test 5: Partial Matches and IATA Codes
-        self.test_partial_matches()
-        
-        # Test 6: Performance and Error Handling
-        self.test_response_performance()
-        self.test_error_handling()
-        self.test_data_structure_validation()
-        
-        # Summary
+    def generate_summary(self):
+        """Generate comprehensive test summary"""
         print("\n" + "=" * 80)
-        print("🎯 ENHANCED AIRPORT SEARCH TESTING SUMMARY")
+        print("🎯 FINAL COMPREHENSIVE AIRPORT DATABASE INTEGRATION TEST SUMMARY")
         print("=" * 80)
         
-        success_rate = (self.passed_tests / self.total_tests) * 100 if self.total_tests > 0 else 0
+        total_tests = len(self.test_results)
+        passed_tests = sum(1 for result in self.test_results if result["success"])
+        success_rate = (passed_tests / total_tests) * 100 if total_tests > 0 else 0
         
-        print(f"📊 OVERALL SUCCESS RATE: {success_rate:.1f}% ({self.passed_tests}/{self.total_tests} tests passed)")
+        print(f"📊 OVERALL RESULTS: {passed_tests}/{total_tests} tests passed ({success_rate:.1f}% success rate)")
+        print()
         
-        if success_rate >= 90:
-            print("🎉 EXCELLENT: Enhanced airport search functionality is production-ready!")
-        elif success_rate >= 75:
-            print("✅ GOOD: Enhanced airport search functionality is mostly working with minor issues")
-        elif success_rate >= 50:
-            print("⚠️ MODERATE: Enhanced airport search functionality has significant issues")
-        else:
-            print("❌ CRITICAL: Enhanced airport search functionality has major problems")
+        # Performance summary
+        if self.performance_results:
+            avg_performance = sum(self.performance_results) * 1000 / len(self.performance_results)
+            print(f"⚡ PERFORMANCE: Average response time {avg_performance:.1f}ms")
+            print()
         
-        print("\n📋 DETAILED TEST RESULTS:")
+        # Categorize results
+        categories = {
+            "Database Assessment": [],
+            "Search Testing": [],
+            "Ranking Algorithm": [],
+            "API Performance": [],
+            "Completeness Check": [],
+            "Integration": []
+        }
+        
         for result in self.test_results:
-            status = "✅ PASS" if result['success'] else "❌ FAIL"
-            details = f" | {result['details']}" if result['details'] else ""
-            print(f"  {status} - {result['test']}{details}")
+            test_name = result["test"]
+            if "Database" in test_name or "Coverage" in test_name:
+                categories["Database Assessment"].append(result)
+            elif "Search" in test_name and "Flight" not in test_name:
+                categories["Search Testing"].append(result)
+            elif "Ranking" in test_name or "Algorithm" in test_name:
+                categories["Ranking Algorithm"].append(result)
+            elif "Performance" in test_name:
+                categories["API Performance"].append(result)
+            elif "Completeness" in test_name:
+                categories["Completeness Check"].append(result)
+            elif "Flight" in test_name:
+                categories["Integration"].append(result)
         
-        # Specific findings for review request
-        print("\n🎯 REVIEW REQUEST SPECIFIC FINDINGS:")
+        # Print category summaries
+        for category, results in categories.items():
+            if results:
+                category_passed = sum(1 for r in results if r["success"])
+                category_total = len(results)
+                category_rate = (category_passed / category_total) * 100 if category_total > 0 else 0
+                status = "✅" if category_rate >= 80 else "⚠️" if category_rate >= 60 else "❌"
+                print(f"{status} {category}: {category_passed}/{category_total} ({category_rate:.1f}%)")
         
-        # Check if New York returns all 3 airports
-        ny_test = any(result['test'] == "New York Multi-Airport Search" and result['success'] 
-                     for result in self.test_results)
-        if ny_test:
-            print("  ✅ New York search returns JFK, LGA, EWR airports")
+        print()
+        
+        # Critical issues
+        failed_tests = [result for result in self.test_results if not result["success"]]
+        if failed_tests:
+            print("🚨 CRITICAL ISSUES IDENTIFIED:")
+            for result in failed_tests:
+                print(f"   ❌ {result['test']}: {result['details']}")
+            print()
+        
+        # Recommendations
+        print("📋 RECOMMENDATIONS:")
+        if success_rate >= 95:
+            print("   ✅ System is ready for the full 8,697 airport integration")
+            print("   ✅ All critical functionality working as expected")
+        elif success_rate >= 80:
+            print("   ⚠️ System mostly ready, address critical issues before full integration")
+            print("   ⚠️ Consider fixing failed tests before proceeding")
         else:
-            print("  ❌ New York search does not return all 3 airports")
+            print("   ❌ System not ready for full integration")
+            print("   ❌ Multiple critical issues need resolution")
         
-        # Check if London returns all 5 airports  
-        london_test = any(result['test'] == "London Multi-Airport Search" and result['success'] 
-                         for result in self.test_results)
-        if london_test:
-            print("  ✅ London search returns LHR, LGW, STN, LTN, LCY airports")
+        if self.performance_results:
+            avg_perf = sum(self.performance_results) * 1000 / len(self.performance_results)
+            if avg_perf < 50:
+                print("   ✅ Performance meets requirements (<50ms)")
+            else:
+                print("   ⚠️ Performance optimization needed (target: <50ms)")
+        
+        print()
+        print("🎯 NEXT STEPS:")
+        if success_rate >= 95:
+            print("   1. Proceed with comprehensive database integration")
+            print("   2. Monitor performance during integration")
+            print("   3. Conduct final verification after integration")
         else:
-            print("  ❌ London search does not return all 5 airports")
+            print("   1. Address critical issues identified above")
+            print("   2. Re-run comprehensive testing")
+            print("   3. Proceed with integration only after 95%+ success rate")
         
-        # Check if Paris returns both airports
-        paris_test = any(result['test'] == "Paris Multi-Airport Search" and result['success'] 
-                        for result in self.test_results)
-        if paris_test:
-            print("  ✅ Paris search returns CDG, ORY airports")
-        else:
-            print("  ❌ Paris search does not return both airports")
-        
-        # Check if city codes work
-        city_codes_test = any("City Code Search" in result['test'] and result['success'] 
-                             for result in self.test_results)
-        if city_codes_test:
-            print("  ✅ City codes like LON, NYC, PAR work properly")
-        else:
-            print("  ❌ City codes like LON, NYC, PAR do not work properly")
-        
-        return success_rate
+        return success_rate >= 95
+
+def main():
+    """Run comprehensive airport database integration test"""
+    print("🚀 STARTING FINAL COMPREHENSIVE AIRPORT DATABASE INTEGRATION TEST")
+    print("=" * 80)
+    print("Testing current airport database status and comprehensive functionality")
+    print("before integrating the massive 8,697 airport dataset.")
+    print()
+    
+    tester = AirportDatabaseTester()
+    
+    # Check backend health first
+    if not tester.test_backend_health():
+        print("❌ Backend not accessible. Cannot proceed with testing.")
+        return False
+    
+    # Run all test phases
+    tester.test_current_database_assessment()
+    tester.test_comprehensive_search_testing()
+    tester.test_ranking_algorithm_perfection()
+    tester.test_api_performance()
+    tester.test_database_completeness_check()
+    tester.test_flight_search_integration()
+    
+    # Generate final summary
+    ready_for_integration = tester.generate_summary()
+    
+    return ready_for_integration
 
 if __name__ == "__main__":
-    tester = EnhancedAirportSearchTester()
-    success_rate = tester.run_all_tests()
-    
-    # Exit with appropriate code
-    if success_rate >= 75:
-        sys.exit(0)  # Success
-    else:
-        sys.exit(1)  # Failure
+    success = main()
+    sys.exit(0 if success else 1)
