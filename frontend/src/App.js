@@ -1739,9 +1739,11 @@ function App() {
     const individualResults = [];
     const seen = new Set(); // Prevent duplicates
     
-    // Search through global airports database
+    // Search through global airports database - ONLY include relevant matches
     GLOBAL_AIRPORTS_DATABASE.forEach(airport => {
       const matchScore = calculateMatchScore(airport, searchTerm);
+      
+      // ONLY include results with score > 0 (actual matches)
       if (matchScore > 0) {
         const key = `${airport.iata}-${airport.city}`;
         if (!seen.has(key)) {
