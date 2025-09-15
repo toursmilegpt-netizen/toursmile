@@ -2530,9 +2530,9 @@ function App() {
         {/* Overlay Container - Responsive Design */}
         <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6">
           <div className="w-full h-full md:w-[28rem] md:h-[32rem] bg-white md:rounded-2xl md:shadow-2xl flex flex-col md:max-h-[80vh]">
-        {/* Header */}
-        <div style={{
-          padding: '16px',
+            {/* Header */}
+            <div style={{
+              padding: '16px',
           borderBottom: '1px solid #e5e7eb',
           display: 'flex',
           alignItems: 'center',
