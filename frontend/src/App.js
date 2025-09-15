@@ -203,13 +203,25 @@ const GLOBAL_AIRPORTS_DATABASE = [
   { city: "Almaty", iata: "ALA", airport: "Almaty International Airport", country: "KZ", countryName: "Kazakhstan" },
   { city: "Tashkent", iata: "TAS", airport: "Islam Karimov Tashkent International Airport", country: "UZ", countryName: "Uzbekistan" },
   
-  // USER REQUESTED MISSING AIRPORTS
+  // USER REQUESTED MISSING AIRPORTS - CRITICAL BUG FIXES
   { city: "Islamabad", iata: "ISB", airport: "Islamabad International Airport", country: "PK", countryName: "Pakistan" },
   { city: "Karachi", iata: "KHI", airport: "Jinnah International Airport", country: "PK", countryName: "Pakistan" },
   { city: "Lahore", iata: "LHE", airport: "Allama Iqbal International Airport", country: "PK", countryName: "Pakistan" },
   { city: "Sharm El Sheikh", iata: "SSH", airport: "Sharm El Sheikh International Airport", country: "EG", countryName: "Egypt" },
   { city: "Ulaanbaatar", iata: "ULN", airport: "Chinggis Khaan International Airport", country: "MN", countryName: "Mongolia" },
   { city: "Guilin", iata: "KWL", airport: "Guilin Liangjiang International Airport", country: "CN", countryName: "China" },
+  
+  // CRITICAL BUG FIX: MISSING BRATISLAVA AND OTHER IATA AIRPORTS
+  { city: "Bratislava", iata: "BTS", airport: "M. R. Štefánik Airport", country: "SK", countryName: "Slovakia" },
+  { city: "Luxembourg", iata: "LUX", airport: "Luxembourg Airport", country: "LU", countryName: "Luxembourg" },
+  { city: "Malta", iata: "MLA", airport: "Malta International Airport", country: "MT", countryName: "Malta" },
+  { city: "Reykjavik", iata: "KEF", airport: "Keflavík International Airport", country: "IS", countryName: "Iceland" },
+  { city: "Dublin", iata: "DUB", airport: "Dublin Airport", country: "IE", countryName: "Ireland" },
+  { city: "Nice", iata: "NCE", airport: "Nice Côte d'Azur Airport", country: "FR", countryName: "France" },
+  { city: "Venice", iata: "VCE", airport: "Venice Marco Polo Airport", country: "IT", countryName: "Italy" },
+  { city: "Florence", iata: "FLR", airport: "Florence Airport", country: "IT", countryName: "Italy" },
+  { city: "Naples", iata: "NAP", airport: "Naples International Airport", country: "IT", countryName: "Italy" },
+  { city: "Palermo", iata: "PMO", airport: "Falcone-Borsellino Airport", country: "IT", countryName: "Italy" },
   
   // ADDITIONAL MAJOR DESTINATIONS WORLDWIDE  
   { city: "Abuja", iata: "ABV", airport: "Nnamdi Azikiwe International Airport", country: "NG", countryName: "Nigeria" },
