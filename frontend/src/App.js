@@ -335,8 +335,11 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
 
   // Enhanced search logic with "All Airports" support
   useEffect(() => {
+    console.log('Search useEffect triggered. value:', value, 'query:', query, 'debouncedQuery:', debouncedQuery, 'open:', open);
+    
     // Don't show suggestions if field already has a complete selected value (not just typing)
     if (value && value.city && !query) {
+      console.log('Early return due to existing value');
       setOpen(false);
       setSuggestions([]);
       return;
