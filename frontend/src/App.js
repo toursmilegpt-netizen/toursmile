@@ -2107,7 +2107,7 @@ function App() {
           <main className="mx-auto max-w-5xl px-4 pb-24">
             {/* Service Icons Section */}
             <section className="text-center pt-12 pb-8">
-              <div className="flex justify-center items-center space-x-8 md:space-x-12">
+              <div className="flex justify-center items-center space-x-8 md:space-x-12 bg-white/50 rounded-xl py-4 px-6">
                 {/* Flights Icon */}
                 <div className="flex flex-col items-center group cursor-pointer">
                   <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-white flex items-center justify-center mb-2 group-hover:bg-blue-50 group-hover:border-blue-300 transition-all duration-200 shadow-sm">
