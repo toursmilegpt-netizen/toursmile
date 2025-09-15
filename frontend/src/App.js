@@ -1079,43 +1079,87 @@ function SearchCard({ onSearch }) {
           </div>
         </div>
 
-        {/* Date and Passenger Row */}
-        <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
-          <DateInput 
-            label="Select Date" 
-            value={depart} 
-            onChange={(date) => { setDepart(date); handleDateComplete(); }}
-            title="Departure" 
-            autoFocus={currentStep === 2}
-          />
-          {trip !== "OW" && (
-            <DateInput label="Select Date" value={ret} onChange={setRet} title="Return" disabled={trip === "OW"} />
-          )}
-          <div>
-            <label className="sr-only">Travellers & Class</label>
-            <button
-              onClick={() => setOpenPax(true)}
-              className="h-12 w-full px-4 rounded-xl border border-neutral-300 text-left hover:bg-neutral-50 flex items-center justify-between"
-            >
-              <span className="text-sm text-neutral-700">
-                {pax.adt} Adult{pax.adt > 1 ? "s" : ""}{pax.chd ? `, ${pax.chd} Child${pax.chd > 1 ? "ren" : ""}` : ""}{pax.inf ? `, ${pax.inf} Infant${pax.inf > 1 ? "s" : ""}` : ""} · {pax.cabin}
-              </span>
-              <span className="h-4 w-4 text-neutral-500">▼</span>
-            </button>
-            {openPax && (
-              <PaxOverlay 
-                onClose={() => {
-                  setOpenPax(false);
-                  handlePassengerComplete();
-                }} 
-                value={pax} 
-                onChange={(newPax) => {
-                  setPax(newPax);
-                  handlePassengerComplete();
-                }} 
-              />
-            )}
+        {/* Date Selection - Compact Row */}
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          {/* Departure Date */}
+          <div 
+            className="date-selector-compact"
+            style={{
+              background: 'white',
+              border: '1px solid #d1d5db',
+              borderRadius: '10px',
+              padding: '8px 12px',
+              minHeight: '52px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              cursor: 'pointer'
+            }}
+            onClick={() => setShowDateOverlay(true)}
+          >
+            <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">DEPARTURE</div>
+            <div className="flex items-center">
+              <span className="text-xs mr-1.5">📅</span>
+              <div className="text-sm font-semibold" style={{ fontSize: '14px', color: depart ? '#111827' : '#9ca3af' }}>
+                {depart ? formatDate(depart) : 'Select Date'}
+              </div>
+            </div>
           </div>
+
+          {/* Return Date - Only show for Round Trip */}
+          {trip === 'RT' && (
+            <div 
+              className="date-selector-compact"
+              style={{
+                background: 'white',
+                border: '1px solid #d1d5db',
+                borderRadius: '10px',
+                padding: '8px 12px',
+                minHeight: '52px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+              onClick={() => setShowDateOverlay(true)}
+            >
+              <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">RETURN</div>
+              <div className="flex items-center">
+                <span className="text-xs mr-1.5">📅</span>
+                <div className="text-sm font-semibold" style={{ fontSize: '14px', color: ret ? '#111827' : '#9ca3af' }}>
+                  {ret ? formatDate(ret) : 'Select Date'}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Passenger Selection - Compact */}
+        <div 
+          className="mt-3 passenger-selector-compact"
+          style={{
+            background: 'white',
+            border: '1px solid #d1d5db',
+            borderRadius: '10px',
+            padding: '8px 12px',
+            minHeight: '52px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer'
+          }}
+          onClick={() => setShowPassengerOverlay(true)}
+        >
+          <div>
+            <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">PASSENGERS & CLASS</div>
+            <div className="flex items-center">
+              <span className="text-xs mr-1.5">👥</span>
+              <div className="text-sm font-semibold" style={{ fontSize: '14px', color: '#111827' }}>
+                {pax.adt + pax.chd + pax.inf} Traveller{pax.adt + pax.chd + pax.inf > 1 ? 's' : ''}, {pax.cabin}
+              </div>
+            </div>
+          </div>
+          <div className="text-neutral-400 text-lg">›</div>
         </div>
 
         {/* Options */}
