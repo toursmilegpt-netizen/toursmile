@@ -816,13 +816,21 @@ async def search_airports(query: str, limit: int = 10):
                 if airport['city'].lower() == city_name.lower():
                     results.append(airport)
         else:
-            # Normal search in city name, airport name, and IATA code
+            # ENHANCED SEARCH WITH PROPER SCORING - CRITICAL FIX for Dublin/Islamabad ranking
+            scored_results = []
+            
             for airport in airports_db:
-                search_text = f"{airport['city']} {airport['airport']} {airport['iata']} {airport['country']}".lower()
-                if query in search_text:
-                    results.append(airport)
-                    if len(results) >= limit:
-                        break
+                score = calculate_airport_match_score(airport, query)
+                if score > 0:  # Only include actual matches
+                    airport_with_score = airport.copy()
+                    airport_with_score['score'] = score
+                    scored_results.append(airport_with_score)
+            
+            # Sort by score (highest first) to ensure exact IATA matches appear first
+            scored_results.sort(key=lambda x: x['score'], reverse=True)
+            
+            # Return top results up to limit
+            results = scored_results[:limit]
         
         return {"results": results}
         
