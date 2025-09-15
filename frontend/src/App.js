@@ -8713,6 +8713,21 @@ const COMPREHENSIVE_GLOBAL_AIRPORTS_DATABASE = [
   { city: "Şırnak", iata: "NKT", airport: "Şırnak Şerafettin Elçi Airport", country: "TR", countryName: "Turkey" },
   { city: "Šiauliai", iata: "SQQ", airport: "Šiauliai International Airport", country: "LT", countryName: "Lithuania" }
 ];
+  { city: "Östersund", iata: "OSD", airport: "Åre Östersund Airport", country: "SE", countryName: "Sweden" },
+  { city: "Ørland", iata: "OLA", airport: "Ørland Airport", country: "NO", countryName: "Norway" },
+  { city: "Ørsta", iata: "HOV", airport: "Ørsta-Volda Airport, Hovden", country: "NO", countryName: "Norway" },
+  { city: "Ürümqi", iata: "URC", airport: "Ürümqi Tianshan International Airport", country: "CN", countryName: "China" },
+  { city: "Þingeyri", iata: "TEY", airport: "Þingeyri Airport", country: "IS", countryName: "Iceland" },
+  { city: "Þórshöfn", iata: "THO", airport: "Þórshöfn Airport", country: "IS", countryName: "Iceland" },
+  { city: "České Budějovice", iata: "JCL", airport: "České Budějovice South Bohemian Airport", country: "CZ", countryName: "Czech Republic" },
+  { city: "Čilipi", iata: "DBV", airport: "Dubrovnik Ruđer Bošković Airport", country: "HR", countryName: "Croatia" },
+  { city: "Đăk R'Lấp", iata: "HOO", airport: "Nhon Co Airfield", country: "VN", countryName: "Vietnam" },
+  { city: "Łódź", iata: "LCJ", airport: "Łódź Władysław Reymont Airport", country: "PL", countryName: "Poland" },
+  { city: "Ōzora", iata: "MMB", airport: "Memanbetsu Airport", country: "JP", countryName: "Japan" },
+  { city: "Şanlıurfa", iata: "GNY", airport: "Şanlıurfa GAP Airport", country: "TR", countryName: "Turkey" },
+  { city: "Şırnak", iata: "NKT", airport: "Şırnak Şerafettin Elçi Airport", country: "TR", countryName: "Turkey" },
+  { city: "Šiauliai", iata: "SQQ", airport: "Šiauliai International Airport", country: "LT", countryName: "Lithuania" }
+];
 
 // Create indexed lookup for fast performance
 const createAirportIndex = () => {
