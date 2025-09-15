@@ -699,19 +699,50 @@ async def search_airports(query: str, limit: int = 10):
             {"city": "Cancún", "airport": "Cancún International", "iata": "CUN", "country": "MX"}
         ]
         
+        # City code mappings for multi-airport cities
+        city_codes = {
+            "lon": "London", "london": "London",
+            "nyc": "New York", "new york": "New York", 
+            "par": "Paris", "paris": "Paris",
+            "tyo": "Tokyo", "tokyo": "Tokyo",
+            "mil": "Milan", "milan": "Milan",
+            "rom": "Rome", "rome": "Rome",
+            "chi": "Chicago", "chicago": "Chicago",
+            "was": "Washington", "washington": "Washington",
+            "hou": "Houston", "houston": "Houston",
+            "dfw": "Dallas", "dallas": "Dallas",
+            "sao": "São Paulo", "são paulo": "São Paulo",
+            "rio": "Rio de Janeiro", "rio de janeiro": "Rio de Janeiro",
+            "bue": "Buenos Aires", "buenos aires": "Buenos Aires",
+            "dxb": "Dubai", "dubai": "Dubai",
+            "bjs": "Beijing", "beijing": "Beijing",
+            "sha": "Shanghai", "shanghai": "Shanghai",
+            "ist": "Istanbul", "istanbul": "Istanbul",
+            "yto": "Toronto", "toronto": "Toronto",
+        }
+        
         # Filter airports based on query
         query = query.lower().strip()
         if not query:
             return {"results": []}
         
         results = []
-        for airport in airports_db:
-            # Search in city name, airport name, and IATA code
-            search_text = f"{airport['city']} {airport['airport']} {airport['iata']}".lower()
-            if query in search_text:
-                results.append(airport)
-                if len(results) >= limit:
-                    break
+        
+        # Check if query matches a city code
+        city_name = city_codes.get(query)
+        if city_name:
+            # Return all airports for this city
+            for airport in airports_db:
+                if airport['city'].lower() == city_name.lower():
+                    results.append(airport)
+        else:
+            # Normal search in city name, airport name, and IATA code
+            for airport in airports_db:
+                search_text = f"{airport['city']} {airport['airport']} {airport['iata']} {airport['country']}".lower()
+                if query in search_text:
+                    results.append(airport)
+                    if len(results) >= limit:
+                        break
         
         return {"results": results}
         
