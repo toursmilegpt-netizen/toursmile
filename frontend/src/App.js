@@ -1622,7 +1622,6 @@ function App() {
           </div>
         </>
       )}
-    </div>
     
     {/* OVERLAYS - App Level for Full-Screen Display */}
     
@@ -1876,6 +1875,7 @@ function App() {
         </div>
       </div>
     )}
+    </div>
   );
 }
 
