@@ -362,8 +362,10 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
       }
     } else if (open && !debouncedQuery) {
       // Show popular destinations when dropdown is open but no query
+      console.log('Showing popular airports because debouncedQuery is empty');
       setSuggestions(popularAirports);
     } else if (!debouncedQuery) {
+      console.log('Clearing suggestions because debouncedQuery is empty');
       setSuggestions([]);
       setOpen(false);
     }
