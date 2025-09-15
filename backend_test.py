@@ -1,53 +1,106 @@
 #!/usr/bin/env python3
 """
-Enhanced Airport Search Functionality Backend Testing
-====================================================
+FINAL COMPREHENSIVE AIRPORT DATABASE INTEGRATION TEST
+Testing current airport database status and comprehensive functionality before integrating the massive 8,697 airport dataset.
 
-Testing comprehensive global airport database and "All Airports" functionality
-as requested in the review. Specifically testing:
-
-1. Enhanced Airport Search API (/api/airports/search)
-2. Comprehensive Airport Database (150+ worldwide airports)
-3. Multi-Airport City Support (New York: JFK/LGA/EWR, London: LHR/LGW/STN/LTN/LCY, Paris: CDG/ORY)
-4. Backend Search Performance and Error Handling
-5. City codes like "LON", "NYC", "PAR"
-
-Expected: All international destinations should be searchable, multi-airport cities should return all airports.
+Test Areas:
+1. Current Database Assessment - Test current airport count and coverage
+2. Comprehensive Search Testing - Test previously missing airports and major hubs
+3. Ranking Algorithm Perfection - Verify exact IATA matches score 1000 and appear first
+4. API Performance - Response time under 50ms for airport searches
+5. Database Completeness Check - Identify any remaining gaps in coverage
 """
 
 import requests
 import json
 import time
 import sys
-import os
-from datetime import datetime, timedelta
-from dotenv import load_dotenv
+from typing import Dict, List, Any
 
-# Load environment variables
-load_dotenv('/app/backend/.env')
-load_dotenv('/app/frontend/.env')
+# Backend URL from environment
+BACKEND_URL = "https://flight-search-module.preview.emergentagent.com/api"
 
-# Configuration - Use environment variable for backend URL
-BACKEND_URL = os.getenv('REACT_APP_BACKEND_URL', 'http://localhost:8001')
-API_BASE_URL = f"{BACKEND_URL}/api"
-TEST_TIMEOUT = 15
-
-class EnhancedAirportSearchTester:
+class AirportDatabaseTester:
     def __init__(self):
+        self.backend_url = BACKEND_URL
         self.test_results = []
-        self.total_tests = 0
-        self.passed_tests = 0
+        self.performance_results = []
         
-        print(f"🔧 Backend URL: {BACKEND_URL}")
-        print(f"🔧 API Base URL: {API_BASE_URL}")
-        
-    def log_test(self, test_name, success, details=""):
+    def log_test(self, test_name: str, success: bool, details: str, response_time: float = None):
         """Log test result"""
-        self.total_tests += 1
-        if success:
-            self.passed_tests += 1
-            status = "✅ PASS"
-        else:
+        result = {
+            "test": test_name,
+            "success": success,
+            "details": details,
+            "response_time": response_time
+        }
+        self.test_results.append(result)
+        
+        status = "✅ PASS" if success else "❌ FAIL"
+        time_info = f" ({response_time:.3f}s)" if response_time else ""
+        print(f"{status}: {test_name}{time_info}")
+        print(f"   {details}")
+        print()
+        
+    def test_backend_health(self):
+        """Test if backend is responding"""
+        try:
+            start_time = time.time()
+            response = requests.get(f"{self.backend_url}/", timeout=10)
+            response_time = time.time() - start_time
+            
+            if response.status_code == 200:
+                self.log_test("Backend Health Check", True, 
+                            f"Backend responding correctly (HTTP {response.status_code})", response_time)
+                return True
+            else:
+                self.log_test("Backend Health Check", False, 
+                            f"Backend returned HTTP {response.status_code}")
+                return False
+        except Exception as e:
+            self.log_test("Backend Health Check", False, f"Backend connection failed: {str(e)}")
+            return False
+    
+    def test_airport_search_endpoint(self, query: str, expected_count: int = None, expected_first: str = None):
+        """Test airport search endpoint with specific query"""
+        try:
+            start_time = time.time()
+            response = requests.get(f"{self.backend_url}/airports/search", 
+                                  params={"query": query, "limit": 10}, timeout=5)
+            response_time = time.time() - start_time
+            self.performance_results.append(response_time)
+            
+            if response.status_code != 200:
+                self.log_test(f"Airport Search: '{query}'", False, 
+                            f"HTTP {response.status_code}: {response.text}", response_time)
+                return None
+                
+            data = response.json()
+            results = data.get("results", [])
+            
+            # Check expected count
+            if expected_count is not None and len(results) != expected_count:
+                self.log_test(f"Airport Search: '{query}'", False, 
+                            f"Expected {expected_count} results, got {len(results)}", response_time)
+                return results
+                
+            # Check expected first result
+            if expected_first and results:
+                first_result = results[0]
+                if first_result.get("iata") != expected_first:
+                    self.log_test(f"Airport Search: '{query}'", False, 
+                                f"Expected first result {expected_first}, got {first_result.get('iata')}", response_time)
+                    return results
+                    
+            self.log_test(f"Airport Search: '{query}'", True, 
+                        f"Found {len(results)} results" + 
+                        (f", first: {results[0].get('iata')} - {results[0].get('airport')}" if results else ""), 
+                        response_time)
+            return results
+            
+        except Exception as e:
+            self.log_test(f"Airport Search: '{query}'", False, f"Request failed: {str(e)}")
+            return None
             status = "❌ FAIL"
         
         result = f"{status} - {test_name}"
