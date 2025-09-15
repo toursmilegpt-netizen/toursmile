@@ -1212,7 +1212,7 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
           display: 'flex',
           alignItems: 'stretch',
           minHeight: '52px',
-          flexDirection: window.innerWidth <= 768 ? 'column' : 'row'
+          flexDirection: isMobile ? 'column' : 'row'
         }}>
           {/* From Field - Left Side */}
           <div 
