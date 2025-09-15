@@ -2116,7 +2116,12 @@ function App() {
           <main className="mx-auto max-w-5xl px-4 pb-24">
             {/* Service Icons Section */}
             <section className="text-center pt-12 pb-8">
-              <div className="flex justify-center items-center space-x-8 md:space-x-12 bg-white/50 rounded-xl py-4 px-6">
+              {/* Service Icons - Enhanced with depth and floating elements */}
+              <div className="flex justify-center items-center space-x-8 md:space-x-12 bg-white/50 rounded-xl py-6 px-8 relative overflow-hidden group">
+                {/* Floating decorative elements */}
+                <div className="absolute top-2 left-8 w-3 h-3 bg-blue-200/40 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-2 right-12 w-2 h-2 bg-orange-200/50 rounded-full animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/4 w-1 h-1 bg-purple-200/60 rounded-full animate-pulse delay-500"></div>
                 {/* Flights Icon */}
                 <div className="flex flex-col items-center group cursor-pointer">
                   <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-white flex items-center justify-center mb-2 group-hover:bg-blue-50 group-hover:border-blue-300 transition-all duration-200 shadow-sm">
