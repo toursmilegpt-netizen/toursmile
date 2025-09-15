@@ -259,14 +259,14 @@ html {
 /* MOBILE RESPONSIVENESS FOR COMPACT CONTAINER */
 @media (max-width: 767px) {
   .compact-flight-container {
-    min-height: 42px !important;
+    min-height: 44px !important;
     border-radius: 8px !important;
   }
   
   .compact-flight-container > div:first-child,
   .compact-flight-container > div:last-child {
-    padding: 4px 8px !important;
-    min-height: 42px !important;
+    padding: 6px 10px !important;
+    min-height: 44px !important;
   }
   
   .compact-flight-container > div:nth-child(2) {
