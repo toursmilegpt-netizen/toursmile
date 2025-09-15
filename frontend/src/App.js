@@ -558,12 +558,23 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     }
   };
 
-  const handleCitySelect = (city) => {
-    // Set the selected city
-    onChange(city);
-    setQuery(city.city);
+  // HANDLE AIRPORT SELECTION - Save IATA, Display Full Format
+  const handleAirportSelect = (airport) => {
+    // Format: "IATA – Airport Name, City" as per requirements
+    const displayFormat = `${airport.iata} – ${airport.airport}, ${airport.city}`;
     
-    // IMMEDIATELY close dropdown
+    // Save IATA code for backend (as per requirements)
+    const airportData = {
+      iata: airport.iata,
+      city: airport.city,
+      airport: airport.airport,
+      country: airport.country,
+      countryName: airport.countryName,
+      displayText: displayFormat
+    };
+    
+    setQuery(displayFormat);
+    onChange(airportData);
     setOpen(false);
     setSuggestions([]);
     
