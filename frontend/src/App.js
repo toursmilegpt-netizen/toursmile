@@ -1628,17 +1628,12 @@ function App() {
           {/* Header */}
           <header className="border-b border-neutral-100">
             <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
-              <div className="flex items-center space-x-6">
+              <div className="flex items-center">
                 <img 
                   src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
                   alt="TourSmile"
                   className="h-12 w-auto"
                 />
-                <div className="hidden md:flex space-x-6 text-sm font-medium">
-                  <span className="text-black border-b-2 border-blue-600 pb-1 font-semibold">Flights</span>
-                  <span className="text-black hover:text-blue-600 cursor-pointer font-medium">Hotels</span>
-                  <span className="text-black hover:text-blue-600 cursor-pointer font-medium">Tours</span>
-                </div>
               </div>
               <div className="flex items-center space-x-3">
                 <button className="px-4 py-2 rounded-full border border-neutral-300 text-black text-sm font-medium hover:bg-neutral-50 hover:border-neutral-400 transition-colors">
