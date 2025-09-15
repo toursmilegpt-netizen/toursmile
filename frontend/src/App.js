@@ -2080,9 +2080,14 @@ function App() {
       {/* Render different pages based on current state */}
       {currentPage === 'search' && (
         <>
-          {/* Header - Enhanced with subtle gradient */}
-          <header className="border-b border-neutral-100 bg-gradient-to-b from-white to-blue-50/30">
-            <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
+          {/* Header - Enhanced with depth and patterns */}
+          <header className="border-b border-neutral-100 bg-gradient-to-b from-white to-blue-50/30 backdrop-blur-sm relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute top-0 left-0 w-full h-full">
+              <div className="absolute top-0 right-20 w-32 h-32 bg-gradient-to-br from-blue-100/20 to-transparent rounded-full blur-xl"></div>
+              <div className="absolute -top-10 left-40 w-20 h-20 bg-gradient-to-br from-blue-200/15 to-transparent rounded-full blur-lg"></div>
+            </div>
+            <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between relative z-10">
               <div className="flex items-center">
                 <img 
                   src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
