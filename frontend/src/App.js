@@ -1019,19 +1019,19 @@ function PaxOverlay({ value, onChange, onClose, compact = false }) {
   if (compact) {
     return (
       <div>
-        <div className="space-y-4">
+        <div className="space-y-3">
           <PaxRow label="Adults (12+)" hint="Ages 12+" value={pax.adt} onInc={() => increment('adt')} onDec={() => decrement('adt')} />
           <PaxRow label="Children (2–11)" hint="Ages 2–11" value={pax.chd} onInc={() => increment('chd')} onDec={() => decrement('chd')} />
           <PaxRow label="Infants (0–1)" hint="On lap" value={pax.inf} onInc={() => increment('inf')} onDec={() => decrement('inf')} />
           
-          <div className="pt-4 border-t border-neutral-200">
-            <div className="text-sm font-medium mb-3" style={{ fontWeight: '500' }}>Cabin Class</div>
+          <div className="pt-3 border-t border-neutral-200">
+            <div className="text-sm font-medium mb-2" style={{ fontWeight: '500' }}>Cabin Class</div>
             <div className="grid grid-cols-2 gap-2">
               {["Economy", "Premium Economy", "Business", "First"].map((cabin) => (
                 <button 
                   key={cabin} 
                   onClick={() => updatePax('cabin', cabin)} 
-                  className={`px-3 py-2 rounded-lg text-sm border transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
                     pax.cabin === cabin ? "border-blue-400 bg-blue-50 text-blue-700" : "border-neutral-300 hover:bg-neutral-50"
                   }`}
                 >
@@ -1042,7 +1042,7 @@ function PaxOverlay({ value, onChange, onClose, compact = false }) {
           </div>
         </div>
         
-        <div className="mt-6 pt-4 border-t border-neutral-200">
+        <div className="mt-4 pt-3 border-t border-neutral-200">
           <div className="flex items-center justify-between">
             <div className="text-sm text-neutral-700">
               {pax.adt} Adult{pax.adt > 1 ? 's' : ''}, {pax.chd} Child{pax.chd > 1 ? 'ren' : ''}, {pax.inf} Infant{pax.inf > 1 ? 's' : ''} · {pax.cabin}
