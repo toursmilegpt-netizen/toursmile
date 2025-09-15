@@ -931,8 +931,8 @@ function SimpleDatePicker({ label, value, onChange, minDate, overlay = false }) 
 
   return (
     <div>
-      <div className="mb-4">
-        <h4 className="text-sm font-medium text-neutral-700 mb-2">{label}</h4>
+      <div className="mb-3">
+        <h4 className="text-sm font-medium text-neutral-700 mb-1">{label}</h4>
         {value && (
           <div className="text-lg font-semibold text-blue-600">
             {formatDateDisplay(value)}
@@ -940,20 +940,20 @@ function SimpleDatePicker({ label, value, onChange, minDate, overlay = false }) 
         )}
       </div>
       
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-3">
+      <div className="mb-3">
+        <div className="flex items-center justify-between mb-2">
           <button 
             onClick={() => setCurrentMonth(addMonths(currentMonth, -1))} 
-            className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-600"
+            className="p-1.5 rounded-lg hover:bg-neutral-100 text-neutral-600 text-sm"
           >
-            ← Previous
+            ← Prev
           </button>
-          <h3 className="text-lg font-semibold">
+          <h3 className="text-base font-semibold">
             {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </h3>
           <button 
             onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} 
-            className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-600"
+            className="p-1.5 rounded-lg hover:bg-neutral-100 text-neutral-600 text-sm"
           >
             Next →
           </button>
