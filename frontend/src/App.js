@@ -2768,45 +2768,44 @@ function App() {
       </>
     )}
     
-    {/* Passenger Selection Overlay - Compact */}
+    {/* Passenger Selection Overlay - Smart Desktop/Mobile Behavior */}
     {showPassengerOverlay && (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'white',
-        zIndex: 9999,
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-        {/* Header */}
-        <div style={{
-          padding: '16px',
-          borderBottom: '1px solid #e5e7eb',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <button
-            onClick={() => setShowPassengerOverlay(false)}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '18px',
-              cursor: 'pointer',
-              padding: '8px',
-              color: '#6b7280'
-            }}
-          >
-            ←
-          </button>
-          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
-            Passengers & Class
-          </h3>
-          <div style={{ width: '34px' }}></div>
-        </div>
+      <>
+        {/* Backdrop - semi-transparent on desktop, hidden on mobile */}
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden md:block"
+          onClick={() => setShowPassengerOverlay(false)}
+        />
+        
+        {/* Overlay Container - Responsive Design */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6">
+          <div className="w-full h-full md:w-[28rem] md:h-[24rem] bg-white md:rounded-2xl md:shadow-2xl flex flex-col md:max-h-[80vh]">
+            {/* Header */}
+            <div style={{
+              padding: '16px',
+              borderBottom: '1px solid #e5e7eb',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <button
+                onClick={() => setShowPassengerOverlay(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '18px',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  color: '#6b7280'
+                }}
+              >
+                ←
+              </button>
+              <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
+                Passengers & Class
+              </h3>
+              <div style={{ width: '34px' }}></div>
+            </div>
 
         {/* Compact Passenger Selector */}
         <div style={{ flex: 1, padding: '12px', overflowY: 'auto' }}>
