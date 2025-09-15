@@ -1719,8 +1719,8 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
                 });
               }
             }}
-            className={`px-8 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all duration-300 disabled:opacity-60 ${
-              currentStep === 4 && from && to && depart ? 'ring-4 ring-blue-300 shadow-2xl bg-blue-700 scale-105' : ''
+            className={`px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-300 disabled:opacity-60 ${
+              currentStep === 4 && from && to && depart ? 'ring-4 ring-blue-300 shadow-2xl from-blue-700 to-blue-800 scale-105' : ''
             }`}
             disabled={loading}
           >
