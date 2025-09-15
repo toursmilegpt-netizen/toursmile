@@ -1530,6 +1530,20 @@ function App() {
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [searchParams, setSearchParams] = useState(null);
   
+  // Overlay states - moved to App level for proper full-screen rendering
+  const [showFromOverlay, setShowFromOverlay] = useState(false);
+  const [showToOverlay, setShowToOverlay] = useState(false);
+  const [showDateOverlay, setShowDateOverlay] = useState(false);
+  const [showPassengerOverlay, setShowPassengerOverlay] = useState(false);
+  
+  // Search form state - moved to App level to share with overlays
+  const [from, setFrom] = useState({ city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' });
+  const [to, setTo] = useState({ city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' });
+  const [depart, setDepart] = useState(null);
+  const [ret, setRet] = useState(null);
+  const [pax, setPax] = useState({ adt: 1, chd: 0, inf: 0, cabin: "Economy" });
+  const [trip, setTrip] = useState("OW");
+  
   const handleSearch = async (searchData) => {
     try {
       setSearchParams({
