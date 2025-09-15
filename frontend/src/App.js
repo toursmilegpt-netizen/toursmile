@@ -1698,6 +1698,10 @@ function App() {
   const [showDateOverlay, setShowDateOverlay] = useState(false);
   const [showPassengerOverlay, setShowPassengerOverlay] = useState(false);
   
+  // Overlay search state
+  const [overlayQuery, setOverlayQuery] = useState('');
+  const [overlayResults, setOverlayResults] = useState([]);
+  
   // Search form state - moved to App level to share with overlays
   const [from, setFrom] = useState({ city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' });
   const [to, setTo] = useState({ city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' });
