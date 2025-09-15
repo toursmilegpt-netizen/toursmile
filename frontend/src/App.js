@@ -2158,7 +2158,7 @@ function App() {
                   { icon: "👨‍💼", title: "Personal Travel Assistant", desc: "Dedicated support executive" },
                   { icon: "⚡", title: "Instant Booking", desc: "Confirmed tickets in seconds" }
                 ].map(item => (
-                  <div key={item.title} className="p-4 rounded-xl hover:shadow-lg transition-shadow">
+                  <div key={item.title} className="p-4 rounded-xl bg-white/60 border border-blue-100/20 hover:shadow-lg hover:bg-white/80 transition-all duration-200">
                     <div className="text-3xl mb-2">{item.icon}</div>
                     <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
                     <p className="text-xs text-neutral-600">{item.desc}</p>
