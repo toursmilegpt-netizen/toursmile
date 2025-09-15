@@ -1,28 +1,35 @@
 #!/usr/bin/env python3
 """
-TBO API Integration Readiness Testing
-=====================================
+Backend Testing After UI/UX Improvements
+========================================
 
-Comprehensive backend testing to ensure the flight search API is ready for TBO API integration.
-Tests all critical endpoints and data structures as requested in the review.
+Testing backend functionality after UI/UX improvements made to the TourSmile flight search page.
+Ensures all backend services remain functional and responsive after frontend changes.
 
-Test Categories:
-1. Flight Search Endpoint Testing
-2. Airport Search API Testing  
-3. Data Structure Validation
-4. Booking Flow API Readiness
-5. TBO API Integration Preparation
+Test Focus (as per review request):
+1. Backend service health check
+2. Airport search API with various queries (Mumbai, Delhi, BOM, DEL, partial matches)
+3. Flight search functionality (end-to-end Mumbai to Delhi with date and passenger selection)
+4. API responsiveness verification
+
+Expected: All backend functionality should work perfectly as changes were purely frontend UI/UX.
 """
 
 import requests
 import json
 import sys
+import os
 from datetime import datetime, timedelta
-import time
+from dotenv import load_dotenv
 
-# Configuration
-BACKEND_URL = "https://travel-search-app.preview.emergentagent.com/api"
-TEST_TIMEOUT = 30
+# Load environment variables
+load_dotenv('/app/backend/.env')
+load_dotenv('/app/frontend/.env')
+
+# Configuration - Use environment variable for backend URL
+BACKEND_URL = os.getenv('REACT_APP_BACKEND_URL', 'http://localhost:8001')
+API_BASE_URL = f"{BACKEND_URL}/api"
+TEST_TIMEOUT = 15
 
 class Colors:
     GREEN = '\033[92m'
