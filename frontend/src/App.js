@@ -1557,7 +1557,11 @@ function App() {
           <header className="border-b border-neutral-100">
             <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
               <div className="flex items-center space-x-6">
-                <div className="text-xl font-bold text-blue-600">TourSmile</div>
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
+                  alt="TourSmile"
+                  className="h-8 w-auto"
+                />
                 <div className="hidden md:flex space-x-6 text-sm font-medium">
                   <span className="text-blue-600 border-b-2 border-blue-600 pb-1">Flights</span>
                   <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Hotels</span>
@@ -1565,11 +1569,12 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div className="hidden md:flex space-x-6 text-sm">
-                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Instant</span>
-                  <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">Secure</span>
-                  <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-medium">Easy</span>
-                </div>
+                <button className="px-3 py-1.5 rounded-full border border-neutral-300 text-sm hover:bg-neutral-50">
+                  24×7 Support
+                </button>
+                <button className="px-3 py-1.5 rounded-full bg-neutral-100 hover:bg-neutral-200 text-sm">
+                  Sign In
+                </button>
               </div>
             </div>
           </header>
@@ -1577,11 +1582,16 @@ function App() {
           {/* Main Content */}
           <main className="mx-auto max-w-5xl px-4 pb-24">
             {/* Hero */}
-            <section className="text-center pt-16 pb-8">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-neutral-900">
+            <section className="text-center pt-8 pb-6">
+              <h1 className="text-4xl md:text-5xl font-bold mb-2 text-neutral-900">
                 Smart Travel, Best Prices
               </h1>
-              <p className="text-lg text-neutral-600 mb-8">
+              <div className="flex justify-center items-center space-x-4 mb-6">
+                <span className="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Instant</span>
+                <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">Secure</span>
+                <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-medium">Easy</span>
+              </div>
+              <p className="text-lg text-neutral-600">
                 Book flights with confidence. Best deals, instant confirmation.
               </p>
             </section>
