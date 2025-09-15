@@ -340,23 +340,16 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
 
   // Enhanced search logic with "All Airports" support
   useEffect(() => {
-    console.log('Search useEffect triggered. value:', value, 'query:', query, 'debouncedQuery:', debouncedQuery, 'open:', open);
-    
     // Don't show suggestions if field already has a complete selected value (not just typing)
     if (value && value.city && !query) {
-      console.log('Early return due to existing value');
       setOpen(false);
       setSuggestions([]);
       return;
     }
     
     if (debouncedQuery && debouncedQuery.length >= 1) {
-      console.log('Searching for:', debouncedQuery); // Debug log
-      
       // Create enhanced search results with "All Airports" for multi-airport cities
       const enhancedSuggestions = createEnhancedSuggestions(debouncedQuery);
-      
-      console.log('Enhanced matches found:', enhancedSuggestions); // Debug log
       
       if (enhancedSuggestions.length > 0) {
         setSuggestions(enhancedSuggestions);
@@ -367,10 +360,8 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
       }
     } else if (open && (!debouncedQuery || debouncedQuery.length === 0)) {
       // Show popular destinations when dropdown is open but no query
-      console.log('Showing popular airports because debouncedQuery is empty');
       setSuggestions(popularAirports);
     } else if (!debouncedQuery || debouncedQuery.length === 0) {
-      console.log('Clearing suggestions because debouncedQuery is empty');
       setSuggestions([]);
       setOpen(false);
     }
