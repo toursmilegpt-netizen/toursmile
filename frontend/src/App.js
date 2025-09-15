@@ -275,41 +275,8 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     }
   }, [value]);
   
-  // Enhanced search logic with "All Airports" support
-  useEffect(() => {
-    // Don't show suggestions if field already has a selected value
-    if (value) {
-      setOpen(false);
-      setSuggestions([]);
-      return;
-    }
-    
-    if (debouncedQuery && debouncedQuery.length >= 1) {
-      console.log('Searching for:', debouncedQuery); // Debug log
-      
-      // Create enhanced search results with "All Airports" for multi-airport cities
-      const enhancedSuggestions = createEnhancedSuggestions(debouncedQuery);
-      
-      console.log('Enhanced matches found:', enhancedSuggestions); // Debug log
-      
-      if (enhancedSuggestions.length > 0) {
-        setSuggestions(enhancedSuggestions);
-        setOpen(true);
-      } else {
-        // Search via API if no local matches, fallback to comprehensive database
-        searchAirports(debouncedQuery);
-      }
-    } else if (open && !debouncedQuery) {
-      // Show popular destinations when dropdown is open but no query
-      setSuggestions(popularAirports);
-    } else if (!debouncedQuery) {
-      setSuggestions([]);
-      setOpen(false);
-    }
-  }, [debouncedQuery, open, value]); // Added value to dependency array
-  
   // Create enhanced suggestions with "All Airports" functionality
-  const createEnhancedSuggestions = (query) => {
+  const createEnhancedSuggestions = useCallback((query) => {
     const matches = POPULAR_AIRPORTS.filter(airport => 
       airport.city.toLowerCase().includes(query.toLowerCase()) ||
       airport.iata.toLowerCase().includes(query.toLowerCase()) ||
@@ -359,7 +326,40 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
         return a.city.localeCompare(b.city);
       })
       .slice(0, 10);
-  };
+  }, []);
+
+  // Enhanced search logic with "All Airports" support
+  useEffect(() => {
+    // Don't show suggestions if field already has a selected value
+    if (value) {
+      setOpen(false);
+      setSuggestions([]);
+      return;
+    }
+    
+    if (debouncedQuery && debouncedQuery.length >= 1) {
+      console.log('Searching for:', debouncedQuery); // Debug log
+      
+      // Create enhanced search results with "All Airports" for multi-airport cities
+      const enhancedSuggestions = createEnhancedSuggestions(debouncedQuery);
+      
+      console.log('Enhanced matches found:', enhancedSuggestions); // Debug log
+      
+      if (enhancedSuggestions.length > 0) {
+        setSuggestions(enhancedSuggestions);
+        setOpen(true);
+      } else {
+        // Search via API if no local matches, fallback to comprehensive database
+        searchAirports(debouncedQuery);
+      }
+    } else if (open && !debouncedQuery) {
+      // Show popular destinations when dropdown is open but no query
+      setSuggestions(popularAirports);
+    } else if (!debouncedQuery) {
+      setSuggestions([]);
+      setOpen(false);
+    }
+  }, [debouncedQuery, open, value, createEnhancedSuggestions]);
   
   // Get city code for multi-airport cities
   const getCityCode = (cityName, country) => {
