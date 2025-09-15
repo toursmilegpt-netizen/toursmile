@@ -374,23 +374,26 @@ html {
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
   transform: translateY(-1px);
 }
+/* EXTRA SMALL MOBILE - COMPACT CONTAINER ADJUSTMENTS */
 @media (max-width: 480px) {
   .max-w-5xl {
     padding: 0 8px !important;
   }
   
-  .unified-flight-container {
-    border-radius: 8px !important;
+  .compact-flight-container {
+    border-radius: 6px !important;
   }
   
-  .integrated-city-input {
-    padding: 6px 10px !important;
+  .date-selector-compact,
+  .passenger-selector-compact {
+    padding: 5px 8px !important;
+    border-radius: 6px !important;
   }
   
-  .swap-button-seamless {
-    height: 24px !important;
-    width: 24px !important;
-    font-size: 12px !important;
+  .swap-button-compact {
+    height: 18px !important;
+    width: 18px !important;
+    font-size: 10px !important;
   }
 }
 
