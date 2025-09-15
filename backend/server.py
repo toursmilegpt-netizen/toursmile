@@ -838,6 +838,54 @@ async def search_airports(query: str, limit: int = 10):
         logging.error(f"Airport search error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to search airports")
 
+def calculate_airport_match_score(airport: dict, search_term: str) -> int:
+    """
+    Calculate match score for airport relevance ranking - MATCHES FRONTEND ALGORITHM
+    CRITICAL: Ensures exact IATA matches always score 1000 and appear first
+    """
+    score = 0
+    
+    airport_iata = airport['iata'].lower()
+    airport_city = airport['city'].lower()
+    airport_name = airport['airport'].lower()
+    airport_country = airport.get('country', '').lower()
+    term = search_term.lower().strip()
+    
+    # EXACT IATA CODE MATCH (HIGHEST PRIORITY - 1000 points)
+    if airport_iata == term:
+        return 1000
+    
+    # IATA CODE STARTS WITH SEARCH TERM (900 points)
+    if airport_iata.startswith(term):
+        return 900
+    
+    # EXACT CITY NAME MATCH (800 points)  
+    if airport_city == term:
+        return 800
+    
+    # CITY NAME STARTS WITH SEARCH TERM (700 points)
+    if airport_city.startswith(term):
+        return 700
+    
+    # AIRPORT NAME STARTS WITH SEARCH TERM (600 points)
+    if airport_name.startswith(term):
+        return 600
+    
+    # CITY NAME CONTAINS SEARCH TERM (500 points)
+    if term in airport_city:
+        return 500
+    
+    # AIRPORT NAME CONTAINS SEARCH TERM (400 points)
+    if term in airport_name:
+        return 400
+    
+    # COUNTRY CONTAINS SEARCH TERM (300 points)
+    if term in airport_country:
+        return 300
+    
+    # NO MATCH - Return 0 (will be filtered out)
+    return 0
+
 @api_router.post("/flights/search")
 async def search_flights(request: FlightSearchRequest):
     """Search for flights with Tripjack API integration and AI recommendations"""
