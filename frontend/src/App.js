@@ -2226,14 +2226,8 @@ function App() {
                 const searchResults = performAutocompleteSearch(query);
                 setOverlayResults(searchResults);
               } else {
-                // Show popular airports for < 2 characters
-                const popularResults = GLOBAL_AIRPORTS_DATABASE
-                  .filter(airport => ['BOM', 'DEL', 'BLR', 'HYD', 'MAA', 'CCU', 'PNQ', 'AMD', 'DXB', 'SIN'].includes(airport.iata))
-                  .map(airport => ({
-                    ...airport,
-                    displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`
-                  }));
-                setOverlayResults(popularResults);
+                // Clear results for < 2 characters - NO popular airports bias
+                setOverlayResults([]);
               }
             }}
           />
