@@ -330,8 +330,8 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
 
   // Enhanced search logic with "All Airports" support
   useEffect(() => {
-    // Don't show suggestions if field already has a selected value
-    if (value) {
+    // Don't show suggestions if field already has a complete selected value (not just typing)
+    if (value && value.city && !query) {
       setOpen(false);
       setSuggestions([]);
       return;
