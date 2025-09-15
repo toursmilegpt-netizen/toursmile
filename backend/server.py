@@ -789,7 +789,7 @@ async def search_airports(query: str, limit: int = 10):
             "rom": "Rome", "rome": "Rome",
             "chi": "Chicago", "chicago": "Chicago",
             "was": "Washington", "washington": "Washington",
-            "hou": "Houston", "houston": "Houston",
+            "hst": "Houston", "houston": "Houston",
             "dfw": "Dallas", "dallas": "Dallas",
             "sao": "São Paulo", "são paulo": "São Paulo",
             "rio": "Rio de Janeiro", "rio de janeiro": "Rio de Janeiro",
