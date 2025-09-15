@@ -2223,7 +2223,7 @@ function App() {
         <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
           <div style={{ marginBottom: '16px' }}>
             <h4 style={{ fontSize: '14px', fontWeight: '600', color: '#6b7280', marginBottom: '12px' }}>
-              {overlayQuery && overlayQuery.length >= 2 ? 'SEARCH RESULTS' : 'POPULAR CITIES'}
+              {overlayQuery && overlayQuery.length >= 2 ? 'SEARCH RESULTS' : 'TYPE TO SEARCH AIRPORTS'}
             </h4>
             <div style={{ display: 'grid', gap: '8px' }}>
               {overlayResults.map((airport) => (
