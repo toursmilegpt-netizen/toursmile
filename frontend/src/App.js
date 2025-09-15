@@ -1728,7 +1728,7 @@ function App() {
   const [overlayQuery, setOverlayQuery] = useState('');
   const [overlayResults, setOverlayResults] = useState([]);
 
-  // GLOBAL AUTOCOMPLETE SEARCH FUNCTIONS - Available to overlay
+  // GLOBAL AUTOCOMPLETE SEARCH FUNCTIONS - Available to overlay  
   const performAutocompleteSearch = useCallback((query) => {
     // Minimum 2 characters required as per requirements
     if (!query || query.length < 2) {
@@ -1736,7 +1736,7 @@ function App() {
     }
 
     const searchTerm = query.toLowerCase().trim();
-    const results = [];
+    const individualResults = [];
     const seen = new Set(); // Prevent duplicates
     
     // Search through global airports database
@@ -1745,7 +1745,7 @@ function App() {
       if (matchScore > 0) {
         const key = `${airport.iata}-${airport.city}`;
         if (!seen.has(key)) {
-          results.push({
+          individualResults.push({
             ...airport,
             matchScore,
             displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`,
@@ -1756,11 +1756,78 @@ function App() {
       }
     });
 
-    // Sort by match score (higher score first) and limit to 10 results
-    return results
-      .sort((a, b) => b.matchScore - a.matchScore)
+    // Group airports by city to create "All Airports" options
+    const cityGroups = {};
+    individualResults.forEach(airport => {
+      const cityKey = `${airport.city}-${airport.countryName}`;
+      if (!cityGroups[cityKey]) {
+        cityGroups[cityKey] = [];
+      }
+      cityGroups[cityKey].push(airport);
+    });
+
+    const finalResults = [];
+    
+    // Add "All Airports" option for cities with multiple airports
+    Object.entries(cityGroups).forEach(([cityKey, airports]) => {
+      if (airports.length > 1) {
+        const firstAirport = airports[0];
+        const cityCode = getCityAllAirportsCode(firstAirport.city);
+        
+        finalResults.push({
+          city: firstAirport.city,
+          iata: cityCode,
+          airport: "All Airports",
+          countryName: firstAirport.countryName,
+          country: firstAirport.country,
+          isAllAirports: true,
+          airportCount: airports.length,
+          matchScore: Math.max(...airports.map(a => a.matchScore)) + 10, // Boost score for "All Airports"
+          displayText: `${cityCode} – All Airports, ${firstAirport.city}`,
+          searchText: searchTerm
+        });
+      }
+    });
+
+    // Add individual airports
+    individualResults.forEach(airport => {
+      finalResults.push(airport);
+    });
+
+    // Sort by match score (higher score first), "All Airports" should appear first
+    return finalResults
+      .sort((a, b) => {
+        if (a.isAllAirports && !b.isAllAirports) return -1;
+        if (!a.isAllAirports && b.isAllAirports) return 1;
+        return b.matchScore - a.matchScore;
+      })
       .slice(0, 10);
   }, []);
+
+  // Get city code for "All Airports" option
+  const getCityAllAirportsCode = (cityName) => {
+    const cityCodeMap = {
+      "London": "LON",
+      "New York": "NYC",
+      "Paris": "PAR", 
+      "Tokyo": "TYO",
+      "Milan": "MIL",
+      "Rome": "ROM",
+      "Chicago": "CHI",
+      "Washington": "WAS",
+      "Houston": "HOU",
+      "Dallas": "DFW",
+      "São Paulo": "SAO",
+      "Rio de Janeiro": "RIO", 
+      "Buenos Aires": "BUE",
+      "Beijing": "BJS",
+      "Shanghai": "SHA",
+      "Istanbul": "IST",
+      "Toronto": "YTO"
+    };
+    
+    return cityCodeMap[cityName] || cityName.substring(0, 3).toUpperCase();
+  };
 
   // Calculate match score for relevance ranking
   const calculateMatchScore = (airport, searchTerm) => {
