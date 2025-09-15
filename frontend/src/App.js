@@ -1632,12 +1632,12 @@ function App() {
                 <img 
                   src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
                   alt="TourSmile"
-                  className="h-10 w-auto"
+                  className="h-12 w-auto"
                 />
                 <div className="hidden md:flex space-x-6 text-sm font-medium">
                   <span className="text-black border-b-2 border-blue-600 pb-1 font-semibold">Flights</span>
                   <span className="text-black hover:text-blue-600 cursor-pointer font-medium">Hotels</span>
-                  <span className="text-black hover:text-blue-600 cursor-pointer font-medium">Activities</span>
+                  <span className="text-black hover:text-blue-600 cursor-pointer font-medium">Tours</span>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
@@ -1653,19 +1653,33 @@ function App() {
 
           {/* Main Content */}
           <main className="mx-auto max-w-5xl px-4 pb-24">
-            {/* Hero */}
-            <section className="text-center pt-8 pb-6">
-              <h1 className="text-4xl md:text-5xl font-bold mb-2 text-black">
-                Quick and Easy Planning at Best Fares
-              </h1>
-              <div className="flex justify-center items-center space-x-4 mb-6">
-                <span className="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Instant</span>
-                <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">Secure</span>
-                <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-medium">Easy</span>
+            {/* Service Icons Section */}
+            <section className="text-center pt-12 pb-8">
+              <div className="flex justify-center items-center space-x-8 md:space-x-12">
+                {/* Flights Icon */}
+                <div className="flex flex-col items-center group cursor-pointer">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-white flex items-center justify-center mb-2 group-hover:bg-blue-50 group-hover:border-blue-300 transition-all duration-200 shadow-sm">
+                    <span className="text-xl md:text-2xl">✈️</span>
+                  </div>
+                  <span className="text-sm font-medium text-black">Flights</span>
+                </div>
+                
+                {/* Hotels Icon */}
+                <div className="flex flex-col items-center group cursor-pointer">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-white flex items-center justify-center mb-2 group-hover:bg-green-50 group-hover:border-green-300 transition-all duration-200 shadow-sm">
+                    <span className="text-xl md:text-2xl">🏨</span>
+                  </div>
+                  <span className="text-sm font-medium text-neutral-400">Hotels</span>
+                </div>
+                
+                {/* Tours Icon */}
+                <div className="flex flex-col items-center group cursor-pointer">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-white flex items-center justify-center mb-2 group-hover:bg-orange-50 group-hover:border-orange-300 transition-all duration-200 shadow-sm">
+                    <span className="text-xl md:text-2xl">🗺️</span>
+                  </div>
+                  <span className="text-sm font-medium text-neutral-400">Tours</span>
+                </div>
               </div>
-              <p className="text-lg text-neutral-600">
-                Book flights with confidence. Best deals, instant confirmation.
-              </p>
             </section>
             
             {/* Search Card */}
