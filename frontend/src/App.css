@@ -259,14 +259,14 @@ html {
 /* MOBILE RESPONSIVENESS FOR COMPACT CONTAINER */
 @media (max-width: 767px) {
   .compact-flight-container {
-    min-height: 48px !important;
+    min-height: 42px !important;
     border-radius: 8px !important;
   }
   
   .compact-flight-container > div:first-child,
   .compact-flight-container > div:last-child {
-    padding: 6px 10px !important;
-    min-height: 48px !important;
+    padding: 4px 8px !important;
+    min-height: 42px !important;
   }
   
   .compact-flight-container > div:nth-child(2) {
@@ -284,8 +284,8 @@ html {
   
   .date-selector-compact,
   .passenger-selector-compact {
-    min-height: 48px !important;
-    padding: 8px 12px !important;
+    min-height: 42px !important;
+    padding: 6px 10px !important;
     border-radius: 8px !important;
   }
   
