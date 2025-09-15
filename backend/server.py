@@ -727,7 +727,7 @@ async def search_airports(query: str, limit: int = 10):
             {"city": "Ulaanbaatar", "airport": "Chinggis Khaan International Airport", "iata": "ULN", "country": "MN"},
             {"city": "Guilin", "airport": "Guilin Liangjiang International Airport", "iata": "KWL", "country": "CN"},
             
-            # CRITICAL BUG FIX: MISSING BRATISLAVA AND OTHER IATA AIRPORTS
+            # CRITICAL BUG FIX: MISSING BRATISLAVA AND OTHER ESSENTIAL IATA AIRPORTS
             {"city": "Bratislava", "airport": "M. R. Štefánik Airport", "iata": "BTS", "country": "SK"},
             {"city": "Luxembourg", "airport": "Luxembourg Airport", "iata": "LUX", "country": "LU"},
             {"city": "Malta", "airport": "Malta International Airport", "iata": "MLA", "country": "MT"},
@@ -738,6 +738,25 @@ async def search_airports(query: str, limit: int = 10):
             {"city": "Florence", "airport": "Florence Airport", "iata": "FLR", "country": "IT"},
             {"city": "Naples", "airport": "Naples International Airport", "iata": "NAP", "country": "IT"},
             {"city": "Palermo", "airport": "Falcone-Borsellino Airport", "iata": "PMO", "country": "IT"},
+            {"city": "Cork", "airport": "Cork Airport", "iata": "ORK", "country": "IE"},
+            {"city": "Shannon", "airport": "Shannon Airport", "iata": "SNN", "country": "IE"},
+            {"city": "Lisbon", "airport": "Humberto Delgado Airport", "iata": "LIS", "country": "PT"},
+            {"city": "Porto", "airport": "Francisco Sá Carneiro Airport", "iata": "OPO", "country": "PT"},
+            {"city": "Faro", "airport": "Faro Airport", "iata": "FAO", "country": "PT"},
+            
+            # EXPANDED MAJOR HUBS TO ENSURE COMPREHENSIVE COVERAGE
+            {"city": "Brisbane", "airport": "Brisbane Airport", "iata": "BNE", "country": "AU"},
+            {"city": "Melbourne", "airport": "Melbourne Airport", "iata": "MEL", "country": "AU"},
+            {"city": "Perth", "airport": "Perth Airport", "iata": "PER", "country": "AU"},
+            {"city": "Adelaide", "airport": "Adelaide Airport", "iata": "ADL", "country": "AU"},
+            {"city": "Auckland", "airport": "Auckland Airport", "iata": "AKL", "country": "NZ"},
+            {"city": "Wellington", "airport": "Wellington Airport", "iata": "WLG", "country": "NZ"},
+            {"city": "Christchurch", "airport": "Christchurch Airport", "iata": "CHC", "country": "NZ"},
+            {"city": "Montreal", "airport": "Montreal-Pierre Elliott Trudeau International Airport", "iata": "YUL", "country": "CA"},
+            {"city": "Vancouver", "airport": "Vancouver International Airport", "iata": "YVR", "country": "CA"},
+            {"city": "Calgary", "airport": "Calgary International Airport", "iata": "YYC", "country": "CA"},
+            {"city": "Toronto", "airport": "Lester B. Pearson International Airport", "iata": "YYZ", "country": "CA"},
+            {"city": "Ottawa", "airport": "Ottawa Macdonald-Cartier International Airport", "iata": "YOW", "country": "CA"},
             
             # ADDITIONAL MAJOR DESTINATIONS WORLDWIDE
             {"city": "Abuja", "airport": "Nnamdi Azikiwe International Airport", "iata": "ABV", "country": "NG"},
