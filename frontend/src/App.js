@@ -1835,7 +1835,7 @@ function App() {
       "Rome": "ROM",
       "Chicago": "CHI",
       "Washington": "WAS",
-      "Houston": "HOU", // CRITICAL FIX: This should be "HOU" for city code, not individual airport HOU code
+      "Houston": "HST", // CRITICAL FIX: Use HST instead of HOU to avoid confusion with William P. Hobby Airport (HOU)
       "Dallas": "DFW",
       "São Paulo": "SAO",
       "Rio de Janeiro": "RIO", 
