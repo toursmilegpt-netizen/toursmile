@@ -361,8 +361,8 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     }
   }, [debouncedQuery, open, value, createEnhancedSuggestions]);
   
-  // Get city code for multi-airport cities
-  const getCityCode = (cityName, country) => {
+  // Get city code for multi-airport cities  
+  const getCityCode = useCallback((cityName, country) => {
     const cityCodeMap = {
       "London-GB": "LON",
       "New York-US": "NYC", 
@@ -386,7 +386,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     };
     
     return cityCodeMap[`${cityName}-${country}`] || cityName.substring(0, 3).toUpperCase();
-  };
+  }, []);
   
   // Get full country name
   const getCountryName = (countryCode) => {
