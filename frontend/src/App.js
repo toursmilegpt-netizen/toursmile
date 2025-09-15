@@ -2820,6 +2820,24 @@ function App() {
             />
           </div>
         </div>
+          </div>
+        </div>
+      </>
+    )}
+
+        {/* Compact Passenger Selector */}
+        <div style={{ flex: 1, padding: '12px', overflowY: 'auto' }}>
+          <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+            <PaxOverlay 
+              value={pax} 
+              onChange={(newPax) => {
+                setPax(newPax);
+                setShowPassengerOverlay(false);
+              }}
+              compact={true}
+            />
+          </div>
+        </div>
       </div>
     )}
     </div>
