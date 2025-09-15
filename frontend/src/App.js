@@ -2080,8 +2080,8 @@ function App() {
       {/* Render different pages based on current state */}
       {currentPage === 'search' && (
         <>
-          {/* Header */}
-          <header className="border-b border-neutral-100">
+          {/* Header - Enhanced with subtle gradient */}
+          <header className="border-b border-neutral-100 bg-gradient-to-b from-white to-blue-50/30">
             <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
               <div className="flex items-center">
                 <img 
