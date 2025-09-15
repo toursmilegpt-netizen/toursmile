@@ -2696,45 +2696,44 @@ function App() {
       </>
     )}
     
-    {/* Date Selection Overlay - Compact Calendar */}
+    {/* Date Selection Overlay - Smart Desktop/Mobile Behavior */}
     {showDateOverlay && (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'white',
-        zIndex: 9999,
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-        {/* Header */}
-        <div style={{
-          padding: '16px',
-          borderBottom: '1px solid #e5e7eb',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <button
-            onClick={() => setShowDateOverlay(false)}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '18px',
-              cursor: 'pointer',
-              padding: '8px',
-              color: '#6b7280'
-            }}
-          >
-            ←
-          </button>
-          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
-            Select Travel Date
-          </h3>
-          <div style={{ width: '34px' }}></div>
-        </div>
+      <>
+        {/* Backdrop - semi-transparent on desktop, hidden on mobile */}
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden md:block"
+          onClick={() => setShowDateOverlay(false)}
+        />
+        
+        {/* Overlay Container - Responsive Design */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6">
+          <div className="w-full h-full md:w-[32rem] md:h-[36rem] bg-white md:rounded-2xl md:shadow-2xl flex flex-col md:max-h-[80vh]">
+            {/* Header */}
+            <div style={{
+              padding: '16px',
+              borderBottom: '1px solid #e5e7eb',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <button
+                onClick={() => setShowDateOverlay(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '18px',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  color: '#6b7280'
+                }}
+              >
+                ←
+              </button>
+              <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
+                Select Travel Date
+              </h3>
+              <div style={{ width: '34px' }}></div>
+            </div>
 
         {/* Compact Calendar */}
         <div style={{ flex: 1, padding: '12px', overflowY: 'auto' }}>
