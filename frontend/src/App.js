@@ -2115,15 +2115,15 @@ function App() {
 
           {/* Main Content */}
           <main className="mx-auto max-w-5xl px-4 pb-24">
-            {/* Hero Section with Enhanced Typography */}
-            <section className="text-center pt-16 pb-4">
+            {/* Hero Section with Compact Typography */}
+            <section className="text-center pt-8 pb-2">
               <div className="relative">
                 {/* Decorative background elements for headline */}
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-64 h-32 bg-gradient-to-r from-blue-100/20 via-purple-100/15 to-orange-100/20 rounded-full blur-3xl"></div>
-                <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-4 relative z-10">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-48 h-20 bg-gradient-to-r from-blue-100/20 via-purple-100/15 to-orange-100/20 rounded-full blur-3xl"></div>
+                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-2 relative z-10">
                   Discover the World
                 </h1>
-                <p className="text-lg md:text-xl text-gray-600 font-medium mb-8 relative z-10">
+                <p className="text-sm md:text-base text-gray-600 font-medium mb-4 relative z-10">
                   Quick and Easy Planning at Best Fares
                 </p>
               </div>
