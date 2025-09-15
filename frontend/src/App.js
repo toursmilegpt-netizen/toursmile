@@ -2124,7 +2124,7 @@ function App() {
                 <div className="absolute top-1/2 left-1/4 w-1 h-1 bg-purple-200/60 rounded-full animate-pulse delay-500"></div>
                 {/* Flights Icon */}
                 <div className="flex flex-col items-center group cursor-pointer">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-white flex items-center justify-center mb-2 group-hover:bg-blue-50 group-hover:border-blue-300 transition-all duration-200 shadow-sm">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-gradient-to-br from-white to-blue-50/30 flex items-center justify-center mb-2 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:to-blue-100/50 group-hover:border-blue-300 group-hover:shadow-lg group-hover:-translate-y-1 transition-all duration-300 shadow-sm">
                     <span className="text-xl md:text-2xl">✈️</span>
                   </div>
                   <span className="text-sm font-medium text-black">Flights</span>
