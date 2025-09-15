@@ -1505,7 +1505,19 @@ function App() {
             </section>
             
             {/* Search Card */}
-            <SearchCard onSearch={handleSearch} />
+            <SearchCard 
+              onSearch={handleSearch}
+              overlayStates={{
+                showFromOverlay, setShowFromOverlay,
+                showToOverlay, setShowToOverlay,
+                showDateOverlay, setShowDateOverlay,
+                showPassengerOverlay, setShowPassengerOverlay
+              }}
+              searchStates={{
+                from, setFrom, to, setTo, depart, setDepart, ret, setRet,
+                pax, setPax, trip, setTrip
+              }}
+            />
 
             {/* Trust Section */}
             <section className="mt-12">
