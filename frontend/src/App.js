@@ -937,70 +937,85 @@ function SearchCard({ onSearch }) {
           ))}
         </div>
 
-        {/* Unified From/To Container - Single Box Design */}
-        <div className="mt-4 unified-flight-container" style={{ 
+        {/* Compact From/To Container - Ixigo Style */}
+        <div className="mt-3 compact-flight-container" style={{ 
           position: 'relative',
           background: 'white',
           border: '1px solid #d1d5db',
-          borderRadius: '12px',
+          borderRadius: '10px',
           overflow: 'hidden',
           display: 'flex',
           alignItems: 'stretch',
-          minHeight: '64px'
+          minHeight: '52px'
         }}>
           {/* From Field - Left Side */}
-          <div style={{ 
-            flex: '1', 
-            minWidth: 0, 
-            maxWidth: '100%',
-            position: 'relative'
-          }}>
-            <CityInput 
-              key={`from-${from ? from.iata : 'empty'}`}
-              label="From" 
-              value={from} 
-              onChange={setFrom}
-              onNext={handleFromComplete}
-              autoFocus={currentStep === 0}
-              integrated={true}
-            />
+          <div 
+            style={{ 
+              flex: '1', 
+              minWidth: 0, 
+              maxWidth: '100%',
+              position: 'relative',
+              cursor: 'pointer'
+            }}
+            onClick={() => setShowFromOverlay(true)}
+          >
+            <div style={{ 
+              padding: '8px 12px',
+              height: '100%',
+              minHeight: '52px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center'
+            }}>
+              <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">FROM</div>
+              <div className="flex items-center" style={{ minWidth: 0, maxWidth: '100%' }}>
+                <span className="text-xs mr-1.5 flex-shrink-0">✈️</span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-semibold truncate" style={{ fontSize: '14px', color: '#111827' }}>
+                    {from ? from.city : 'Select City'}
+                  </div>
+                  {from && from.iata && (
+                    <div className="text-[10px] text-neutral-500 font-mono uppercase">
+                      {from.iata}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
           
-          {/* Integrated Swap Button - Seamless Design */}
+          {/* Swap Button - Center */}
           <div style={{
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '48px',
-            minWidth: '48px',
-            maxWidth: '48px',
-            background: 'white',
-            borderLeft: 'none',
-            borderRight: 'none'
+            width: '40px',
+            minWidth: '40px',
+            maxWidth: '40px',
+            background: 'white'
           }}>
             <button
               aria-label="Swap From and To"
               onClick={(e) => { 
                 e.preventDefault();
                 e.stopPropagation();
-                // Swap complete airport objects
                 const tempFrom = from; 
                 const tempTo = to;
                 setFrom(tempTo); 
                 setTo(tempFrom);
               }}
-              className="swap-button-seamless"
+              className="swap-button-compact"
               style={{ 
-                height: '32px',
-                width: '32px',
-                borderRadius: '6px',
+                height: '24px',
+                width: '24px',
+                borderRadius: '4px',
                 border: 'none',
                 background: 'transparent',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '16px',
+                fontSize: '14px',
                 color: '#6b7280',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease'
@@ -1008,12 +1023,10 @@ function SearchCard({ onSearch }) {
               onMouseOver={(e) => {
                 e.target.style.background = '#f9fafb';
                 e.target.style.color = '#374151';
-                e.target.style.transform = 'scale(1.1)';
               }}
               onMouseOut={(e) => {
                 e.target.style.background = 'transparent';
                 e.target.style.color = '#6b7280';
-                e.target.style.transform = 'scale(1)';
               }}
             >
               ⇄
@@ -1021,21 +1034,40 @@ function SearchCard({ onSearch }) {
           </div>
           
           {/* To Field - Right Side */}
-          <div style={{ 
-            flex: '1', 
-            minWidth: 0, 
-            maxWidth: '100%', 
-            position: 'relative'
-          }}>
-            <CityInput 
-              key={`to-${to ? to.iata : 'empty'}`}
-              label="To" 
-              value={to} 
-              onChange={setTo}
-              onNext={handleToComplete}
-              autoFocus={currentStep === 1}
-              integrated={true}
-            />
+          <div 
+            style={{ 
+              flex: '1', 
+              minWidth: 0, 
+              maxWidth: '100%', 
+              position: 'relative',
+              cursor: 'pointer',
+              borderLeft: '1px solid #f3f4f6'
+            }}
+            onClick={() => setShowToOverlay(true)}
+          >
+            <div style={{ 
+              padding: '8px 12px',
+              height: '100%',
+              minHeight: '52px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center'
+            }}>
+              <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">TO</div>
+              <div className="flex items-center" style={{ minWidth: 0, maxWidth: '100%' }}>
+                <span className="text-xs mr-1.5 flex-shrink-0">✈️</span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-semibold truncate" style={{ fontSize: '14px', color: '#111827' }}>
+                    {to ? to.city : 'Select City'}
+                  </div>
+                  {to && to.iata && (
+                    <div className="text-[10px] text-neutral-500 font-mono uppercase">
+                      {to.iata}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
