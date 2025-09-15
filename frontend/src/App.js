@@ -499,6 +499,96 @@ const GLOBAL_AIRPORTS_DATABASE = [
   { city: "Yaren", iata: "INU", airport: "Nauru Airport", country: "NR", countryName: "Nauru" },
   { city: "Yerevan", iata: "EVN", airport: "Zvartnots International Airport", country: "AM", countryName: "Armenia" },
   { city: "Zagreb", iata: "ZAG", airport: "Zagreb Airport", country: "HR", countryName: "Croatia" },
+  
+  // 🌍 ADDITIONAL PRIORITY AIRPORTS FOR COMPREHENSIVE GLOBAL COVERAGE
+  // Major Asian Hubs
+  { city: "Taipei", iata: "TPE", airport: "Taiwan Taoyuan International Airport", country: "TW", countryName: "Taiwan" },
+  { city: "Kuala Lumpur", iata: "KUL", airport: "Kuala Lumpur International Airport", country: "MY", countryName: "Malaysia" },
+  { city: "Jakarta", iata: "CGK", airport: "Soekarno-Hatta International Airport", country: "ID", countryName: "Indonesia" },
+  { city: "Manila", iata: "MNL", airport: "Ninoy Aquino International Airport", country: "PH", countryName: "Philippines" },
+  { city: "Seoul", iata: "ICN", airport: "Incheon International Airport", country: "KR", countryName: "South Korea" },
+  { city: "Seoul", iata: "GMP", airport: "Gimpo International Airport", country: "KR", countryName: "South Korea" },
+  { city: "Osaka", iata: "KIX", airport: "Kansai International Airport", country: "JP", countryName: "Japan" },
+  { city: "Osaka", iata: "ITM", airport: "Osaka International Airport", country: "JP", countryName: "Japan" },
+  
+  // Major African Airports
+  { city: "Johannesburg", iata: "JNB", airport: "O.R. Tambo International Airport", country: "ZA", countryName: "South Africa" },
+  { city: "Cape Town", iata: "CPT", airport: "Cape Town International Airport", country: "ZA", countryName: "South Africa" },
+  { city: "Lagos", iata: "LOS", airport: "Murtala Muhammed International Airport", country: "NG", countryName: "Nigeria" },
+  { city: "Accra", iata: "ACC", airport: "Kotoka International Airport", country: "GH", countryName: "Ghana" },
+  { city: "Addis Ababa", iata: "ADD", airport: "Addis Ababa Bole International Airport", country: "ET", countryName: "Ethiopia" },
+  { city: "Nairobi", iata: "NBO", airport: "Jomo Kenyatta International Airport", country: "KE", countryName: "Kenya" },
+  
+  // Major Middle Eastern Hubs
+  { city: "Doha", iata: "DOH", airport: "Hamad International Airport", country: "QA", countryName: "Qatar" },
+  { city: "Abu Dhabi", iata: "AUH", airport: "Zayed International Airport", country: "AE", countryName: "United Arab Emirates" },
+  { city: "Kuwait City", iata: "KWI", airport: "Kuwait International Airport", country: "KW", countryName: "Kuwait" },
+  { city: "Muscat", iata: "MCT", airport: "Muscat International Airport", country: "OM", countryName: "Oman" },
+  { city: "Manama", iata: "BAH", airport: "Bahrain International Airport", country: "BH", countryName: "Bahrain" },
+  { city: "Riyadh", iata: "RUH", airport: "King Khalid International Airport", country: "SA", countryName: "Saudi Arabia" },
+  { city: "Jeddah", iata: "JED", airport: "King Abdulaziz International Airport", country: "SA", countryName: "Saudi Arabia" },
+  { city: "Amman", iata: "AMM", airport: "Queen Alia International Airport", country: "JO", countryName: "Jordan" },
+  { city: "Beirut", iata: "BEY", airport: "Beirut Rafic Hariri International Airport", country: "LB", countryName: "Lebanon" },
+  
+  // South American Major Hubs
+  { city: "São Paulo", iata: "GRU", airport: "São Paulo/Guarulhos International Airport", country: "BR", countryName: "Brazil" },
+  { city: "São Paulo", iata: "CGH", airport: "São Paulo–Congonhas Airport", country: "BR", countryName: "Brazil" },
+  { city: "Rio de Janeiro", iata: "GIG", airport: "Rio de Janeiro–Galeão International Airport", country: "BR", countryName: "Brazil" },
+  { city: "Rio de Janeiro", iata: "SDU", airport: "Santos Dumont Airport", country: "BR", countryName: "Brazil" },
+  { city: "Buenos Aires", iata: "EZE", airport: "Ezeiza International Airport", country: "AR", countryName: "Argentina" },
+  { city: "Buenos Aires", iata: "AEP", airport: "Jorge Newbery Airfield", country: "AR", countryName: "Argentina" },
+  { city: "Santiago", iata: "SCL", airport: "Comodoro Arturo Merino Benítez International Airport", country: "CL", countryName: "Chile" },
+  { city: "Lima", iata: "LIM", airport: "Jorge Chávez International Airport", country: "PE", countryName: "Peru" },
+  { city: "Bogotá", iata: "BOG", airport: "El Dorado International Airport", country: "CO", countryName: "Colombia" },
+  
+  // Major Canadian Airports
+  { city: "Toronto", iata: "YYZ", airport: "Lester B. Pearson International Airport", country: "CA", countryName: "Canada" },
+  { city: "Vancouver", iata: "YVR", airport: "Vancouver International Airport", country: "CA", countryName: "Canada" },
+  { city: "Montreal", iata: "YUL", airport: "Montreal-Pierre Elliott Trudeau International Airport", country: "CA", countryName: "Canada" },
+  { city: "Calgary", iata: "YYC", airport: "Calgary International Airport", country: "CA", countryName: "Canada" },
+  { city: "Edmonton", iata: "YEG", airport: "Edmonton International Airport", country: "CA", countryName: "Canada" },
+  { city: "Ottawa", iata: "YOW", airport: "Ottawa Macdonald-Cartier International Airport", country: "CA", countryName: "Canada" },
+  
+  // Major Mexican Airports
+  { city: "Mexico City", iata: "MEX", airport: "Mexico City International Airport", country: "MX", countryName: "Mexico" },
+  { city: "Cancún", iata: "CUN", airport: "Cancún International Airport", country: "MX", countryName: "Mexico" },
+  { city: "Guadalajara", iata: "GDL", airport: "Miguel Hidalgo y Costilla Guadalajara International Airport", country: "MX", countryName: "Mexico" },
+  { city: "Monterrey", iata: "MTY", airport: "General Mariano Escobedo International Airport", country: "MX", countryName: "Mexico" },
+  { city: "Puerto Vallarta", iata: "PVR", airport: "Licenciado Gustavo Díaz Ordaz International Airport", country: "MX", countryName: "Mexico" },
+  { city: "Los Cabos", iata: "SJD", airport: "Los Cabos International Airport", country: "MX", countryName: "Mexico" },
+  
+  // Major Australian/NZ Airports
+  { city: "Sydney", iata: "SYD", airport: "Sydney Kingsford Smith Airport", country: "AU", countryName: "Australia" },
+  { city: "Melbourne", iata: "MEL", airport: "Melbourne Airport", country: "AU", countryName: "Australia" },
+  { city: "Brisbane", iata: "BNE", airport: "Brisbane Airport", country: "AU", countryName: "Australia" },
+  { city: "Perth", iata: "PER", airport: "Perth Airport", country: "AU", countryName: "Australia" },
+  { city: "Adelaide", iata: "ADL", airport: "Adelaide International Airport", country: "AU", countryName: "Australia" },
+  { city: "Auckland", iata: "AKL", airport: "Auckland International Airport", country: "NZ", countryName: "New Zealand" },
+  { city: "Christchurch", iata: "CHC", airport: "Christchurch Airport", country: "NZ", countryName: "New Zealand" },
+  { city: "Queenstown", iata: "ZQN", airport: "Queenstown Airport", country: "NZ", countryName: "New Zealand" },
+  
+  // Additional European Regional Airports
+  { city: "Stockholm", iata: "ARN", airport: "Stockholm Arlanda Airport", country: "SE", countryName: "Sweden" },
+  { city: "Oslo", iata: "OSL", airport: "Oslo Airport", country: "NO", countryName: "Norway" },
+  { city: "Copenhagen", iata: "CPH", airport: "Copenhagen Airport", country: "DK", countryName: "Denmark" },
+  { city: "Helsinki", iata: "HEL", airport: "Helsinki Airport", country: "FI", countryName: "Finland" },
+  { city: "Warsaw", iata: "WAW", airport: "Warsaw Chopin Airport", country: "PL", countryName: "Poland" },
+  { city: "Prague", iata: "PRG", airport: "Václav Havel Airport Prague", country: "CZ", countryName: "Czech Republic" },
+  { city: "Budapest", iata: "BUD", airport: "Budapest Ferenc Liszt International Airport", country: "HU", countryName: "Hungary" },
+  { city: "Sofia", iata: "SOF", airport: "Sofia Airport", country: "BG", countryName: "Bulgaria" },
+  { city: "Bucharest", iata: "OTP", airport: "Henri Coandă International Airport", country: "RO", countryName: "Romania" },
+  { city: "Belgrade", iata: "BEG", airport: "Belgrade Nikola Tesla Airport", country: "RS", countryName: "Serbia" },
+  
+  // Island Nations and Remote Destinations
+  { city: "Suva", iata: "SUV", airport: "Nausori Airport", country: "FJ", countryName: "Fiji" },
+  { city: "Nadi", iata: "NAN", airport: "Nadi International Airport", country: "FJ", countryName: "Fiji" },
+  { city: "Apia", iata: "APW", airport: "Faleolo International Airport", country: "WS", countryName: "Samoa" },
+  { city: "Nuku'alofa", iata: "TBU", airport: "Fua'amotu International Airport", country: "TO", countryName: "Tonga" },
+  { city: "Rarotonga", iata: "RAR", airport: "Rarotonga International Airport", country: "CK", countryName: "Cook Islands" },
+  { city: "Papeete", iata: "PPT", airport: "Faa'a International Airport", country: "PF", countryName: "French Polynesia" },
+  { city: "Noumea", iata: "NOU", airport: "La Tontouta International Airport", country: "NC", countryName: "New Caledonia" },
+  { city: "Port Vila", iata: "VLI", airport: "Bauerfield Airport", country: "VU", countryName: "Vanuatu" },
+  { city: "Port Moresby", iata: "POM", airport: "Jacksons International Airport", country: "PG", countryName: "Papua New Guinea" },
 ];
 
 // Create indexed lookup for fast performance
