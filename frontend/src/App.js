@@ -336,33 +336,42 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
   };
 
   // Enhanced search logic with "All Airports" support
+  // MAIN AUTOCOMPLETE LOGIC - Trigger on 2+ Characters
   useEffect(() => {
-    // Don't show suggestions if field already has a complete selected value (not just typing)
-    if (value && value.city && !query) {
+    // Don't show suggestions if field already has a complete selected value (when not actively typing)
+    if (value && value.iata && !query) {
       setOpen(false);
       setSuggestions([]);
       return;
     }
     
-    if (debouncedQuery && debouncedQuery.length >= 1) {
-      // Create enhanced search results with "All Airports" for multi-airport cities
-      const enhancedSuggestions = createEnhancedSuggestions(debouncedQuery);
+    // Trigger autocomplete search with 2+ characters (per requirements)
+    if (debouncedQuery && debouncedQuery.length >= 2) {
+      const autocompleteResults = performAutocompleteSearch(debouncedQuery);
       
-      if (enhancedSuggestions.length > 0) {
-        setSuggestions(enhancedSuggestions);
+      if (autocompleteResults.length > 0) {
+        setSuggestions(autocompleteResults);
         setOpen(true);
       } else {
-        // Search via API if no local matches, fallback to comprehensive database
-        searchAirports(debouncedQuery);
+        // No matches found - keep dropdown open but show empty state
+        setSuggestions([]);
+        setOpen(true);
       }
-    } else if (open && (!debouncedQuery || debouncedQuery.length === 0)) {
-      // Show popular destinations when dropdown is open but no query
-      setSuggestions(popularAirports);
+    } else if (open && (!debouncedQuery || debouncedQuery.length < 2)) {
+      // Show popular airports when dropdown is open but query is less than 2 characters
+      const popularResults = GLOBAL_AIRPORTS_DATABASE
+        .filter(airport => ['BOM', 'DEL', 'BLR', 'HYD', 'MAA', 'CCU', 'PNQ', 'AMD', 'DXB', 'SIN'].includes(airport.iata))
+        .map(airport => ({
+          ...airport,
+          displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`,
+          matchScore: 0
+        }));
+      setSuggestions(popularResults);
     } else if (!debouncedQuery || debouncedQuery.length === 0) {
       setSuggestions([]);
       setOpen(false);
     }
-  }, [debouncedQuery, open, value, createEnhancedSuggestions]);
+  }, [debouncedQuery, open, value, performAutocompleteSearch]);
   
   // Get city code for multi-airport cities  
   const getCityCode = useCallback((cityName, country) => {
