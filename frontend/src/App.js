@@ -254,63 +254,86 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     }
   }, [value]);
   
-  // Create enhanced suggestions with "All Airports" functionality
-  const createEnhancedSuggestions = useCallback((query) => {
-    console.log('createEnhancedSuggestions called with query:', query);
-    const matches = POPULAR_AIRPORTS.filter(airport => 
-      airport.city.toLowerCase().includes(query.toLowerCase()) ||
-      airport.iata.toLowerCase().includes(query.toLowerCase()) ||
-      airport.airport.toLowerCase().includes(query.toLowerCase()) ||
-      airport.country.toLowerCase().includes(query.toLowerCase())
-    );
-    console.log('Matches found:', matches.length, matches);
+  // ENHANCED AUTOCOMPLETE SEARCH - High Performance with 2+ Character Trigger
+  const performAutocompleteSearch = useCallback((query) => {
+    // Minimum 2 characters required as per requirements
+    if (!query || query.length < 2) {
+      return [];
+    }
+
+    const searchTerm = query.toLowerCase().trim();
+    const results = [];
+    const seen = new Set(); // Prevent duplicates
     
-    // Group airports by city to create "All Airports" options
-    const cityGroups = {};
-    matches.forEach(airport => {
-      const cityKey = `${airport.city}-${airport.country}`;
-      if (!cityGroups[cityKey]) {
-        cityGroups[cityKey] = [];
+    // Search through global airports database
+    GLOBAL_AIRPORTS_DATABASE.forEach(airport => {
+      const matchScore = calculateMatchScore(airport, searchTerm);
+      if (matchScore > 0) {
+        const key = `${airport.iata}-${airport.city}`;
+        if (!seen.has(key)) {
+          results.push({
+            ...airport,
+            matchScore,
+            displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`,
+            searchText: searchTerm
+          });
+          seen.add(key);
+        }
       }
-      cityGroups[cityKey].push(airport);
     });
-    
-    const enhancedResults = [];
-    
-    // Add "All Airports" option for cities with multiple airports
-    Object.entries(cityGroups).forEach(([cityKey, airports]) => {
-      if (airports.length > 1) {
-        // Add "All Airports" option
-        const firstAirport = airports[0];
-        const cityCode = getCityCode(firstAirport.city, firstAirport.country);
-        enhancedResults.push({
-          city: firstAirport.city,
-          iata: cityCode,
-          airport: "All Airports",
-          country: firstAirport.country,
-          isAllAirports: true,
-          airportCount: airports.length
-        });
-      }
-      
-      // Add individual airports
-      airports.forEach(airport => {
-        enhancedResults.push(airport);
-      });
-    });
-    
-    // Sort: "All Airports" first, then individual airports, limit to 10 results
-    const finalResults = enhancedResults
-      .sort((a, b) => {
-        if (a.isAllAirports && !b.isAllAirports) return -1;
-        if (!a.isAllAirports && b.isAllAirports) return 1;
-        return a.city.localeCompare(b.city);
-      })
+
+    // Sort by match score (higher score first) and limit to 10 results
+    return results
+      .sort((a, b) => b.matchScore - a.matchScore)
       .slice(0, 10);
+  }, []);
+
+  // Calculate match score for relevance ranking
+  const calculateMatchScore = (airport, searchTerm) => {
+    let score = 0;
     
-    console.log('Final enhanced results:', finalResults.length, finalResults);
-    return finalResults;
-  }, [getCityCode]);
+    // Exact IATA code match (highest priority)
+    if (airport.iata.toLowerCase() === searchTerm) {
+      score += 100;
+    } else if (airport.iata.toLowerCase().startsWith(searchTerm)) {
+      score += 80;
+    }
+    
+    // City name matches
+    if (airport.city.toLowerCase() === searchTerm) {
+      score += 90;
+    } else if (airport.city.toLowerCase().startsWith(searchTerm)) {
+      score += 70;
+    } else if (airport.city.toLowerCase().includes(searchTerm)) {
+      score += 50;
+    }
+    
+    // Airport name matches
+    if (airport.airport.toLowerCase().includes(searchTerm)) {
+      score += 30;
+    }
+    
+    // Country name matches
+    if (airport.countryName.toLowerCase().includes(searchTerm)) {
+      score += 20;
+    }
+    
+    return score;
+  };
+
+  // Highlight matching text in results
+  const highlightMatch = (text, searchTerm) => {
+    if (!searchTerm || !text) return text;
+    
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    const parts = text.split(regex);
+    
+    return parts.map((part, index) => 
+      regex.test(part) ? 
+        <strong key={index} className="font-semibold text-blue-600">{part}</strong> : 
+        part
+    );
+  };
 
   // Enhanced search logic with "All Airports" support
   useEffect(() => {
