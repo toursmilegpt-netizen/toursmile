@@ -952,10 +952,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "COMPREHENSIVE 100% PERFECTION FINAL TESTING - COMPLETED"
-    - "Visual Improvements Verification - COMPLETED"
-    - "TBO API Integration Readiness - VERIFIED"
+    - "Critical Airport Search Functionality Fix - URGENT"
+    - "Airport Search Filtering Logic Implementation"
+    - "All Airports Feature Implementation"
   stuck_tasks:
+    - "Critical Airport Search Functionality Fix"
     - "Mobile touch target optimization (minor - 44px compliance needed)"
   test_all: false
   test_priority: "high_first"
