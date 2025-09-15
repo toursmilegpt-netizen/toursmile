@@ -2343,15 +2343,13 @@ function App() {
 
           {/* Main Content */}
           <main className="mx-auto max-w-5xl px-4 pb-24">
-            {/* Hero Section with Compact Typography */}
+            {/* Hero Section with Compact Typography - FIXED TEXT ALIGNMENT */}
             <section className="text-center pt-8 pb-2">
-              <div className="relative">
-                {/* Decorative background elements for headline */}
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-48 h-20 bg-gradient-to-r from-blue-100/20 via-purple-100/15 to-orange-100/20 rounded-full blur-3xl"></div>
-                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-2 relative z-10">
+              <div className="relative flex flex-col items-center justify-center">
+                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-2 relative z-10 text-center">
                   Discover the World
                 </h1>
-                <p className="text-sm md:text-base text-gray-600 font-medium mb-4 relative z-10">
+                <p className="text-sm md:text-base text-gray-600 font-medium mb-4 relative z-10 text-center">
                   Quick and Easy Planning at Best Fares
                 </p>
               </div>
