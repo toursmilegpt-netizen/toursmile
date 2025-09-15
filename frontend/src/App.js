@@ -2668,6 +2668,7 @@ function App() {
           </div>
         </div>
       </div>
+      </>
     )}
     
     {/* Date Selection Overlay - Compact Calendar */}
