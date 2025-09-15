@@ -762,19 +762,33 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
               <button
                 key={`${airport.iata}-${i}`}
                 onClick={() => handleCitySelect(airport)}
-                className="w-full text-left px-3 py-2 hover:bg-neutral-50 flex items-center justify-between transition-colors duration-150"
+                className={`w-full text-left px-3 py-2 hover:bg-neutral-50 flex items-center justify-between transition-colors duration-150 ${
+                  airport.isAllAirports ? 'bg-blue-25 border-l-2 border-blue-400' : ''
+                }`}
                 style={{ 
                   minHeight: '44px',
-                  borderBottom: i < suggestions.length - 1 ? '1px solid #f3f4f6' : 'none'
+                  borderBottom: i < suggestions.length - 1 ? '1px solid #f3f4f6' : 'none',
+                  backgroundColor: airport.isAllAirports ? '#f0f9ff' : 'transparent'
                 }}
               >
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium text-neutral-900 truncate">
-                    {airport.city}, {airport.country === 'IN' ? 'India' : airport.country}
+                    {airport.city}, {getCountryName(airport.country)}
+                    {airport.isAllAirports && (
+                      <span className="ml-2 text-xs text-blue-600 font-normal">
+                        ({airport.airportCount} airports)
+                      </span>
+                    )}
                   </div>
-                  <div className="text-xs text-neutral-500 truncate">{airport.airport}</div>
+                  <div className="text-xs text-neutral-500 truncate">
+                    {airport.isAllAirports ? "All Airports" : airport.airport}
+                  </div>
                 </div>
-                <div className="text-xs font-bold text-neutral-600 bg-neutral-100 px-2 py-1 rounded ml-2 flex-shrink-0">
+                <div className={`text-xs font-bold px-2 py-1 rounded ml-2 flex-shrink-0 ${
+                  airport.isAllAirports 
+                    ? 'text-blue-700 bg-blue-100' 
+                    : 'text-neutral-600 bg-neutral-100'
+                }`}>
                   {airport.iata}
                 </div>
               </button>
