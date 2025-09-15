@@ -851,6 +851,119 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
   );
 }
 
+// Simple Date Picker Component for Overlays
+function SimpleDatePicker({ label, value, onChange, minDate, overlay = false }) {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  
+  const addMonths = (date, months) => {
+    const newDate = new Date(date);
+    newDate.setMonth(newDate.getMonth() + months);
+    return newDate;
+  };
+
+  const formatDateDisplay = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  };
+
+  const renderCalendar = () => {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const startDate = new Date(firstDay);
+    startDate.setDate(startDate.getDate() - ((firstDay.getDay() + 6) % 7));
+    
+    const days = [];
+    for (let i = 0; i < 42; i++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+      days.push(date);
+    }
+    
+    return (
+      <div>
+        <div className="grid grid-cols-7 text-xs text-neutral-500 mb-2">
+          {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((day) => 
+            <div key={day} className="py-2 text-center font-medium">{day}</div>
+          )}
+        </div>
+        <div className="grid grid-cols-7 gap-1">
+          {days.map((date, i) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const dateStr = `${year}-${month}-${day}`;
+            
+            const isCurrentMonth = date.getMonth() === currentMonth.getMonth();
+            const isSelected = value && value === dateStr;
+            const isToday = new Date().toDateString() === date.toDateString();
+            const isDisabled = minDate && date < new Date(minDate);
+            
+            return (
+              <button 
+                key={i} 
+                disabled={isDisabled}
+                onClick={() => { 
+                  if (!isDisabled) {
+                    onChange(dateStr);
+                  }
+                }}
+                className={`aspect-square rounded-lg text-sm flex items-center justify-center transition-colors ${
+                  isCurrentMonth ? "text-neutral-900" : "text-neutral-400"
+                } ${
+                  isSelected ? "bg-blue-600 text-white font-semibold" : 
+                  isToday ? "bg-blue-100 text-blue-700 font-medium" :
+                  isDisabled ? "text-neutral-300 cursor-not-allowed" :
+                  "hover:bg-neutral-100"
+                }`}
+                style={{ minHeight: '40px' }}
+              >
+                {date.getDate()}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <div className="mb-4">
+        <h4 className="text-sm font-medium text-neutral-700 mb-2">{label}</h4>
+        {value && (
+          <div className="text-lg font-semibold text-blue-600">
+            {formatDateDisplay(value)}
+          </div>
+        )}
+      </div>
+      
+      <div className="mb-4">
+        <div className="flex items-center justify-between mb-3">
+          <button 
+            onClick={() => setCurrentMonth(addMonths(currentMonth, -1))} 
+            className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-600"
+          >
+            ← Previous
+          </button>
+          <h3 className="text-lg font-semibold">
+            {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+          </h3>
+          <button 
+            onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} 
+            className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-600"
+          >
+            Next →
+          </button>
+        </div>
+        {renderCalendar()}
+      </div>
+    </div>
+  );
+}
+
 // Passenger Row Component
 function PaxRow({ label, hint, value, onInc, onDec }) {
   return (
