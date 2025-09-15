@@ -1983,26 +1983,22 @@ function App() {
             }}
             autoFocus={true}
             onChange={(e) => {
-              // Filter popular cities based on input
-              const query = e.target.value.toLowerCase();
-              if (query.length > 0) {
-                const filtered = [
-                  { city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' },
-                  { city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' },
-                  { city: 'Bengaluru', iata: 'BLR', airport: 'Kempegowda Intl', country: 'IN' },
-                  { city: 'Chennai', iata: 'MAA', airport: 'Chennai Intl', country: 'IN' },
-                  { city: 'Kolkata', iata: 'CCU', airport: 'Netaji Subhas Chandra Bose Intl', country: 'IN' },
-                  { city: 'Hyderabad', iata: 'HYD', airport: 'Rajiv Gandhi Intl', country: 'IN' },
-                  { city: 'Dubai', iata: 'DXB', airport: 'Dubai International', country: 'AE' },
-                  { city: 'Singapore', iata: 'SIN', airport: 'Singapore Changi', country: 'SG' },
-                  { city: 'London', iata: 'LHR', airport: 'Heathrow Airport', country: 'GB' },
-                  { city: 'New York', iata: 'JFK', airport: 'John F Kennedy Intl', country: 'US' }
-                ].filter(airport => 
-                  airport.city.toLowerCase().includes(query) ||
-                  airport.iata.toLowerCase().includes(query) ||
-                  airport.airport.toLowerCase().includes(query)
-                );
-                // Could add filtered results here, but for now we'll just use the full list below
+              const query = e.target.value;
+              setOverlayQuery(query);
+              
+              // Trigger global autocomplete search for 2+ characters
+              if (query && query.length >= 2) {
+                const searchResults = performAutocompleteSearch(query);
+                setOverlayResults(searchResults);
+              } else {
+                // Show popular airports for < 2 characters
+                const popularResults = GLOBAL_AIRPORTS_DATABASE
+                  .filter(airport => ['BOM', 'DEL', 'BLR', 'HYD', 'MAA', 'CCU', 'PNQ', 'AMD', 'DXB', 'SIN'].includes(airport.iata))
+                  .map(airport => ({
+                    ...airport,
+                    displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`
+                  }));
+                setOverlayResults(popularResults);
               }
             }}
           />
