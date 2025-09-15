@@ -275,7 +275,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     }
   }, [value]);
   
-  // Handle search when user types - FIXED LOGIC with value check
+  // Enhanced search logic with "All Airports" support
   useEffect(() => {
     // Don't show suggestions if field already has a selected value
     if (value) {
@@ -287,17 +287,13 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     if (debouncedQuery && debouncedQuery.length >= 1) {
       console.log('Searching for:', debouncedQuery); // Debug log
       
-      // Search in comprehensive airport database first
-      const localMatches = POPULAR_AIRPORTS.filter(airport => 
-        airport.city.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
-        airport.iata.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
-        airport.airport.toLowerCase().includes(debouncedQuery.toLowerCase())
-      ).slice(0, 8); // Limit to 8 results for better UX
+      // Create enhanced search results with "All Airports" for multi-airport cities
+      const enhancedSuggestions = createEnhancedSuggestions(debouncedQuery);
       
-      console.log('Local matches found:', localMatches); // Debug log
+      console.log('Enhanced matches found:', enhancedSuggestions); // Debug log
       
-      if (localMatches.length > 0) {
-        setSuggestions(localMatches);
+      if (enhancedSuggestions.length > 0) {
+        setSuggestions(enhancedSuggestions);
         setOpen(true);
       } else {
         // Search via API if no local matches, fallback to comprehensive database
@@ -311,6 +307,86 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
       setOpen(false);
     }
   }, [debouncedQuery, open, value]); // Added value to dependency array
+  
+  // Create enhanced suggestions with "All Airports" functionality
+  const createEnhancedSuggestions = (query) => {
+    const matches = POPULAR_AIRPORTS.filter(airport => 
+      airport.city.toLowerCase().includes(query.toLowerCase()) ||
+      airport.iata.toLowerCase().includes(query.toLowerCase()) ||
+      airport.airport.toLowerCase().includes(query.toLowerCase()) ||
+      airport.country.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    // Group airports by city to create "All Airports" options
+    const cityGroups = {};
+    matches.forEach(airport => {
+      const cityKey = `${airport.city}-${airport.country}`;
+      if (!cityGroups[cityKey]) {
+        cityGroups[cityKey] = [];
+      }
+      cityGroups[cityKey].push(airport);
+    });
+    
+    const enhancedResults = [];
+    
+    // Add "All Airports" option for cities with multiple airports
+    Object.entries(cityGroups).forEach(([cityKey, airports]) => {
+      if (airports.length > 1) {
+        // Add "All Airports" option
+        const firstAirport = airports[0];
+        const cityCode = getCityCode(firstAirport.city, firstAirport.country);
+        enhancedResults.push({
+          city: firstAirport.city,
+          iata: cityCode,
+          airport: "All Airports",
+          country: firstAirport.country,
+          isAllAirports: true,
+          airportCount: airports.length
+        });
+      }
+      
+      // Add individual airports
+      airports.forEach(airport => {
+        enhancedResults.push(airport);
+      });
+    });
+    
+    // Sort: "All Airports" first, then individual airports, limit to 10 results
+    return enhancedResults
+      .sort((a, b) => {
+        if (a.isAllAirports && !b.isAllAirports) return -1;
+        if (!a.isAllAirports && b.isAllAirports) return 1;
+        return a.city.localeCompare(b.city);
+      })
+      .slice(0, 10);
+  };
+  
+  // Get city code for multi-airport cities
+  const getCityCode = (cityName, country) => {
+    const cityCodeMap = {
+      "London-GB": "LON",
+      "New York-US": "NYC", 
+      "Paris-FR": "PAR",
+      "Tokyo-JP": "TYO",
+      "Milan-IT": "MIL",
+      "Rome-IT": "ROM",
+      "Chicago-US": "CHI",
+      "Washington-US": "WAS",
+      "Houston-US": "HOU",
+      "Dallas-US": "DFW",
+      "São Paulo-BR": "SAO",
+      "Rio de Janeiro-BR": "RIO",
+      "Buenos Aires-AR": "BUE",
+      "Dubai-AE": "DXB",
+      "Beijing-CN": "BJS",
+      "Shanghai-CN": "SHA",
+      "Istanbul-TR": "IST",
+      "Toronto-CA": "YTO",
+      "Oslo-NO": "OSL"
+    };
+    
+    return cityCodeMap[`${cityName}-${country}`] || cityName.substring(0, 3).toUpperCase();
+  };
   
   const searchAirports = async (searchQuery) => {
     if (abortController.current) {
