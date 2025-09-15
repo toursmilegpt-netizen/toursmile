@@ -547,13 +547,10 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    console.log('handleInputChange called with:', inputValue);
     setQuery(inputValue);
-    console.log('setQuery called with:', inputValue);
     
     // Clear any selected value when user starts typing
     if (value) {
-      console.log('Clearing value because user is typing');
       onChange(null);
     }
     
