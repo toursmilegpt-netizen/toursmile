@@ -21,7 +21,7 @@ import os
 from typing import Dict, List, Any
 
 # Backend URL from environment
-BACKEND_URL = "https://flight-search-module.preview.emergentagent.com/api"
+BACKEND_URL = "https://flightsearch-ui-1.preview.emergentagent.com/api"
 
 class PriorityAirportsTester:
     def __init__(self):
