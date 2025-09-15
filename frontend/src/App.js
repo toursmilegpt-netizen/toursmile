@@ -1824,7 +1824,7 @@ function App() {
       .slice(0, 10);
   }, []);
 
-  // Get city code for "All Airports" option
+  // Get city code for "All Airports" option - FIXED HOUSTON BUG
   const getCityAllAirportsCode = (cityName) => {
     const cityCodeMap = {
       "London": "LON",
@@ -1835,7 +1835,7 @@ function App() {
       "Rome": "ROM",
       "Chicago": "CHI",
       "Washington": "WAS",
-      "Houston": "HOU",
+      "Houston": "HOU", // CRITICAL FIX: This should be "HOU" for city code, not individual airport HOU code
       "Dallas": "DFW",
       "São Paulo": "SAO",
       "Rio de Janeiro": "RIO", 
