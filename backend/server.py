@@ -6366,7 +6366,7 @@ async def search_airports(query: str, limit: int = 10):
             {"city": "Palmas", "airport": "Brigadeiro Lysias Rodrigues Airport", "iata": "PMW", "country": "BR"},
             {"city": "Palmatak", "airport": "Matak Airport", "iata": "MWK", "country": "ID"},
             {"city": "Palmdale", "airport": "Palmdale Regional Airport / USAF Plant 42 Airport", "iata": "PMD", "country": "US"},
-            {"city": "Palmer", "airport": "Warren "Bud" Woods Palmer Municipal Airport", "iata": "PAQ", "country": "US"},
+            {"city": "Palmer", "airport": "Warren \"Bud\" Woods Palmer Municipal Airport", "iata": "PAQ", "country": "US"},
             {"city": "Palmer", "airport": "Drumduff Airport", "iata": "DFP", "country": "AU"},
             {"city": "Palmerola", "airport": "Palmerola International Airport / José Enrique Soto Cano Air Base", "iata": "XPL", "country": "HN"},
             {"city": "Palmerston North", "airport": "Palmerston North Airport", "iata": "PMR", "country": "NZ"},
