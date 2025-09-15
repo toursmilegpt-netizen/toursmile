@@ -1263,15 +1263,15 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
               }}
               className="swap-button-enhanced"
               style={{ 
-                height: '32px',
-                width: '32px',
+                height: window.innerWidth <= 768 ? '28px' : '32px',
+                width: window.innerWidth <= 768 ? '28px' : '32px',
                 borderRadius: '8px',
                 border: '1px solid #e5e7eb',
                 background: 'white',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '16px',
+                fontSize: window.innerWidth <= 768 ? '14px' : '16px',
                 color: '#374151',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease',
