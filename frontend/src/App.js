@@ -1796,12 +1796,18 @@ function App() {
       finalResults.push(airport);
     });
 
-    // Sort by match score (higher score first), "All Airports" should appear first
+    // Sort by match score STRICTLY (highest score first)
     return finalResults
       .sort((a, b) => {
+        // Primary sort: Match score (highest first)
+        if (a.matchScore !== b.matchScore) {
+          return b.matchScore - a.matchScore;
+        }
+        // Secondary sort: "All Airports" first if same score
         if (a.isAllAirports && !b.isAllAirports) return -1;
         if (!a.isAllAirports && b.isAllAirports) return 1;
-        return b.matchScore - a.matchScore;
+        // Tertiary sort: Alphabetical
+        return a.city.localeCompare(b.city);
       })
       .slice(0, 10);
   }, []);
