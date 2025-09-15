@@ -1623,6 +1623,259 @@ function App() {
         </>
       )}
     </div>
+    
+    {/* OVERLAYS - App Level for Full-Screen Display */}
+    
+    {/* City Selection Overlay - Ixigo Style */}
+    {(showFromOverlay || showToOverlay) && (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'white',
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        {/* Header */}
+        <div style={{
+          padding: '16px',
+          borderBottom: '1px solid #e5e7eb',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <button
+            onClick={() => {
+              setShowFromOverlay(false);
+              setShowToOverlay(false);
+            }}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '18px',
+              cursor: 'pointer',
+              padding: '8px',
+              color: '#6b7280'
+            }}
+          >
+            ←
+          </button>
+          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
+            {showFromOverlay ? 'Select Departure City' : 'Select Destination City'}
+          </h3>
+          <div style={{ width: '34px' }}></div>
+        </div>
+
+        {/* Search Bar */}
+        <div style={{ padding: '16px', borderBottom: '1px solid #f3f4f6' }}>
+          <CityInput 
+            value={showFromOverlay ? from : to} 
+            onChange={(city) => {
+              if (showFromOverlay) {
+                setFrom(city);
+                setShowFromOverlay(false);
+              } else {
+                setTo(city);
+                setShowToOverlay(false);
+              }
+            }}
+            autoFocus={true}
+            overlay={true}
+          />
+        </div>
+
+        {/* Popular Cities */}
+        <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
+          <div style={{ marginBottom: '16px' }}>
+            <h4 style={{ fontSize: '14px', fontWeight: '600', color: '#6b7280', marginBottom: '12px' }}>
+              POPULAR CITIES
+            </h4>
+            <div style={{ display: 'grid', gap: '8px' }}>
+              {[
+                { city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' },
+                { city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' },
+                { city: 'Bengaluru', iata: 'BLR', airport: 'Kempegowda Intl', country: 'IN' },
+                { city: 'Chennai', iata: 'MAA', airport: 'Chennai Intl', country: 'IN' },
+                { city: 'Kolkata', iata: 'CCU', airport: 'Netaji Subhas Chandra Bose Intl', country: 'IN' },
+                { city: 'Hyderabad', iata: 'HYD', airport: 'Rajiv Gandhi Intl', country: 'IN' },
+                { city: 'Dubai', iata: 'DXB', airport: 'Dubai International', country: 'AE' },
+                { city: 'Singapore', iata: 'SIN', airport: 'Singapore Changi', country: 'SG' },
+                { city: 'London', iata: 'LHR', airport: 'Heathrow Airport', country: 'GB' },
+                { city: 'New York', iata: 'JFK', airport: 'John F Kennedy Intl', country: 'US' }
+              ].map((airport) => (
+                <div
+                  key={airport.iata}
+                  style={{
+                    padding: '12px',
+                    border: '1px solid #f3f4f6',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                  className="city-option-hover"
+                  onClick={() => {
+                    if (showFromOverlay) {
+                      setFrom(airport);
+                      setShowFromOverlay(false);
+                    } else {
+                      setTo(airport);
+                      setShowToOverlay(false);
+                    }
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div style={{ fontSize: '16px', fontWeight: '500', color: '#111827' }}>
+                        {airport.city}
+                      </div>
+                      <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                        {airport.airport}
+                      </div>
+                    </div>
+                    <div style={{ 
+                      fontSize: '14px', 
+                      fontWeight: '600', 
+                      color: '#6b7280',
+                      fontFamily: 'monospace'
+                    }}>
+                      {airport.iata}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+    
+    {/* Date Selection Overlay - Compact Calendar */}
+    {showDateOverlay && (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'white',
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        {/* Header */}
+        <div style={{
+          padding: '16px',
+          borderBottom: '1px solid #e5e7eb',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <button
+            onClick={() => setShowDateOverlay(false)}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '18px',
+              cursor: 'pointer',
+              padding: '8px',
+              color: '#6b7280'
+            }}
+          >
+            ←
+          </button>
+          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
+            Select Travel Date
+          </h3>
+          <div style={{ width: '34px' }}></div>
+        </div>
+
+        {/* Compact Calendar */}
+        <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
+          <SimpleDatePicker 
+            label="Departure Date" 
+            value={depart} 
+            onChange={(date) => {
+              setDepart(date);
+              if (trip !== 'RT') {
+                setShowDateOverlay(false);
+              }
+            }}
+            overlay={true}
+          />
+          {trip === 'RT' && (
+            <div style={{ marginTop: '16px' }}>
+              <SimpleDatePicker 
+                label="Return Date" 
+                value={ret} 
+                onChange={(date) => {
+                  setRet(date);
+                  setShowDateOverlay(false);
+                }}
+                minDate={depart}
+                overlay={true}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+    
+    {/* Passenger Selection Overlay - Compact */}
+    {showPassengerOverlay && (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'white',
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        {/* Header */}
+        <div style={{
+          padding: '16px',
+          borderBottom: '1px solid #e5e7eb',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <button
+            onClick={() => setShowPassengerOverlay(false)}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '18px',
+              cursor: 'pointer',
+              padding: '8px',
+              color: '#6b7280'
+            }}
+          >
+            ←
+          </button>
+          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
+            Passengers & Class
+          </h3>
+          <div style={{ width: '34px' }}></div>
+        </div>
+
+        {/* Compact Passenger Selector */}
+        <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
+          <PaxOverlay 
+            value={pax} 
+            onChange={(newPax) => {
+              setPax(newPax);
+              setShowPassengerOverlay(false);
+            }}
+            compact={true}
+          />
+        </div>
+      </div>
+    )}
   );
 }
 
