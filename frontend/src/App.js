@@ -2012,21 +2012,10 @@ function App() {
         <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
           <div style={{ marginBottom: '16px' }}>
             <h4 style={{ fontSize: '14px', fontWeight: '600', color: '#6b7280', marginBottom: '12px' }}>
-              POPULAR CITIES
+              {overlayQuery && overlayQuery.length >= 2 ? 'SEARCH RESULTS' : 'POPULAR CITIES'}
             </h4>
             <div style={{ display: 'grid', gap: '8px' }}>
-              {[
-                { city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' },
-                { city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' },
-                { city: 'Bengaluru', iata: 'BLR', airport: 'Kempegowda Intl', country: 'IN' },
-                { city: 'Chennai', iata: 'MAA', airport: 'Chennai Intl', country: 'IN' },
-                { city: 'Kolkata', iata: 'CCU', airport: 'Netaji Subhas Chandra Bose Intl', country: 'IN' },
-                { city: 'Hyderabad', iata: 'HYD', airport: 'Rajiv Gandhi Intl', country: 'IN' },
-                { city: 'Dubai', iata: 'DXB', airport: 'Dubai International', country: 'AE' },
-                { city: 'Singapore', iata: 'SIN', airport: 'Singapore Changi', country: 'SG' },
-                { city: 'London', iata: 'LHR', airport: 'Heathrow Airport', country: 'GB' },
-                { city: 'New York', iata: 'JFK', airport: 'John F Kennedy Intl', country: 'US' }
-              ].map((airport) => (
+              {overlayResults.map((airport) => (
                 <div
                   key={airport.iata}
                   style={{
