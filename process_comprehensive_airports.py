@@ -178,9 +178,10 @@ def generate_backend_python(airports):
         py_entry = f'            {{"city": "{city}", "airport": "{airport_name}", "iata": "{airport["iata"]}", "country": "{airport["country"]}"}}'
         py_entries.append(py_entry)
     
+    py_entries_joined = ',\n'.join(py_entries)
     py_content = f"""        # 🌍 COMPREHENSIVE IATA AIRPORT DATABASE - {len(airports)} AIRPORTS
         airports_db = [
-{',\\n'.join(py_entries)}
+{py_entries_joined}
         ]"""
     
     return py_content
