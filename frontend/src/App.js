@@ -2825,7 +2825,6 @@ function App() {
       </div>
       </>
     )}
-    </div>
   );
 }
 
