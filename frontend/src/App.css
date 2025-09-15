@@ -220,65 +220,68 @@ html {
   transition: all 0.15s ease;
 }
 
-/* UNIFIED FLIGHT CONTAINER - SINGLE BOX DESIGN */
-.unified-flight-container {
+/* COMPACT FLIGHT CONTAINER - MOBILE FIRST */
+.compact-flight-container {
   transition: all 0.15s ease;
 }
 
-.unified-flight-container:hover {
+.compact-flight-container:hover {
   border-color: #9ca3af !important;
 }
 
-.unified-flight-container:focus-within {
+.compact-flight-container:focus-within {
   border-color: #3b82f6 !important;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
 }
 
-/* Seamless Swap Button Styling */
-.swap-button-seamless {
+/* Compact Swap Button Styling */
+.swap-button-compact {
   z-index: 10;
   position: relative;
 }
 
-/* MOBILE RESPONSIVENESS FOR UNIFIED CONTAINER */
+/* Date and Passenger Selectors */
+.date-selector-compact:hover,
+.passenger-selector-compact:hover {
+  border-color: #9ca3af !important;
+}
+
+.date-selector-compact:focus-within,
+.passenger-selector-compact:focus-within {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* MOBILE RESPONSIVENESS FOR COMPACT CONTAINER */
 @media (max-width: 767px) {
-  .unified-flight-container {
-    flex-direction: row !important;
-    min-height: 56px !important;
-    border-radius: 10px !important;
+  .compact-flight-container {
+    min-height: 48px !important;
+    border-radius: 8px !important;
   }
   
-  .unified-flight-container > div:first-child,
-  .unified-flight-container > div:last-child {
-    flex: 1 !important;
-    min-width: 0 !important;
+  .compact-flight-container > div:first-child,
+  .compact-flight-container > div:last-child {
+    padding: 6px 10px !important;
+    min-height: 48px !important;
   }
   
-  .unified-flight-container > div:nth-child(2) {
-    width: 40px !important;
-    min-width: 40px !important;
-    max-width: 40px !important;
+  .compact-flight-container > div:nth-child(2) {
+    width: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
   }
   
-  .integrated-city-input {
-    padding: 8px 12px !important;
-    min-height: 56px !important;
+  .swap-button-compact {
+    height: 20px !important;
+    width: 20px !important;
+    font-size: 12px !important;
   }
   
-  .integrated-city-input label {
-    font-size: 9px !important;
-    margin-bottom: 2px !important;
-  }
-  
-  .integrated-city-input input {
-    font-size: 14px !important;
-  }
-  
-  .swap-button-seamless {
-    height: 28px !important;
-    width: 28px !important;
-    border-radius: 4px !important;
-    font-size: 14px !important;
+  .date-selector-compact,
+  .passenger-selector-compact {
+    min-height: 48px !important;
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
   }
 }
 
