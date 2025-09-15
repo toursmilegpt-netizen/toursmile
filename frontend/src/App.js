@@ -1830,19 +1830,42 @@ function App() {
 
         {/* Search Bar */}
         <div style={{ padding: '16px', borderBottom: '1px solid #f3f4f6' }}>
-          <CityInput 
-            value={showFromOverlay ? from : to} 
-            onChange={(city) => {
-              if (showFromOverlay) {
-                setFrom(city);
-                setShowFromOverlay(false);
-              } else {
-                setTo(city);
-                setShowToOverlay(false);
-              }
+          <input
+            type="text"
+            placeholder="Type city name or airport code"
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              fontSize: '16px',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
+              outline: 'none',
+              background: '#f9fafb'
             }}
             autoFocus={true}
-            overlay={true}
+            onChange={(e) => {
+              // Filter popular cities based on input
+              const query = e.target.value.toLowerCase();
+              if (query.length > 0) {
+                const filtered = [
+                  { city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' },
+                  { city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' },
+                  { city: 'Bengaluru', iata: 'BLR', airport: 'Kempegowda Intl', country: 'IN' },
+                  { city: 'Chennai', iata: 'MAA', airport: 'Chennai Intl', country: 'IN' },
+                  { city: 'Kolkata', iata: 'CCU', airport: 'Netaji Subhas Chandra Bose Intl', country: 'IN' },
+                  { city: 'Hyderabad', iata: 'HYD', airport: 'Rajiv Gandhi Intl', country: 'IN' },
+                  { city: 'Dubai', iata: 'DXB', airport: 'Dubai International', country: 'AE' },
+                  { city: 'Singapore', iata: 'SIN', airport: 'Singapore Changi', country: 'SG' },
+                  { city: 'London', iata: 'LHR', airport: 'Heathrow Airport', country: 'GB' },
+                  { city: 'New York', iata: 'JFK', airport: 'John F Kennedy Intl', country: 'US' }
+                ].filter(airport => 
+                  airport.city.toLowerCase().includes(query) ||
+                  airport.iata.toLowerCase().includes(query) ||
+                  airport.airport.toLowerCase().includes(query)
+                );
+                // Could add filtered results here, but for now we'll just use the full list below
+              }
+            }}
           />
         </div>
 
