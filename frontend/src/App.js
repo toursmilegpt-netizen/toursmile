@@ -1256,19 +1256,19 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
           
           {/* Swap Button - Mobile Responsive Design */}
           <div style={{
-            position: window.innerWidth <= 768 ? 'absolute' : 'relative',
+            position: isMobile ? 'absolute' : 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: window.innerWidth <= 768 ? '40px' : '44px',
-            minWidth: window.innerWidth <= 768 ? '40px' : '44px',
-            maxWidth: window.innerWidth <= 768 ? '40px' : '44px',
-            height: window.innerWidth <= 768 ? '40px' : 'auto',
+            width: isMobile ? '40px' : '44px',
+            minWidth: isMobile ? '40px' : '44px',
+            maxWidth: isMobile ? '40px' : '44px',
+            height: isMobile ? '40px' : 'auto',
             background: 'white',
-            top: window.innerWidth <= 768 ? '50%' : 'auto',
-            right: window.innerWidth <= 768 ? '12px' : 'auto',
-            transform: window.innerWidth <= 768 ? 'translateY(-50%)' : 'none',
-            zIndex: window.innerWidth <= 768 ? 10 : 'auto'
+            top: isMobile ? '50%' : 'auto',
+            right: isMobile ? '12px' : 'auto',
+            transform: isMobile ? 'translateY(-50%)' : 'none',
+            zIndex: isMobile ? 10 : 'auto'
           }}>
             <button
               aria-label="Swap From and To"
