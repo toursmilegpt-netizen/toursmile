@@ -952,7 +952,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
       if (error.name !== 'AbortError') {
         console.error('Airport search error:', error);
         // Fallback to enhanced airport database search
-        const enhancedFallback = createEnhancedSuggestions(searchQuery);
+        const enhancedFallback = performAutocompleteSearch(searchQuery);
         setSuggestions(enhancedFallback);
         setOpen(true);
       }
