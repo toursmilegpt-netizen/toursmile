@@ -2239,15 +2239,28 @@ function App() {
                   }}
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    {/* Required Format: "IATA – Airport Name, City" */}
+                    {/* Required Format: "IATA – Airport Name, City" with All Airports Support */}
                     <div style={{ fontSize: '16px', fontWeight: '500', color: '#111827' }}>
-                      <span style={{ color: '#2563eb', fontWeight: '600' }}>{airport.iata}</span>
+                      <span style={{ 
+                        color: airport.isAllAirports ? '#1d4ed8' : '#2563eb', 
+                        fontWeight: '600',
+                        backgroundColor: airport.isAllAirports ? '#eff6ff' : 'transparent',
+                        padding: airport.isAllAirports ? '2px 6px' : '0',
+                        borderRadius: airport.isAllAirports ? '4px' : '0'
+                      }}>
+                        {airport.iata}
+                      </span>
                       <span style={{ color: '#6b7280', margin: '0 6px' }}>–</span>
-                      <span>
+                      <span style={{ fontWeight: airport.isAllAirports ? '600' : '400' }}>
                         {overlayQuery && overlayQuery.length >= 2 ? 
                           highlightMatch(airport.airport, overlayQuery) : 
                           airport.airport
                         }
+                        {airport.isAllAirports && (
+                          <span style={{ color: '#1d4ed8', fontWeight: '500', fontSize: '14px' }}>
+                            {' '}({airport.airportCount} airports)
+                          </span>
+                        )}
                       </span>
                       <span style={{ color: '#6b7280' }}>, </span>
                       <span>
