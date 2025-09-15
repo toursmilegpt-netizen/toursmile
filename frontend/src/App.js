@@ -670,6 +670,14 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
     return date.toLocaleDateString('en-US', options);
   };
 
+  // Simple date formatter for compact display
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    const options = { day: 'numeric', month: 'short' };
+    return date.toLocaleDateString('en-US', options);
+  };
+
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
