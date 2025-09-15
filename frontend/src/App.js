@@ -1134,7 +1134,11 @@ function SearchCard({ onSearch }) {
               cursor: 'pointer',
               borderLeft: '1px solid #f3f4f6'
             }}
-            onClick={() => setShowToOverlay(true)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowToOverlay(true);
+            }}
           >
             <div style={{ 
               padding: '8px 12px',
