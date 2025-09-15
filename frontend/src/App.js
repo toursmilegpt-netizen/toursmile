@@ -1520,36 +1520,36 @@ function Footer() {
     <footer className="mt-16 border-t border-neutral-200 pt-8">
       <div className="mx-auto max-w-5xl px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
         <div>
-          <div className="font-medium mb-2" style={{ fontWeight: '500' }}>About</div>
-          <ul className="space-y-1 text-neutral-600" style={{ fontWeight: '300' }}>
-            <li><a href="#" className="hover:text-neutral-900">Company</a></li>
-            <li><a href="#" className="hover:text-neutral-900">Contact</a></li>
+          <div className="font-semibold mb-2 text-black">About</div>
+          <ul className="space-y-1">
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Company</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div className="font-medium mb-2" style={{ fontWeight: '500' }}>Help</div>
-          <ul className="space-y-1 text-neutral-600" style={{ fontWeight: '300' }}>
-            <li><a href="#" className="hover:text-neutral-900">Support</a></li>
-            <li><a href="#" className="hover:text-neutral-900">FAQ</a></li>
+          <div className="font-semibold mb-2 text-black">Help</div>
+          <ul className="space-y-1">
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Support</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">FAQ</a></li>
           </ul>
         </div>
         <div>
-          <div className="font-medium mb-2" style={{ fontWeight: '500' }}>Policies</div>
-          <ul className="space-y-1 text-neutral-600" style={{ fontWeight: '300' }}>
-            <li><a href="#" className="hover:text-neutral-900">Terms & Conditions</a></li>
-            <li><a href="#" className="hover:text-neutral-900">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-neutral-900">Cancellation & Refund</a></li>
-            <li><a href="#" className="hover:text-neutral-900">Cookie Policy</a></li>
-            <li><a href="#" className="hover:text-neutral-900">Disclaimer</a></li>
-            <li><a href="#" className="hover:text-neutral-900">Grievance Officer</a></li>
+          <div className="font-semibold mb-2 text-black">Policies</div>
+          <ul className="space-y-1">
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Terms & Conditions</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Privacy Policy</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Cancellation & Refund</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Cookie Policy</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Disclaimer</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Grievance Officer</a></li>
           </ul>
         </div>
         <div>
-          <div className="font-medium mb-2" style={{ fontWeight: '500' }}>Follow</div>
-          <ul className="space-y-1 text-neutral-600" style={{ fontWeight: '300' }}>
-            <li><a href="#" className="hover:text-neutral-900">Instagram</a></li>
-            <li><a href="#" className="hover:text-neutral-900">Twitter</a></li>
-            <li><a href="#" className="hover:text-neutral-900">LinkedIn</a></li>
+          <div className="font-semibold mb-2 text-black">Follow</div>
+          <ul className="space-y-1">
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Instagram</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">Twitter</a></li>
+            <li><a href="#" className="text-black hover:text-blue-600 font-medium transition-colors">LinkedIn</a></li>
           </ul>
         </div>
       </div>
