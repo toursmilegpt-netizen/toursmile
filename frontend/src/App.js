@@ -2130,7 +2130,7 @@ function App() {
             </section>
 
             {/* Service Icons Section */}
-            <section className="text-center pb-8">
+            <section className="text-center pb-4">
               {/* Service Icons - Enhanced with depth and floating elements */}
               <div className="flex justify-center items-center space-x-8 md:space-x-12 bg-white/50 rounded-xl py-6 px-8 relative overflow-hidden group">
                 {/* Floating decorative elements */}
