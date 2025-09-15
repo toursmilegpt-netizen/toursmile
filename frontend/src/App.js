@@ -1674,8 +1674,8 @@ function App() {
 
           {/* Main Content */}
           <main className="mx-auto max-w-5xl px-4 pb-24">
-            {/* Service Icons Section - Hidden on Desktop */}
-            <section className="md:hidden text-center pt-12 pb-8">
+            {/* Service Icons Section */}
+            <section className="text-center pt-12 pb-8">
               <div className="flex justify-center items-center space-x-8 md:space-x-12">
                 {/* Flights Icon */}
                 <div className="flex flex-col items-center group cursor-pointer">
