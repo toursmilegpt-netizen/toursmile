@@ -1329,9 +1329,9 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
             }}
           >
             <div style={{ 
-              padding: '8px 12px',
+              padding: window.innerWidth <= 767 ? '6px 10px' : '8px 12px',
               height: '100%',
-              minHeight: '52px',
+              minHeight: window.innerWidth <= 767 ? '44px' : '52px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center'
