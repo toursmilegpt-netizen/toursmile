@@ -2132,7 +2132,7 @@ function App() {
                 
                 {/* Hotels Icon */}
                 <div className="flex flex-col items-center group cursor-pointer">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-white flex items-center justify-center mb-2 group-hover:bg-green-50 group-hover:border-green-300 transition-all duration-200 shadow-sm">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl border border-neutral-300 bg-gradient-to-br from-white to-green-50/30 flex items-center justify-center mb-2 group-hover:bg-gradient-to-br group-hover:from-green-50 group-hover:to-green-100/50 group-hover:border-green-300 group-hover:shadow-lg group-hover:-translate-y-1 transition-all duration-300 shadow-sm">
                     <span className="text-xl md:text-2xl">🏨</span>
                   </div>
                   <span className="text-sm font-medium text-neutral-400">Hotels</span>
