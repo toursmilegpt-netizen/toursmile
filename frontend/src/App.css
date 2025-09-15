@@ -401,12 +401,16 @@ html {
   
   .compact-flight-container {
     border-radius: 6px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
   }
   
   .date-selector-compact,
   .passenger-selector-compact {
-    padding: 5px 8px !important;
+    padding: 4px 8px !important;
     border-radius: 6px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
   }
   
   .swap-button-compact {
