@@ -829,8 +829,11 @@ async def search_airports(query: str, limit: int = 10):
             # Sort by score (highest first) to ensure exact IATA matches appear first
             scored_results.sort(key=lambda x: x['score'], reverse=True)
             
-            # Return top results up to limit
-            results = scored_results[:limit]
+            # Return top results up to limit (removing score field for consistency)
+            results = []
+            for result in scored_results[:limit]:
+                clean_result = {k: v for k, v in result.items() if k != 'score'}
+                results.append(clean_result)
         
         return {"results": results}
         
