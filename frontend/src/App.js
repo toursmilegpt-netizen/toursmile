@@ -2201,7 +2201,7 @@ function App() {
       {/* Flight Selection Page */}
       {currentPage === 'selection' && (
         <>
-          <header className="border-b border-neutral-100">
+          <header className="border-b border-neutral-100 bg-gradient-to-b from-white to-blue-50/30">
             <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <button 
