@@ -754,6 +754,30 @@ const calculateMatchScore = (airport, searchTerm) => {
   const countryName = (airport.countryName || '').toLowerCase();
   const term = searchTerm.toLowerCase();
   
+  // City code mappings for multi-airport cities (like NYC → New York)
+  const cityCodeMap = {
+    "nyc": "new york",
+    "lon": "london", 
+    "par": "paris",
+    "tyo": "tokyo",
+    "mil": "milan",
+    "rom": "rome",
+    "chi": "chicago",
+    "was": "washington",
+    "hst": "houston",
+    "dfw": "dallas",
+    "sao": "são paulo",
+    "rio": "rio de janeiro",
+    "bue": "buenos aires",
+    "bjs": "beijing",
+    "sha": "shanghai",
+    "ist": "istanbul",
+    "yto": "toronto"
+  };
+  
+  // Map search term if it's a city code
+  const mappedTerm = cityCodeMap[term] || term;
+  
   // EXACT IATA CODE MATCH (HIGHEST PRIORITY - 1000 points)
   if (airportIata === term) {
     return 1000;
@@ -764,13 +788,13 @@ const calculateMatchScore = (airport, searchTerm) => {
     return 900;
   }
   
-  // EXACT CITY NAME MATCH (800 points)  
-  if (airportCity === term) {
+  // EXACT CITY NAME MATCH - including city code mapping (800 points)  
+  if (airportCity === mappedTerm) {
     return 800;
   }
   
-  // CITY NAME STARTS WITH SEARCH TERM (700 points)
-  if (airportCity.startsWith(term)) {
+  // CITY NAME STARTS WITH SEARCH TERM - including city code mapping (700 points)
+  if (airportCity.startsWith(mappedTerm)) {
     return 700;
   }
   
