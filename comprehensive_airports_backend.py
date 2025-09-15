@@ -5425,7 +5425,7 @@
             {"city": "New York", "airport": "Downtown Manhattan Heliport", "iata": "JRB", "country": "US"},
             {"city": "New York", "airport": "John F Kennedy International Airport", "iata": "JFK", "country": "US"},
             {"city": "New York", "airport": "LaGuardia Airport", "iata": "LGA", "country": "US"},
-            {"city": "Newark", "airport": "Newark Liberty International Airport", "iata": "EWR", "country": "US"},
+            {"city": "New York", "airport": "Newark Liberty International Airport", "iata": "EWR", "country": "US"},
             {"city": "Newburgh", "airport": "New York Stewart International Airport", "iata": "SWF", "country": "US"},
             {"city": "Newcastle", "airport": "Newcastle Airport", "iata": "NCS", "country": "ZA"},
             {"city": "Newcastle", "airport": "Mondell Field", "iata": "ECS", "country": "US"},
