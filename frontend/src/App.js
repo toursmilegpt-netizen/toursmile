@@ -2765,7 +2765,7 @@ function App() {
             )}
           </div>
         </div>
-      </div>
+      </>
     )}
     
     {/* Passenger Selection Overlay - Compact */}
