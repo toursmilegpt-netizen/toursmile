@@ -1183,7 +1183,7 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
           ))}
         </div>
 
-        {/* Compact From/To Container - No Gridlines */}
+        {/* Compact From/To Container - Mobile Responsive */}
         <div className="mt-3 compact-flight-container" style={{ 
           position: 'relative',
           background: 'white',
@@ -1192,7 +1192,8 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
           overflow: 'hidden',
           display: 'flex',
           alignItems: 'stretch',
-          minHeight: '52px'
+          minHeight: '52px',
+          flexDirection: window.innerWidth <= 768 ? 'column' : 'row'
         }}>
           {/* From Field - Left Side */}
           <div 
