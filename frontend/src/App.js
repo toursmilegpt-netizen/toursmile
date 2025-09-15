@@ -1144,6 +1144,10 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
   const [error, setError] = useState(null);
   const [currentStep, setCurrentStep] = useState(0); // 0: from, 1: to, 2: date, 3: passenger, 4: search
 
+  // Responsive design hook
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth <= 768;
+
   // Backend base URL from environment
   const backendBase = process.env.REACT_APP_BACKEND_URL;
 
