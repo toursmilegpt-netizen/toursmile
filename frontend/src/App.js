@@ -334,8 +334,11 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
   // Enhanced search logic with "All Airports" support
   // MAIN AUTOCOMPLETE LOGIC - Trigger on 2+ Characters
   useEffect(() => {
+    console.log('🔍 Search Effect:', { debouncedQuery, open, value: value?.iata });
+    
     // Don't show suggestions if field already has a complete selected value (when not actively typing)
     if (value && value.iata && !query) {
+      console.log('❌ Early return: has value but no query');
       setOpen(false);
       setSuggestions([]);
       return;
@@ -343,18 +346,23 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     
     // Trigger autocomplete search with 2+ characters (per requirements)
     if (debouncedQuery && debouncedQuery.length >= 2) {
+      console.log('🚀 Triggering search for:', debouncedQuery);
       const autocompleteResults = performAutocompleteSearch(debouncedQuery);
+      console.log('📊 Search results:', autocompleteResults.length, autocompleteResults);
       
       if (autocompleteResults.length > 0) {
         setSuggestions(autocompleteResults);
         setOpen(true);
+        console.log('✅ Set filtered suggestions');
       } else {
         // No matches found - keep dropdown open but show empty state
         setSuggestions([]);
         setOpen(true);
+        console.log('🔍 No matches found, showing empty state');
       }
     } else if (open && (!debouncedQuery || debouncedQuery.length < 2)) {
       // Show popular airports when dropdown is open but query is less than 2 characters
+      console.log('📋 Showing popular airports for query length < 2');
       const popularResults = GLOBAL_AIRPORTS_DATABASE
         .filter(airport => ['BOM', 'DEL', 'BLR', 'HYD', 'MAA', 'CCU', 'PNQ', 'AMD', 'DXB', 'SIN'].includes(airport.iata))
         .map(airport => ({
@@ -364,6 +372,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
         }));
       setSuggestions(popularResults);
     } else if (!debouncedQuery || debouncedQuery.length === 0) {
+      console.log('🚫 Clearing suggestions');
       setSuggestions([]);
       setOpen(false);
     }
