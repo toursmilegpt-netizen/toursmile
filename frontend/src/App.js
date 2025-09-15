@@ -2156,7 +2156,7 @@ function App() {
                   { icon: "🔒", title: "Secure Booking", desc: "SSL encrypted transactions" },
                   { icon: "📞", title: "24x7 Support", desc: "Round the clock assistance" },
                   { icon: "👨‍💼", title: "Personal Travel Assistant", desc: "Dedicated support executive" },
-                  { icon: "⚡", title: "Instant Booking", desc: "Confirmed tickets in seconds" }
+                  { icon: "⚡", title: "Instant Booking", desc: "Confirmed tickets in seconds", accent: true }
                 ].map(item => (
                   <div key={item.title} className="p-4 rounded-xl bg-white/60 border border-blue-100/20 hover:shadow-lg hover:bg-white/80 transition-all duration-200">
                     <div className="text-3xl mb-2">{item.icon}</div>
