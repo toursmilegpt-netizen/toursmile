@@ -1235,16 +1235,21 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
             </div>
           </div>
           
-          {/* Swap Button - Enhanced Icon Design */}
+          {/* Swap Button - Mobile Responsive Design */}
           <div style={{
-            position: 'relative',
+            position: window.innerWidth <= 768 ? 'absolute' : 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '44px',
-            minWidth: '44px',
-            maxWidth: '44px',
-            background: 'white'
+            width: window.innerWidth <= 768 ? '40px' : '44px',
+            minWidth: window.innerWidth <= 768 ? '40px' : '44px',
+            maxWidth: window.innerWidth <= 768 ? '40px' : '44px',
+            height: window.innerWidth <= 768 ? '40px' : 'auto',
+            background: 'white',
+            top: window.innerWidth <= 768 ? '50%' : 'auto',
+            right: window.innerWidth <= 768 ? '12px' : 'auto',
+            transform: window.innerWidth <= 768 ? 'translateY(-50%)' : 'none',
+            zIndex: window.innerWidth <= 768 ? 10 : 'auto'
           }}>
             <button
               aria-label="Swap From and To"
