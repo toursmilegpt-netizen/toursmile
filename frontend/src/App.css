@@ -234,10 +234,14 @@ html {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
 }
 
-/* Compact Swap Button Styling */
-.swap-button-compact {
+/* Enhanced Swap Button Styling */
+.swap-button-enhanced {
   z-index: 10;
   position: relative;
+}
+
+.swap-button-enhanced:active {
+  transform: scale(0.95) !important;
 }
 
 /* Date and Passenger Selectors */
@@ -271,10 +275,11 @@ html {
     max-width: 44px !important;
   }
   
-  .swap-button-compact {
+  .swap-button-enhanced {
     height: 44px !important;
     width: 44px !important;
     font-size: 16px !important;
+    border-radius: 6px !important;
   }
   
   .date-selector-compact,
