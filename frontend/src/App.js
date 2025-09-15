@@ -1417,7 +1417,7 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
 
   return (
     <div className="mx-auto max-w-5xl px-4">
-      <div className="rounded-2xl shadow-sm border border-neutral-200 bg-white p-4 md:p-6">
+      <div className="rounded-2xl shadow-sm border border-blue-100/30 bg-gradient-to-br from-white to-blue-50/20 p-4 md:p-6">
         {/* Trip Type Tabs */}
         <div className="inline-flex rounded-full bg-neutral-100 p-1">
           {[
