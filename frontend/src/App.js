@@ -375,7 +375,7 @@ const GLOBAL_AIRPORTS_DATABASE = [
   { city: "Antalya", iata: "AYT", airport: "Antalya Airport", country: "TR", countryName: "Turkey" },
   { city: "Apia", iata: "APW", airport: "Faleolo International Airport", country: "WS", countryName: "Samoa" },
   { city: "Ashgabat", iata: "ASB", airport: "Oguzhan Airport", country: "TM", countryName: "Turkmenistan" },
-  { city: "Asunción", iata: "ASU", airport: "Silvio Pettirossi International Airport", country: "PY", countryName": "Paraguay" },
+  { city: "Asunción", iata: "ASU", airport: "Silvio Pettirossi International Airport", country: "PY", countryName: "Paraguay" },
   { city: "Auckland", iata: "AKL", airport: "Auckland Airport", country: "NZ", countryName: "New Zealand" },
   { city: "Baghdad", iata: "BGW", airport: "Baghdad International Airport", country: "IQ", countryName: "Iraq" },
   { city: "Baku", iata: "GYD", airport: "Heydar Aliyev International Airport", country: "AZ", countryName: "Azerbaijan" },
