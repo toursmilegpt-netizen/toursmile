@@ -1748,6 +1748,34 @@ function App() {
     setSelectedFlight(null);
   };
 
+  const openFromOverlay = () => {
+    setShowFromOverlay(true);
+    // Initialize with popular airports
+    const popularResults = GLOBAL_AIRPORTS_DATABASE
+      .filter(airport => ['BOM', 'DEL', 'BLR', 'HYD', 'MAA', 'CCU', 'PNQ', 'AMD', 'DXB', 'SIN'].includes(airport.iata))
+      .map(airport => ({
+        ...airport,
+        displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`,
+        matchScore: 0
+      }));
+    setOverlayResults(popularResults);
+    setOverlayQuery('');
+  };
+
+  const openToOverlay = () => {
+    setShowToOverlay(true);
+    // Initialize with popular airports
+    const popularResults = GLOBAL_AIRPORTS_DATABASE
+      .filter(airport => ['BOM', 'DEL', 'BLR', 'HYD', 'MAA', 'CCU', 'PNQ', 'AMD', 'DXB', 'SIN'].includes(airport.iata))
+      .map(airport => ({
+        ...airport,
+        displayText: `${airport.iata} – ${airport.airport}, ${airport.city}`,
+        matchScore: 0
+      }));
+    setOverlayResults(popularResults);
+    setOverlayQuery('');
+  };
+
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       {/* Render different pages based on current state */}
