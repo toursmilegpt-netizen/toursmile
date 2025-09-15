@@ -389,7 +389,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
   }, []);
   
   // Get full country name
-  const getCountryName = (countryCode) => {
+  const getCountryName = useCallback((countryCode) => {
     const countryNames = {
       'IN': 'India',
       'US': 'United States',
@@ -441,7 +441,7 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     };
     
     return countryNames[countryCode] || countryCode;
-  };
+  }, []);
   
   const searchAirports = async (searchQuery) => {
     if (abortController.current) {
