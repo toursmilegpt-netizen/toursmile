@@ -823,41 +823,49 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
               </div>
             )}
             
-            {suggestions.map((airport, i) => (
-              <button
-                key={`${airport.iata}-${i}`}
-                onClick={() => handleCitySelect(airport)}
-                className={`w-full text-left px-3 py-2 hover:bg-neutral-50 flex items-center justify-between transition-colors duration-150 ${
-                  airport.isAllAirports ? 'bg-blue-25 border-l-2 border-blue-400' : ''
-                }`}
-                style={{ 
-                  minHeight: '44px',
-                  borderBottom: i < suggestions.length - 1 ? '1px solid #f3f4f6' : 'none',
-                  backgroundColor: airport.isAllAirports ? '#f0f9ff' : 'transparent'
-                }}
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-neutral-900 truncate">
-                    {airport.city}, {getCountryName(airport.country)}
-                    {airport.isAllAirports && (
-                      <span className="ml-2 text-xs text-blue-600 font-normal">
-                        ({airport.airportCount} airports)
-                      </span>
+            {suggestions.length === 0 && debouncedQuery && debouncedQuery.length >= 2 ? (
+              <div className="px-3 py-4 text-center text-neutral-500 text-sm">
+                No airports found for "{debouncedQuery}"
+              </div>
+            ) : (
+              suggestions.map((airport, i) => (
+                <button
+                  key={`${airport.iata}-${airport.city}-${i}`}
+                  onClick={() => handleAirportSelect(airport)}
+                  className="w-full text-left px-3 py-3 hover:bg-blue-50 transition-colors duration-150 border-b border-neutral-100 last:border-b-0"
+                  style={{ minHeight: '56px' }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 min-w-0">
+                      {/* IATA Code - Airport Name, City format as required */}
+                      <div className="text-sm font-medium text-neutral-900 mb-1">
+                        <span className="font-bold text-blue-600">{airport.iata}</span>
+                        <span className="text-neutral-400 mx-1">–</span>
+                        <span>
+                          {airport.searchText ? 
+                            highlightMatch(airport.airport, airport.searchText) : 
+                            airport.airport
+                          }
+                        </span>
+                      </div>
+                      {/* City, Country */}
+                      <div className="text-xs text-neutral-500">
+                        {airport.searchText ? 
+                          highlightMatch(airport.city, airport.searchText) : 
+                          airport.city
+                        }, {airport.countryName}
+                      </div>
+                    </div>
+                    {/* Match score indicator for debugging (remove in production) */}
+                    {airport.matchScore > 0 && (
+                      <div className="text-xs text-neutral-400 ml-2">
+                        {airport.matchScore}
+                      </div>
                     )}
                   </div>
-                  <div className="text-xs text-neutral-500 truncate">
-                    {airport.isAllAirports ? "All Airports" : airport.airport}
-                  </div>
-                </div>
-                <div className={`text-xs font-bold px-2 py-1 rounded ml-2 flex-shrink-0 ${
-                  airport.isAllAirports 
-                    ? 'text-blue-700 bg-blue-100' 
-                    : 'text-neutral-600 bg-neutral-100'
-                }`}>
-                  {airport.iata}
-                </div>
-              </button>
-            ))}
+                </button>
+              ))
+            )}
             
             {loading && (
               <div className="px-3 py-3 text-xs text-neutral-400 text-center">
