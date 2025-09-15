@@ -1212,7 +1212,11 @@ function SearchCard({ onSearch }) {
                 justifyContent: 'center',
                 cursor: 'pointer'
               }}
-              onClick={() => setShowDateOverlay(true)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowDateOverlay(true);
+              }}
             >
               <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">RETURN</div>
               <div className="flex items-center">
