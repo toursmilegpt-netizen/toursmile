@@ -1628,19 +1628,19 @@ function App() {
                 <img 
                   src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
                   alt="TourSmile"
-                  className="h-8 w-auto"
+                  className="h-10 w-auto"
                 />
                 <div className="hidden md:flex space-x-6 text-sm font-medium">
-                  <span className="text-blue-600 border-b-2 border-blue-600 pb-1">Flights</span>
-                  <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Hotels</span>
-                  <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer">Activities</span>
+                  <span className="text-black border-b-2 border-blue-600 pb-1 font-semibold">Flights</span>
+                  <span className="text-black hover:text-blue-600 cursor-pointer font-medium">Hotels</span>
+                  <span className="text-black hover:text-blue-600 cursor-pointer font-medium">Activities</span>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <button className="px-3 py-1.5 rounded-full border border-neutral-300 text-sm hover:bg-neutral-50">
+              <div className="flex items-center space-x-3">
+                <button className="px-4 py-2 rounded-full border border-neutral-300 text-black text-sm font-medium hover:bg-neutral-50 hover:border-neutral-400 transition-colors">
                   24×7 Support
                 </button>
-                <button className="px-3 py-1.5 rounded-full bg-neutral-100 hover:bg-neutral-200 text-sm">
+                <button className="px-4 py-2 rounded-full border border-neutral-300 text-black text-sm font-medium hover:bg-neutral-50 hover:border-neutral-400 transition-colors">
                   Sign In
                 </button>
               </div>
@@ -1651,8 +1651,8 @@ function App() {
           <main className="mx-auto max-w-5xl px-4 pb-24">
             {/* Hero */}
             <section className="text-center pt-8 pb-6">
-              <h1 className="text-4xl md:text-5xl font-bold mb-2 text-neutral-900">
-                Smart Travel, Best Prices
+              <h1 className="text-4xl md:text-5xl font-bold mb-2 text-black">
+                Quick and Easy Planning at Best Fares
               </h1>
               <div className="flex justify-center items-center space-x-4 mb-6">
                 <span className="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">Instant</span>
