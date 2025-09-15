@@ -277,12 +277,14 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
   
   // Create enhanced suggestions with "All Airports" functionality
   const createEnhancedSuggestions = useCallback((query) => {
+    console.log('createEnhancedSuggestions called with query:', query);
     const matches = POPULAR_AIRPORTS.filter(airport => 
       airport.city.toLowerCase().includes(query.toLowerCase()) ||
       airport.iata.toLowerCase().includes(query.toLowerCase()) ||
       airport.airport.toLowerCase().includes(query.toLowerCase()) ||
       airport.country.toLowerCase().includes(query.toLowerCase())
     );
+    console.log('Matches found:', matches.length, matches);
     
     // Group airports by city to create "All Airports" options
     const cityGroups = {};
