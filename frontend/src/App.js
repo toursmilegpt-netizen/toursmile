@@ -2195,7 +2195,10 @@ function App() {
                   { icon: "👨‍💼", title: "Personal Travel Assistant", desc: "Dedicated support executive" },
                   { icon: "⚡", title: "Instant Booking", desc: "Confirmed tickets in seconds", accent: true }
                 ].map(item => (
-                  <div key={item.title} className={`p-4 rounded-xl ${item.accent ? 'bg-gradient-to-br from-orange-50/40 to-white/60 border-orange-200/30' : 'bg-white/60 border-blue-100/20'} border hover:shadow-lg hover:bg-white/80 transition-all duration-200`}>
+                  <div key={item.title} className={`p-6 rounded-xl ${item.accent ? 'bg-gradient-to-br from-orange-50/40 to-white/60 border-orange-200/30 shadow-orange-100/20' : 'bg-white/60 border-blue-100/20 shadow-blue-100/10'} border hover:shadow-xl hover:bg-white/80 hover:-translate-y-2 transition-all duration-300 shadow-lg group cursor-pointer relative overflow-hidden`}>
+                    {/* Subtle background animation */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-white/20 group-hover:from-white/10 group-hover:to-transparent transition-all duration-500"></div>
+                    <div className="relative z-10">
                     <div className="text-3xl mb-2">{item.icon}</div>
                     <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
                     <p className="text-xs text-neutral-600">{item.desc}</p>
