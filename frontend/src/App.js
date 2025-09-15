@@ -2036,23 +2036,35 @@ function App() {
                     }
                   }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <div style={{ fontSize: '16px', fontWeight: '500', color: '#111827' }}>
-                        {airport.city}
-                      </div>
-                      <div style={{ fontSize: '14px', color: '#6b7280' }}>
-                        {airport.airport}
-                      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    {/* Required Format: "IATA – Airport Name, City" */}
+                    <div style={{ fontSize: '16px', fontWeight: '500', color: '#111827' }}>
+                      <span style={{ color: '#2563eb', fontWeight: '600' }}>{airport.iata}</span>
+                      <span style={{ color: '#6b7280', margin: '0 6px' }}>–</span>
+                      <span>
+                        {overlayQuery && overlayQuery.length >= 2 ? 
+                          highlightMatch(airport.airport, overlayQuery) : 
+                          airport.airport
+                        }
+                      </span>
+                      <span style={{ color: '#6b7280' }}>, </span>
+                      <span>
+                        {overlayQuery && overlayQuery.length >= 2 ? 
+                          highlightMatch(airport.city, overlayQuery) : 
+                          airport.city
+                        }
+                      </span>
                     </div>
-                    <div style={{ 
-                      fontSize: '14px', 
-                      fontWeight: '600', 
-                      color: '#6b7280',
-                      fontFamily: 'monospace'
-                    }}>
-                      {airport.iata}
+                    {/* Country Name */}
+                    <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                      {airport.countryName || airport.country}
                     </div>
+                    {/* Match Score - Remove in production */}
+                    {airport.matchScore > 0 && (
+                      <div style={{ fontSize: '12px', color: '#9ca3af' }}>
+                        Score: {airport.matchScore}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
