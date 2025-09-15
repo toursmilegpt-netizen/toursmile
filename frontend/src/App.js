@@ -1243,7 +1243,11 @@ function SearchCard({ onSearch }) {
             justifyContent: 'space-between',
             cursor: 'pointer'
           }}
-          onClick={() => setShowPassengerOverlay(true)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setShowPassengerOverlay(true);
+          }}
         >
           <div>
             <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">PASSENGERS & CLASS</div>
