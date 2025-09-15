@@ -368,7 +368,15 @@ html {
   }
 }
 
-/* Flight Card Hover Effects */
+/* CITY SELECTION OVERLAY HOVER EFFECTS */
+.city-option-hover:hover {
+  background-color: #f3f4f6 !important;
+  border-color: #9ca3af !important;
+}
+
+.overlay-suggestion-hover:hover {
+  background-color: #f9fafb !important;
+}
 .flight-card-hover:hover {
   border-color: #3b82f6 !important;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
