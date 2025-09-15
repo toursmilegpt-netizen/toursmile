@@ -1,0 +1,975 @@
+[
+  {
+    "city": "Abu Dhabi",
+    "iata": "AUH",
+    "airport": "Zayed International Airport",
+    "country": "AE",
+    "countryName": "United Arab Emirates"
+  },
+  {
+    "city": "Accra",
+    "iata": "ACC",
+    "airport": "Kotoka International Airport",
+    "country": "GH",
+    "countryName": "Ghana"
+  },
+  {
+    "city": "Addis Ababa",
+    "iata": "ADD",
+    "airport": "Addis Ababa Bole International Airport",
+    "country": "ET",
+    "countryName": "Ethiopia"
+  },
+  {
+    "city": "Adelaide",
+    "iata": "ADL",
+    "airport": "Adelaide International Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Amman",
+    "iata": "AMM",
+    "airport": "Queen Alia International Airport",
+    "country": "JO",
+    "countryName": "Jordan"
+  },
+  {
+    "city": "Antananarivo",
+    "iata": "TNR",
+    "airport": "Ivato Airport",
+    "country": "MG",
+    "countryName": "Madagascar"
+  },
+  {
+    "city": "Apia",
+    "iata": "APW",
+    "airport": "Faleolo International Airport",
+    "country": "WS",
+    "countryName": "Samoa"
+  },
+  {
+    "city": "Auckland",
+    "iata": "AKL",
+    "airport": "Auckland International Airport",
+    "country": "NZ",
+    "countryName": "New Zealand"
+  },
+  {
+    "city": "Avarua",
+    "iata": "RAR",
+    "airport": "Rarotonga International Airport",
+    "country": "CK",
+    "countryName": "Cook Islands"
+  },
+  {
+    "city": "Babelthuap Island",
+    "iata": "ROR",
+    "airport": "Babelthuap Airport",
+    "country": "PW",
+    "countryName": "Palau"
+  },
+  {
+    "city": "Baghdad",
+    "iata": "BGW",
+    "airport": "Baghdad International Airport / New Al Muthana Air Base",
+    "country": "IQ",
+    "countryName": "Iraq"
+  },
+  {
+    "city": "Balice",
+    "iata": "KRK",
+    "airport": "Krak\u00f3w John Paul II International Airport",
+    "country": "PL",
+    "countryName": "Poland"
+  },
+  {
+    "city": "Beirut",
+    "iata": "BEY",
+    "airport": "Beirut Rafic Hariri International Airport",
+    "country": "LB",
+    "countryName": "Lebanon"
+  },
+  {
+    "city": "Belgrade",
+    "iata": "BEG",
+    "airport": "Belgrade Nikola Tesla Airport",
+    "country": "RS",
+    "countryName": "Serbia"
+  },
+  {
+    "city": "Bergen",
+    "iata": "BGO",
+    "airport": "Bergen Airport, Flesland",
+    "country": "NO",
+    "countryName": "Norway"
+  },
+  {
+    "city": "Billund",
+    "iata": "BLL",
+    "airport": "Billund Airport",
+    "country": "DK",
+    "countryName": "Denmark"
+  },
+  {
+    "city": "Bogota",
+    "iata": "BOG",
+    "airport": "El Dorado International Airport",
+    "country": "CO",
+    "countryName": "Colombia"
+  },
+  {
+    "city": "Bras\u00edlia",
+    "iata": "BSB",
+    "airport": "Presidente Juscelino Kubitschek International Airport",
+    "country": "BR",
+    "countryName": "Brazil"
+  },
+  {
+    "city": "Brisbane",
+    "iata": "BNE",
+    "airport": "Brisbane International Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Brno",
+    "iata": "BRQ",
+    "airport": "Brno-Tu\u0159any Airport",
+    "country": "CZ",
+    "countryName": "Czech Republic"
+  },
+  {
+    "city": "Budapest",
+    "iata": "BUD",
+    "airport": "Budapest Liszt Ferenc International Airport",
+    "country": "HU",
+    "countryName": "Hungary"
+  },
+  {
+    "city": "Buenos Aires",
+    "iata": "AEP",
+    "airport": "Jorge Newbery Airpark",
+    "country": "AR",
+    "countryName": "Argentina"
+  },
+  {
+    "city": "Buenos Aires (Ezeiza)",
+    "iata": "EZE",
+    "airport": "Minister Pistarini International Airport",
+    "country": "AR",
+    "countryName": "Argentina"
+  },
+  {
+    "city": "Cairns",
+    "iata": "CNS",
+    "airport": "Cairns International Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Calgary",
+    "iata": "YYC",
+    "airport": "Calgary International Airport",
+    "country": "CA",
+    "countryName": "Canada"
+  },
+  {
+    "city": "Canberra",
+    "iata": "CBR",
+    "airport": "Canberra Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Canc\u00fan",
+    "iata": "CUN",
+    "airport": "Canc\u00fan International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "Cape Town",
+    "iata": "CPT",
+    "airport": "Cape Town International Airport",
+    "country": "ZA",
+    "countryName": "South Africa"
+  },
+  {
+    "city": "Chengdu (Shuangliu)",
+    "iata": "CTU",
+    "airport": "Chengdu Shuangliu International Airport",
+    "country": "CN",
+    "countryName": "China"
+  },
+  {
+    "city": "Chongqing",
+    "iata": "CKG",
+    "airport": "Chongqing Jiangbei International Airport",
+    "country": "CN",
+    "countryName": "China"
+  },
+  {
+    "city": "Christchurch",
+    "iata": "CHC",
+    "airport": "Christchurch International Airport",
+    "country": "NZ",
+    "countryName": "New Zealand"
+  },
+  {
+    "city": "Ciudad de M\u00e9xico",
+    "iata": "MEX",
+    "airport": "Benito Ju\u00e1rez International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "Copenhagen",
+    "iata": "CPH",
+    "airport": "Copenhagen Kastrup Airport",
+    "country": "DK",
+    "countryName": "Denmark"
+  },
+  {
+    "city": "Cork",
+    "iata": "ORK",
+    "airport": "Cork Airport",
+    "country": "IE",
+    "countryName": "Ireland"
+  },
+  {
+    "city": "Cozumel",
+    "iata": "CZM",
+    "airport": "Cozumel International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "Dar es Salaam",
+    "iata": "DAR",
+    "airport": "Julius Nyerere International Airport",
+    "country": "TZ",
+    "countryName": "Tanzania"
+  },
+  {
+    "city": "Darwin",
+    "iata": "DRW",
+    "airport": "Darwin International Airport / RAAF Darwin",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Debrecen",
+    "iata": "DEB",
+    "airport": "Debrecen International Airport",
+    "country": "HU",
+    "countryName": "Hungary"
+  },
+  {
+    "city": "Doha",
+    "iata": "DOH",
+    "airport": "Hamad International Airport",
+    "country": "QA",
+    "countryName": "Qatar"
+  },
+  {
+    "city": "Dublin",
+    "iata": "DUB",
+    "airport": "Dublin Airport",
+    "country": "IE",
+    "countryName": "Ireland"
+  },
+  {
+    "city": "Edmonton",
+    "iata": "YEG",
+    "airport": "Edmonton International Airport",
+    "country": "CA",
+    "countryName": "Canada"
+  },
+  {
+    "city": "Faro",
+    "iata": "FAO",
+    "airport": "Faro Airport",
+    "country": "PT",
+    "countryName": "Portugal"
+  },
+  {
+    "city": "Fortaleza",
+    "iata": "FOR",
+    "airport": "Pinto Martins International Airport",
+    "country": "BR",
+    "countryName": "Brazil"
+  },
+  {
+    "city": "Fukuoka",
+    "iata": "FUK",
+    "airport": "Fukuoka Airport",
+    "country": "JP",
+    "countryName": "Japan"
+  },
+  {
+    "city": "Funafuti",
+    "iata": "FUN",
+    "airport": "Funafuti International Airport",
+    "country": "TV",
+    "countryName": "Tuvalu"
+  },
+  {
+    "city": "Funchal",
+    "iata": "FNC",
+    "airport": "Madeira International Airport Cristiano Ronaldo",
+    "country": "PT",
+    "countryName": "Portugal"
+  },
+  {
+    "city": "Gda\u0144sk",
+    "iata": "GDN",
+    "airport": "Gda\u0144sk Lech Wa\u0142\u0119sa Airport",
+    "country": "PL",
+    "countryName": "Poland"
+  },
+  {
+    "city": "Gold Coast",
+    "iata": "OOL",
+    "airport": "Gold Coast Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Guadalajara",
+    "iata": "GDL",
+    "airport": "Guadalajara International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "G\u00f6teborg",
+    "iata": "GOT",
+    "airport": "G\u00f6teborg Landvetter Airport",
+    "country": "SE",
+    "countryName": "Sweden"
+  },
+  {
+    "city": "Halifax",
+    "iata": "YHZ",
+    "airport": "Halifax / Stanfield International Airport",
+    "country": "CA",
+    "countryName": "Canada"
+  },
+  {
+    "city": "Harare",
+    "iata": "HRE",
+    "airport": "Robert Gabriel Mugabe International Airport",
+    "country": "ZW",
+    "countryName": "Zimbabwe"
+  },
+  {
+    "city": "Helsinki (Vantaa)",
+    "iata": "HEL",
+    "airport": "Helsinki Vantaa Airport",
+    "country": "FI",
+    "countryName": "Finland"
+  },
+  {
+    "city": "Hobart (Cambridge)",
+    "iata": "HBA",
+    "airport": "Hobart International Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Honiara",
+    "iata": "HIR",
+    "airport": "Honiara International Airport",
+    "country": "SB",
+    "countryName": "Solomon Islands"
+  },
+  {
+    "city": "Ilinden",
+    "iata": "SKP",
+    "airport": "Skopje International Airport",
+    "country": "MK",
+    "countryName": "Macedonia"
+  },
+  {
+    "city": "Jakarta",
+    "iata": "CGK",
+    "airport": "Soekarno-Hatta International Airport",
+    "country": "ID",
+    "countryName": "Indonesia"
+  },
+  {
+    "city": "Jeddah",
+    "iata": "JED",
+    "airport": "King Abdulaziz International Airport",
+    "country": "SA",
+    "countryName": "Saudi Arabia"
+  },
+  {
+    "city": "Johannesburg",
+    "iata": "JNB",
+    "airport": "O.R. Tambo International Airport",
+    "country": "ZA",
+    "countryName": "South Africa"
+  },
+  {
+    "city": "Kuwait City",
+    "iata": "KWI",
+    "airport": "Kuwait International Airport",
+    "country": "KW",
+    "countryName": "Kuwait"
+  },
+  {
+    "city": "Lagos",
+    "iata": "LOS",
+    "airport": "Murtala Muhammed International Airport",
+    "country": "NG",
+    "countryName": "Nigeria"
+  },
+  {
+    "city": "Larnaca",
+    "iata": "LCA",
+    "airport": "Larnaca International Airport",
+    "country": "CY",
+    "countryName": "Cyprus"
+  },
+  {
+    "city": "Lima",
+    "iata": "LIM",
+    "airport": "Jorge Ch\u00e1vez International Airport",
+    "country": "PE",
+    "countryName": "Peru"
+  },
+  {
+    "city": "Lisbon",
+    "iata": "LIS",
+    "airport": "Lisbon Humberto Delgado Airport",
+    "country": "PT",
+    "countryName": "Portugal"
+  },
+  {
+    "city": "Lusaka",
+    "iata": "LUN",
+    "airport": "Kenneth Kaunda International Airport",
+    "country": "ZM",
+    "countryName": "Zambia"
+  },
+  {
+    "city": "Luxembourg",
+    "iata": "LUX",
+    "airport": "Luxembourg-Findel International Airport",
+    "country": "LU",
+    "countryName": "Luxembourg"
+  },
+  {
+    "city": "Mahe Island",
+    "iata": "SEZ",
+    "airport": "Seychelles International Airport",
+    "country": "SC",
+    "countryName": "Seychelles"
+  },
+  {
+    "city": "Maiquet\u00eda",
+    "iata": "CCS",
+    "airport": "Maiquet\u00eda Sim\u00f3n Bol\u00edvar International Airport",
+    "country": "VE",
+    "countryName": "Venezuela"
+  },
+  {
+    "city": "Majuro Atoll",
+    "iata": "MAJ",
+    "airport": "Marshall Islands International Airport",
+    "country": "MH",
+    "countryName": "Marshall Islands"
+  },
+  {
+    "city": "Manama",
+    "iata": "BAH",
+    "airport": "Bahrain International Airport",
+    "country": "BH",
+    "countryName": "Bahrain"
+  },
+  {
+    "city": "Manila (Pasay)",
+    "iata": "MNL",
+    "airport": "Ninoy Aquino International Airport",
+    "country": "PH",
+    "countryName": "Philippines"
+  },
+  {
+    "city": "Maputo",
+    "iata": "MPM",
+    "airport": "Maputo Airport",
+    "country": "MZ",
+    "countryName": "Mozambique"
+  },
+  {
+    "city": "Melbourne",
+    "iata": "MEL",
+    "airport": "Melbourne Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Minsk",
+    "iata": "MSQ",
+    "airport": "Minsk National Airport",
+    "country": "BY",
+    "countryName": "Belarus"
+  },
+  {
+    "city": "Monterrey",
+    "iata": "MTY",
+    "airport": "Monterrey International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "Montr\u00e9al",
+    "iata": "YUL",
+    "airport": "Montreal / Pierre Elliott Trudeau International Airport",
+    "country": "CA",
+    "countryName": "Canada"
+  },
+  {
+    "city": "Muscat",
+    "iata": "MCT",
+    "airport": "Muscat International Airport",
+    "country": "OM",
+    "countryName": "Oman"
+  },
+  {
+    "city": "M\u00e9rida",
+    "iata": "MID",
+    "airport": "Manuel Crescencio Rej\u00f3n International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "Nadi",
+    "iata": "NAN",
+    "airport": "Nadi International Airport",
+    "country": "FJ",
+    "countryName": "Fiji"
+  },
+  {
+    "city": "Nausori",
+    "iata": "SUV",
+    "airport": "Nausori International Airport",
+    "country": "FJ",
+    "countryName": "Fiji"
+  },
+  {
+    "city": "Noum\u00e9a (La Tontouta)",
+    "iata": "NOU",
+    "airport": "La Tontouta International Airport",
+    "country": "NC",
+    "countryName": "New Caledonia"
+  },
+  {
+    "city": "Nuku'alofa",
+    "iata": "TBU",
+    "airport": "Fua'amotu International Airport",
+    "country": "TO",
+    "countryName": "Tonga"
+  },
+  {
+    "city": "Osaka",
+    "iata": "KIX",
+    "airport": "Kansai International Airport",
+    "country": "JP",
+    "countryName": "Japan"
+  },
+  {
+    "city": "Osaka",
+    "iata": "ITM",
+    "airport": "Osaka International Airport",
+    "country": "JP",
+    "countryName": "Japan"
+  },
+  {
+    "city": "Oslo (Gardermoen)",
+    "iata": "OSL",
+    "airport": "Oslo Airport, Gardermoen",
+    "country": "NO",
+    "countryName": "Norway"
+  },
+  {
+    "city": "Otopeni",
+    "iata": "OTP",
+    "airport": "Bucharest Henri Coand\u0103 International Airport",
+    "country": "RO",
+    "countryName": "Romania"
+  },
+  {
+    "city": "Ottawa",
+    "iata": "YOW",
+    "airport": "Ottawa Macdonald-Cartier International Airport",
+    "country": "CA",
+    "countryName": "Canada"
+  },
+  {
+    "city": "Papeete",
+    "iata": "PPT",
+    "airport": "Faa'a International Airport",
+    "country": "PF",
+    "countryName": "French Polynesia"
+  },
+  {
+    "city": "Perth",
+    "iata": "PER",
+    "airport": "Perth International Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "Plaine Magnien",
+    "iata": "MRU",
+    "airport": "Sir Seewoosagur Ramgoolam International Airport",
+    "country": "MU",
+    "countryName": "Mauritius"
+  },
+  {
+    "city": "Podgorica",
+    "iata": "TGD",
+    "airport": "Podgorica Airport / Podgorica Golubovci Airbase",
+    "country": "ME",
+    "countryName": "Montenegro"
+  },
+  {
+    "city": "Pohnpei Island",
+    "iata": "PNI",
+    "airport": "Pohnpei International Airport",
+    "country": "FM",
+    "countryName": "Micronesia"
+  },
+  {
+    "city": "Port Moresby",
+    "iata": "POM",
+    "airport": "Port Moresby Jacksons International Airport",
+    "country": "PG",
+    "countryName": "Papua New Guinea"
+  },
+  {
+    "city": "Port Vila",
+    "iata": "VLI",
+    "airport": "Bauerfield International Airport",
+    "country": "VU",
+    "countryName": "Vanuatu"
+  },
+  {
+    "city": "Porto",
+    "iata": "OPO",
+    "airport": "Francisco de S\u00e1 Carneiro Airport",
+    "country": "PT",
+    "countryName": "Portugal"
+  },
+  {
+    "city": "Prague",
+    "iata": "PRG",
+    "airport": "V\u00e1clav Havel Airport Prague",
+    "country": "CZ",
+    "countryName": "Czech Republic"
+  },
+  {
+    "city": "Puerto Vallarta",
+    "iata": "PVR",
+    "airport": "Puerto Vallarta International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "Qingdao (Jiaozhou)",
+    "iata": "TAO",
+    "airport": "Qingdao Jiaodong International Airport",
+    "country": "CN",
+    "countryName": "China"
+  },
+  {
+    "city": "Queenstown",
+    "iata": "ZQN",
+    "airport": "Queenstown International Airport",
+    "country": "NZ",
+    "countryName": "New Zealand"
+  },
+  {
+    "city": "Quito",
+    "iata": "UIO",
+    "airport": "Mariscal Sucre International Airport",
+    "country": "EC",
+    "countryName": "Ecuador"
+  },
+  {
+    "city": "Recife",
+    "iata": "REC",
+    "airport": "Recife/Guararapes - Gilberto Freyre International Airport",
+    "country": "BR",
+    "countryName": "Brazil"
+  },
+  {
+    "city": "Reykjav\u00edk",
+    "iata": "KEF",
+    "airport": "Keflavik International Airport",
+    "country": "IS",
+    "countryName": "Iceland"
+  },
+  {
+    "city": "Reykjav\u00edk",
+    "iata": "RKV",
+    "airport": "Reykjav\u00edk Domestic Airport",
+    "country": "IS",
+    "countryName": "Iceland"
+  },
+  {
+    "city": "Riga",
+    "iata": "RIX",
+    "airport": "Riga International Airport",
+    "country": "LV",
+    "countryName": "Latvia"
+  },
+  {
+    "city": "Rinas",
+    "iata": "TIA",
+    "airport": "Tirana International Airport Mother Teresa",
+    "country": "AL",
+    "countryName": "Albania"
+  },
+  {
+    "city": "Rio De Janeiro",
+    "iata": "GIG",
+    "airport": "Rio Gale\u00e3o \u2013 Tom Jobim International Airport",
+    "country": "BR",
+    "countryName": "Brazil"
+  },
+  {
+    "city": "Rio de Janeiro",
+    "iata": "SDU",
+    "airport": "Santos Dumont Airport",
+    "country": "BR",
+    "countryName": "Brazil"
+  },
+  {
+    "city": "Riyadh",
+    "iata": "RUH",
+    "airport": "King Khaled International Airport",
+    "country": "SA",
+    "countryName": "Saudi Arabia"
+  },
+  {
+    "city": "Salvador",
+    "iata": "SSA",
+    "airport": "Deputado Luiz Eduardo Magalh\u00e3es International Airport",
+    "country": "BR",
+    "countryName": "Brazil"
+  },
+  {
+    "city": "San Jos\u00e9 del Cabo",
+    "iata": "SJD",
+    "airport": "Los Cabos International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "Santiago",
+    "iata": "SCL",
+    "airport": "Comodoro Arturo Merino Ben\u00edtez International Airport",
+    "country": "CL",
+    "countryName": "Chile"
+  },
+  {
+    "city": "Sapporo",
+    "iata": "CTS",
+    "airport": "New Chitose Airport",
+    "country": "JP",
+    "countryName": "Japan"
+  },
+  {
+    "city": "Sarajevo",
+    "iata": "SJJ",
+    "airport": "Sarajevo International Airport",
+    "country": "BA",
+    "countryName": "Bosnia and Herzegovina"
+  },
+  {
+    "city": "Seoul",
+    "iata": "ICN",
+    "airport": "Incheon International Airport",
+    "country": "KR",
+    "countryName": "South Korea"
+  },
+  {
+    "city": "Seoul",
+    "iata": "GMP",
+    "airport": "Gimpo International Airport",
+    "country": "KR",
+    "countryName": "South Korea"
+  },
+  {
+    "city": "Sepang",
+    "iata": "KUL",
+    "airport": "Kuala Lumpur International Airport",
+    "country": "MY",
+    "countryName": "Malaysia"
+  },
+  {
+    "city": "Shannon",
+    "iata": "SNN",
+    "airport": "Shannon Airport",
+    "country": "IE",
+    "countryName": "Ireland"
+  },
+  {
+    "city": "Sofia",
+    "iata": "SOF",
+    "airport": "Sofia Airport",
+    "country": "BG",
+    "countryName": "Bulgaria"
+  },
+  {
+    "city": "Stockholm",
+    "iata": "ARN",
+    "airport": "Stockholm-Arlanda Airport",
+    "country": "SE",
+    "countryName": "Sweden"
+  },
+  {
+    "city": "Sydney (Mascot)",
+    "iata": "SYD",
+    "airport": "Sydney Kingsford Smith International Airport",
+    "country": "AU",
+    "countryName": "Australia"
+  },
+  {
+    "city": "S\u00e3o Paulo",
+    "iata": "GRU",
+    "airport": "Guarulhos - Governador Andr\u00e9 Franco Montoro International Airport",
+    "country": "BR",
+    "countryName": "Brazil"
+  },
+  {
+    "city": "S\u00e3o Paulo",
+    "iata": "CGH",
+    "airport": "Congonhas Airport",
+    "country": "BR",
+    "countryName": "Brazil"
+  },
+  {
+    "city": "Tallinn",
+    "iata": "TLL",
+    "airport": "Lennart Meri Tallinn Airport",
+    "country": "EE",
+    "countryName": "Estonia"
+  },
+  {
+    "city": "Tampere / Pirkkala",
+    "iata": "TMP",
+    "airport": "Tampere-Pirkkala Airport",
+    "country": "FI",
+    "countryName": "Finland"
+  },
+  {
+    "city": "Taoyuan",
+    "iata": "TPE",
+    "airport": "Taiwan Taoyuan International Airport",
+    "country": "TW",
+    "countryName": "Taiwan"
+  },
+  {
+    "city": "Tarawa",
+    "iata": "TRW",
+    "airport": "Bonriki International Airport",
+    "country": "KI",
+    "countryName": "Kiribati"
+  },
+  {
+    "city": "Tianjin",
+    "iata": "TSN",
+    "airport": "Tianjin Binhai International Airport",
+    "country": "CN",
+    "countryName": "China"
+  },
+  {
+    "city": "Tijuana",
+    "iata": "TIJ",
+    "airport": "General Abelardo L. Rodriguez International Airport",
+    "country": "MX",
+    "countryName": "Mexico"
+  },
+  {
+    "city": "Toronto",
+    "iata": "YYZ",
+    "airport": "Toronto Lester B. Pearson International Airport",
+    "country": "CA",
+    "countryName": "Canada"
+  },
+  {
+    "city": "Valletta",
+    "iata": "MLA",
+    "airport": "Malta International Airport",
+    "country": "MT",
+    "countryName": "Malta"
+  },
+  {
+    "city": "Vancouver",
+    "iata": "YVR",
+    "airport": "Vancouver International Airport",
+    "country": "CA",
+    "countryName": "Canada"
+  },
+  {
+    "city": "Velika Gorica",
+    "iata": "ZAG",
+    "airport": "Zagreb Franjo Tu\u0111man International Airport",
+    "country": "HR",
+    "countryName": "Croatia"
+  },
+  {
+    "city": "Vilnius",
+    "iata": "VNO",
+    "airport": "Vilnius International Airport",
+    "country": "LT",
+    "countryName": "Lithuania"
+  },
+  {
+    "city": "Warsaw",
+    "iata": "WAW",
+    "airport": "Warsaw Chopin Airport",
+    "country": "PL",
+    "countryName": "Poland"
+  },
+  {
+    "city": "Wellington",
+    "iata": "WLG",
+    "airport": "Wellington International Airport",
+    "country": "NZ",
+    "countryName": "New Zealand"
+  },
+  {
+    "city": "Winnipeg",
+    "iata": "YWG",
+    "airport": "Winnipeg / James Armstrong Richardson International Airport",
+    "country": "CA",
+    "countryName": "Canada"
+  },
+  {
+    "city": "Wuhan (Huangpi)",
+    "iata": "WUH",
+    "airport": "Wuhan Tianhe International Airport",
+    "country": "CN",
+    "countryName": "China"
+  },
+  {
+    "city": "Yaren District",
+    "iata": "INU",
+    "airport": "Nauru International Airport",
+    "country": "NR",
+    "countryName": "Nauru"
+  },
+  {
+    "city": "Zgornji Brnik",
+    "iata": "LJU",
+    "airport": "Ljubljana Jo\u017ee Pu\u010dnik Airport",
+    "country": "SI",
+    "countryName": "Slovenia"
+  }
+]
