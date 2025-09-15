@@ -1398,15 +1398,15 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
           )}
         </div>
 
-        {/* Passenger Selection - Compact */}
+        {/* Passenger Selection - Mobile Responsive */}
         <div 
           className="mt-3 passenger-selector-compact"
           style={{
             background: 'white',
             border: '1px solid #d1d5db',
             borderRadius: '10px',
-            padding: '8px 12px',
-            minHeight: '52px',
+            padding: window.innerWidth <= 768 ? '10px 14px' : '8px 12px',
+            minHeight: window.innerWidth <= 768 ? '56px' : '52px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
