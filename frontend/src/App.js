@@ -2163,9 +2163,13 @@ function App() {
               }}
             />
 
-            {/* Subtle section divider */}
-            <div className="mt-12 mb-8 flex items-center justify-center">
+            {/* Enhanced section divider with decorative elements */}
+            <div className="mt-12 mb-8 flex items-center justify-center relative">
               <div className="h-px bg-gradient-to-r from-transparent via-blue-200/40 to-transparent w-full max-w-md"></div>
+              {/* Decorative floating shapes */}
+              <div className="absolute left-1/4 -top-8 w-16 h-16 bg-gradient-to-br from-blue-100/10 to-purple-100/15 rounded-full blur-xl animate-pulse delay-300"></div>
+              <div className="absolute right-1/3 -bottom-6 w-12 h-12 bg-gradient-to-br from-orange-100/15 to-pink-100/10 rounded-full blur-lg animate-pulse delay-700"></div>
+              <div className="absolute left-1/2 top-4 w-8 h-8 bg-gradient-to-br from-green-100/20 to-blue-100/15 rounded-full blur-md animate-pulse delay-1000"></div>
             </div>
 
             {/* Trust Section */}
