@@ -1772,7 +1772,8 @@ function SearchCard({ onSearch, overlayStates, searchStates }) {
             )}
           </div>
         )}
-
+        
+        </div> {/* Close relative z-10 div */}
       </div>
     </div>
   );
