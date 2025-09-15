@@ -321,13 +321,16 @@ function CityInput({ label, value, onChange, onNext, autoFocus = false, integrat
     });
     
     // Sort: "All Airports" first, then individual airports, limit to 10 results
-    return enhancedResults
+    const finalResults = enhancedResults
       .sort((a, b) => {
         if (a.isAllAirports && !b.isAllAirports) return -1;
         if (!a.isAllAirports && b.isAllAirports) return 1;
         return a.city.localeCompare(b.city);
       })
       .slice(0, 10);
+    
+    console.log('Final enhanced results:', finalResults.length, finalResults);
+    return finalResults;
   }, [getCityCode]);
 
   // Enhanced search logic with "All Airports" support
