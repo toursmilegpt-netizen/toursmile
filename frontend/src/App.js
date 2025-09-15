@@ -2176,8 +2176,8 @@ function App() {
       {/* Results Page */}
       {currentPage === 'results' && (
         <>
-          {/* Header with Back Button */}
-          <header className="border-b border-neutral-100">
+          {/* Header with Back Button - Enhanced with subtle gradient */}
+          <header className="border-b border-neutral-100 bg-gradient-to-b from-white to-blue-50/30">
             <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <button 
