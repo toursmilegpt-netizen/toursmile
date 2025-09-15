@@ -2149,8 +2149,13 @@ function App() {
               }}
             />
 
+            {/* Subtle section divider */}
+            <div className="mt-12 mb-8 flex items-center justify-center">
+              <div className="h-px bg-gradient-to-r from-transparent via-blue-200/40 to-transparent w-full max-w-md"></div>
+            </div>
+
             {/* Trust Section */}
-            <section className="mt-12">
+            <section className="mt-4">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 {[
                   { icon: "🔒", title: "Secure Booking", desc: "SSL encrypted transactions" },
