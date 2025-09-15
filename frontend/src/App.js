@@ -2550,7 +2550,7 @@ function App() {
         </div>
       </div>
     )}
-    </div>
+    </div> {/* Close relative z-10 div */}
   );
 }
 
