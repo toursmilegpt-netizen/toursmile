@@ -1,1 +1,0 @@
-window.NEXT_PUBLIC_API_BASE = 'https://api.toursmile.in/api';
