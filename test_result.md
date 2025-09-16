@@ -1061,14 +1061,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Comprehensive Airport Database Integration Test - COMPLETED"
-    - "NYC Airport Search Bug Investigation - COMPLETED"
-    - "New Autocomplete Functionality Implementation - CRITICAL"
-    - "Airport Search Filtering Logic Implementation"
-    - "All Airports Feature Implementation"
+    - "Flight Results Page Integration"
   stuck_tasks:
-    - "New Autocomplete Functionality Implementation"
-    - "Mobile touch target optimization (minor - 44px compliance needed)"
+    - "Flight Results Page Integration"
+    - "Ixigo-Style Compact Design Implementation"
+    - "Homepage Search Flow Integration"
+    - "Critical Swap Functionality Fix"
+    - "Critical Airport Search Functionality Fix"
   test_all: false
   test_priority: "high_first"
 
