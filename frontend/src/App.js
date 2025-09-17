@@ -2292,11 +2292,9 @@ function App() {
         tripType: searchData.trip
       });
       
-      // Mock search delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Navigate to results page
+      // Navigate to results page immediately to show loading state
       setCurrentPage('results');
+      
     } catch (error) {
       console.error('Search failed:', error);
     }
