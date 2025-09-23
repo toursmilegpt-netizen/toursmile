@@ -146,112 +146,161 @@ class PaymentOrderRequest(BaseModel):
     receipt: Optional[str] = None
     bookingData: Optional[dict] = None
 
-# Mock data for flights - Enhanced for Phase 2 with TBO-style data structure
+# Mock data for flights - Enhanced for Phase 2 with TBO-style data structure and Multiple Fare Types
 MOCK_FLIGHTS = [
     {
         "id": "FL001",
         "airline": "Air India",
-        "flight_number": "AI 101",
-        "origin": "Delhi",
-        "destination": "Mumbai",
+        "flight_number": "AI 131",
+        "origin": "Mumbai",
+        "destination": "Delhi",
         "departure_time": "06:00",
         "arrival_time": "08:30",
         "duration": "2h 30m",
         "duration_minutes": 150,
-        "price": 4500,
+        "base_price": 3800,
         "currency": "INR",
         "stops": 0,
         "aircraft": "Boeing 737",
         "aircraft_type": "Boeing 737-800",
         "is_lcc": False,
         "booking_class": "Economy",
-        "refundable": True,
         "baggage_allowance": "23 kg",
-        "data_source": "mock"
+        "data_source": "mock",
+        "fare_types": [
+            {
+                "type": "saver",
+                "name": "Saver",
+                "price": 3800,
+                "base_fare": 3230,
+                "taxes": 570,
+                "refundable": False,
+                "changeable": False,
+                "cancellation_charges": {
+                    "before_24h": {"amount": 3800, "percentage": 100},
+                    "within_24h": {"amount": 3800, "percentage": 100},
+                    "description": "Non-refundable"
+                },
+                "change_charges": {
+                    "amount": 3800,
+                    "description": "Changes not allowed"
+                },
+                "baggage": "15 kg",
+                "seat_selection": False,
+                "meal": False,
+                "features": ["Lowest Price", "No Changes", "No Refunds"]
+            },
+            {
+                "type": "regular",
+                "name": "Regular",
+                "price": 4370,
+                "base_fare": 3800,
+                "taxes": 570,
+                "refundable": True,
+                "changeable": True,
+                "cancellation_charges": {
+                    "before_24h": {"amount": 950, "percentage": 25},
+                    "within_24h": {"amount": 1900, "percentage": 50},
+                    "description": "₹950 cancellation fee (before 24h)"
+                },
+                "change_charges": {
+                    "amount": 570,
+                    "description": "₹570 + fare difference"
+                },
+                "baggage": "20 kg",
+                "seat_selection": False,
+                "meal": False,
+                "features": ["Partial Refund", "Date Changes", "Standard Baggage"]
+            },
+            {
+                "type": "flexi",
+                "name": "Flexi",
+                "price": 5130,
+                "base_fare": 4560,
+                "taxes": 570,
+                "refundable": True,
+                "changeable": True,
+                "cancellation_charges": {
+                    "before_24h": {"amount": 0, "percentage": 0},
+                    "within_24h": {"amount": 950, "percentage": 25},
+                    "description": "Free cancellation (before 24h)"
+                },
+                "change_charges": {
+                    "amount": 0,
+                    "description": "Free date/time changes + fare difference"
+                },
+                "baggage": "25 kg",
+                "seat_selection": True,
+                "meal": True,
+                "features": ["Free Cancellation", "Free Changes", "Extra Baggage", "Seat Selection", "Meal Included"]
+            }
+        ]
     },
     {
         "id": "FL002", 
         "airline": "IndiGo",
-        "flight_number": "6E 202",
-        "origin": "Delhi",
-        "destination": "Mumbai", 
+        "flight_number": "6E 211",
+        "origin": "Mumbai",
+        "destination": "Delhi",
         "departure_time": "14:30",
         "arrival_time": "17:00",
         "duration": "2h 30m",
         "duration_minutes": 150,
-        "price": 3800,
+        "base_price": 3200,
         "currency": "INR",
         "stops": 0,
         "aircraft": "Airbus A320",
         "aircraft_type": "Airbus A320neo",
         "is_lcc": True,
         "booking_class": "Economy",
-        "refundable": False,
         "baggage_allowance": "15 kg",
-        "data_source": "mock"
-    },
-    {
-        "id": "FL003",
-        "airline": "SpiceJet",
-        "flight_number": "SG 303",
-        "origin": "Mumbai",
-        "destination": "Goa",
-        "departure_time": "10:15",
-        "arrival_time": "11:45",
-        "duration": "1h 30m",
-        "duration_minutes": 90,
-        "price": 2800,
-        "currency": "INR",
-        "stops": 0,
-        "aircraft": "Boeing 737",
-        "aircraft_type": "Boeing 737 MAX",
-        "is_lcc": True,
-        "booking_class": "Economy",
-        "refundable": False,
-        "baggage_allowance": "15 kg",
-        "data_source": "mock"
-    },
-    {
-        "id": "FL004",
-        "airline": "Vistara",
-        "flight_number": "UK 955",
-        "origin": "Mumbai",
-        "destination": "Delhi",
-        "departure_time": "09:30",
-        "arrival_time": "12:00",
-        "duration": "2h 30m",
-        "duration_minutes": 150,
-        "price": 5200,
-        "currency": "INR",
-        "stops": 0,
-        "aircraft": "Airbus A320",
-        "aircraft_type": "Airbus A320neo",
-        "is_lcc": False,
-        "booking_class": "Premium Economy",
-        "refundable": True,
-        "baggage_allowance": "25 kg",
-        "data_source": "mock"
-    },
-    {
-        "id": "FL005",
-        "airline": "GoAir",
-        "flight_number": "G8 401",
-        "origin": "Mumbai",
-        "destination": "Delhi",
-        "departure_time": "16:45",
-        "arrival_time": "19:15",
-        "duration": "2h 30m",
-        "duration_minutes": 150,
-        "price": 3200,
-        "currency": "INR",
-        "stops": 0,
-        "aircraft": "Airbus A320",
-        "aircraft_type": "Airbus A320",
-        "is_lcc": True,
-        "booking_class": "Economy",
-        "refundable": False,
-        "baggage_allowance": "15 kg",
-        "data_source": "mock"
+        "data_source": "mock",
+        "fare_types": [
+            {
+                "type": "saver",
+                "name": "Saver",
+                "price": 3200,
+                "base_fare": 2720,
+                "taxes": 480,
+                "refundable": False,
+                "changeable": False,
+                "cancellation_charges": {
+                    "before_24h": {"amount": 3200, "percentage": 100},
+                    "within_24h": {"amount": 3200, "percentage": 100},
+                    "description": "Non-refundable"
+                },
+                "change_charges": {
+                    "amount": 3200,
+                    "description": "Changes not allowed"
+                },
+                "baggage": "15 kg",
+                "seat_selection": False,
+                "meal": False,
+                "features": ["Lowest Price", "No Changes", "No Refunds"]
+            },
+            {
+                "type": "regular",
+                "name": "Regular",
+                "price": 3680,
+                "base_fare": 3200,
+                "taxes": 480,
+                "refundable": True,
+                "changeable": True,
+                "cancellation_charges": {
+                    "before_24h": {"amount": 800, "percentage": 25},
+                    "within_24h": {"amount": 1600, "percentage": 50},
+                    "description": "₹800 cancellation fee (before 24h)"
+                },
+                "change_charges": {
+                    "amount": 480,
+                    "description": "₹480 + fare difference"
+                },
+                "baggage": "20 kg",
+                "seat_selection": False,
+                "meal": False,
+                "features": ["Partial Refund", "Date Changes", "Standard Baggage"]
+            }
+        ]
     }
 ]
 
