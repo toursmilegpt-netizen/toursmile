@@ -5,6 +5,8 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
+  
   // State for expanded fare options
   const [expandedFlightId, setExpandedFlightId] = useState(null);
   
