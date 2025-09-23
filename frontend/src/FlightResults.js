@@ -127,6 +127,26 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
         if (filters.refundable !== flight.refundable) return false;
       }
       
+      // Aircraft type filter
+      if (filters.aircraftTypes && filters.aircraftTypes.length > 0) {
+        if (!filters.aircraftTypes.includes(flight.aircraft_type)) return false;
+      }
+      
+      // Service type filter (LCC vs Full Service)
+      if (filters.serviceTypes && filters.serviceTypes.length > 0) {
+        const isLcc = flight.is_lcc;
+        const hasLcc = filters.serviceTypes.includes('lcc');
+        const hasFull = filters.serviceTypes.includes('full');
+        
+        if (hasLcc && hasFull) {
+          // Both selected, show all
+        } else if (hasLcc && !isLcc) {
+          return false;
+        } else if (hasFull && isLcc) {
+          return false;
+        }
+      }
+      
       return true;
     });
     
