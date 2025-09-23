@@ -16,7 +16,7 @@ class TBOFlightService:
         self.username = os.getenv('TBO_USERNAME', 'Smile')
         self.password = os.getenv('TBO_PASSWORD', 'Smile@123')
         self.base_url = os.getenv('TBO_BASE_URL', 'http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest')
-        self.auth_url = os.getenv('TBO_AUTH_URL', 'http://api.tektravels.com/SharedServices/SharedData.svc')
+        self.auth_url = os.getenv('TBO_AUTH_URL', 'http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Authenticate')
         self.client_id = os.getenv('TBO_CLIENT_ID', 'ApiIntegrationNew')
         
         # Token management
