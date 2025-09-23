@@ -49,7 +49,7 @@ class TBOFlightService:
         async with httpx.AsyncClient(timeout=30.0) as client:
             try:
                 response = await client.post(
-                    f"{self.auth_url}/rest/Authenticate",
+                    self.auth_url,  # Direct URL, no need for f-string
                     json=auth_payload,
                     headers={
                         "Content-Type": "application/json",
