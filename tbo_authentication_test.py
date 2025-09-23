@@ -27,7 +27,7 @@ import httpx
 import asyncio
 
 # Backend URL from environment
-BACKEND_URL = "https://flightsearch-ui-1.preview.emergentagent.com/api"
+BACKEND_URL = "https://flywise-search.preview.emergentagent.com/api"
 
 # TBO API Configuration from backend/.env
 TBO_USERNAME = "Smile"

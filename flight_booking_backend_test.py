@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any
 
 # Backend URL from environment
-BACKEND_URL = "https://flightsearch-ui-1.preview.emergentagent.com/api"
+BACKEND_URL = "https://flywise-search.preview.emergentagent.com/api"
 
 class FlightBookingBackendTester:
     def __init__(self):

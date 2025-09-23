@@ -18,7 +18,7 @@ import sys
 from typing import Dict, List, Any
 
 # Backend URL from environment
-BACKEND_URL = "https://flightsearch-ui-1.preview.emergentagent.com/api"
+BACKEND_URL = "https://flywise-search.preview.emergentagent.com/api"
 
 class AirportDatabaseTester:
     def __init__(self):

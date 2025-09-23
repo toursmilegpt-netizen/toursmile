@@ -22,7 +22,7 @@ def test_current_ranking_issues():
     print("🚨 CURRENT RANKING ISSUES ANALYSIS")
     print("=" * 50)
     
-    url = 'https://flightsearch-ui-1.preview.emergentagent.com/api/airports/search'
+    url = 'https://flywise-search.preview.emergentagent.com/api/airports/search'
     
     # Test cases that are currently failing
     failing_cases = [
