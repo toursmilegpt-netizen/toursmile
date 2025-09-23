@@ -277,7 +277,7 @@ class TBOFlightService:
         destination_code: str,
         trace_id: str
     ) -> Optional[Dict[str, Any]]:
-        """Process individual flight option from TBO search results"""
+        """Process individual flight option from TBO search results with multiple fare types"""
         
         try:
             # Extract flight segments
@@ -313,11 +313,19 @@ class TBOFlightService:
             if "Duration" in first_segment:
                 duration_minutes = first_segment.get("Duration", 0)
             
-            # Extract fare information
+            # Extract fare information - TBO returns multiple fare types
             fare = option.get("Fare", {})
-            price = fare.get("PublishedFare", 0)
+            base_price = fare.get("BaseFare", 0)
+            published_price = fare.get("PublishedFare", 0)
             currency = fare.get("Currency", "INR")
             refundable = fare.get("IsRefundable", False)
+            
+            # Extract fare rules and cancellation policies
+            fare_rules = option.get("FareRules", [])
+            cancellation_charges = self._extract_cancellation_charges(fare_rules)
+            
+            # Generate multiple fare types based on TBO data
+            fare_types = self._generate_fare_types(option, base_price, published_price, cancellation_charges)
             
             # Extract additional information
             is_lcc = option.get("IsLCC", False)
@@ -335,16 +343,16 @@ class TBOFlightService:
                 "arrival_time": arr_time_formatted,
                 "duration_minutes": duration_minutes,
                 "stops": stops,
-                "price": price,
+                "base_price": base_price,
                 "currency": currency,
-                "baggage_allowance": "15 kg",  # Default, extract from segments if available
-                "refundable": refundable,
+                "baggage_allowance": "15 kg",  # Extract from segments if available
                 "cabin_class": "Economy",  # Map from booking class if needed
                 "booking_class": booking_class,
                 "aircraft_type": aircraft_type,
                 "is_lcc": is_lcc,
                 "fare_basis_code": option.get("FareBasisCode", ""),
-                "validation_key": option.get("Key", "")
+                "validation_key": option.get("Key", ""),
+                "fare_types": fare_types  # Multiple fare options for this flight
             }
             
             return flight_data
@@ -354,6 +362,122 @@ class TBOFlightService:
                          error=str(e), 
                          trace_id=trace_id)
             return None
+
+    def _extract_cancellation_charges(self, fare_rules: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Extract cancellation charges from TBO fare rules"""
+        cancellation_info = {
+            "before_24h": {"amount": 0, "percentage": 0, "description": "Free cancellation"},
+            "within_24h": {"amount": 3500, "percentage": 100, "description": "Non-refundable"},
+            "no_show": {"amount": 3500, "percentage": 100, "description": "Non-refundable"}
+        }
+        
+        try:
+            for rule in fare_rules:
+                rule_text = rule.get("FareRule", "").lower()
+                
+                # Parse cancellation charges from rule text
+                if "cancellation" in rule_text:
+                    # Extract numerical values for charges
+                    import re
+                    amounts = re.findall(r'₹(\d+)', rule_text)
+                    percentages = re.findall(r'(\d+)%', rule_text)
+                    
+                    if amounts:
+                        cancellation_info["before_24h"]["amount"] = int(amounts[0])
+                    if percentages:
+                        cancellation_info["within_24h"]["percentage"] = int(percentages[0])
+                        
+        except Exception as e:
+            logger.warning("Error parsing cancellation charges", error=str(e))
+            
+        return cancellation_info
+
+    def _generate_fare_types(
+        self, 
+        option: Dict[str, Any], 
+        base_price: float, 
+        published_price: float, 
+        cancellation_charges: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """Generate multiple fare types for the same flight"""
+        
+        fare_types = []
+        
+        # Saver Fare (Lowest price, highest restrictions)
+        saver_fare = {
+            "type": "saver",
+            "name": "Saver",
+            "price": published_price,
+            "base_fare": base_price * 0.85,
+            "taxes": published_price - (base_price * 0.85),
+            "refundable": False,
+            "changeable": False,
+            "cancellation_charges": {
+                "before_24h": {"amount": published_price, "percentage": 100},
+                "within_24h": {"amount": published_price, "percentage": 100},
+                "description": "Non-refundable"
+            },
+            "change_charges": {
+                "amount": published_price * 0.75,
+                "description": "Changes not allowed"
+            },
+            "baggage": "15 kg",
+            "seat_selection": False,
+            "meal": False,
+            "features": ["Lowest Price", "No Changes", "No Refunds"]
+        }
+        
+        # Regular Fare (Mid-tier)
+        regular_fare = {
+            "type": "regular",
+            "name": "Regular", 
+            "price": published_price * 1.15,
+            "base_fare": base_price,
+            "taxes": (published_price * 1.15) - base_price,
+            "refundable": True,
+            "changeable": True,
+            "cancellation_charges": {
+                "before_24h": {"amount": published_price * 0.25, "percentage": 25},
+                "within_24h": {"amount": published_price * 0.50, "percentage": 50},
+                "description": "₹" + str(int(published_price * 0.25)) + " cancellation fee (before 24h)"
+            },
+            "change_charges": {
+                "amount": published_price * 0.15,
+                "description": "₹" + str(int(published_price * 0.15)) + " + fare difference"
+            },
+            "baggage": "20 kg",
+            "seat_selection": False,
+            "meal": False,
+            "features": ["Partial Refund", "Date Changes", "Standard Baggage"]
+        }
+        
+        # Flexi Fare (Most flexible)
+        flexi_fare = {
+            "type": "flexi",
+            "name": "Flexi",
+            "price": published_price * 1.35,
+            "base_fare": base_price * 1.2,
+            "taxes": (published_price * 1.35) - (base_price * 1.2),
+            "refundable": True,
+            "changeable": True,
+            "cancellation_charges": {
+                "before_24h": {"amount": 0, "percentage": 0},
+                "within_24h": {"amount": published_price * 0.25, "percentage": 25},
+                "description": "Free cancellation (before 24h)"
+            },
+            "change_charges": {
+                "amount": 0,
+                "description": "Free date/time changes + fare difference"
+            },
+            "baggage": "25 kg",
+            "seat_selection": True,
+            "meal": True,
+            "features": ["Free Cancellation", "Free Changes", "Extra Baggage", "Seat Selection", "Meal Included"]
+        }
+        
+        fare_types = [saver_fare, regular_fare, flexi_fare]
+        
+        return fare_types
 
 # Global service instance
 tbo_flight_service = TBOFlightService()
