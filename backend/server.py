@@ -4,8 +4,10 @@ from starlette.middleware.cors import CORSMiddleware
 
 # Import the real APIs
 from real_hotel_api import hotel_api_service
-from tripjack_flight_api import tripjack_flight_service  # NEW: Tripjack with comprehensive LCC coverage
-from tripjack_hotel_api import tripjack_hotel_service   # NEW: Tripjack hotel search
+# Updated to use TBO Flight API instead of Tripjack
+import httpx
+import structlog
+from tripjack_hotel_api import tripjack_hotel_service   # Keep hotel search
 
 import os
 import logging
