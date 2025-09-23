@@ -640,7 +640,9 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                       departureTime: [],
                       arrivalTime: [],
                       durationRange: [0, 720],
-                      refundable: null
+                      refundable: null,
+                      aircraftTypes: [],
+                      serviceTypes: []
                     });
                   }}
                   className="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg"
