@@ -410,8 +410,18 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                             <div className="font-medium text-gray-800">
                               {flight.airline || 'Unknown Airline'}
                             </div>
-                            <div className="text-sm text-gray-500">
-                              {flight.flight_number || 'N/A'}
+                            <div className="text-sm text-gray-500 flex items-center space-x-2">
+                              <span>{flight.flight_number || 'N/A'}</span>
+                              {flight.aircraft_type && (
+                                <span className="text-xs bg-gray-100 px-2 py-0.5 rounded">
+                                  {flight.aircraft_type}
+                                </span>
+                              )}
+                              {flight.is_lcc && (
+                                <span className="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded">
+                                  LCC
+                                </span>
+                              )}
                             </div>
                           </div>
                         </div>
