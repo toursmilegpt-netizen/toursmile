@@ -15,7 +15,9 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
     departureTime: [],
     arrivalTime: [],
     durationRange: [0, 720], // in minutes
-    refundable: null
+    refundable: null,
+    aircraftTypes: [],
+    serviceTypes: [] // lcc, full
   });
   
   // Sorting state
