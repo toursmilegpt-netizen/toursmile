@@ -468,11 +468,26 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                         </div>
                         
                         {/* Additional Info */}
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <span>🧳 {flight.baggage_allowance || '15 kg'}</span>
-                          <span className={flight.refundable ? 'text-green-600' : 'text-orange-600'}>
-                            {flight.refundable ? '✓ Refundable' : '⚠ Non-refundable'}
-                          </span>
+                        <div className="flex items-center justify-between text-sm text-gray-500">
+                          <div className="flex items-center space-x-4">
+                            <span>🧳 {flight.baggage_allowance || '15 kg'}</span>
+                            <span className={flight.refundable ? 'text-green-600' : 'text-orange-600'}>
+                              {flight.refundable ? '✓ Refundable' : '⚠ Non-refundable'}
+                            </span>
+                            {flight.booking_class && (
+                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+                                Class: {flight.booking_class}
+                              </span>
+                            )}
+                          </div>
+                          
+                          {/* Fare Breakdown Button */}
+                          <button 
+                            className="text-blue-600 hover:text-blue-700 text-xs font-medium"
+                            onClick={() => {/* TODO: Show fare breakdown */}}
+                          >
+                            Fare Details
+                          </button>
                         </div>
                       </div>
                       
