@@ -60,7 +60,7 @@ class TBOFlightService:
                 response.raise_for_status()
                 auth_data = response.json()
                 
-                if auth_data.get("Status", {}).get("Success"):
+                if auth_data.get("IsSuccess"):
                     self.auth_token = auth_data.get("TokenId")
                     # Token expires at 23:59:59 IST - for now use 23 hours from now
                     self.token_expires_at = datetime.now() + timedelta(hours=23)
@@ -70,7 +70,8 @@ class TBOFlightService:
                                token_preview=self.auth_token[:10] + "..." if self.auth_token else None)
                     return self.auth_token
                 else:
-                    error_msg = auth_data.get("Status", {}).get("Description", "Authentication failed")
+                    errors = auth_data.get("Errors", [])
+                    error_msg = errors[0].get("UserMessage", "Authentication failed") if errors else "Authentication failed"
                     logger.error("TBO authentication failed", 
                                 error=error_msg, 
                                 trace_id=trace_id)
