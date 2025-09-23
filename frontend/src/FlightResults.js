@@ -272,7 +272,68 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
         </div>
       </div>
       
-      {/* Refundable Filter */}
+      {/* Aircraft Type Filter */}
+      {uniqueAircraftTypes.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-gray-800 mb-3">Aircraft Type</h3>
+          <div className="space-y-2 max-h-24 overflow-y-auto">
+            {uniqueAircraftTypes.map(aircraft => (
+              <label key={aircraft} className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={filters.aircraftTypes && filters.aircraftTypes.includes(aircraft)}
+                  onChange={(e) => {
+                    const currentTypes = filters.aircraftTypes || [];
+                    const newTypes = e.target.checked 
+                      ? [...currentTypes, aircraft]
+                      : currentTypes.filter(t => t !== aircraft);
+                    setFilters(prev => ({ ...prev, aircraftTypes: newTypes }));
+                  }}
+                  className="mr-2"
+                />
+                <span className="text-sm">{aircraft}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {/* LCC/Full Service Filter */}
+      <div>
+        <h3 className="font-semibold text-gray-800 mb-3">Service Type</h3>
+        <div className="space-y-2">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              checked={filters.serviceTypes && filters.serviceTypes.includes('lcc')}
+              onChange={(e) => {
+                const currentTypes = filters.serviceTypes || [];
+                const newTypes = e.target.checked 
+                  ? [...currentTypes, 'lcc']
+                  : currentTypes.filter(t => t !== 'lcc');
+                setFilters(prev => ({ ...prev, serviceTypes: newTypes }));
+              }}
+              className="mr-2"
+            />
+            <span className="text-sm">Low Cost Carriers</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              checked={filters.serviceTypes && filters.serviceTypes.includes('full')}
+              onChange={(e) => {
+                const currentTypes = filters.serviceTypes || [];
+                const newTypes = e.target.checked 
+                  ? [...currentTypes, 'full']
+                  : currentTypes.filter(t => t !== 'full');
+                setFilters(prev => ({ ...prev, serviceTypes: newTypes }));
+              }}
+              className="mr-2"
+            />
+            <span className="text-sm">Full Service</span>
+          </label>
+        </div>
+      </div>
       <div>
         <h3 className="font-semibold text-gray-800 mb-3">Ticket Type</h3>
         <div className="space-y-2">
