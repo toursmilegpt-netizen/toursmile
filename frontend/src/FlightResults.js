@@ -494,16 +494,26 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                       {/* Price & Book Button */}
                       <div className="text-right ml-6">
                         <div className="text-2xl font-bold text-gray-800 mb-1">
-                          ₹{(flight.price || 0).toLocaleString()}
+                          {flight.currency === 'INR' ? '₹' : flight.currency || '₹'}{(flight.price || 0).toLocaleString()}
                         </div>
-                        <div className="text-sm text-gray-500 mb-3">
+                        <div className="text-sm text-gray-500 mb-2">
                           per person
                         </div>
+                        {flight.data_source === 'tbo' && (
+                          <div className="text-xs text-green-600 mb-2">
+                            ✓ Live Price
+                          </div>
+                        )}
+                        {flight.data_source === 'mock' && (
+                          <div className="text-xs text-orange-600 mb-2">
+                            ⚠ Demo Price
+                          </div>
+                        )}
                         <button 
                           onClick={() => onFlightSelect && onFlightSelect(flight)}
-                          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium w-full"
                         >
-                          Select
+                          Select Flight
                         </button>
                       </div>
                     </div>
