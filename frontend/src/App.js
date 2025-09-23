@@ -2257,18 +2257,10 @@ function Footer() {
 // Main App Component
 function App() {
   // Navigation state
-  const [currentPage, setCurrentPage] = useState('results'); // 'search', 'results', 'selection', 'passenger', 'payment', 'confirmation' - TESTING: Start on results page
+  const [currentPage, setCurrentPage] = useState('search'); // 'search', 'results', 'selection', 'passenger', 'payment', 'confirmation'
   const [searchResults, setSearchResults] = useState(null);
   const [selectedFlight, setSelectedFlight] = useState(null);
-  const [searchParams, setSearchParams] = useState({
-    from: { city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' },
-    to: { city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' },
-    departDate: '2025-01-21',
-    returnDate: null,
-    passengers: '1 Adult',
-    class: 'Economy',
-    tripType: 'OW'
-  }); // TESTING: Pre-populate search params
+  const [searchParams, setSearchParams] = useState(null);
   
   // Overlay states - moved to App level for proper full-screen rendering
   const [showFromOverlay, setShowFromOverlay] = useState(false);
