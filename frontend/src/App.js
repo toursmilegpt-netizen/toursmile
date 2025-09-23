@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom';
 import './App.css';
 import FlightResults from './FlightResults';
+import BookingFlow from './BookingFlow';
 
 // Import existing comprehensive airport database and components...
 
