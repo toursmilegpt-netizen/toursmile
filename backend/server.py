@@ -7,6 +7,7 @@ from real_hotel_api import hotel_api_service
 # Updated to use TBO Flight API instead of Tripjack
 import httpx
 import structlog
+from tbo_flight_api import tbo_flight_service  # NEW: TBO Flight API integration
 from tripjack_hotel_api import tripjack_hotel_service   # Keep hotel search
 
 import os
