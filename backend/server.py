@@ -9488,33 +9488,37 @@ async def search_flights(request: FlightSearchRequest):
         real_flights = []
         use_real_api = False
         
-        try:
-            if tripjack_flight_service.api_key:
-                logging.info(f"Using Tripjack API for route: {request.origin} → {request.destination}")
-                for ov in origin_variants:
-                    for dv in dest_variants:
-                        for d in date_variants:
-                            results = tripjack_flight_service.search_flights(
-                                origin=ov,
-                                destination=dv,
-                                departure_date=d,
-                                passengers=(request.passengers if hasattr(request, 'passengers') and isinstance(request.passengers, int) else 1),
-                                class_type=(request.class_type if hasattr(request, 'class_type') else 'economy'),
-                                trip_type=('roundtrip' if getattr(request, 'return_date', None) else 'oneway'),
-                                return_date=(request.return_date if getattr(request, 'return_date', None) else None)
-                            )
-                            if results:
-                                real_flights.extend(results)
-                real_flights = dedupe_flights(real_flights)
-                if real_flights:
-                    use_real_api = True
-                    logging.info(f"✅ Tripjack API returned {len(real_flights)} flights (after variants & dedupe)")
-                else:
-                    logging.warning("Tripjack API returned no flights, falling back to mock data")
-            else:
-                logging.info("Tripjack API key not configured, using mock data")
-        except Exception as api_error:
-            logging.error(f"Tripjack API error: {str(api_error)}, falling back to mock data")
+        # TODO: Replace with TBO Flight API integration
+        # try:
+        #     if tripjack_flight_service.api_key:
+        #         logging.info(f"Using Tripjack API for route: {request.origin} → {request.destination}")
+        #         for ov in origin_variants:
+        #             for dv in dest_variants:
+        #                 for d in date_variants:
+        #                     results = tripjack_flight_service.search_flights(
+        #                         origin=ov,
+        #                         destination=dv,
+        #                         departure_date=d,
+        #                         passengers=(request.passengers if hasattr(request, 'passengers') and isinstance(request.passengers, int) else 1),
+        #                         class_type=(request.class_type if hasattr(request, 'class_type') else 'economy'),
+        #                         trip_type=('roundtrip' if getattr(request, 'return_date', None) else 'oneway'),
+        #                         return_date=(request.return_date if getattr(request, 'return_date', None) else None)
+        #                     )
+        #                     if results:
+        #                         real_flights.extend(results)
+        #         real_flights = dedupe_flights(real_flights)
+        #         if real_flights:
+        #             use_real_api = True
+        #             logging.info(f"✅ Tripjack API returned {len(real_flights)} flights (after variants & dedupe)")
+        #         else:
+        #             logging.warning("Tripjack API returned no flights, falling back to mock data")
+        #     else:
+        #         logging.info("Tripjack API key not configured, using mock data")
+        # except Exception as api_error:
+        #     logging.error(f"Tripjack API error: {str(api_error)}, falling back to mock data")
+        
+        # Temporarily disable real API and use mock data until TBO integration is complete
+        logging.info("Using mock data - TBO Flight API integration pending")
         
         # Fallback to mock data if real API failed or no credentials
         if not use_real_api:
