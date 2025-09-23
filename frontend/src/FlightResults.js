@@ -158,6 +158,13 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
     return airlines.sort();
   }, [flights]);
   
+  // Get unique aircraft types for filter
+  const uniqueAircraftTypes = useMemo(() => {
+    const safeFlights = Array.isArray(flights) ? flights : [];
+    const aircraftTypes = [...new Set(safeFlights.map(f => f && f.aircraft_type).filter(Boolean))];
+    return aircraftTypes.sort();
+  }, [flights]);
+  
   // Format duration
   const formatDuration = (minutes) => {
     if (!minutes) return 'N/A';
