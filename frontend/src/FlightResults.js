@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
+// DESIGN CONSISTENCY RULE: ALL PAGES MUST MAINTAIN TOURSMILE HEADER BRANDING
+// This ensures consistent user experience and brand recognition across the application
+// Header includes: TourSmile logo, navigation, WhatsApp support, and Sign In
+
 // Flight Results Page Component - Updated for App.js integration
 const FlightResults = ({ searchParams, onFlightSelect }) => {
   const [flights, setFlights] = useState([]);
