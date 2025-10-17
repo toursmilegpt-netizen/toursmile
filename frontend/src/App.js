@@ -4,6 +4,39 @@ import './App.css';
 import FlightResults from './FlightResults';
 import BookingFlow from './BookingFlow';
 
+// ===============================================================================
+// TOURSMILE DESIGN CONSISTENCY STANDARDS - MANDATORY FOR ALL DEVELOPERS
+// ===============================================================================
+// 
+// HEADER CONSISTENCY RULE:
+// ALL pages/components MUST maintain the exact same TourSmile header structure:
+// - TourSmile logo (blue gradient background with ✈ icon)
+// - "TourSmile" brand name (blue gradient text)
+// - Navigation: Flights (active), Hotels, Tours
+// - WhatsApp support button (green, with icon)
+// - Sign In button
+// - Consistent styling: bg-white/95, backdrop-blur-sm, border-b border-gray-100
+// - Sticky positioning: sticky top-0 z-40
+//
+// BRANDING CONSISTENCY:
+// - Logo: Always blue gradient (from-blue-500 to-blue-600) with white ✈ icon
+// - Brand name: Always "TourSmile" with blue gradient text (from-blue-600 to-blue-800)
+// - Color scheme: Primary blue (#3B82F6), secondary gray, accent green for WhatsApp
+// - Typography: Bold for brand name, semibold for navigation, medium for buttons
+//
+// BACKGROUND CONSISTENCY:
+// - Always use: bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100
+// - Never use solid colors for main background
+//
+// COMPONENT ARCHITECTURE:
+// - Loading states MUST include header
+// - Error states MUST include header  
+// - All page components MUST include header
+// - Mobile responsiveness MUST be maintained
+//
+// FAILURE TO MAINTAIN CONSISTENCY = CRITICAL BUG
+// ===============================================================================
+
 // Import existing comprehensive airport database and components...
 
 // TOURSMILE HOMEPAGE - CLEAN WORKING IMPLEMENTATION
