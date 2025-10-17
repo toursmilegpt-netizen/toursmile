@@ -2309,7 +2309,7 @@ function App() {
   // Search form state - moved to App level to share with overlays
   const [from, setFrom] = useState({ city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' });
   const [to, setTo] = useState({ city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' });
-  const [depart, setDepart] = useState(null);
+  const [depart, setDepart] = useState(new Date(2025, 0, 20)); // Default to Jan 20, 2025 for demo purposes
   const [ret, setRet] = useState(null);
   const [pax, setPax] = useState({ adt: 1, chd: 0, inf: 0, cabin: "Economy" });
   const [trip, setTrip] = useState("OW");
