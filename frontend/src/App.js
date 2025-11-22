@@ -2316,6 +2316,46 @@ function App() {
   // GUIDED UX FLOW STATE - Enterprise-level user journey management
   const [currentStep, setCurrentStep] = useState(1); // 1=from, 2=to, 3=depart, 4=return, 5=passengers, 6=search
   const [completedSteps, setCompletedSteps] = useState(new Set([1, 2, 3, 5])); // Pre-populated fields are marked complete
+
+  // GUIDED UX FLOW HELPERS
+  const markStepComplete = (step) => {
+    setCompletedSteps(prev => new Set([...prev, step]));
+    // Auto-advance to next logical step
+    const nextStep = getNextIncompleteStep(step);
+    if (nextStep) {
+      setCurrentStep(nextStep);
+    }
+  };
+
+  const getNextIncompleteStep = (currentStep) => {
+    const stepOrder = trip === 'RT' ? [1, 2, 3, 4, 5] : [1, 2, 3, 5]; // Skip return date for one-way
+    const currentIndex = stepOrder.indexOf(currentStep);
+    
+    for (let i = currentIndex + 1; i < stepOrder.length; i++) {
+      if (!completedSteps.has(stepOrder[i])) {
+        return stepOrder[i];
+      }
+    }
+    
+    // All steps complete, ready for search
+    return 6;
+  };
+
+  const getStepStatus = (step) => {
+    if (completedSteps.has(step)) return 'complete';
+    if (currentStep === step) return 'active';
+    return 'pending';
+  };
+
+  const getStepColor = (step) => {
+    const status = getStepStatus(step);
+    switch (status) {
+      case 'complete': return 'border-green-500 bg-green-50 text-green-700';
+      case 'active': return 'border-blue-500 bg-blue-50 text-blue-700 ring-2 ring-blue-200';
+      case 'pending': return 'border-gray-300 bg-gray-50 text-gray-500';
+      default: return 'border-gray-300 bg-white text-gray-900';
+    }
+  };
   
   const handleSearch = async (searchData) => {
     try {
