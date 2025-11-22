@@ -2291,7 +2291,7 @@ function Footer() {
 // Main App Component
 function App() {
   // Navigation state
-  const [currentPage, setCurrentPage] = useState('results'); // 'search', 'results', 'selection', 'passenger', 'payment', 'confirmation' - TEMP: Set to 'results' to test header consistency
+  const [currentPage, setCurrentPage] = useState('search'); // 'search', 'results', 'selection', 'passenger', 'payment', 'confirmation'
   const [searchResults, setSearchResults] = useState(null);
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [searchParams, setSearchParams] = useState(null);
