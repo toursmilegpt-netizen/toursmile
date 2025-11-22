@@ -2144,10 +2144,10 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
 
         {/* Passenger Selection - Mobile Responsive */}
         <div 
-          className="mt-3 passenger-selector-compact"
+          className={`mt-3 passenger-selector-compact transition-all duration-200 ${getStepColor(5)}`}
           style={{
-            background: 'white',
-            border: '1px solid #d1d5db',
+            background: getStepStatus(5) === 'active' ? '#EFF6FF' : 'white',
+            border: getStepStatus(5) === 'active' ? '2px solid #3B82F6' : '1px solid #d1d5db',
             borderRadius: '10px',
             padding: isMobile ? '10px 14px' : '8px 12px',
             minHeight: isMobile ? '56px' : '52px',
