@@ -2521,6 +2521,9 @@ function App() {
                 from, setFrom, to, setTo, depart, setDepart, ret, setRet,
                 pax, setPax, trip, setTrip
               }}
+              guidedFlow={{
+                currentStep, markStepComplete, getStepStatus, getStepColor
+              }}
             />
 
             {/* Simple section divider - REMOVED DECORATIVE CIRCLES */}
