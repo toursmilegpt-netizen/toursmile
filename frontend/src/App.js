@@ -1823,7 +1823,7 @@ function PaxOverlay({ value, onChange, onClose, compact = false }) {
 
 // Search Card Component
 // Search Card Component with Auto-focus Guidance
-function SearchCard({ onSearch, overlayStates, searchStates }) {
+function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
   const {
     showFromOverlay, setShowFromOverlay,
     showToOverlay, setShowToOverlay,
