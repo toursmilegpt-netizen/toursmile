@@ -1841,7 +1841,6 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [currentStep, setCurrentStep] = useState(0); // 0: from, 1: to, 2: date, 3: passenger, 4: search
 
   // Responsive design hook
   const windowWidth = useWindowWidth();
