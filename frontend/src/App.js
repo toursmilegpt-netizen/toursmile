@@ -2508,7 +2508,37 @@ function App() {
               </div>
             </section>
             
-            {/* Search Card */}
+            {/* GUIDED FLOW PROGRESS INDICATOR */}
+            <div className="mb-6 bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-blue-100">
+              <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
+                <span>Complete your search</span>
+                <span>{completedSteps.size - 1}/5 steps</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className={`w-3 h-3 rounded-full flex-shrink-0 ${getStepStatus(1) === 'complete' ? 'bg-green-500' : getStepStatus(1) === 'active' ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+                <div className="h-px bg-gray-300 flex-1"></div>
+                <div className={`w-3 h-3 rounded-full flex-shrink-0 ${getStepStatus(2) === 'complete' ? 'bg-green-500' : getStepStatus(2) === 'active' ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+                <div className="h-px bg-gray-300 flex-1"></div>
+                <div className={`w-3 h-3 rounded-full flex-shrink-0 ${getStepStatus(3) === 'complete' ? 'bg-green-500' : getStepStatus(3) === 'active' ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+                {trip === 'RT' && (
+                  <>
+                    <div className="h-px bg-gray-300 flex-1"></div>
+                    <div className={`w-3 h-3 rounded-full flex-shrink-0 ${getStepStatus(4) === 'complete' ? 'bg-green-500' : getStepStatus(4) === 'active' ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+                  </>
+                )}
+                <div className="h-px bg-gray-300 flex-1"></div>
+                <div className={`w-3 h-3 rounded-full flex-shrink-0 ${getStepStatus(5) === 'complete' ? 'bg-green-500' : getStepStatus(5) === 'active' ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+              </div>
+              <div className="flex items-center justify-between text-xs text-gray-500 mt-2">
+                <span>From</span>
+                <span>To</span>
+                <span>Date</span>
+                {trip === 'RT' && <span>Return</span>}
+                <span>Passengers</span>
+              </div>
+            </div>
+
+            {/* Search Card - Clean working implementation */}
             <SearchCard 
               onSearch={handleSearch}
               overlayStates={{
