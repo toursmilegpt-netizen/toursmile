@@ -2502,7 +2502,6 @@ function App() {
                 >
                   ← Back to Search
                 </button>
-                <div className="text-xl font-bold text-blue-600">TourSmile</div>
               </div>
             </div>
           </header>
