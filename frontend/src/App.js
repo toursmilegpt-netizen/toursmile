@@ -2525,7 +2525,6 @@ function App() {
                 >
                   ← Back to Results
                 </button>
-                <div className="text-xl font-bold text-blue-600">TourSmile</div>
               </div>
             </div>
           </header>
