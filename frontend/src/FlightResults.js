@@ -415,15 +415,19 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
         <header className="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-40">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <div className="flex items-center justify-between">
-              {/* TourSmile Logo & Branding */}
+              {/* Logo as Home Button (UX Standard) */}
               <div className="flex items-center space-x-8">
-                <div className="flex items-center">
+                <button 
+                  onClick={() => window.location.href = '/'}
+                  className="flex items-center hover:opacity-80 transition-opacity"
+                  title="Return to Homepage"
+                >
                   <img 
                     src="https://customer-assets.emergentagent.com/job_flywise-search/artifacts/kdx1ncq0_FINAL%20LOGO.png"
-                    alt="TourSmile"
-                    className="h-8 w-auto"
+                    alt="TourSmile - Return to Homepage"
+                    className="h-6 w-auto"
                   />
-                </div>
+                </button>
                 
                 {/* Navigation */}
                 <nav className="hidden md:flex space-x-6">
@@ -474,15 +478,19 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
         <header className="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-40">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <div className="flex items-center justify-between">
-              {/* TourSmile Logo & Branding */}
+              {/* Logo as Home Button (UX Standard) */}
               <div className="flex items-center space-x-8">
-                <div className="flex items-center">
+                <button 
+                  onClick={() => window.location.href = '/'}
+                  className="flex items-center hover:opacity-80 transition-opacity"
+                  title="Return to Homepage"
+                >
                   <img 
                     src="https://customer-assets.emergentagent.com/job_flywise-search/artifacts/kdx1ncq0_FINAL%20LOGO.png"
-                    alt="TourSmile"
-                    className="h-8 w-auto"
+                    alt="TourSmile - Return to Homepage"
+                    className="h-6 w-auto"
                   />
-                </div>
+                </button>
                 
                 {/* Navigation */}
                 <nav className="hidden md:flex space-x-6">
