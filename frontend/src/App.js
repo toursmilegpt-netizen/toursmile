@@ -2338,7 +2338,7 @@ function App() {
 
   // GUIDED UX FLOW STATE - Enterprise-level user journey management
   const [currentStep, setCurrentStep] = useState(1); // 1=from, 2=to, 3=depart, 4=return, 5=passengers, 6=search
-  const [completedSteps, setCompletedSteps] = useState(new Set([1, 2, 3, 5])); // Pre-populated fields are marked complete
+  const [completedSteps, setCompletedSteps] = useState(new Set([1, 2, 3])); // Pre-populated fields: from, to, depart are marked complete
 
   // GUIDED UX FLOW HELPERS
   const markStepComplete = (step) => {
