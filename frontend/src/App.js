@@ -2083,10 +2083,10 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         <div className="mt-3 grid grid-cols-2 gap-2">
           {/* Departure Date */}
           <div 
-            className="date-selector-compact"
+            className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
             style={{
-              background: 'white',
-              border: '1px solid #d1d5db',
+              background: getStepStatus(3) === 'active' ? '#EFF6FF' : 'white',
+              border: getStepStatus(3) === 'active' ? '2px solid #3B82F6' : '1px solid #d1d5db',
               borderRadius: '10px',
               padding: '8px 12px',
               minHeight: '52px',
