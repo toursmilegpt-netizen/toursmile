@@ -1858,25 +1858,41 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
     return date.toLocaleDateString('en-US', options);
   };
 
-  // Auto-focus progression handlers
-  const handleFromComplete = () => {
-    setCurrentStep(1); // Move to "To" field
+  // GUIDED UX FLOW HANDLERS - Enterprise-level user journey
+  const handleFromSelect = (selectedFrom) => {
+    setFrom(selectedFrom);
+    markStepComplete(1);
+    setShowFromOverlay(false);
+    // Auto-guide user to next step
+    setTimeout(() => setShowToOverlay(true), 200);
   };
 
-  const handleToComplete = () => {
-    setCurrentStep(2); // Move to date field  
+  const handleToSelect = (selectedTo) => {
+    setTo(selectedTo);
+    markStepComplete(2);
+    setShowToOverlay(false);
+    // Auto-guide user to date selection
+    setTimeout(() => setShowDateOverlay(true), 200);
   };
 
-  const handleDateComplete = () => {
-    setCurrentStep(3); // Move to passenger selection
-    // Auto-open passenger selector after date selection
-    setTimeout(() => {
-      setShowPassengerOverlay(true);
-    }, 300);
+  const handleDateSelect = (selectedDate) => {
+    setDepart(selectedDate);
+    markStepComplete(3);
+    setShowDateOverlay(false);
+    // If round trip, guide to return date, otherwise to passengers
+    if (trip === 'RT' && !ret) {
+      setTimeout(() => setShowDateOverlay(true), 200);
+    } else {
+      setTimeout(() => setShowPassengerOverlay(true), 200);
+    }
   };
 
-  const handlePassengerComplete = () => {
-    setCurrentStep(4); // Enable search button glow
+  const handlePassengerSelect = (selectedPax) => {
+    setPax(selectedPax);
+    markStepComplete(5);
+    setShowPassengerOverlay(false);
+    // Guide attention to search button
+    markStepComplete(6);
   };
 
   return (
