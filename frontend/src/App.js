@@ -2923,6 +2923,9 @@ function App() {
               onChange={(newPax) => {
                 setPax(newPax);
                 setShowPassengerOverlay(false);
+                markStepComplete(5);
+                // Guide attention to search button
+                markStepComplete(6);
               }}
               compact={true}
             />
