@@ -2377,12 +2377,13 @@ function App() {
               <div className="absolute -top-10 left-40 w-20 h-20 bg-gradient-to-br from-blue-200/15 to-transparent rounded-full blur-lg"></div>
             </div>
             <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between relative z-10">
-              <div className="flex items-center">
-                <img 
-                  src="https://customer-assets.emergentagent.com/job_pixel-perfect-ui-12/artifacts/7qb5obai_FINAL%20LOGO%20-%20Copy.png"
-                  alt="TourSmile"
-                  className="h-12 w-auto"
-                />
+              <div className="flex items-center space-x-2">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-white text-lg font-bold">✈️</span>
+                </div>
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                  TourSmile
+                </span>
               </div>
               <div className="flex items-center space-x-3">
                 <a href="https://wa.me/+919623959623" target="_blank" rel="noopener noreferrer" className="flex items-center p-2 rounded-full border border-neutral-300 text-black hover:bg-green-50 hover:border-green-400 transition-colors">
