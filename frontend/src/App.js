@@ -2037,12 +2037,15 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           
           {/* To Field - Right Side */}
           <div 
+            className={`transition-all duration-200 ${getStepColor(2)}`}
             style={{ 
               flex: '1', 
               minWidth: 0, 
               maxWidth: '100%', 
               position: 'relative',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              borderRadius: '10px',
+              border: getStepStatus(2) === 'active' ? '2px solid #3B82F6' : '1px solid #d1d5db'
             }}
             onClick={(e) => {
               e.preventDefault();
