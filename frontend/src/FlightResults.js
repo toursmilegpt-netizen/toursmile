@@ -419,7 +419,7 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
               <div className="flex items-center space-x-8">
                 <div className="flex items-center space-x-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
-                    <span className="text-white text-sm font-bold">✈</span>
+                    <span className="text-white text-sm font-bold">✈️</span>
                   </div>
                   <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
                     TourSmile
@@ -479,7 +479,7 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
               <div className="flex items-center space-x-8">
                 <div className="flex items-center space-x-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
-                    <span className="text-white text-sm font-bold">✈</span>
+                    <span className="text-white text-sm font-bold">✈️</span>
                   </div>
                   <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
                     TourSmile
