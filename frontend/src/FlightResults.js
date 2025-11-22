@@ -541,13 +541,12 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
           <div className="flex items-center justify-between">
             {/* TourSmile Logo & Branding */}
             <div className="flex items-center space-x-8">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
-                  <span className="text-white text-sm font-bold">✈</span>
-                </div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-                  TourSmile
-                </span>
+              <div className="flex items-center">
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_flywise-search/artifacts/kdx1ncq0_FINAL%20LOGO.png"
+                  alt="TourSmile"
+                  className="h-8 w-auto"
+                />
               </div>
               
               {/* Navigation */}
