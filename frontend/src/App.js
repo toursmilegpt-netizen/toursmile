@@ -1835,6 +1835,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
     from, setFrom, to, setTo, depart, setDepart, ret, setRet,
     pax, setPax, trip, setTrip
   } = searchStates;
+
+  const { currentStep, markStepComplete, getStepStatus, getStepColor } = guidedFlow;
   
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
