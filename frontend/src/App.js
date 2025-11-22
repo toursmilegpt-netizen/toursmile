@@ -2737,9 +2737,15 @@ function App() {
                     if (showFromOverlay) {
                       setFrom(airport);
                       setShowFromOverlay(false);
+                      markStepComplete(1);
+                      // Auto-guide to next step
+                      setTimeout(() => setShowToOverlay(true), 200);
                     } else {
                       setTo(airport);
                       setShowToOverlay(false);
+                      markStepComplete(2);
+                      // Auto-guide to date selection
+                      setTimeout(() => setShowDateOverlay(true), 200);
                     }
                   }}
                 >
