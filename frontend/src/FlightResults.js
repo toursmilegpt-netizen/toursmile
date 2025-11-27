@@ -139,6 +139,10 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
     // Ensure flights is always an array
     const safeFlights = Array.isArray(flights) ? flights : [];
     
+    // TEMP: Skip filtering to show sample flights for visual enhancement
+    let filtered = safeFlights;
+    
+    /* ORIGINAL FILTERING CODE - temporarily disabled
     let filtered = safeFlights.filter(flight => {
       if (!flight) return false;
       
