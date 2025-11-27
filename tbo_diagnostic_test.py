@@ -17,8 +17,8 @@ from datetime import datetime, timedelta
 # TBO Configuration
 TBO_USERNAME = "Smile"
 TBO_PASSWORD = "Smile@123"
-TBO_AUTH_URL = "http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Authenticate"
-TBO_SEARCH_URL = "http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search"
+TBO_AUTH_URL = "https://Sharedapi.tektravels.com/SharedData.svc/rest/Authenticate"
+TBO_SEARCH_URL = "https://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search"
 
 async def test_tbo_authentication():
     """Test TBO authentication directly"""
