@@ -40,7 +40,57 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
       setLoading(true);
       setError(null);
       
-      // TBO API integration is now working - proceeding with real API call
+      // TEMP: Add sample data to test airline logo system
+      setTimeout(() => {
+        const testFlights = [
+          {
+            id: 1,
+            airline_code: '6E',
+            airline_name: 'IndiGo',
+            flight_number: '6E-2024',
+            departure_time: '06:30',
+            arrival_time: '08:45',
+            duration_minutes: 135,
+            stops: 0,
+            price: 4850,
+            refundable: true,
+            aircraft_type: 'A320',
+            is_lcc: true
+          },
+          {
+            id: 2,
+            airline_code: 'AI', 
+            airline_name: 'Air India',
+            flight_number: 'AI-131',
+            departure_time: '09:15',
+            arrival_time: '11:30', 
+            duration_minutes: 135,
+            stops: 0,
+            price: 5200,
+            refundable: true,
+            aircraft_type: 'B737',
+            is_lcc: false
+          },
+          {
+            id: 3,
+            airline_code: 'UK',
+            airline_name: 'Vistara',
+            flight_number: 'UK-955',
+            departure_time: '14:20',
+            arrival_time: '16:35',
+            duration_minutes: 135,
+            stops: 0,
+            price: 6800,
+            refundable: true,
+            aircraft_type: 'A321',
+            is_lcc: false
+          }
+        ];
+        
+        setFlights(testFlights);
+        setLoading(false);
+      }, 500);
+      return;
       
       // Use environment variable for backend URL
       const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
