@@ -41,63 +41,7 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
       setLoading(true);
       setError(null);
       
-      // TEMP: Add sample data for visual enhancement - immediate loading
-      console.log('Setting sample flights for visual enhancement - IMMEDIATE');
-      const sampleFlights = [
-          {
-            id: 1,
-            airline_name: "IndiGo",
-            airline_code: "6E", 
-            flight_number: "6E-2024",
-            departure_time: "06:30",
-            arrival_time: "08:45",
-            departure_airport: "DEL",
-            departure_city: "Delhi",
-            arrival_airport: "BOM", 
-            arrival_city: "Mumbai",
-            duration_minutes: 135,
-            duration: "2h 15m",
-            stops: 0,
-            stop_description: "Non-stop",
-            price: 4850,
-            refundable: true,
-            aircraft_type: "A320",
-            is_lcc: true,
-            fare_types: [
-              { name: "Saver", price: 4850, savings: 0, cancellation: "₹3,500 + Fare difference" },
-              { name: "Flexi", price: 5650, savings: 0, cancellation: "₹3,000 + Fare difference" }
-            ]
-          },
-          {
-            id: 2,
-            airline_name: "Air India",
-            airline_code: "AI",
-            flight_number: "AI-131", 
-            departure_time: "09:15",
-            arrival_time: "11:30",
-            departure_airport: "DEL",
-            departure_city: "Delhi",
-            arrival_airport: "BOM",
-            arrival_city: "Mumbai", 
-            duration_minutes: 135,
-            duration: "2h 15m",
-            stops: 0,
-            stop_description: "Non-stop",
-            price: 5200,
-            refundable: true,
-            aircraft_type: "B737",
-            is_lcc: false,
-            fare_types: [
-              { name: "Saver", price: 5200, savings: 0, cancellation: "₹3,500 + Fare difference" },
-              { name: "Flexi", price: 6100, savings: 0, cancellation: "₹2,500 + Fare difference" }
-            ]
-          }
-      ];
-      console.log('Sample flights data:', sampleFlights);
-      setFlights(sampleFlights);
-      setLoading(false);
-      console.log('Sample flights set immediately, loading set to false');
-      return;
+      // TBO API integration is now working - proceeding with real API call
       
       // Use environment variable for backend URL
       const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
