@@ -189,14 +189,15 @@ class TBOCertificationTester:
             # booking_details = await self.service.get_booking_details(booking_id, pnr, self.trace_id)
             
             self.log_test_result(test_name, "PASS", {
-                "route": "DEL-BOM Return",
+                "route": "DEL-BOM One-way",
                 "passengers": "2A+1C+1I",
+                "class": "Economy",
                 "search_results": len(search_result),
                 "fare_rule_status": "Retrieved",
                 "fare_quote_status": "Retrieved",
                 "ssr_status": "Retrieved",
                 "booking_simulation": "Complete",
-                "response_summary": f"Found {len(search_result)} flights, all API calls successful"
+                "response_summary": f"Family booking flow completed with {len(search_result)} flights"
             })
             
             return True
