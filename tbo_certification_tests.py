@@ -189,7 +189,7 @@ class TBOCertificationTester:
             # booking_details = await self.service.get_booking_details(booking_id, pnr, self.trace_id)
             
             self.log_test_result(test_name, "PASS", {
-                "route": "DEL-BOM One-way",
+                "route": "BOM-DEL One-way",
                 "passengers": "2A+1C+1I",
                 "class": "Economy",
                 "search_results": len(search_result),
