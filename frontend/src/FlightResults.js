@@ -725,18 +725,27 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                       <div className="flex items-center justify-between">
                         {/* Flight Details */}
                         <div className="flex-1">
-                          <div className="flex items-center mb-3">
-                            <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center mr-4 shadow-sm">
-                              <span className="text-blue-700 text-sm font-bold">
-                                {(flight.airline || 'UK').substring(0, 2)}
-                              </span>
-                            </div>
-                            <div>
-                              <div className="font-semibold text-gray-800 text-lg">
-                                {flight.airline || 'Unknown Airline'}
+                          <div className="flex items-center space-x-4 mb-6">
+                            {/* Enhanced Airline Logo with Real Branding */}
+                            <div className="relative">
+                              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
+                                flight.airline_code === '6E' ? 'bg-gradient-to-br from-indigo-500 to-purple-600' :
+                                flight.airline_code === 'AI' ? 'bg-gradient-to-br from-red-500 to-red-600' :
+                                'bg-gradient-to-br from-blue-500 to-blue-600'
+                              }`}>
+                                <span className="text-white text-lg font-bold">{flight.airline_code || 'UK'}</span>
                               </div>
-                              <div className="text-sm text-gray-500 flex items-center space-x-2">
-                                <span>{flight.flight_number || 'N/A'}</span>
+                              {/* Airline Rating Badge */}
+                              <div className="absolute -bottom-1 -right-1 bg-yellow-400 text-yellow-900 text-xs font-bold px-1.5 py-0.5 rounded-full">
+                                4.2★
+                              </div>
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-bold text-gray-900 text-lg">{flight.airline_name || flight.airline || 'Unknown Airline'}</div>
+                              <div className="text-sm text-gray-600 font-medium">{flight.flight_number || 'N/A'}</div>
+                              <div className="flex items-center space-x-2 mt-1">
+                                {flight.refundable && <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Refundable</span>}
+                                {flight.stops === 0 && <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full">Non-stop</span>}
                                 {flight.aircraft_type && (
                                   <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
                                     {flight.aircraft_type}
