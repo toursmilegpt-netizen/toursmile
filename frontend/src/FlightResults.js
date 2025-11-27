@@ -92,12 +92,11 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
               { name: "Flexi", price: 6100, savings: 0, cancellation: "₹2,500 + Fare difference" }
             ]
           }
-        ];
-        console.log('Sample flights data:', sampleFlights);
-        setFlights(sampleFlights);
-        setLoading(false);
-        console.log('Sample flights set, loading set to false');
-      }, 500); // Reduce timeout to 500ms
+      ];
+      console.log('Sample flights data:', sampleFlights);
+      setFlights(sampleFlights);
+      setLoading(false);
+      console.log('Sample flights set immediately, loading set to false');
       return;
       
       // Use environment variable for backend URL
