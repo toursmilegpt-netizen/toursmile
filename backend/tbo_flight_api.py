@@ -324,7 +324,6 @@ class TBOFlightService:
             base_price = fare.get("BaseFare", 0)
             published_price = fare.get("PublishedFare", 0)
             currency = fare.get("Currency", "INR")
-            refundable = fare.get("IsRefundable", False)
             
             # Extract fare rules and cancellation policies
             fare_rules = option.get("FareRules", [])
