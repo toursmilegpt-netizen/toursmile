@@ -169,7 +169,7 @@ class TBOFlightService:
                     "Destination": destination_code,
                     "FlightCabinClass": cabin_class,
                     "PreferredDepartureTime": departure_date + "T00:00:00",
-                    "PreferredArrivalTime": departure_date + "T23:59:59"
+                    "PreferredArrivalTime": departure_date + "T00:00:00"
                 }
             ]
             
