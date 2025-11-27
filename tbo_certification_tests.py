@@ -86,11 +86,9 @@ class TBOCertificationTester:
                 destination="BOM", 
                 departure_date=tomorrow.strftime("%Y-%m-%d"),
                 return_date=return_date.strftime("%Y-%m-%d"),
-                adults=2,
-                children=1,
-                infants=1,
+                passengers=4,  # 2A+1C+1I = 4 total
+                class_type="economy",
                 trip_type="return",
-                cabin_class="Economy",
                 trace_id=self.trace_id
             )
             
