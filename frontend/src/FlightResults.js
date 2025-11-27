@@ -799,19 +799,21 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                                     <div className="flex-1 h-0.5 bg-gradient-to-r from-orange-400 to-orange-300 mx-2"></div>
                                   </>
                                 )}
-                                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                                  <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full border-2 border-white shadow-lg"></div>
+                                </div>
                               </div>
-                              <div className="text-xs text-gray-500 mt-1 font-medium">
-                                {(flight.stops || 0) === 0 ? 'Non-stop' : `${flight.stops} stop${flight.stops > 1 ? 's' : ''}`}
-                              </div>
-                            </div>
-                            
-                            <div className="text-center">
-                              <div className="font-bold text-xl text-gray-800">
-                                {formatTime(flight.arrival_time)}
-                              </div>
-                              <div className="text-sm text-gray-500 font-medium">
-                                {flight.destination || searchParams?.to?.iata || 'BOM'}
+                              
+                              {/* Arrival Info */}
+                              <div className="text-center flex-1">
+                                <div className="font-bold text-2xl text-gray-900 mb-1">
+                                  {formatTime(flight.arrival_time)}
+                                </div>
+                                <div className="text-sm font-semibold text-gray-700 mb-1">
+                                  {flight.arrival_airport || flight.destination || searchParams?.to?.iata || 'BOM'}
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                  {flight.arrival_city || searchParams?.to?.city || 'Mumbai'}
+                                </div>
                               </div>
                             </div>
                           </div>
