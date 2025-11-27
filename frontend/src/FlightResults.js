@@ -85,10 +85,7 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
     // Ensure flights is always an array
     const safeFlights = Array.isArray(flights) ? flights : [];
     
-    // TEMP: Skip filtering to test airline logos
-    let filtered = safeFlights;
-    
-    /* Filter flights
+    // Filter flights
     let filtered = safeFlights.filter(flight => {
       if (!flight) return false;
       
