@@ -666,12 +666,21 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                           <div className="flex items-center space-x-4 mb-6">
                             {/* Enhanced Airline Logo with Real Branding */}
                             <div className="relative">
+                              {/* Real Airline Logos Implementation */}
                               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
-                                flight.airline_code === '6E' ? 'bg-gradient-to-br from-indigo-500 to-purple-600' :
-                                flight.airline_code === 'AI' ? 'bg-gradient-to-br from-red-500 to-red-600' :
-                                'bg-gradient-to-br from-blue-500 to-blue-600'
+                                getAirlineTheme(flight).bgClass
                               }`}>
-                                <span className="text-white text-lg font-bold">{flight.airline_code || 'UK'}</span>
+                                {getAirlineTheme(flight).hasLogo ? (
+                                  <img 
+                                    src={getAirlineTheme(flight).logoUrl} 
+                                    alt={getAirlineTheme(flight).name}
+                                    className="w-10 h-10 object-contain filter brightness-0 invert"
+                                  />
+                                ) : (
+                                  <span className="text-white text-lg font-bold">
+                                    {getAirlineTheme(flight).code}
+                                  </span>
+                                )}
                               </div>
                               {/* Airline Rating Badge */}
                               <div className="absolute -bottom-1 -right-1 bg-yellow-400 text-yellow-900 text-xs font-bold px-1.5 py-0.5 rounded-full">
