@@ -215,7 +215,7 @@ class TBOCertificationTester:
         Purpose: Test business class booking
         """
         test_name = "Test Case 2: BOM-DEL Business One-way"
-        tomorrow = datetime.now() + timedelta(days=2)
+        departure_date = datetime.now() + timedelta(days=8)  # 8 days from now
         
         try:
             print(f"\n🧪 {test_name}")
