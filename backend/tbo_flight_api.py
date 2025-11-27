@@ -485,5 +485,223 @@ class TBOFlightService:
         
         return fare_types
 
+    async def get_fare_rule(self, result_index: str, trace_id: str = None) -> Dict[str, Any]:
+        """
+        TBO FareRule API - Get fare rules for a specific flight
+        Required for certification
+        """
+        if not trace_id:
+            trace_id = str(uuid.uuid4())
+            
+        logger.info("TBO Fare Rule request", trace_id=trace_id, result_index=result_index)
+        
+        try:
+            token = await self.get_auth_token(trace_id)
+            
+            fare_rule_payload = {
+                "ResultIndex": result_index,
+                "TokenId": token,
+                "EndUserIp": "192.168.11.120"
+            }
+            
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/FareRule",
+                    json=fare_rule_payload,
+                    headers={
+                        "Content-Type": "application/json",
+                        "Accept-Encoding": "gzip"
+                    }
+                )
+                
+                response.raise_for_status()
+                return response.json()
+                
+        except Exception as e:
+            logger.error("TBO FareRule error", error=str(e), trace_id=trace_id)
+            raise Exception(f"TBO FareRule failed: {str(e)}")
+
+    async def get_fare_quote(self, result_index: str, trace_id: str = None) -> Dict[str, Any]:
+        """
+        TBO FareQuote API - Get detailed fare information
+        Required for certification 
+        """
+        if not trace_id:
+            trace_id = str(uuid.uuid4())
+            
+        logger.info("TBO Fare Quote request", trace_id=trace_id, result_index=result_index)
+        
+        try:
+            token = await self.get_auth_token(trace_id)
+            
+            fare_quote_payload = {
+                "ResultIndex": result_index,
+                "TokenId": token,
+                "EndUserIp": "192.168.11.120"
+            }
+            
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/FareQuote", 
+                    json=fare_quote_payload,
+                    headers={
+                        "Content-Type": "application/json",
+                        "Accept-Encoding": "gzip"
+                    }
+                )
+                
+                response.raise_for_status()
+                return response.json()
+                
+        except Exception as e:
+            logger.error("TBO FareQuote error", error=str(e), trace_id=trace_id)
+            raise Exception(f"TBO FareQuote failed: {str(e)}")
+
+    async def get_ssr(self, result_index: str, trace_id: str = None) -> Dict[str, Any]:
+        """
+        TBO SSR API - Get Special Service Requests (meals, seats, baggage)
+        Optional for certification
+        """
+        if not trace_id:
+            trace_id = str(uuid.uuid4())
+            
+        logger.info("TBO SSR request", trace_id=trace_id, result_index=result_index)
+        
+        try:
+            token = await self.get_auth_token(trace_id)
+            
+            ssr_payload = {
+                "ResultIndex": result_index,
+                "TokenId": token,
+                "EndUserIp": "192.168.11.120"
+            }
+            
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/SSR",
+                    json=ssr_payload,
+                    headers={
+                        "Content-Type": "application/json", 
+                        "Accept-Encoding": "gzip"
+                    }
+                )
+                
+                response.raise_for_status()
+                return response.json()
+                
+        except Exception as e:
+            logger.error("TBO SSR error", error=str(e), trace_id=trace_id)
+            raise Exception(f"TBO SSR failed: {str(e)}")
+
+    async def book_flight(self, booking_data: Dict[str, Any], trace_id: str = None) -> Dict[str, Any]:
+        """
+        TBO Book API - Create flight booking
+        Required for certification
+        """
+        if not trace_id:
+            trace_id = str(uuid.uuid4())
+            
+        logger.info("TBO Book request", trace_id=trace_id)
+        
+        try:
+            token = await self.get_auth_token(trace_id)
+            
+            booking_payload = {
+                **booking_data,
+                "TokenId": token,
+                "EndUserIp": "192.168.11.120"
+            }
+            
+            async with httpx.AsyncClient(timeout=120.0) as client:  # Longer timeout for booking
+                response = await client.post(
+                    f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/Book",
+                    json=booking_payload,
+                    headers={
+                        "Content-Type": "application/json",
+                        "Accept-Encoding": "gzip"
+                    }
+                )
+                
+                response.raise_for_status()
+                return response.json()
+                
+        except Exception as e:
+            logger.error("TBO Book error", error=str(e), trace_id=trace_id)
+            raise Exception(f"TBO Book failed: {str(e)}")
+
+    async def ticket_flight(self, booking_id: str, pnr: str, trace_id: str = None) -> Dict[str, Any]:
+        """
+        TBO Ticket API - Issue flight tickets
+        Required for certification
+        """
+        if not trace_id:
+            trace_id = str(uuid.uuid4())
+            
+        logger.info("TBO Ticket request", trace_id=trace_id, booking_id=booking_id, pnr=pnr)
+        
+        try:
+            token = await self.get_auth_token(trace_id)
+            
+            ticket_payload = {
+                "BookingId": booking_id,
+                "PNR": pnr,
+                "TokenId": token,
+                "EndUserIp": "192.168.11.120"
+            }
+            
+            async with httpx.AsyncClient(timeout=120.0) as client:
+                response = await client.post(
+                    f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/Ticket",
+                    json=ticket_payload,
+                    headers={
+                        "Content-Type": "application/json",
+                        "Accept-Encoding": "gzip"
+                    }
+                )
+                
+                response.raise_for_status()
+                return response.json()
+                
+        except Exception as e:
+            logger.error("TBO Ticket error", error=str(e), trace_id=trace_id)
+            raise Exception(f"TBO Ticket failed: {str(e)}")
+
+    async def get_booking_details(self, booking_id: str, pnr: str, trace_id: str = None) -> Dict[str, Any]:
+        """
+        TBO GetBookingDetails API - Get booking information
+        Required for certification
+        """
+        if not trace_id:
+            trace_id = str(uuid.uuid4())
+            
+        logger.info("TBO GetBookingDetails request", trace_id=trace_id, booking_id=booking_id, pnr=pnr)
+        
+        try:
+            token = await self.get_auth_token(trace_id)
+            
+            booking_details_payload = {
+                "BookingId": booking_id,
+                "PNR": pnr, 
+                "TokenId": token,
+                "EndUserIp": "192.168.11.120"
+            }
+            
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/GetBookingDetails",
+                    json=booking_details_payload,
+                    headers={
+                        "Content-Type": "application/json",
+                        "Accept-Encoding": "gzip"
+                    }
+                )
+                
+                response.raise_for_status()
+                return response.json()
+                
+        except Exception as e:
+            logger.error("TBO GetBookingDetails error", error=str(e), trace_id=trace_id)
+            raise Exception(f"TBO GetBookingDetails failed: {str(e)}")
+
 # Global service instance
 tbo_flight_service = TBOFlightService()
