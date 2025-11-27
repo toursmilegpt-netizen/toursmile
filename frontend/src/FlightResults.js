@@ -160,7 +160,6 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
       
       return true;
     });
-    */ // END ORIGINAL FILTERING CODE
     
     // Sort flights
     filtered.sort((a, b) => {
