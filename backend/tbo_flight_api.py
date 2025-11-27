@@ -197,15 +197,8 @@ class TBOFlightService:
             }
             
             async with httpx.AsyncClient(timeout=60.0) as client:
-                # Try different TBO flight search endpoints
-                possible_endpoints = [
-                    f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/Search",
-                    f"{self.base_url}/SharedData.svc/rest/FlightSearch", 
-                    f"{self.base_url}/Api/TP_Flight/FlightSearch",
-                    f"{self.base_url}/SharedData.svc/rest/Search"
-                ]
-                
-                search_url = possible_endpoints[0]  # Start with the most likely one
+                # Use the correct TBO flight search endpoint
+                search_url = f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/Search"
                 logger.info("Attempting TBO flight search", search_url=search_url, trace_id=trace_id)
                 
                 response = await client.post(
