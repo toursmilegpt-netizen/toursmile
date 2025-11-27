@@ -208,6 +208,95 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
     if (!timeStr) return 'N/A';
     return timeStr.substring(0, 5);
   };
+
+  // Enhanced airline branding and logo system
+  const getAirlineTheme = (flight) => {
+    const airlineCode = flight.airline_code || flight.airline || '';
+    const airlineName = flight.airline_name || flight.airline || '';
+    
+    const airlineData = {
+      // Indian Airlines
+      '6E': {
+        name: 'IndiGo',
+        code: '6E',
+        bgClass: 'bg-gradient-to-br from-indigo-600 to-purple-700',
+        hasLogo: false,
+        logoUrl: null
+      },
+      'AI': {
+        name: 'Air India',
+        code: 'AI', 
+        bgClass: 'bg-gradient-to-br from-red-600 to-orange-600',
+        hasLogo: false,
+        logoUrl: null
+      },
+      'SG': {
+        name: 'SpiceJet',
+        code: 'SG',
+        bgClass: 'bg-gradient-to-br from-red-500 to-yellow-500',
+        hasLogo: false,
+        logoUrl: null
+      },
+      'UK': {
+        name: 'Vistara',
+        code: 'UK',
+        bgClass: 'bg-gradient-to-br from-purple-600 to-pink-600',
+        hasLogo: false,
+        logoUrl: null
+      },
+      'G8': {
+        name: 'GoAir',
+        code: 'G8',
+        bgClass: 'bg-gradient-to-br from-green-500 to-teal-600',
+        hasLogo: false,
+        logoUrl: null
+      },
+      'I5': {
+        name: 'AirAsia India',
+        code: 'I5',
+        bgClass: 'bg-gradient-to-br from-red-600 to-red-700',
+        hasLogo: false,
+        logoUrl: null
+      },
+      // International Airlines  
+      'EK': {
+        name: 'Emirates',
+        code: 'EK',
+        bgClass: 'bg-gradient-to-br from-red-600 to-red-800',
+        hasLogo: false,
+        logoUrl: null
+      },
+      'QR': {
+        name: 'Qatar Airways',
+        code: 'QR', 
+        bgClass: 'bg-gradient-to-br from-purple-800 to-red-700',
+        hasLogo: false,
+        logoUrl: null
+      },
+      'BA': {
+        name: 'British Airways',
+        code: 'BA',
+        bgClass: 'bg-gradient-to-br from-blue-800 to-red-600',
+        hasLogo: false,
+        logoUrl: null
+      }
+    };
+
+    // Try to match by airline code first, then by name
+    const matchedAirline = airlineData[airlineCode] || 
+      Object.values(airlineData).find(airline => 
+        airlineName.toLowerCase().includes(airline.name.toLowerCase())
+      );
+
+    // Return matched airline or default
+    return matchedAirline || {
+      name: airlineName || 'Airline',
+      code: airlineCode || airlineName?.substring(0, 2).toUpperCase() || 'AL',
+      bgClass: 'bg-gradient-to-br from-gray-500 to-gray-600',
+      hasLogo: false,
+      logoUrl: null
+    };
+  };
   
   // Render filter sidebar
   const renderFilters = () => (
