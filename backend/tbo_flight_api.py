@@ -215,7 +215,7 @@ class TBOFlightService:
                     search_payload["TokenId"] = token
                     
                     response = await client.post(
-                        f"{self.base_url}/Search",
+                        search_url,
                         json=search_payload,
                         headers={
                             "Content-Type": "application/json", 
