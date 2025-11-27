@@ -55,8 +55,8 @@ async def test_flight_search(token, origin, destination, departure_date, test_na
                 "Origin": origin,
                 "Destination": destination,
                 "FlightCabinClass": "1",
-                "PreferredDepartureTime": departure_date + "T06:00:00",
-                "PreferredArrivalTime": departure_date + "T23:59:00"
+                "PreferredDepartureTime": departure_date + "T00:00:00",
+                "PreferredArrivalTime": departure_date + "T00:00:00"
             }
         ]
     }
