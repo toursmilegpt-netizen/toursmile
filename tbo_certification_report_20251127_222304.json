@@ -1,0 +1,58 @@
+{
+  "certification_report": {
+    "agency": "SMILE HOLIDAYS",
+    "test_run_date": "2025-11-27T22:23:04.971260",
+    "trace_id": "2e477be4-c6a5-45f5-b284-e7a1e1cefda6",
+    "total_tests": 3,
+    "passed": 2,
+    "failed": 1,
+    "success_rate": 66.66666666666666,
+    "api_endpoints_tested": [
+      "Authenticate",
+      "Search",
+      "FareRule",
+      "FareQuote",
+      "SSR",
+      "Book (Simulated)",
+      "Ticket (Simulated)",
+      "GetBookingDetails (Simulated)"
+    ],
+    "test_results": [
+      {
+        "test_name": "Test Case 1: DEL-BOM Family Return",
+        "status": "FAIL",
+        "timestamp": "2025-11-27T22:22:43.396638",
+        "trace_id": "2e477be4-c6a5-45f5-b284-e7a1e1cefda6",
+        "details": {
+          "error": "No flights found in search"
+        }
+      },
+      {
+        "test_name": "Test Case 2: BOM-DEL Business One-way",
+        "status": "PASS",
+        "timestamp": "2025-11-27T22:22:53.211048",
+        "trace_id": "2e477be4-c6a5-45f5-b284-e7a1e1cefda6",
+        "details": {
+          "route": "BOM-DEL One-way",
+          "passengers": "1A",
+          "class": "Business",
+          "search_results": 28,
+          "response_summary": "Business class booking flow completed"
+        }
+      },
+      {
+        "test_name": "Test Case 3: CCJ-BOM Economy",
+        "status": "PASS",
+        "timestamp": "2025-11-27T22:23:04.970926",
+        "trace_id": "2e477be4-c6a5-45f5-b284-e7a1e1cefda6",
+        "details": {
+          "route": "CJB-BOM One-way",
+          "passengers": "2A",
+          "class": "Economy",
+          "search_results": 111,
+          "response_summary": "Secondary city route completed"
+        }
+      }
+    ]
+  }
+}
