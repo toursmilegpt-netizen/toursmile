@@ -273,11 +273,9 @@ class TBOCertificationTester:
                 origin="CJB",  # Coimbatore
                 destination="BOM",
                 departure_date=tomorrow.strftime("%Y-%m-%d"),
-                adults=2,
-                children=0,
-                infants=0,
+                passengers=2,
+                class_type="economy",
                 trip_type="oneway",
-                cabin_class="Economy",
                 trace_id=self.trace_id
             )
             
