@@ -228,16 +228,21 @@ class TBOFlightService:
                 response.raise_for_status()
                 search_data = response.json()
                 
-                if not search_data.get("Status", {}).get("Success"):
-                    error_msg = search_data.get("Status", {}).get("Description", "Search failed")
+                # TBO search response structure is different from auth response
+                response_obj = search_data.get("Response", {})
+                error_obj = response_obj.get("Error", {})
+                error_code = error_obj.get("ErrorCode", 0)
+                
+                if error_code != 0:
+                    error_msg = error_obj.get("ErrorMessage", "Search failed")
                     logger.error("TBO flight search failed", 
-                                error=error_msg, 
+                                error=f"Code {error_code}: {error_msg}", 
                                 trace_id=trace_id)
                     return []
                 
                 # Process search results
                 flights = []
-                results = search_data.get("Response", {}).get("Results", [])
+                results = response_obj.get("Results", [])
                 
                 logger.info("Processing TBO search results", 
                            result_groups=len(results),
