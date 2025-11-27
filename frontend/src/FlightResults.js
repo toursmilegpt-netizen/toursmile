@@ -709,6 +709,7 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                   <div className="text-gray-400 text-6xl mb-4">✈️</div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">No flights found</h3>
                   <p className="text-gray-600">Try adjusting your filters or search criteria.</p>
+                  <p className="text-xs text-red-500 mt-2">DEBUG: Total flights: {flights.length}, Filtered: {filteredAndSortedFlights.length}</p>
                 </div>
               ) : (
                 filteredAndSortedFlights.map((flight, index) => (
