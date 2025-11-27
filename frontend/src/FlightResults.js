@@ -32,9 +32,8 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
   
   // Load flights on component mount
   useEffect(() => {
-    console.log('FlightResults mounted, calling fetchFlights with searchParams:', searchParams);
     fetchFlights();
-  }, []); // Remove dependency on searchParams to ensure it always runs
+  }, [searchParams]);
   
   const fetchFlights = async () => {
     try {
