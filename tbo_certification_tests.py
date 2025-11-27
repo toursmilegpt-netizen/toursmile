@@ -224,7 +224,7 @@ class TBOCertificationTester:
             search_result = await self.service.search_flights(
                 origin="BOM",
                 destination="DEL",
-                departure_date=tomorrow.strftime("%Y-%m-%d"),
+                departure_date=departure_date.strftime("%Y-%m-%d"),
                 passengers=1,
                 class_type="business",
                 trip_type="oneway",
