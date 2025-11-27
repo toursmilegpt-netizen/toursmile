@@ -85,11 +85,11 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
             aircraft_type: 'A321',
             is_lcc: false
           }
-        ];
-        
-        setFlights(testFlights);
-        setLoading(false);
-      }, 500);
+      ];
+      
+      console.log('Test flights for airline logos:', testFlights);
+      setFlights(testFlights);
+      setLoading(false);
       return;
       
       // Use environment variable for backend URL
