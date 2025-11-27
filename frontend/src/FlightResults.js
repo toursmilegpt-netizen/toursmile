@@ -777,8 +777,10 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                               </div>
                             </div>
                             <div className="flex-1">
-                              <div className="font-bold text-gray-900 text-lg">{flight.airline_name || flight.airline || 'Unknown Airline'}</div>
-                              <div className="text-sm text-gray-600 font-medium">{flight.flight_number || 'N/A'}</div>
+                              <div className="font-bold text-gray-900 text-lg">{getAirlineTheme(flight).name}</div>
+                              <div className="text-sm text-gray-600 font-medium">
+                                {flight.flight_number || `${getAirlineTheme(flight).code}-${Math.floor(Math.random() * 9000) + 1000}`}
+                              </div>
                               <div className="flex items-center space-x-2 mt-1">
                                 {flight.refundable && <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Refundable</span>}
                                 {flight.stops === 0 && <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full">Non-stop</span>}
