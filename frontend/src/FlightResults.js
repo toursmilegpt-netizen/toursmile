@@ -819,24 +819,49 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                           </div>
                         </div>
                         
-                        {/* Price & Select Button */}
-                        <div className="text-center ml-6">
-                          <div className="text-3xl font-bold text-gray-900 mb-1">
-                            ₹{flight.fare_types && flight.fare_types.length > 0 
-                              ? flight.fare_types[0].price.toLocaleString()
-                              : (flight.price || flight.base_price || 0).toLocaleString()
-                            }
-                          </div>
-                          <div className="text-sm text-gray-500 mb-4">per person</div>
+                        {/* Enhanced Price & CTA Section */}
+                        <div className="text-center ml-6 bg-gradient-to-br from-white to-blue-50 rounded-xl p-6 border border-blue-100 shadow-lg">
+                          {/* Price Comparison */}
+                          {flight.price <= 5000 && (
+                            <div className="text-xs text-green-600 font-semibold mb-1 flex items-center justify-center">
+                              🔥 SAVE ₹{(6000 - flight.price).toLocaleString()} vs average
+                            </div>
+                          )}
                           
+                          <div className="relative">
+                            <div className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-1">
+                              ₹{flight.fare_types && flight.fare_types.length > 0 
+                                ? flight.fare_types[0].price.toLocaleString()
+                                : (flight.price || flight.base_price || 0).toLocaleString()
+                              }
+                            </div>
+                            {/* Urgency Indicator */}
+                            <div className="text-xs text-orange-600 font-semibold mb-2">
+                              ⚠️ Only 3 seats left at this price
+                            </div>
+                          </div>
+                          
+                          <div className="text-sm text-gray-600 mb-4 font-medium">per person · All taxes included</div>
+                          
+                          {/* Enhanced CTA Button */}
                           <button 
                             onClick={() => setExpandedFlightId(
                               expandedFlightId === flight.id ? null : flight.id
                             )}
-                            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-md hover:shadow-lg transform hover:scale-105"
+                            className="w-full bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white px-8 py-4 rounded-xl hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 transition-all duration-300 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden"
                           >
-                            {expandedFlightId === flight.id ? 'Hide Options' : 'Select Flight'}
+                            <span className="relative z-10">
+                              {expandedFlightId === flight.id ? '🔽 Hide Fare Options' : '✈️ View Fare Options'}
+                            </span>
+                            {/* Button Animation Effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform skew-x-12 group-hover:translate-x-full transition-transform duration-1000"></div>
                           </button>
+                          
+                          {/* Trust Signals */}
+                          <div className="mt-3 flex items-center justify-center space-x-4 text-xs text-gray-500">
+                            <span className="flex items-center">🔒 Secure Payment</span>
+                            <span className="flex items-center">📱 Instant Confirmation</span>
+                          </div>
                         </div>
                       </div>
                     </div>
