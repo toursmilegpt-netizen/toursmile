@@ -97,7 +97,8 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
         console.log('Sample flights data:', sampleFlights);
         setFlights(sampleFlights);
         setLoading(false);
-      }, 1000);
+        console.log('Sample flights set, loading set to false');
+      }, 500); // Reduce timeout to 500ms
       return;
       
       // Use environment variable for backend URL
