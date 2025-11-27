@@ -197,8 +197,10 @@ class TBOFlightService:
             }
             
             async with httpx.AsyncClient(timeout=60.0) as client:
+                # Use the correct TBO flight search endpoint
+                search_url = f"{self.base_url}/SharedData.svc/rest/Search"
                 response = await client.post(
-                    f"{self.base_url}/Search",
+                    search_url,
                     json=search_payload,
                     headers={
                         "Content-Type": "application/json",
