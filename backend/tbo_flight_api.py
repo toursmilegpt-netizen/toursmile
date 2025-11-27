@@ -180,7 +180,7 @@ class TBOFlightService:
                     "Destination": origin_code,
                     "FlightCabinClass": cabin_class,
                     "PreferredDepartureTime": return_date + "T00:00:00",
-                    "PreferredArrivalTime": return_date + "T23:59:59"
+                    "PreferredArrivalTime": return_date + "T00:00:00"
                 })
             
             search_payload = {
