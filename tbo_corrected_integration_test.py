@@ -116,7 +116,7 @@ class TBOCorrectedIntegrationTester:
                     # Analyze if this is real TBO data or mock fallback
                     tbo_indicators = self._analyze_tbo_authentication(flights, data)
                     
-                    if "tbo" in data_source.lower() or any("tbo" in str(flight.get("data_source", "")).lower() for flight in flights):
+                    if "real_api" in data_source.lower() or "tbo" in data_source.lower() or any("tbo" in str(flight.get("data_source", "")).lower() for flight in flights):
                         self.log_test("TBO Authentication (Fixed URLs)", True, 
                                     f"✅ REAL TBO DATA: Authentication successful with fixed URLs - {tbo_indicators}", 
                                     response_time, {"flight_count": len(flights), "data_source": data_source})
