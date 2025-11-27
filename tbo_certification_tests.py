@@ -82,12 +82,12 @@ class TBOCertificationTester:
             # Step 1: Search
             print("1️⃣ Search Flights...")
             search_result = await self.service.search_flights(
-                origin="DEL",
-                destination="BOM", 
+                origin="BOM",  # Switch to BOM-DEL which we know works
+                destination="DEL", 
                 departure_date=departure_date.strftime("%Y-%m-%d"),
                 passengers=4,  # 2A+1C+1I = 4 total
                 class_type="economy",
-                trip_type="oneway",  # Change to one-way for better availability
+                trip_type="oneway",
                 trace_id=self.trace_id
             )
             
