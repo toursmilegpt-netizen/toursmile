@@ -1,0 +1,50 @@
+{
+  "certification_report": {
+    "agency": "SMILE HOLIDAYS",
+    "test_run_date": "2025-11-27T22:16:21.983104",
+    "trace_id": "06f68803-c228-4cf2-9144-6d40b1470347",
+    "total_tests": 3,
+    "passed": 0,
+    "failed": 3,
+    "success_rate": 0.0,
+    "api_endpoints_tested": [
+      "Authenticate",
+      "Search",
+      "FareRule",
+      "FareQuote",
+      "SSR",
+      "Book (Simulated)",
+      "Ticket (Simulated)",
+      "GetBookingDetails (Simulated)"
+    ],
+    "test_results": [
+      {
+        "test_name": "Test Case 1: DEL-BOM Family Return",
+        "status": "FAIL",
+        "timestamp": "2025-11-27T22:16:21.983043",
+        "trace_id": "06f68803-c228-4cf2-9144-6d40b1470347",
+        "details": {
+          "error": "TBOFlightService.search_flights() got an unexpected keyword argument 'adults'"
+        }
+      },
+      {
+        "test_name": "Test Case 2: BOM-DEL Business One-way",
+        "status": "FAIL",
+        "timestamp": "2025-11-27T22:16:21.983078",
+        "trace_id": "06f68803-c228-4cf2-9144-6d40b1470347",
+        "details": {
+          "error": "TBOFlightService.search_flights() got an unexpected keyword argument 'adults'"
+        }
+      },
+      {
+        "test_name": "Test Case 3: CCJ-BOM Economy",
+        "status": "FAIL",
+        "timestamp": "2025-11-27T22:16:21.983096",
+        "trace_id": "06f68803-c228-4cf2-9144-6d40b1470347",
+        "details": {
+          "error": "TBOFlightService.search_flights() got an unexpected keyword argument 'adults'"
+        }
+      }
+    ]
+  }
+}
