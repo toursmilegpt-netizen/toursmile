@@ -190,14 +190,14 @@ class TBOCertificationTester:
             
             self.log_test_result(test_name, "PASS", {
                 "route": "BOM-DEL One-way",
-                "passengers": "2A+1C+1I",
+                "passengers": "2A",
                 "class": "Economy",
                 "search_results": len(search_result),
                 "fare_rule_status": "Retrieved",
                 "fare_quote_status": "Retrieved",
                 "ssr_status": "Retrieved",
                 "booking_simulation": "Complete",
-                "response_summary": f"Family booking flow completed with {len(search_result)} flights"
+                "response_summary": f"Multiple adults booking flow completed with {len(search_result)} flights"
             })
             
             return True
