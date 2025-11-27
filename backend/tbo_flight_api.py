@@ -198,7 +198,7 @@ class TBOFlightService:
             
             async with httpx.AsyncClient(timeout=60.0) as client:
                 # Use the correct TBO flight search endpoint
-                search_url = f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/Search"
+                search_url = "http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search"
                 logger.info("Attempting TBO flight search", search_url=search_url, trace_id=trace_id)
                 
                 response = await client.post(
