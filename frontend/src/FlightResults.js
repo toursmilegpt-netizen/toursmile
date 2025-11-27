@@ -760,24 +760,39 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                             </div>
                           </div>
                           
-                          {/* Route & Time */}
-                          <div className="flex items-center space-x-4">
-                            <div className="text-center">
-                              <div className="font-bold text-xl text-gray-800">
-                                {formatTime(flight.departure_time)}
+                          {/* Enhanced Route & Time Visualization */}
+                          <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-4 mt-4">
+                            <div className="flex items-center justify-between">
+                              {/* Departure Info */}
+                              <div className="text-center flex-1">
+                                <div className="font-bold text-2xl text-gray-900 mb-1">
+                                  {formatTime(flight.departure_time)}
+                                </div>
+                                <div className="text-sm font-semibold text-gray-700 mb-1">
+                                  {flight.departure_airport || flight.origin || searchParams?.from?.iata || 'DEL'}
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                  {flight.departure_city || searchParams?.from?.city || 'Delhi'}
+                                </div>
                               </div>
-                              <div className="text-sm text-gray-500 font-medium">
-                                {flight.origin || searchParams?.from?.iata || 'DEL'}
-                              </div>
-                            </div>
-                            
-                            <div className="flex-1 text-center px-4">
-                              <div className="text-sm text-gray-500 mb-1 font-medium">
-                                {formatDuration(flight.duration_minutes)}
-                              </div>
-                              <div className="flex items-center justify-center">
-                                <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                                <div className="flex-1 h-0.5 bg-gradient-to-r from-blue-400 to-blue-300 mx-2"></div>
+                              
+                              {/* Flight Path Visualization */}
+                              <div className="flex-1 px-6">
+                                <div className="text-center mb-2">
+                                  <div className="text-sm font-semibold text-gray-600">
+                                    {formatDuration(flight.duration_minutes)}
+                                  </div>
+                                  <div className="text-xs text-green-600 font-medium">
+                                    {flight.stops === 0 ? 'Direct Flight' : `${flight.stops} Stop${flight.stops > 1 ? 's' : ''}`}
+                                  </div>
+                                </div>
+                                <div className="flex items-center justify-center relative">
+                                  <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full border-2 border-white shadow-lg"></div>
+                                  <div className="flex-1 h-1 bg-gradient-to-r from-blue-500 via-blue-400 to-green-500 mx-2 rounded-full relative overflow-hidden">
+                                    {flight.stops === 0 && (
+                                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
+                                    )}
+                                  </div>
                                 {(flight.stops || 0) > 0 && (
                                   <>
                                     <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
