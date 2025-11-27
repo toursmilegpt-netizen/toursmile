@@ -542,7 +542,8 @@ class TBOFlightService:
             fare_quote_payload = {
                 "ResultIndex": result_index,
                 "TokenId": token,
-                "EndUserIp": "192.168.11.120"
+                "EndUserIp": "192.168.11.120",
+                "TraceId": trace_id
             }
             
             async with httpx.AsyncClient(timeout=60.0) as client:
