@@ -40,9 +40,9 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
       setLoading(true);
       setError(null);
       
-      // TEMP: Add sample data to test airline logo system
-      setTimeout(() => {
-        const testFlights = [
+      // TEMP: Add sample data to test airline logo system - IMMEDIATE
+      console.log('Setting test flights for airline logos');
+      const testFlights = [
           {
             id: 1,
             airline_code: '6E',
