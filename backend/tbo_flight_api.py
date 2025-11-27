@@ -40,10 +40,10 @@ class TBOFlightService:
         logger.info("Refreshing TBO authentication token", trace_id=trace_id)
         
         auth_payload = {
-            "BookingMode": "API",
+            "ClientId": "ApiIntegrationNew",
             "UserName": self.username,
             "Password": self.password,
-            "IPAddress": "192.168.1.1"
+            "EndUserIp": "192.168.11.120"
         }
         
         async with httpx.AsyncClient(timeout=30.0) as client:
