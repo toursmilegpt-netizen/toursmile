@@ -92,7 +92,9 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
               { name: "Flexi", price: 6100, savings: 0, cancellation: "₹2,500 + Fare difference" }
             ]
           }
-        ]);
+        ];
+        console.log('Sample flights data:', sampleFlights);
+        setFlights(sampleFlights);
         setLoading(false);
       }, 1000);
       return;
