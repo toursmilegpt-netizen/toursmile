@@ -211,7 +211,7 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
       }
       
       return true;
-    });
+    }); */
     
     // Sort flights
     filtered.sort((a, b) => {
