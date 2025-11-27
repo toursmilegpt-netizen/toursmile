@@ -41,10 +41,9 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
       setLoading(true);
       setError(null);
       
-      // TEMP: Add sample data for visual enhancement - matching expected field format
-      setTimeout(() => {
-        console.log('Setting sample flights for visual enhancement');
-        const sampleFlights = [
+      // TEMP: Add sample data for visual enhancement - immediate loading
+      console.log('Setting sample flights for visual enhancement - IMMEDIATE');
+      const sampleFlights = [
           {
             id: 1,
             airline_name: "IndiGo",
