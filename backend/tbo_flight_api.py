@@ -687,7 +687,7 @@ class TBOFlightService:
             
             async with httpx.AsyncClient(timeout=60.0) as client:
                 response = await client.post(
-                    f"{self.base_url}/BookingEngineService_Air/AirService.svc/rest/GetBookingDetails",
+                    "http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/GetBookingDetails",
                     json=booking_details_payload,
                     headers={
                         "Content-Type": "application/json",
