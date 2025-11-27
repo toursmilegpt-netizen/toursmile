@@ -712,9 +712,16 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                 </div>
               ) : (
                 filteredAndSortedFlights.map((flight, index) => (
-                  <div key={index} className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+                  <div key={index} className="bg-white rounded-2xl border border-gray-50 shadow-md hover:shadow-xl hover:shadow-blue-50 transition-all duration-300 overflow-hidden group">
+                    {/* TRUST BADGE - Popular Choice / Best Price etc */}
+                    {flight.price <= 5000 && (
+                      <div className="bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-semibold px-3 py-1 absolute top-4 left-4 rounded-full z-10 shadow-lg">
+                        💎 BEST PRICE
+                      </div>
+                    )}
+                    
                     {/* Main Flight Info Row */}
-                    <div className="p-4">
+                    <div className="p-6">
                       <div className="flex items-center justify-between">
                         {/* Flight Details */}
                         <div className="flex-1">
