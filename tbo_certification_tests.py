@@ -225,11 +225,9 @@ class TBOCertificationTester:
                 origin="BOM",
                 destination="DEL",
                 departure_date=tomorrow.strftime("%Y-%m-%d"),
-                adults=1,
-                children=0,
-                infants=0,
-                trip_type="oneway", 
-                cabin_class="Business",
+                passengers=1,
+                class_type="business",
+                trip_type="oneway",
                 trace_id=self.trace_id
             )
             
