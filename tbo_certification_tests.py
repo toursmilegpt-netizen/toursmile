@@ -97,7 +97,7 @@ class TBOCertificationTester:
                 return False
                 
             flight = search_result[0]
-            result_index = flight.get('result_index', '0')
+            result_index = flight.get('id', '0')  # TBO stores ResultIndex in 'id' field
             
             # Step 2: FareRule
             print("2️⃣ Get Fare Rules...")
@@ -233,7 +233,7 @@ class TBOCertificationTester:
             
             if search_result and len(search_result) > 0:
                 flight = search_result[0]
-                result_index = flight.get('result_index', '0')
+                result_index = flight.get('id', '0')  # TBO stores ResultIndex in 'id' field
                 
                 # Complete flow for business class
                 fare_rule = await self.service.get_fare_rule(result_index, self.trace_id)
@@ -281,7 +281,7 @@ class TBOCertificationTester:
             
             if search_result and len(search_result) > 0:
                 flight = search_result[0]
-                result_index = flight.get('result_index', '0')
+                result_index = flight.get('id', '0')  # TBO stores ResultIndex in 'id' field
                 
                 fare_rule = await self.service.get_fare_rule(result_index, self.trace_id)
                 fare_quote = await self.service.get_fare_quote(result_index, self.trace_id)
