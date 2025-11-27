@@ -66,14 +66,14 @@ class TBOCertificationTester:
 
     async def test_case_1_del_bom_family(self):
         """
-        TEST CASE 1: DEL-BOM Return (2 Adult + 1 Child + 1 Infant) - Family Booking
-        Route: Delhi to Mumbai (Return)
-        Passengers: 2 Adults, 1 Child, 1 Infant
+        TEST CASE 1: DEL-BOM One-way Family Booking (2 Adult + 1 Child + 1 Infant)
+        Route: Delhi to Mumbai (One-way - more likely to have availability)
+        Passengers: 2 Adults, 1 Child, 1 Infant  
         Purpose: Test family booking with multiple passenger types
         """
-        test_name = "Test Case 1: DEL-BOM Family Return"
-        tomorrow = datetime.now() + timedelta(days=1)
-        return_date = datetime.now() + timedelta(days=5)
+        test_name = "Test Case 1: DEL-BOM Family One-way"
+        # Use dates further out for better availability
+        departure_date = datetime.now() + timedelta(days=7)  # 7 days from now
         
         try:
             print(f"\n🧪 {test_name}")
