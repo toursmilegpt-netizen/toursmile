@@ -72,8 +72,8 @@ class TBOCertificationTester:
         Purpose: Test multiple passenger booking with complete API flow
         """
         test_name = "Test Case 1: BOM-DEL Multiple Adults"
-        # Use dates further out for better availability
-        departure_date = datetime.now() + timedelta(days=10)  # 10 days from now
+        # Use same date pattern as successful Test Case 2
+        departure_date = datetime.now() + timedelta(days=8)  # 8 days from now (same as working test)
         
         try:
             print(f"\n🧪 {test_name}")
