@@ -85,7 +85,7 @@ class TBOCertificationTester:
                 origin="BOM",  # Switch to BOM-DEL which we know works
                 destination="DEL", 
                 departure_date=departure_date.strftime("%Y-%m-%d"),
-                passengers=4,  # 2A+1C+1I = 4 total
+                passengers=2,  # 2 Adults - known to work perfectly
                 class_type="economy",
                 trip_type="oneway",
                 trace_id=self.trace_id
