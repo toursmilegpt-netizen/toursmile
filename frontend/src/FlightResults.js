@@ -40,6 +40,42 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
       setLoading(true);
       setError(null);
       
+      // TEMP: Add sample data for visual enhancement
+      setTimeout(() => {
+        setFlights([
+          {
+            id: 1,
+            airline: { name: "IndiGo", code: "6E", logo: "6E" },
+            flight_number: "6E-2024",
+            departure: { time: "06:30", airport: "DEL", city: "Delhi" },
+            arrival: { time: "08:45", airport: "BOM", city: "Mumbai" },
+            duration: "2h 15m",
+            stops: "Non-stop",
+            price: 4850,
+            fare_types: [
+              { name: "Saver", price: 4850, savings: 0, cancellation: "₹3,500 + Fare difference" },
+              { name: "Flexi", price: 5650, savings: 0, cancellation: "₹3,000 + Fare difference" }
+            ]
+          },
+          {
+            id: 2,
+            airline: { name: "Air India", code: "AI", logo: "AI" },
+            flight_number: "AI-131",
+            departure: { time: "09:15", airport: "DEL", city: "Delhi" },
+            arrival: { time: "11:30", airport: "BOM", city: "Mumbai" },
+            duration: "2h 15m",
+            stops: "Non-stop",
+            price: 5200,
+            fare_types: [
+              { name: "Saver", price: 5200, savings: 0, cancellation: "₹3,500 + Fare difference" },
+              { name: "Flexi", price: 6100, savings: 0, cancellation: "₹2,500 + Fare difference" }
+            ]
+          }
+        ]);
+        setLoading(false);
+      }, 1000);
+      return;
+      
       // Use environment variable for backend URL
       const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       
