@@ -272,7 +272,7 @@ class TBOCertificationTester:
             search_result = await self.service.search_flights(
                 origin="CJB",  # Coimbatore
                 destination="BOM",
-                departure_date=tomorrow.strftime("%Y-%m-%d"),
+                departure_date=departure_date.strftime("%Y-%m-%d"),
                 passengers=2,
                 class_type="economy",
                 trip_type="oneway",
