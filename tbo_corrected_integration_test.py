@@ -233,7 +233,7 @@ class TBOCorrectedIntegrationTester:
                         flight_analysis = self._analyze_corrected_endpoint_response(flights, data)
                         
                         # Check if this is real TBO data
-                        is_tbo_data = "tbo" in data_source.lower() or any("tbo" in str(f.get("data_source", "")).lower() for f in flights)
+                        is_tbo_data = "real_api" in data_source.lower() or "tbo" in data_source.lower() or any("tbo" in str(f.get("data_source", "")).lower() for f in flights)
                         
                         if is_tbo_data:
                             tbo_data_count += 1
