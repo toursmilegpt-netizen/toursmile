@@ -263,7 +263,7 @@ class TBOCertificationTester:
         Purpose: Test domestic secondary city route
         """
         test_name = "Test Case 3: CCJ-BOM Economy"
-        tomorrow = datetime.now() + timedelta(days=3)
+        departure_date = datetime.now() + timedelta(days=3)
         
         try:
             print(f"\n🧪 {test_name}")
