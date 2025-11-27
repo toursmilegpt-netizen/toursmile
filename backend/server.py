@@ -9709,6 +9709,100 @@ async def search_flights(request: FlightSearchRequest):
         logging.error(f"Flight search error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to search flights")
 
+# TBO CERTIFICATION ENDPOINTS - Required for TBO API certification process
+@api_router.post("/tbo/fare-rule")
+async def get_tbo_fare_rule(result_index: str, trace_id: str = None):
+    """Get TBO fare rules - Required for certification"""
+    try:
+        from tbo_flight_api import tbo_flight_service
+        result = await tbo_flight_service.get_fare_rule(result_index, trace_id)
+        return result
+    except Exception as e:
+        logging.error(f"TBO FareRule error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"TBO FareRule failed: {str(e)}")
+
+@api_router.post("/tbo/fare-quote")
+async def get_tbo_fare_quote(result_index: str, trace_id: str = None):
+    """Get TBO fare quote - Required for certification"""
+    try:
+        from tbo_flight_api import tbo_flight_service
+        result = await tbo_flight_service.get_fare_quote(result_index, trace_id)
+        return result
+    except Exception as e:
+        logging.error(f"TBO FareQuote error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"TBO FareQuote failed: {str(e)}")
+
+@api_router.post("/tbo/ssr")
+async def get_tbo_ssr(result_index: str, trace_id: str = None):
+    """Get TBO Special Service Requests - Optional for certification"""
+    try:
+        from tbo_flight_api import tbo_flight_service
+        result = await tbo_flight_service.get_ssr(result_index, trace_id)
+        return result
+    except Exception as e:
+        logging.error(f"TBO SSR error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"TBO SSR failed: {str(e)}")
+
+@api_router.post("/tbo/book")
+async def book_tbo_flight(booking_data: dict, trace_id: str = None):
+    """Book TBO flight - Required for certification"""
+    try:
+        from tbo_flight_api import tbo_flight_service
+        result = await tbo_flight_service.book_flight(booking_data, trace_id)
+        return result
+    except Exception as e:
+        logging.error(f"TBO Book error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"TBO Book failed: {str(e)}")
+
+@api_router.post("/tbo/ticket")
+async def ticket_tbo_flight(booking_id: str, pnr: str, trace_id: str = None):
+    """Issue TBO ticket - Required for certification"""
+    try:
+        from tbo_flight_api import tbo_flight_service
+        result = await tbo_flight_service.ticket_flight(booking_id, pnr, trace_id)
+        return result
+    except Exception as e:
+        logging.error(f"TBO Ticket error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"TBO Ticket failed: {str(e)}")
+
+@api_router.post("/tbo/booking-details")
+async def get_tbo_booking_details(booking_id: str, pnr: str, trace_id: str = None):
+    """Get TBO booking details - Required for certification"""
+    try:
+        from tbo_flight_api import tbo_flight_service
+        result = await tbo_flight_service.get_booking_details(booking_id, pnr, trace_id)
+        return result
+    except Exception as e:
+        logging.error(f"TBO GetBookingDetails error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"TBO GetBookingDetails failed: {str(e)}")
+
+@api_router.get("/tbo/certification-test")
+async def run_tbo_certification_test():
+    """Run TBO certification test suite"""
+    try:
+        import subprocess
+        import sys
+        
+        # Run the certification test script
+        result = subprocess.run(
+            [sys.executable, "/app/tbo_certification_tests.py"],
+            capture_output=True,
+            text=True,
+            timeout=300  # 5 minute timeout
+        )
+        
+        return {
+            "success": result.returncode == 0,
+            "output": result.stdout,
+            "error": result.stderr,
+            "return_code": result.returncode
+        }
+    except subprocess.TimeoutExpired:
+        raise HTTPException(status_code=504, detail="Certification test timeout")
+    except Exception as e:
+        logging.error(f"Certification test error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Certification test failed: {str(e)}")
+
 # OTP Authentication Endpoints (Sandbox Mode)
 @api_router.post("/auth/send-otp")
 async def send_otp_sandbox(request: OTPSendRequest):
