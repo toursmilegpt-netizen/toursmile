@@ -32,7 +32,7 @@ import httpx
 import asyncio
 
 # Backend URL from environment
-BACKEND_URL = "https://flywise-search.preview.emergentagent.com/api"
+BACKEND_URL = "https://flight-cert-runner.preview.emergentagent.com/api"
 
 # TBO API Configuration - Updated credentials from review request
 TBO_USERNAME = "Smile"

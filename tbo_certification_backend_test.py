@@ -39,7 +39,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 
 # Backend URL from environment
-BACKEND_URL = "https://flywise-search.preview.emergentagent.com/api"
+BACKEND_URL = "https://flight-cert-runner.preview.emergentagent.com/api"
 
 class TBOCertificationTester:
     def __init__(self):

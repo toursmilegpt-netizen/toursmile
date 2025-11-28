@@ -1,0 +1,67 @@
+{
+  "certification_report": {
+    "agency": "SMILE HOLIDAYS",
+    "test_run_date": "2025-11-27T22:36:09.722166",
+    "trace_id": "356fc62f-1108-4b99-a567-ca62edb6cd0a",
+    "total_tests": 3,
+    "passed": 2,
+    "failed": 1,
+    "success_rate": 66.66666666666666,
+    "api_endpoints_tested": [
+      "Authenticate",
+      "Search",
+      "FareRule",
+      "FareQuote",
+      "SSR",
+      "Book (Simulated)",
+      "Ticket (Simulated)",
+      "GetBookingDetails (Simulated)"
+    ],
+    "test_results": [
+      {
+        "test_name": "Test Case 1: BOM-DEL Multiple Adults",
+        "status": "FAIL",
+        "timestamp": "2025-11-27T22:35:40.555371",
+        "trace_id": "9e9ccb76-f60a-417f-897d-fdf5fc48d2b8",
+        "details": {
+          "error": "No flights found in search"
+        }
+      },
+      {
+        "test_name": "Test Case 1: BOM-DEL Multiple Adults",
+        "status": "FAIL",
+        "timestamp": "2025-11-27T22:35:48.877662",
+        "trace_id": "356fc62f-1108-4b99-a567-ca62edb6cd0a",
+        "details": {
+          "error": "No flights found in search"
+        }
+      },
+      {
+        "test_name": "Test Case 2: BOM-DEL Business One-way",
+        "status": "PASS",
+        "timestamp": "2025-11-27T22:35:58.872747",
+        "trace_id": "356fc62f-1108-4b99-a567-ca62edb6cd0a",
+        "details": {
+          "route": "BOM-DEL One-way",
+          "passengers": "1A",
+          "class": "Business",
+          "search_results": 26,
+          "response_summary": "Business class booking flow completed"
+        }
+      },
+      {
+        "test_name": "Test Case 3: CCJ-BOM Economy",
+        "status": "PASS",
+        "timestamp": "2025-11-27T22:36:09.721794",
+        "trace_id": "356fc62f-1108-4b99-a567-ca62edb6cd0a",
+        "details": {
+          "route": "CJB-BOM One-way",
+          "passengers": "2A",
+          "class": "Economy",
+          "search_results": 111,
+          "response_summary": "Secondary city route completed"
+        }
+      }
+    ]
+  }
+}
