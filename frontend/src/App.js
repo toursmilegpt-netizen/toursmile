@@ -2435,9 +2435,10 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Passenger Selection - Compact Display with Total Count */}
-        <div 
-          className={`mt-2 passenger-selector-compact transition-all duration-200 ${getStepColor(5)}`}
+        {/* Passenger Selection - Centered */}
+        <div className="mt-2 flex justify-center">
+          <div 
+            className={`passenger-selector-compact transition-all duration-200 ${getStepColor(5)}`}
           style={{
             background: getStepStatus(5) === 'active' ? '#EFF6FF' : 'white',
             border: getStepStatus(5) === 'active' ? '2px solid #3B82F6' : '1px solid #d1d5db',
