@@ -2238,24 +2238,20 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             </div>
           </div>
           
-          {/* Swap Button - Mobile Responsive Design */}
+          {/* Enhanced Swap Button - User Friendly */}
           <div style={{
             position: isMobile ? 'absolute' : 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: isMobile ? '40px' : '44px',
-            minWidth: isMobile ? '40px' : '44px',
-            maxWidth: isMobile ? '40px' : '44px',
-            height: isMobile ? '40px' : 'auto',
-            background: 'white',
+            flexShrink: 0,
             top: isMobile ? '50%' : 'auto',
             right: isMobile ? '12px' : 'auto',
             transform: isMobile ? 'translateY(-50%)' : 'none',
             zIndex: isMobile ? 10 : 'auto'
           }}>
             <button
-              aria-label="Swap From and To"
+              aria-label="Swap Cities"
               onClick={(e) => { 
                 e.preventDefault();
                 e.stopPropagation();
@@ -2264,36 +2260,34 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 setFrom(tempTo); 
                 setTo(tempFrom);
               }}
-              className="swap-button-enhanced"
               style={{ 
-                height: isMobile ? '28px' : '32px',
-                width: isMobile ? '28px' : '32px',
-                borderRadius: '8px',
-                border: '1px solid #e5e7eb',
-                background: 'white',
+                height: isMobile ? '36px' : '48px',
+                padding: isMobile ? '8px 12px' : '12px 16px',
+                borderRadius: '10px',
+                border: 'none',
+                background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+                color: 'white',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: isMobile ? '14px' : '16px',
-                color: '#374151',
+                gap: isMobile ? '4px' : '6px',
+                fontSize: isMobile ? '11px' : '13px',
+                fontWeight: '600',
                 cursor: 'pointer',
-                transition: 'all 0.15s ease',
-                boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)'
+                transition: 'all 0.2s ease',
+                boxShadow: '0 2px 4px rgba(59, 130, 246, 0.2)',
+                whiteSpace: 'nowrap'
               }}
-              onMouseOver={(e) => {
-                e.target.style.background = '#f3f4f6';
-                e.target.style.color = '#111827';
-                e.target.style.transform = 'scale(1.05)';
-                e.target.style.borderColor = '#9ca3af';
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.boxShadow = '0 4px 8px rgba(59, 130, 246, 0.3)';
               }}
-              onMouseOut={(e) => {
-                e.target.style.background = 'white';
-                e.target.style.color = '#374151';
-                e.target.style.transform = 'scale(1)';
-                e.target.style.borderColor = '#e5e7eb';
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 2px 4px rgba(59, 130, 246, 0.2)';
               }}
             >
-              🔄
+              <span style={{ fontSize: isMobile ? '14px' : '16px' }}>⇄</span>
+              {!isMobile && <span>Swap Cities</span>}
             </button>
           </div>
           
