@@ -2268,13 +2268,13 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             </button>
           </div>
           
-          {/* To Field - Right Side */}
+          {/* To Field - Right Side - Optimized Width */}
           <div 
             className={`transition-all duration-200 ${getStepColor(2)}`}
             style={{ 
-              flex: '1', 
-              minWidth: 0, 
-              maxWidth: '100%', 
+              flex: '0 0 38%',
+              minWidth: 0,
+              maxWidth: '38%',
               position: 'relative',
               cursor: 'pointer',
               borderRadius: '10px',
@@ -2287,7 +2287,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
           >
             <div style={{ 
-              padding: window.innerWidth <= 767 ? '5px 8px' : '6px 10px',
+              padding: window.innerWidth <= 767 ? '5px 8px' : '6px 8px',
               height: '100%',
               minHeight: window.innerWidth <= 767 ? '40px' : '44px',
               display: 'flex',
