@@ -1144,6 +1144,104 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
           </div>
         </div>
       )}
+      
+      {/* Fare Selection Modal for Round Trip */}
+      {showFareModal && modalFlight && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+              <h3 className="text-xl font-bold">
+                Select {modalType === 'departure' ? 'Departure' : 'Return'} Fare
+              </h3>
+              <button
+                onClick={() => setShowFareModal(false)}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="p-6">
+              <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-lg">{getAirlineTheme(modalFlight).name}</div>
+                    <div className="text-sm text-gray-600">
+                      {formatTime(modalFlight.departure_time)} → {formatTime(modalFlight.arrival_time)}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-gray-600">Duration</div>
+                    <div className="font-semibold">{formatDuration(modalFlight.duration_minutes)}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {modalFlight.fare_types && modalFlight.fare_types.map((fareType, fareIndex) => (
+                  <div 
+                    key={fareIndex} 
+                    className="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-blue-500 hover:shadow-lg transition-all duration-200 cursor-pointer"
+                    onClick={() => {
+                      const selectedFlight = {
+                        ...modalFlight,
+                        selectedFareType: fareType,
+                        price: fareType.price
+                      };
+                      
+                      if (modalType === 'departure') {
+                        setSelectedDepartureFlight(selectedFlight);
+                        setShowFareModal(false);
+                        if (isRoundTrip) {
+                          setSelectionStep('return');
+                        } else {
+                          onFlightSelect && onFlightSelect(selectedFlight);
+                        }
+                      } else {
+                        setSelectedReturnFlight(selectedFlight);
+                        setShowFareModal(false);
+                        // Both flights selected, proceed to booking
+                        if (onFlightSelect) {
+                          onFlightSelect({
+                            departure: selectedDepartureFlight,
+                            return: selectedFlight
+                          });
+                        }
+                      }
+                    }}
+                  >
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h5 className="font-bold text-gray-900 text-lg">{fareType.name}</h5>
+                        <div className="text-2xl font-bold text-blue-600 mt-1">
+                          ₹{fareType.price.toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 mb-4">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600">Baggage:</span>
+                        <span className="text-gray-800 font-medium">{fareType.baggage}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600">Refundable:</span>
+                        <span className={fareType.refundable ? 'text-green-700 font-medium' : 'text-red-600 font-medium'}>
+                          {fareType.refundable ? '✓ Yes' : '✗ No'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold">
+                      Select {fareType.name}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
