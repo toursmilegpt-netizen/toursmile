@@ -2131,7 +2131,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         </div>
 
         {/* Date Selection - Compact Row */}
-        <div className="mt-3 grid grid-cols-2 gap-2">
+        <div className="mt-2 grid grid-cols-2 gap-2">
           {/* Departure Date */}
           <div 
             className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
