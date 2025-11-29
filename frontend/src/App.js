@@ -2151,13 +2151,15 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Enhanced From/To Container - Better Spacing & Alignment */}
-        <div className="mt-2" style={{ 
-          display: 'flex',
-          alignItems: 'center',
-          gap: isMobile ? '8px' : '12px',
-          flexDirection: isMobile ? 'column' : 'row'
-        }}>
+        {/* Enhanced From/To Container - Centered & Aligned */}
+        <div className="mt-2 flex justify-center">
+          <div style={{ 
+            display: 'flex',
+            alignItems: 'center',
+            gap: isMobile ? '8px' : '12px',
+            flexDirection: isMobile ? 'column' : 'row',
+            maxWidth: '100%'
+          }}>
           {/* From Field - Enhanced with Brand Colors */}
           <div 
             className={`transition-all duration-200 ${getStepColor(1)}`}
