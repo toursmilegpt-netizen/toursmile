@@ -182,12 +182,17 @@ class TBOFlightService:
             
             # Add return segment for round trip
             if journey_type == "2" and return_date:
+                # Clean return date format
+                clean_return_date = return_date
+                if 'T' in return_date:
+                    clean_return_date = return_date.split('T')[0]
+                    
                 segments.append({
                     "Origin": destination_code,
                     "Destination": origin_code,
                     "FlightCabinClass": cabin_class,
-                    "PreferredDepartureTime": return_date + "T00:00:00",
-                    "PreferredArrivalTime": return_date + "T00:00:00"
+                    "PreferredDepartureTime": clean_return_date + "T00:00:00",
+                    "PreferredArrivalTime": clean_return_date + "T00:00:00"
                 })
             
             search_payload = {
