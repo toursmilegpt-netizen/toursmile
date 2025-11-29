@@ -2188,7 +2188,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           )}
         </div>
 
-        {/* Passenger Selection - Mobile Responsive */}
+        {/* Passenger Selection - Compact Display with Total Count */}
         <div 
           className={`mt-3 passenger-selector-compact transition-all duration-200 ${getStepColor(5)}`}
           style={{
@@ -2213,7 +2213,14 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             <div className="flex items-center">
               <span className="text-xs mr-1.5">👥</span>
               <div className="text-sm font-semibold" style={{ fontSize: '14px', color: '#111827' }}>
-                {pax.adt + pax.chd + pax.inf} Traveller{pax.adt + pax.chd + pax.inf > 1 ? 's' : ''}, {pax.cabin}
+                {(() => {
+                  const total = pax.adt + pax.chd + pax.inf;
+                  const parts = [];
+                  if (pax.adt > 0) parts.push(`${pax.adt} Adult${pax.adt > 1 ? 's' : ''}`);
+                  if (pax.chd > 0) parts.push(`${pax.chd} Child${pax.chd > 1 ? 'ren' : ''}`);
+                  if (pax.inf > 0) parts.push(`${pax.inf} Infant${pax.inf > 1 ? 's' : ''}`);
+                  return `${total} Passenger${total > 1 ? 's' : ''}, ${pax.cabin}`;
+                })()}
               </div>
             </div>
           </div>
