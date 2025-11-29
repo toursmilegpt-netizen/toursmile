@@ -1277,89 +1277,229 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
       
       {/* Search Modification Overlay - Full Search Form */}
       {showSearchOverlay && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-start justify-center overflow-y-auto py-8 px-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full shadow-2xl relative animate-slideIn">
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-start justify-center overflow-y-auto py-4 sm:py-8 px-4">
+          <div className="bg-white rounded-2xl max-w-4xl w-full shadow-2xl relative">
             {/* Header */}
-            <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 rounded-t-2xl flex items-center justify-between z-10">
+            <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-t-2xl flex items-center justify-between z-10">
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold">Modify Your Search</h2>
-                <p className="text-sm text-blue-100 mt-1">You'll be redirected to update your travel details</p>
+                <h2 className="text-lg sm:text-xl font-bold">Modify Your Search</h2>
+                <p className="text-xs sm:text-sm text-blue-100 mt-1">Update your flight details and search again</p>
               </div>
               <button
-                onClick={() => setShowSearchOverlay(false)}
+                onClick={() => {
+                  setShowSearchOverlay(false);
+                  // Reset modified search to original
+                  setModifiedSearch({
+                    from: searchParams?.from || null,
+                    to: searchParams?.to || null,
+                    departDate: searchParams?.departDate || '',
+                    returnDate: searchParams?.returnDate || '',
+                    tripType: searchParams?.tripType || 'OW',
+                    passengers: searchParams?.passengers || 1
+                  });
+                }}
                 className="text-white hover:bg-white/20 rounded-full p-2 transition-colors"
                 aria-label="Close"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
             
-            {/* Current Search Summary */}
-            <div className="p-6">
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 mb-6 border border-blue-200">
-                <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                  Current Search Details
-                </h3>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600 font-medium">Route:</span>
-                    <span className="font-semibold text-gray-900">
-                      {searchParams?.from?.city || 'Origin'} → {searchParams?.to?.city || 'Destination'}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600 font-medium">Trip Type:</span>
-                    <span className="font-semibold text-gray-900">
-                      {searchParams?.tripType === 'RT' || searchParams?.returnDate ? 'Round Trip' : 'One Way'}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600 font-medium">Departure:</span>
-                    <span className="font-semibold text-gray-900">{searchParams?.departDate || 'Not set'}</span>
-                  </div>
-                  {(searchParams?.returnDate || searchParams?.tripType === 'RT') && (
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-600 font-medium">Return:</span>
-                      <span className="font-semibold text-gray-900">{searchParams?.returnDate || 'Not set'}</span>
+            {/* Search Form */}
+            <div className="p-4 sm:p-6 space-y-4">
+              {/* Trip Type Selector */}
+              <div className="flex gap-2 bg-gray-100 p-1 rounded-lg">
+                <button
+                  onClick={() => setModifiedSearch({...modifiedSearch, tripType: 'OW', returnDate: ''})}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium text-sm transition-colors ${
+                    modifiedSearch.tripType === 'OW' 
+                      ? 'bg-white text-blue-600 shadow' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  One Way
+                </button>
+                <button
+                  onClick={() => setModifiedSearch({...modifiedSearch, tripType: 'RT'})}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium text-sm transition-colors ${
+                    modifiedSearch.tripType === 'RT' 
+                      ? 'bg-white text-blue-600 shadow' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Round Trip
+                </button>
+              </div>
+
+              {/* From/To Cities */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">From</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={modifiedSearch.from?.city || ''}
+                      readOnly
+                      placeholder="Select origin city"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 font-medium"
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">
+                      {modifiedSearch.from?.iata || ''}
                     </div>
-                  )}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">To</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={modifiedSearch.to?.city || ''}
+                      readOnly
+                      placeholder="Select destination city"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 font-medium"
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">
+                      {modifiedSearch.to?.iata || ''}
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
-                <svg className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+              {/* Dates */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Departure Date</label>
+                  <input
+                    type="date"
+                    value={modifiedSearch.departDate}
+                    onChange={(e) => setModifiedSearch({...modifiedSearch, departDate: e.target.value})}
+                    min={new Date().toISOString().split('T')[0]}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+                {modifiedSearch.tripType === 'RT' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Return Date</label>
+                    <input
+                      type="date"
+                      value={modifiedSearch.returnDate}
+                      onChange={(e) => setModifiedSearch({...modifiedSearch, returnDate: e.target.value})}
+                      min={modifiedSearch.departDate || new Date().toISOString().split('T')[0]}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Passengers */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
+                <select
+                  value={modifiedSearch.passengers}
+                  onChange={(e) => setModifiedSearch({...modifiedSearch, passengers: parseInt(e.target.value)})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
+                    <option key={num} value={num}>{num} {num === 1 ? 'Passenger' : 'Passengers'}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-start gap-2">
+                <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <div className="text-sm">
-                  <p className="font-medium text-amber-900 mb-1">Continue to Search Page</p>
-                  <p className="text-amber-700">You'll be taken back to the home page where you can modify your search criteria and search again.</p>
-                </div>
+                <p className="text-xs sm:text-sm text-blue-800">
+                  <strong>Note:</strong> To change origin/destination cities, please return to the home page.
+                </p>
               </div>
-              
+
               {/* Action Buttons */}
-              <div className="flex justify-end gap-3">
+              <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-2">
                 <button
-                  onClick={() => setShowSearchOverlay(false)}
-                  className="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                  onClick={() => {
+                    setShowSearchOverlay(false);
+                    setModifiedSearch({
+                      from: searchParams?.from || null,
+                      to: searchParams?.to || null,
+                      departDate: searchParams?.departDate || '',
+                      returnDate: searchParams?.returnDate || '',
+                      tripType: searchParams?.tripType || 'OW',
+                      passengers: searchParams?.passengers || 1
+                    });
+                  }}
+                  className="w-full sm:w-auto px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={() => {
-                    // Navigate back to home page
-                    window.location.href = '/';
+                  onClick={async () => {
+                    // Validate dates
+                    if (!modifiedSearch.departDate) {
+                      alert('Please select a departure date');
+                      return;
+                    }
+                    if (modifiedSearch.tripType === 'RT' && !modifiedSearch.returnDate) {
+                      alert('Please select a return date for round trip');
+                      return;
+                    }
+                    
+                    // Close overlay and show loading
+                    setShowSearchOverlay(false);
+                    setLoading(true);
+                    
+                    // Update search params and trigger new search
+                    const newSearchParams = {
+                      from: modifiedSearch.from,
+                      to: modifiedSearch.to,
+                      departDate: modifiedSearch.departDate,
+                      returnDate: modifiedSearch.tripType === 'RT' ? modifiedSearch.returnDate : null,
+                      tripType: modifiedSearch.tripType,
+                      passengers: modifiedSearch.passengers
+                    };
+                    
+                    // Call the API with new params
+                    try {
+                      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+                      const response = await fetch(`${backendUrl}/api/flights/search`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          origin: newSearchParams.from?.city || searchParams?.from?.city,
+                          destination: newSearchParams.to?.city || searchParams?.to?.city,
+                          departure_date: newSearchParams.departDate,
+                          return_date: newSearchParams.returnDate,
+                          passengers: newSearchParams.passengers,
+                          class_type: 'economy',
+                          trip_type: newSearchParams.tripType === 'RT' ? 'round_trip' : 'one_way'
+                        })
+                      });
+                      
+                      if (response.ok) {
+                        const data = await response.json();
+                        const flightResults = data.flights || data || [];
+                        setFlights(Array.isArray(flightResults) ? flightResults : []);
+                        
+                        // Scroll to top
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      } else {
+                        throw new Error('Search failed');
+                      }
+                    } catch (err) {
+                      setError(err.message);
+                      setFlights([]);
+                    } finally {
+                      setLoading(false);
+                    }
                   }}
-                  className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-lg flex items-center gap-2"
+                  className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-lg flex items-center justify-center gap-2"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
-                  Go to Search Page
+                  Search Flights
                 </button>
               </div>
             </div>
