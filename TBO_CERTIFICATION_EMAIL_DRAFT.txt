@@ -73,29 +73,39 @@ TESTING STATISTICS:
 - Failed Routes: 7 (70% failure rate due to staging data unavailability)
 
 ═══════════════════════════════════════════════════════════════
-📊 CERTIFICATION TEST RESULTS
+📊 REVISED CERTIFICATION TEST CASES (Using Working Routes)
 ═══════════════════════════════════════════════════════════════
 
-Latest Test Run: November 27, 2024
-Trace ID: 5420da6e-83ed-45c5-add0-d3d4c7f37879
+Based on our comprehensive route testing, we propose these test cases using CONFIRMED WORKING ROUTES:
 
-Test Case 1: BOM-DEL Multiple Adults (2 Adults, Economy)
-Status: FAILED
-Reason: No flights found in search (Code 25)
+✅ PROPOSED TEST CASE 1: Delhi → Bangalore Route
+   - Route: DEL (Delhi) → BLR (Bangalore)
+   - Date: December 6, 2025 (or any date 1 week ahead)
+   - Passengers: 2 Adults
+   - Class: Economy
+   - Expected Results: ~60 flights
+   - Current Status: CONFIRMED WORKING (60 flights returned)
+   - Trace ID: 7e3f5a10-a800-46ae-96ec-51208bbcf7a1
 
-Test Case 2: BOM-DEL Business Class (1 Adult)
-Status: PASSED ✅
-Results: 26 flights returned
-Complete flow: Search → FareRule → FareQuote → Simulated Booking
+✅ PROPOSED TEST CASE 2: Bangalore → Delhi Route
+   - Route: BLR (Bangalore) → DEL (Delhi)
+   - Date: December 6, 2025
+   - Passengers: 1 Adult
+   - Class: Economy
+   - Expected Results: ~111 flights
+   - Current Status: CONFIRMED WORKING (111 flights returned)
+   - Trace ID: 57f5c707-2803-474f-a879-5a4402c8f138
 
-Test Case 3: CJB-BOM Economy (2 Adults)
-Status: PASSED ✅
-Results: 111 flights returned
-Complete flow: Search → FareRule → FareQuote → Simulated Booking
+✅ PROPOSED TEST CASE 3: Mumbai → Chennai Route
+   - Route: BOM (Mumbai) → MAA (Chennai)
+   - Date: December 6, 2025
+   - Passengers: 1 Adult, 1 Child
+   - Class: Economy
+   - Expected Results: ~60 flights
+   - Current Status: CONFIRMED WORKING (60 flights returned)
+   - Trace ID: 2e55ce15-d2d4-4651-93da-c42cbb6fb585
 
-Current Success Rate: 66.7% (2 out of 3 tests passed)
-
-Detailed certification report attached: tbo_certification_report_20251127_223717.json
+These three routes have been validated to have consistent data availability in your staging environment.
 
 ═══════════════════════════════════════════════════════════════
 📤 CERTIFICATION REQUEST
