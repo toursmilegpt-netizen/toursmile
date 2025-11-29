@@ -2154,16 +2154,11 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           ))}
         </div>
 
-        {/* Compact From/To Container - Mobile Responsive */}
-        <div className="mt-2 compact-flight-container" style={{ 
-          position: 'relative',
-          background: 'white',
-          border: '1px solid #d1d5db',
-          borderRadius: '10px',
-          overflow: 'hidden',
+        {/* Enhanced From/To Container - Better Spacing & Alignment */}
+        <div className="mt-2" style={{ 
           display: 'flex',
-          alignItems: 'stretch',
-          minHeight: '52px',
+          alignItems: 'center',
+          gap: isMobile ? '8px' : '12px',
           flexDirection: isMobile ? 'column' : 'row'
         }}>
           {/* From Field - Left Side - Optimized Width */}
