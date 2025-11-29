@@ -2530,42 +2530,39 @@ function App() {
 
           {/* Main Content */}
           <main className="mx-auto max-w-5xl px-4 pb-24">
-            {/* Hero Section - Ultra Compact for Above-the-Fold Search Form */}
-            <section className="text-center pt-4 pb-2">
-              <div className="relative flex flex-col items-center justify-center">
-                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-1 relative z-10 text-center">
-                  Discover the World
-                </h1>
-                <p className="text-xs sm:text-sm md:text-base text-gray-600 font-medium mb-2 relative z-10 text-center">
-                  Quick and Easy Planning at Best Fares
-                </p>
-              </div>
+            {/* Hero Section - Minimal for Maximum Above-the-Fold Space */}
+            <section className="text-center pt-2 pb-1">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-1">
+                Discover the World
+              </h1>
+              <p className="text-xs sm:text-sm text-gray-600 font-medium mb-1">
+                Quick and Easy Planning at Best Fares
+              </p>
             </section>
 
-            {/* Service Icons Section - Compact */}
-            <section className="text-center pb-3">
-              {/* Service Icons - Smaller and more compact */}
-              <div className="flex justify-center items-center space-x-6 sm:space-x-8 md:space-x-10 bg-white/50 rounded-xl py-2 px-4">
+            {/* Service Icons Section - Inline Compact */}
+            <section className="text-center pb-2">
+              <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 py-1.5">
                 {/* Flights Icon */}
-                <div className="flex flex-col items-center group cursor-pointer">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-blue-50/30 flex items-center justify-center mb-1 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:to-blue-100/50 group-hover:border-blue-300 group-hover:shadow-lg group-hover:-translate-y-1 transition-all duration-300 shadow-sm">
-                    <span className="text-base sm:text-lg md:text-xl">✈️</span>
+                <div className="flex items-center space-x-1.5 group cursor-pointer">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-blue-50/30 flex items-center justify-center group-hover:border-blue-300 transition-all duration-300 shadow-sm">
+                    <span className="text-sm sm:text-base md:text-lg">✈️</span>
                   </div>
                   <span className="text-xs sm:text-sm font-medium text-black">Flights</span>
                 </div>
                 
                 {/* Hotels Icon */}
-                <div className="flex flex-col items-center group cursor-pointer">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-green-50/30 flex items-center justify-center mb-1 group-hover:bg-gradient-to-br group-hover:from-green-50 group-hover:to-green-100/50 group-hover:border-green-300 group-hover:shadow-lg group-hover:-translate-y-1 transition-all duration-300 shadow-sm">
-                    <span className="text-base sm:text-lg md:text-xl">🏨</span>
+                <div className="flex items-center space-x-1.5 group cursor-pointer">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-green-50/30 flex items-center justify-center group-hover:border-green-300 transition-all duration-300 shadow-sm">
+                    <span className="text-sm sm:text-base md:text-lg">🏨</span>
                   </div>
                   <span className="text-xs sm:text-sm font-medium text-neutral-400">Hotels</span>
                 </div>
                 
                 {/* Tours Icon */}
-                <div className="flex flex-col items-center group cursor-pointer">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-orange-50/30 flex items-center justify-center mb-1 group-hover:bg-gradient-to-br group-hover:from-orange-50 group-hover:to-orange-100/50 group-hover:border-orange-300 group-hover:shadow-lg group-hover:-translate-y-1 transition-all duration-300 shadow-sm">
-                    <span className="text-base sm:text-lg md:text-xl">🗺️</span>
+                <div className="flex items-center space-x-1.5 group cursor-pointer">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-orange-50/30 flex items-center justify-center group-hover:border-orange-300 transition-all duration-300 shadow-sm">
+                    <span className="text-sm sm:text-base md:text-lg">🗺️</span>
                   </div>
                   <span className="text-xs sm:text-sm font-medium text-neutral-400">Tours</span>
                 </div>
