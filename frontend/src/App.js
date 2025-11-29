@@ -2129,7 +2129,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4">
+    <div className="mx-auto max-w-[950px] px-4">
       <div className="rounded-xl shadow-xl border border-blue-100/30 bg-gradient-to-br from-white to-blue-50/20 p-2.5 md:p-3 relative overflow-hidden group hover:shadow-2xl transition-all duration-500">
         {/* Decorative background elements */}
         <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-blue-100/10 to-purple-100/10 rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
