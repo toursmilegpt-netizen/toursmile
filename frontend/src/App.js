@@ -1665,10 +1665,11 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
       newDate.setHours(0, 0, 0, 0);
       if (newDate >= effectiveMinDate) {
         const dateStr = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}-${String(firstAvailableDay).padStart(2, '0')}`;
-        onChange(dateStr);
+        // Use setTimeout to avoid state updates during render
+        setTimeout(() => onChange(dateStr), 0);
       }
     }
-  }, [selectedMonth, selectedYear, effectiveMinDate]);
+  }, [selectedMonth, selectedYear, effectiveMinDate, availableDays, selectedDay]);
   
   // Handle changes
   const handleDayChange = (day) => {
