@@ -2648,7 +2648,7 @@ function App() {
                 <img 
                   src="https://customer-assets.emergentagent.com/job_flywise-search/artifacts/kdx1ncq0_FINAL%20LOGO.png"
                   alt="TourSmile"
-                  className="h-8 w-auto"
+                  className="h-7 sm:h-8 w-auto"
                 />
               </div>
               <div className="flex items-center space-x-3">
