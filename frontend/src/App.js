@@ -2194,9 +2194,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
           >
             <div style={{ 
-              padding: isMobile ? '10px 14px' : '12px 16px',
+              padding: window.innerWidth < 480 ? '8px 10px' : window.innerWidth < 768 ? '10px 12px' : '12px 16px',
               height: '100%',
-              minHeight: isMobile ? '56px' : '64px',
+              minHeight: window.innerWidth < 480 ? '52px' : window.innerWidth < 768 ? '56px' : '64px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center'
@@ -2324,9 +2324,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
           >
             <div style={{ 
-              padding: isMobile ? '10px 14px' : '12px 16px',
+              padding: window.innerWidth < 480 ? '8px 10px' : window.innerWidth < 768 ? '10px 12px' : '12px 16px',
               height: '100%',
-              minHeight: isMobile ? '56px' : '64px',
+              minHeight: window.innerWidth < 480 ? '52px' : window.innerWidth < 768 ? '56px' : '64px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center'
