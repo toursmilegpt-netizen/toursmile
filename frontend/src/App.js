@@ -1585,6 +1585,7 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
   // Sync internal state when value or minDate changes
   useEffect(() => {
     let dateToUse;
+    let shouldUpdateParent = false;
     
     if (value && !isNaN(new Date(value))) {
       // Use provided value
@@ -1592,6 +1593,8 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
     } else if (minDate && !isNaN(new Date(minDate))) {
       // No value, use minDate as default
       dateToUse = new Date(minDate);
+      // Only update parent if value is explicitly undefined/null and we're setting from minDate
+      shouldUpdateParent = !value;
     } else {
       // Fallback to today
       dateToUse = today;
@@ -1601,10 +1604,11 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
     setSelectedMonth(dateToUse.getMonth());
     setSelectedYear(dateToUse.getFullYear());
     
-    // If we're using minDate (not value), update parent state
-    if (!value && minDate && !isNaN(new Date(minDate))) {
+    // Only update parent state when there's no existing value and we need to set from minDate
+    if (shouldUpdateParent && minDate && !isNaN(new Date(minDate))) {
       const dateStr = `${dateToUse.getFullYear()}-${String(dateToUse.getMonth() + 1).padStart(2, '0')}-${String(dateToUse.getDate()).padStart(2, '0')}`;
-      onChange(dateStr);
+      // Use setTimeout to avoid updating parent state during render
+      setTimeout(() => onChange(dateStr), 0);
     }
   }, [value, minDate]);
   
