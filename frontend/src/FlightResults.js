@@ -981,15 +981,36 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                           
                           <div className="text-sm text-gray-600 mb-4 font-medium">per person · All taxes included</div>
                           
-                          {/* Enhanced CTA Button */}
+                          {/* Enhanced CTA Button - Round Trip Support */}
                           <button 
-                            onClick={() => setExpandedFlightId(
-                              expandedFlightId === flight.id ? null : flight.id
-                            )}
-                            className="w-full bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white px-8 py-4 rounded-xl hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 transition-all duration-300 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden"
+                            onClick={() => {
+                              if (isRoundTrip) {
+                                // Open modal for fare selection
+                                setModalFlight(flight);
+                                setModalType(selectionStep);
+                                setShowFareModal(true);
+                              } else {
+                                // Toggle expanded view for one-way
+                                setExpandedFlightId(
+                                  expandedFlightId === flight.id ? null : flight.id
+                                );
+                              }
+                            }}
+                            className={`w-full bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white px-8 py-4 rounded-xl hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 transition-all duration-300 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 group relative overflow-hidden ${
+                              isRoundTrip && 
+                              ((selectionStep === 'departure' && selectedDepartureFlight?.id === flight.id) ||
+                               (selectionStep === 'return' && selectedReturnFlight?.id === flight.id))
+                              ? 'ring-4 ring-green-400' : ''
+                            }`}
                           >
                             <span className="relative z-10">
-                              {expandedFlightId === flight.id ? '🔽 Hide Fare Options' : '✈️ View Fare Options'}
+                              {isRoundTrip ? (
+                                selectedDepartureFlight?.id === flight.id || selectedReturnFlight?.id === flight.id ? 
+                                '✓ Selected' : 
+                                `Select ${selectionStep === 'departure' ? 'Departure' : 'Return'} Flight`
+                              ) : (
+                                expandedFlightId === flight.id ? '🔽 Hide Fare Options' : '✈️ View Fare Options'
+                              )}
                             </span>
                             {/* Button Animation Effect */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform skew-x-12 group-hover:translate-x-full transition-transform duration-1000"></div>
