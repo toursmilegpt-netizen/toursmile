@@ -772,6 +772,63 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
           <div className="sm:hidden text-xs text-gray-600 mt-2">
             <span className="font-semibold text-blue-600">{filteredAndSortedFlights.length}</span> flights found
           </div>
+          
+          {/* Round-Trip Progress Indicator */}
+          {isRoundTrip && (
+            <div className="mt-4 bg-blue-50 rounded-lg p-3 border border-blue-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  {/* Step 1: Departure */}
+                  <div className={`flex items-center space-x-2 ${selectionStep === 'departure' ? 'text-blue-600' : selectedDepartureFlight ? 'text-green-600' : 'text-gray-400'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                      selectedDepartureFlight ? 'bg-green-500 text-white' : 
+                      selectionStep === 'departure' ? 'bg-blue-600 text-white' : 
+                      'bg-gray-300 text-gray-600'
+                    }`}>
+                      {selectedDepartureFlight ? '✓' : '1'}
+                    </div>
+                    <span className="text-sm font-medium hidden sm:inline">
+                      {selectedDepartureFlight ? 'Departure Selected' : 'Select Departure'}
+                    </span>
+                    <span className="text-sm font-medium sm:hidden">
+                      Departure
+                    </span>
+                  </div>
+                  
+                  {/* Arrow */}
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                  
+                  {/* Step 2: Return */}
+                  <div className={`flex items-center space-x-2 ${selectionStep === 'return' ? 'text-blue-600' : selectedReturnFlight ? 'text-green-600' : 'text-gray-400'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                      selectedReturnFlight ? 'bg-green-500 text-white' : 
+                      selectionStep === 'return' ? 'bg-blue-600 text-white' : 
+                      'bg-gray-300 text-gray-600'
+                    }`}>
+                      {selectedReturnFlight ? '✓' : '2'}
+                    </div>
+                    <span className="text-sm font-medium hidden sm:inline">
+                      {selectedReturnFlight ? 'Return Selected' : 'Select Return'}
+                    </span>
+                    <span className="text-sm font-medium sm:hidden">
+                      Return
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Progress Text */}
+                <div className="text-sm text-gray-600 hidden md:block">
+                  {selectedDepartureFlight && selectedReturnFlight ? 
+                    'Both flights selected!' : 
+                    selectionStep === 'departure' ? 
+                    'Step 1 of 2: Choose your departure flight' : 
+                    'Step 2 of 2: Choose your return flight'}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       
