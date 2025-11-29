@@ -57,7 +57,7 @@ TEST PARAMETERS: 1 Adult, Economy Class, Date: December 6, 2025
 
 2. Bangalore (BLR) → Delhi (DEL)
    - Trace ID: 57f5c707-2803-474f-a879-5a4402c8f138
-   - Flights Returned: 111 flights
+   - Flights Returned: 46+ flights (varies by time)
    - Sample: Indigo 2186 @ ₹1,000
    - Status: ✅ SUCCESS
 
