@@ -2366,10 +2366,11 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               </div>
             </div>
           </div>
+          </div>
         </div>
 
-        {/* Date Selection - Compact Inline Field */}
-        <div className="mt-2">
+        {/* Date Selection - Centered Compact Field */}
+        <div className="mt-2 flex justify-center">
           <div 
             className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
             style={{
