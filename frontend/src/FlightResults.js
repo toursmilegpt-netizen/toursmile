@@ -881,17 +881,17 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                           </div>
                           
                           {/* Enhanced Route & Time Visualization */}
-                          <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-4 mt-4">
+                          <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg sm:rounded-xl p-3 sm:p-4 mt-3 sm:mt-4">
                             <div className="flex items-center justify-between">
                               {/* Departure Info */}
                               <div className="text-center flex-1">
-                                <div className="font-bold text-2xl text-gray-900 mb-1">
+                                <div className="font-bold text-lg sm:text-2xl text-gray-900 mb-0.5 sm:mb-1">
                                   {formatTime(flight.departure_time)}
                                 </div>
-                                <div className="text-sm font-semibold text-gray-700 mb-1">
+                                <div className="text-xs sm:text-sm font-semibold text-gray-700 mb-0.5 sm:mb-1">
                                   {flight.departure_airport || flight.origin || searchParams?.from?.iata || 'DEL'}
                                 </div>
-                                <div className="text-xs text-gray-500">
+                                <div className="hidden sm:block text-xs text-gray-500">
                                   {flight.departure_city || searchParams?.from?.city || 'Delhi'}
                                 </div>
                               </div>
