@@ -27,7 +27,7 @@ import httpx
 import asyncio
 
 # Backend URL from environment
-BACKEND_URL = "https://flight-cert-runner.preview.emergentagent.com/api"
+BACKEND_URL = "https://cleartrip-clone.preview.emergentagent.com/api"
 
 # TBO API Configuration from backend/.env
 TBO_USERNAME = "Smile"
