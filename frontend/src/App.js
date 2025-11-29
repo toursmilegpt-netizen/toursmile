@@ -1687,21 +1687,31 @@ function SimpleDatePicker({ label, value, onChange, minDate, overlay = false }) 
         <div className="flex items-center justify-between mb-2">
           <button 
             onClick={() => setCurrentMonth(addMonths(currentMonth, -1))} 
-            className="p-1.5 rounded-lg hover:bg-neutral-100 text-neutral-600 text-sm"
+            className="p-2 sm:p-1.5 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 text-neutral-600 text-sm touch-manipulation"
           >
             ← Prev
           </button>
-          <h3 className="text-base font-semibold">
+          <h3 className="text-sm sm:text-base font-semibold">
             {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </h3>
           <button 
             onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} 
-            className="p-1.5 rounded-lg hover:bg-neutral-100 text-neutral-600 text-sm"
+            className="p-2 sm:p-1.5 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 text-neutral-600 text-sm touch-manipulation"
           >
             Next →
           </button>
         </div>
-        {renderCalendar()}
+        <div 
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          className="touch-pan-x select-none"
+        >
+          {renderCalendar()}
+        </div>
+        <p className="text-xs text-neutral-500 mt-2 text-center sm:hidden">
+          👆 Swipe left/right to change months
+        </p>
       </div>
     </div>
   );
