@@ -1647,7 +1647,8 @@ function SimpleDatePicker({ label, value, onChange, minDate, overlay = false, au
             const isCurrentMonth = date.getMonth() === currentMonth.getMonth();
             const isSelected = value && value === dateStr;
             const isToday = new Date().toDateString() === date.toDateString();
-            const isDisabled = minDate && date < new Date(minDate);
+            // Disable past dates - compare with effective min date (today by default)
+            const isDisabled = effectiveMinDate && date < effectiveMinDate;
             
             return (
               <button 
