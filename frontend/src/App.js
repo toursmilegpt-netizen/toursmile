@@ -2148,6 +2148,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               {tab.label}
             </button>
           ))}
+          </div>
         </div>
 
         {/* Enhanced From/To Container - Better Spacing & Alignment */}
