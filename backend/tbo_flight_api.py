@@ -151,6 +151,13 @@ class TBOFlightService:
             origin_code = self.convert_city_to_iata(origin)
             destination_code = self.convert_city_to_iata(destination)
             
+            # Clean and normalize date format (handle ISO timestamps from frontend)
+            # TBO expects: yyyy-MM-ddTHH:mm:ss
+            clean_date = departure_date
+            if 'T' in departure_date:
+                # Already has time component, extract just the date part
+                clean_date = departure_date.split('T')[0]
+            
             # Map journey type
             journey_type = "1" if trip_type == "oneway" else "2"
             
@@ -168,8 +175,8 @@ class TBOFlightService:
                     "Origin": origin_code,
                     "Destination": destination_code,
                     "FlightCabinClass": cabin_class,
-                    "PreferredDepartureTime": departure_date + "T00:00:00",
-                    "PreferredArrivalTime": departure_date + "T00:00:00"
+                    "PreferredDepartureTime": clean_date + "T00:00:00",
+                    "PreferredArrivalTime": clean_date + "T00:00:00"
                 }
             ]
             
