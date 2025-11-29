@@ -9629,25 +9629,16 @@ async def search_flights(request: FlightSearchRequest):
                 use_real_api = True
                 logging.info(f"✅ TBO API returned {len(real_flights)} flights (after variants & dedupe)")
             else:
-                logging.warning("TBO API returned no flights, falling back to mock data")
+                logging.warning("⚠️ TBO API returned NO flights for this search - NO MOCK DATA FALLBACK")
         
         except Exception as api_error:
-            logging.error(f"TBO API error: {str(api_error)}, falling back to mock data")
+            logging.error(f"❌ TBO API error: {str(api_error)} - NO MOCK DATA FALLBACK")
         
-        # Fallback to mock data if real API failed or no credentials
+        # NO MOCK DATA FALLBACK - Only show real TBO API results
+        # If no flights found, return empty list
         if not use_real_api:
-            filtered_flights = [
-                flight for flight in MOCK_FLIGHTS 
-                if (flight["origin"].lower() == request.origin.lower() and 
-                    flight["destination"].lower() == request.destination.lower())
-            ]
-            if request.flexibleDates:
-                # For mock, just duplicate to simulate more results
-                filtered_flights = filtered_flights * 1
-            # If no exact matches, return some sample flights
-            if not filtered_flights:
-                filtered_flights = MOCK_FLIGHTS[:2]
-            real_flights = filtered_flights
+            real_flights = []
+            logging.warning(f"🚫 NO FLIGHTS FOUND - TBO API returned no results for {request.origin} → {request.destination}")
         
         # Apply enhanced search filters to results
         if enhanced_params:
