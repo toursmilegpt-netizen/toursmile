@@ -2473,10 +2473,12 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             </div>
           </div>
           <div className="text-neutral-400 text-lg">›</div>
+          </div>
         </div>
 
-        {/* Options */}
-        <div className="mt-2 flex flex-wrap items-center gap-3">
+        {/* Options - Centered */}
+        <div className="mt-2 flex justify-center">
+          <div className="flex flex-wrap items-center gap-3">
           <label className="flex items-center gap-2 text-xs sm:text-sm text-neutral-700">
             <input type="checkbox" className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Direct flights only
           </label>
