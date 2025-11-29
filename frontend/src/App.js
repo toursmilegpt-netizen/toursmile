@@ -1653,15 +1653,15 @@ function SimpleDatePicker({ label, value, onChange, minDate, overlay = false }) 
                     onChange(dateStr);
                   }
                 }}
-                className={`aspect-square rounded-lg text-sm flex items-center justify-center transition-colors ${
+                className={`aspect-square rounded-lg text-sm sm:text-base flex items-center justify-center transition-colors touch-manipulation ${
                   isCurrentMonth ? "text-neutral-900" : "text-neutral-400"
                 } ${
-                  isSelected ? "bg-blue-600 text-white font-semibold" : 
-                  isToday ? "bg-blue-100 text-blue-700 font-medium" :
-                  isDisabled ? "text-neutral-300 cursor-not-allowed" :
-                  "hover:bg-neutral-100"
+                  isSelected ? "bg-blue-600 text-white font-semibold shadow-md" : 
+                  isToday ? "bg-blue-100 text-blue-700 font-medium ring-1 ring-blue-300" :
+                  isDisabled ? "text-neutral-300 cursor-not-allowed opacity-40" :
+                  "hover:bg-neutral-100 active:bg-neutral-200"
                 }`}
-                style={{ minHeight: '40px' }}
+                style={{ minHeight: '44px', minWidth: '44px' }}
               >
                 {date.getDate()}
               </button>
