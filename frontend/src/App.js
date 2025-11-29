@@ -2369,31 +2369,58 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Date Selection - Consolidated Single Field */}
+        {/* Date Selection - Compact Inline Field */}
         <div className="mt-2">
           <div 
             className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
             style={{
-              background: getStepStatus(3) === 'active' ? '#EFF6FF' : 'white',
-              border: getStepStatus(3) === 'active' ? '2px solid #3B82F6' : '1px solid #d1d5db',
-              borderRadius: '10px',
-              padding: '6px 10px',
-              minHeight: '44px',
-              display: 'flex',
+              background: '#F0F9FF',
+              border: getStepStatus(3) === 'active' ? '2px solid #3B82F6' : '1px solid #E5E7EB',
+              borderRadius: '12px',
+              padding: isMobile ? '10px 14px' : '12px 16px',
+              minHeight: isMobile ? '56px' : '64px',
+              display: 'inline-flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+              transition: 'all 0.2s ease',
+              minWidth: isMobile ? '100%' : 'auto'
             }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               setShowDateOverlay(true);
             }}
+            onMouseEnter={(e) => {
+              if (getStepStatus(3) !== 'active') {
+                e.currentTarget.style.borderColor = '#3B82F6';
+                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(59, 130, 246, 0.1)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (getStepStatus(3) !== 'active') {
+                e.currentTarget.style.borderColor = '#E5E7EB';
+                e.currentTarget.style.boxShadow = '0 1px 2px 0 rgba(0, 0, 0, 0.05)';
+              }
+            }}
           >
-            <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">TRAVEL DATES</div>
+            <div style={{ 
+              fontSize: isMobile ? '9px' : '10px', 
+              fontWeight: '500', 
+              color: '#6B7280',
+              marginBottom: '4px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>TRAVEL DATES</div>
             <div className="flex items-center">
-              <span className="text-xs mr-1.5">📅</span>
-              <div className="text-sm font-semibold" style={{ fontSize: '14px', color: depart ? '#111827' : '#9ca3af' }}>
+              <span style={{ fontSize: '16px', marginRight: '8px' }}>📅</span>
+              <div style={{ 
+                fontSize: isMobile ? '14px' : '16px', 
+                fontWeight: '600',
+                color: depart ? '#111827' : '#9CA3AF',
+                whiteSpace: 'nowrap'
+              }}>
                 {depart && trip === 'RT' && ret ? (
                   `${formatDate(depart)} → ${formatDate(ret)}`
                 ) : depart && trip === 'RT' && !ret ? (
