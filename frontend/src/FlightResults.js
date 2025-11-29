@@ -684,6 +684,88 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
         </div>
       </header>
       
+      {/* Date Display and Navigation Bar - Mobile First */}
+      <div className="bg-white border-b border-gray-200 sticky top-[60px] z-30">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          {/* Route and Date Info */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            {/* Route Display */}
+            <div className="flex items-center space-x-2">
+              <div className="flex items-center text-sm sm:text-base">
+                <span className="font-semibold text-gray-900">{searchParams?.from?.city || 'Origin'}</span>
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 mx-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+                <span className="font-semibold text-gray-900">{searchParams?.to?.city || 'Destination'}</span>
+              </div>
+            </div>
+            
+            {/* Date Navigation */}
+            <div className="flex items-center justify-between sm:justify-end space-x-2">
+              {/* Previous Date Button */}
+              <button
+                onClick={() => {
+                  const currentDate = new Date(searchParams?.departDate || new Date());
+                  currentDate.setDate(currentDate.getDate() - 1);
+                  const newDate = currentDate.toISOString().split('T')[0];
+                  // Trigger new search with previous date
+                  window.location.href = `/?from=${searchParams?.from?.iata}&to=${searchParams?.to?.iata}&date=${newDate}`;
+                }}
+                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg border border-gray-300 hover:bg-gray-50 active:bg-gray-100 transition-colors touch-manipulation"
+                title="Previous day"
+              >
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+              
+              {/* Current Date Display */}
+              <div className="flex flex-col items-center px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200 min-w-[120px]">
+                <span className="text-xs sm:text-sm text-blue-600 font-medium">
+                  {searchParams?.departDate ? new Date(searchParams.departDate).toLocaleDateString('en-US', { 
+                    weekday: 'short'
+                  }) : 'Date'}
+                </span>
+                <span className="text-sm sm:text-base font-bold text-blue-900">
+                  {searchParams?.departDate ? new Date(searchParams.departDate).toLocaleDateString('en-US', { 
+                    month: 'short',
+                    day: 'numeric'
+                  }) : 'Select'}
+                </span>
+              </div>
+              
+              {/* Next Date Button */}
+              <button
+                onClick={() => {
+                  const currentDate = new Date(searchParams?.departDate || new Date());
+                  currentDate.setDate(currentDate.getDate() + 1);
+                  const newDate = currentDate.toISOString().split('T')[0];
+                  // Trigger new search with next date
+                  window.location.href = `/?from=${searchParams?.from?.iata}&to=${searchParams?.to?.iata}&date=${newDate}`;
+                }}
+                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg border border-gray-300 hover:bg-gray-50 active:bg-gray-100 transition-colors touch-manipulation"
+                title="Next day"
+              >
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+              
+              {/* Results Count */}
+              <div className="hidden sm:flex items-center ml-4 text-sm text-gray-600">
+                <span className="font-semibold text-blue-600">{filteredAndSortedFlights.length}</span>
+                <span className="ml-1">flights</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Mobile Results Count */}
+          <div className="sm:hidden text-xs text-gray-600 mt-2">
+            <span className="font-semibold text-blue-600">{filteredAndSortedFlights.length}</span> flights found
+          </div>
+        </div>
+      </div>
+      
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="lg:grid lg:grid-cols-4 lg:gap-6">
           {/* Desktop Filters Sidebar */}
