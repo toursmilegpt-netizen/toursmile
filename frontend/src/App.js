@@ -2900,7 +2900,7 @@ function App() {
               <div style={{ width: '34px' }}></div>
             </div>
 
-        {/* Compact Calendar */}
+        {/* Compact Calendar with Auto-Open Return Date */}
         <div style={{ flex: 1, padding: '12px', overflowY: 'auto' }}>
           <div style={{ maxWidth: '400px', margin: '0 auto' }}>
             <SimpleDatePicker 
@@ -2908,20 +2908,36 @@ function App() {
               value={depart} 
               onChange={(date) => {
                 setDepart(date);
-                if (trip !== 'RT') {
+                markStepComplete(3);
+                // For round trip, keep overlay open to select return date
+                // Auto-scroll/focus to return date picker
+                if (trip === 'RT' && !ret) {
+                  // User has selected departure, now they need to select return
+                  // Overlay stays open automatically
+                  setTimeout(() => {
+                    const returnDateSection = document.querySelector('[data-return-date-picker]');
+                    if (returnDateSection) {
+                      returnDateSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                  }, 100);
+                } else if (trip !== 'RT') {
+                  // For one-way, close after selecting departure
                   setShowDateOverlay(false);
                 }
               }}
               overlay={true}
             />
             {trip === 'RT' && (
-              <div style={{ marginTop: '12px' }}>
+              <div style={{ marginTop: '12px' }} data-return-date-picker>
                 <SimpleDatePicker 
                   label="Return Date" 
                   value={ret} 
                   onChange={(date) => {
                     setRet(date);
+                    markStepComplete(4);
                     setShowDateOverlay(false);
+                    // Auto-guide to passengers
+                    setTimeout(() => setShowPassengerOverlay(true), 200);
                   }}
                   minDate={depart}
                   overlay={true}
