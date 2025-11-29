@@ -2213,7 +2213,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 <span style={{ fontSize: '16px', marginRight: '8px' }}>✈️</span>
                 <div className="flex-1 min-w-0">
                   <div className="truncate" style={{ 
-                    fontSize: isMobile ? '14px' : '16px', 
+                    fontSize: window.innerWidth < 480 ? '12px' : window.innerWidth < 768 ? '14px' : '16px', 
                     fontWeight: '600',
                     color: from ? '#111827' : '#9CA3AF',
                     lineHeight: '1.2'
@@ -2264,7 +2264,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: isMobile ? '14px' : '16px',
+                fontSize: window.innerWidth < 480 ? '12px' : window.innerWidth < 768 ? '14px' : '16px',
                 fontWeight: 'bold',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
@@ -2338,7 +2338,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 <span style={{ fontSize: '16px', marginRight: '8px' }}>✈️</span>
                 <div className="flex-1 min-w-0">
                   <div className="truncate" style={{ 
-                    fontSize: isMobile ? '14px' : '16px', 
+                    fontSize: window.innerWidth < 480 ? '12px' : window.innerWidth < 768 ? '14px' : '16px', 
                     fontWeight: '600',
                     color: to ? '#111827' : '#9CA3AF',
                     lineHeight: '1.2'
@@ -2411,7 +2411,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             <div className="flex items-center">
               <span style={{ fontSize: '16px', marginRight: '8px' }}>📅</span>
               <div style={{ 
-                fontSize: isMobile ? '14px' : '16px', 
+                fontSize: window.innerWidth < 480 ? '12px' : window.innerWidth < 768 ? '14px' : '16px', 
                 fontWeight: '600',
                 color: depart ? '#111827' : '#9CA3AF',
                 whiteSpace: 'nowrap'
