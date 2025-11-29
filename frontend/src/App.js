@@ -2666,41 +2666,41 @@ function App() {
 
           {/* Main Content */}
           <main className="mx-auto max-w-5xl px-4 pb-24">
-            {/* Hero Section - Minimal for Maximum Above-the-Fold Space */}
-            <section className="text-center pt-2 pb-1">
-              <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-1">
+            {/* Hero Section - Ultra Compact on Mobile, Minimal on Desktop */}
+            <section className="text-center pt-1 sm:pt-2 pb-0.5 sm:pb-1">
+              <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-0.5 sm:mb-1">
                 Discover the World
               </h1>
-              <p className="text-xs sm:text-sm text-gray-600 font-medium mb-1">
+              <p className="text-[10px] sm:text-xs md:text-sm text-gray-600 font-medium mb-0.5 sm:mb-1">
                 Quick and Easy Planning at Best Fares
               </p>
             </section>
 
-            {/* Service Icons Section - Inline Compact */}
-            <section className="text-center pb-2">
-              <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 py-1.5">
+            {/* Service Icons Section - More Compact on Mobile */}
+            <section className="text-center pb-1.5 sm:pb-2">
+              <div className="flex justify-center items-center space-x-3 sm:space-x-4 md:space-x-6 lg:space-x-8 py-1 sm:py-1.5">
                 {/* Flights Icon */}
-                <div className="flex items-center space-x-1.5 group cursor-pointer">
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-blue-50/30 flex items-center justify-center group-hover:border-blue-300 transition-all duration-300 shadow-sm">
-                    <span className="text-sm sm:text-base md:text-lg">✈️</span>
+                <div className="flex items-center space-x-1 sm:space-x-1.5 group cursor-pointer">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-blue-50/30 flex items-center justify-center group-hover:border-blue-300 transition-all duration-300 shadow-sm">
+                    <span className="text-xs sm:text-sm md:text-base lg:text-lg">✈️</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-medium text-black">Flights</span>
+                  <span className="text-[10px] sm:text-xs md:text-sm font-medium text-black">Flights</span>
                 </div>
                 
                 {/* Hotels Icon */}
-                <div className="flex items-center space-x-1.5 group cursor-pointer">
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-green-50/30 flex items-center justify-center group-hover:border-green-300 transition-all duration-300 shadow-sm">
-                    <span className="text-sm sm:text-base md:text-lg">🏨</span>
+                <div className="flex items-center space-x-1 sm:space-x-1.5 group cursor-pointer">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-green-50/30 flex items-center justify-center group-hover:border-green-300 transition-all duration-300 shadow-sm">
+                    <span className="text-xs sm:text-sm md:text-base lg:text-lg">🏨</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-medium text-neutral-400">Hotels</span>
+                  <span className="text-[10px] sm:text-xs md:text-sm font-medium text-neutral-400">Hotels</span>
                 </div>
                 
                 {/* Tours Icon */}
-                <div className="flex items-center space-x-1.5 group cursor-pointer">
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-orange-50/30 flex items-center justify-center group-hover:border-orange-300 transition-all duration-300 shadow-sm">
-                    <span className="text-sm sm:text-base md:text-lg">🗺️</span>
+                <div className="flex items-center space-x-1 sm:space-x-1.5 group cursor-pointer">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-orange-50/30 flex items-center justify-center group-hover:border-orange-300 transition-all duration-300 shadow-sm">
+                    <span className="text-xs sm:text-sm md:text-base lg:text-lg">🗺️</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-medium text-neutral-400">Tours</span>
+                  <span className="text-[10px] sm:text-xs md:text-sm font-medium text-neutral-400">Tours</span>
                 </div>
               </div>
             </section>
