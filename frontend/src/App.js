@@ -2161,41 +2161,75 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           gap: isMobile ? '8px' : '12px',
           flexDirection: isMobile ? 'column' : 'row'
         }}>
-          {/* From Field - Left Side - Optimized Width */}
+          {/* From Field - Enhanced with Brand Colors */}
           <div 
             className={`transition-all duration-200 ${getStepColor(1)}`}
             style={{ 
-              flex: '0 0 38%',
+              flex: isMobile ? '1 1 100%' : '0 0 40%',
               minWidth: 0, 
-              maxWidth: '38%',
+              maxWidth: isMobile ? '100%' : '40%',
               position: 'relative',
               cursor: 'pointer',
-              borderRadius: '10px',
-              border: getStepStatus(1) === 'active' ? '2px solid #3B82F6' : '1px solid #d1d5db'
+              borderRadius: '12px',
+              border: getStepStatus(1) === 'active' ? '2px solid #3B82F6' : '1px solid #E5E7EB',
+              background: '#F0F9FF',
+              boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+              transition: 'all 0.2s ease'
             }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               setShowFromOverlay(true);
             }}
+            onMouseEnter={(e) => {
+              if (getStepStatus(1) !== 'active') {
+                e.currentTarget.style.borderColor = '#3B82F6';
+                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(59, 130, 246, 0.1)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (getStepStatus(1) !== 'active') {
+                e.currentTarget.style.borderColor = '#E5E7EB';
+                e.currentTarget.style.boxShadow = '0 1px 2px 0 rgba(0, 0, 0, 0.05)';
+              }
+            }}
           >
             <div style={{ 
-              padding: window.innerWidth <= 767 ? '5px 8px' : '6px 8px',
+              padding: isMobile ? '10px 14px' : '12px 16px',
               height: '100%',
-              minHeight: window.innerWidth <= 767 ? '40px' : '44px',
+              minHeight: isMobile ? '56px' : '64px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center'
             }}>
-              <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">FROM</div>
+              <div style={{ 
+                fontSize: isMobile ? '9px' : '10px', 
+                fontWeight: '500', 
+                color: '#6B7280',
+                marginBottom: '4px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}>FROM</div>
               <div className="flex items-center" style={{ minWidth: 0, maxWidth: '100%' }}>
-                <span className="text-xs mr-1.5 flex-shrink-0">✈️</span>
+                <span style={{ fontSize: '16px', marginRight: '8px' }}>✈️</span>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold truncate" style={{ fontSize: '14px', color: '#111827' }}>
+                  <div className="truncate" style={{ 
+                    fontSize: isMobile ? '14px' : '16px', 
+                    fontWeight: '600',
+                    color: from ? '#111827' : '#9CA3AF',
+                    lineHeight: '1.2'
+                  }}>
                     {from ? from.city : 'Select City'}
                   </div>
                   {from && from.iata && (
-                    <div className="text-[10px] text-neutral-500 font-mono uppercase">
+                    <div style={{
+                      fontSize: isMobile ? '10px' : '11px',
+                      color: '#9CA3AF',
+                      fontFamily: 'monospace',
+                      textTransform: 'uppercase',
+                      marginTop: '2px',
+                      fontWeight: '400'
+                    }}>
                       {from.iata}
                     </div>
                   )}
