@@ -3028,47 +3028,50 @@ function App() {
               <div style={{ width: '34px' }}></div>
             </div>
 
-        {/* Compact Calendar with Auto-Open Return Date */}
-        <div style={{ flex: 1, padding: '12px', overflowY: 'auto' }}>
+        {/* Dropdown Date Pickers - Both dates in one view */}
+        <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
           <div style={{ maxWidth: '400px', margin: '0 auto' }}>
-            {/* Show departure calendar only if departure date not selected or if not round trip */}
-            {(trip !== 'RT' || !depart) && (
-              <SimpleDatePicker 
-                label="Departure Date" 
-                value={depart} 
-                onChange={(date) => {
-                  setDepart(date);
-                  markStepComplete(3);
-                  // For round trip, close this calendar and the return will show
-                  if (trip === 'RT') {
-                    // Departure selected, return calendar will now show below
-                  } else {
-                    // For one-way, close overlay after selecting departure
-                    setShowDateOverlay(false);
-                  }
-                }}
-                overlay={true}
-              />
-            )}
+            {/* Departure Date Dropdown */}
+            <DropdownDatePicker 
+              label="Departure Date" 
+              value={depart} 
+              onChange={(date) => {
+                setDepart(date);
+                markStepComplete(3);
+                // Don't auto-close for better UX - user can see both dates
+              }}
+            />
             
-            {/* Show return calendar for round trip after departure is selected */}
-            {trip === 'RT' && depart && (
-              <div style={{ marginTop: depart && trip === 'RT' ? '0' : '12px' }} data-return-date-picker>
-                <SimpleDatePicker 
+            {/* Return Date Dropdown - Show for round trip */}
+            {trip === 'RT' && (
+              <div style={{ marginTop: '16px' }}>
+                <DropdownDatePicker 
                   label="Return Date" 
                   value={ret} 
                   onChange={(date) => {
                     setRet(date);
                     markStepComplete(4);
-                    setShowDateOverlay(false);
-                    // Auto-guide to passengers
-                    setTimeout(() => setShowPassengerOverlay(true), 200);
                   }}
                   minDate={depart}
-                  overlay={true}
                 />
               </div>
             )}
+            
+            {/* Apply Button */}
+            <div style={{ marginTop: '20px' }}>
+              <button
+                onClick={() => {
+                  setShowDateOverlay(false);
+                  // Auto-guide to passengers if dates are selected
+                  if (depart && (trip !== 'RT' || ret)) {
+                    setTimeout(() => setShowPassengerOverlay(true), 200);
+                  }
+                }}
+                className="w-full px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors"
+              >
+                Apply Dates
+              </button>
+            </div>
           </div>
         </div>
       </div>
