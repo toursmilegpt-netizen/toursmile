@@ -66,7 +66,7 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
           return_date: searchParams?.returnDate,
           passengers: 1,
           class_type: 'economy',
-          trip_type: 'one_way'
+          trip_type: searchParams?.returnDate || searchParams?.tripType === 'RT' ? 'round_trip' : 'one_way'
         })
       });
       
