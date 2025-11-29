@@ -2908,32 +2908,29 @@ function App() {
         {/* Compact Calendar with Auto-Open Return Date */}
         <div style={{ flex: 1, padding: '12px', overflowY: 'auto' }}>
           <div style={{ maxWidth: '400px', margin: '0 auto' }}>
-            <SimpleDatePicker 
-              label="Departure Date" 
-              value={depart} 
-              onChange={(date) => {
-                setDepart(date);
-                markStepComplete(3);
-                // For round trip, keep overlay open to select return date
-                // Auto-scroll/focus to return date picker
-                if (trip === 'RT' && !ret) {
-                  // User has selected departure, now they need to select return
-                  // Overlay stays open automatically
-                  setTimeout(() => {
-                    const returnDateSection = document.querySelector('[data-return-date-picker]');
-                    if (returnDateSection) {
-                      returnDateSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                  }, 100);
-                } else if (trip !== 'RT') {
-                  // For one-way, close after selecting departure
-                  setShowDateOverlay(false);
-                }
-              }}
-              overlay={true}
-            />
-            {trip === 'RT' && (
-              <div style={{ marginTop: '12px' }} data-return-date-picker>
+            {/* Show departure calendar only if departure date not selected or if not round trip */}
+            {(trip !== 'RT' || !depart) && (
+              <SimpleDatePicker 
+                label="Departure Date" 
+                value={depart} 
+                onChange={(date) => {
+                  setDepart(date);
+                  markStepComplete(3);
+                  // For round trip, close this calendar and the return will show
+                  if (trip === 'RT') {
+                    // Departure selected, return calendar will now show below
+                  } else {
+                    // For one-way, close overlay after selecting departure
+                    setShowDateOverlay(false);
+                  }
+                }}
+                overlay={true}
+              />
+            )}
+            
+            {/* Show return calendar for round trip after departure is selected */}
+            {trip === 'RT' && depart && (
+              <div style={{ marginTop: depart && trip === 'RT' ? '0' : '12px' }} data-return-date-picker>
                 <SimpleDatePicker 
                   label="Return Date" 
                   value={ret} 
