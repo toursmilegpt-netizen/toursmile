@@ -27,7 +27,7 @@ import httpx
 import asyncio
 
 # Backend URL from environment
-BACKEND_URL = "https://cleartrip-clone.preview.emergentagent.com/api"
+BACKEND_URL = "https://travel-portal-15.preview.emergentagent.com/api"
 
 # TBO API Configuration - SMILE HOLIDAYS CREDENTIALS
 TBO_USERNAME = "Smile"

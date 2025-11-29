@@ -22,7 +22,7 @@ def test_current_ranking_issues():
     print("🚨 CURRENT RANKING ISSUES ANALYSIS")
     print("=" * 50)
     
-    url = 'https://cleartrip-clone.preview.emergentagent.com/api/airports/search'
+    url = 'https://travel-portal-15.preview.emergentagent.com/api/airports/search'
     
     # Test cases that are currently failing
     failing_cases = [

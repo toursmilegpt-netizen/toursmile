@@ -11,7 +11,7 @@ import time
 from datetime import datetime, timedelta
 
 # Backend URL from environment
-BACKEND_URL = "https://cleartrip-clone.preview.emergentagent.com/api"
+BACKEND_URL = "https://travel-portal-15.preview.emergentagent.com/api"
 
 class IxigoAutocompleteBackendTester:
     def __init__(self):

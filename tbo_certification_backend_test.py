@@ -39,7 +39,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 
 # Backend URL from environment
-BACKEND_URL = "https://cleartrip-clone.preview.emergentagent.com/api"
+BACKEND_URL = "https://travel-portal-15.preview.emergentagent.com/api"
 
 class TBOCertificationTester:
     def __init__(self):
