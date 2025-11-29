@@ -1569,8 +1569,8 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
   today.setHours(0, 0, 0, 0);
   const effectiveMinDate = minDate || today;
   
-  // Parse current value or use min date
-  const currentDate = value ? new Date(value) : effectiveMinDate;
+  // Parse current value or use min date - with validation
+  const currentDate = value && !isNaN(new Date(value)) ? new Date(value) : effectiveMinDate;
   const [selectedDay, setSelectedDay] = useState(currentDate.getDate());
   const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth());
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
