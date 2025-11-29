@@ -2312,9 +2312,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Date Selection - Compact Row */}
-        <div className="mt-2 grid grid-cols-2 gap-2">
-          {/* Departure Date */}
+        {/* Date Selection - Consolidated Single Field */}
+        <div className="mt-2">
           <div 
             className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
             style={{
@@ -2334,45 +2333,22 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               setShowDateOverlay(true);
             }}
           >
-            <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">DEPARTURE</div>
+            <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">TRAVEL DATES</div>
             <div className="flex items-center">
               <span className="text-xs mr-1.5">📅</span>
               <div className="text-sm font-semibold" style={{ fontSize: '14px', color: depart ? '#111827' : '#9ca3af' }}>
-                {depart ? formatDate(depart) : 'Select Date'}
+                {depart && trip === 'RT' && ret ? (
+                  `${formatDate(depart)} → ${formatDate(ret)}`
+                ) : depart && trip === 'RT' && !ret ? (
+                  `${formatDate(depart)} → Select Date`
+                ) : depart ? (
+                  formatDate(depart)
+                ) : (
+                  'Select Dates'
+                )}
               </div>
             </div>
           </div>
-
-          {/* Return Date - Only show for Round Trip */}
-          {trip === 'RT' && (
-            <div 
-              className="date-selector-compact"
-              style={{
-                background: 'white',
-                border: '1px solid #d1d5db',
-                borderRadius: '10px',
-                padding: '6px 10px',
-                minHeight: '44px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                cursor: 'pointer'
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setShowDateOverlay(true);
-              }}
-            >
-              <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">RETURN</div>
-              <div className="flex items-center">
-                <span className="text-xs mr-1.5">📅</span>
-                <div className="text-sm font-semibold" style={{ fontSize: '14px', color: ret ? '#111827' : '#9ca3af' }}>
-                  {ret ? formatDate(ret) : 'Select Date'}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Passenger Selection - Compact Display with Total Count */}
