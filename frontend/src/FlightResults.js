@@ -14,6 +14,15 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
   // State for expanded fare options
   const [expandedFlightId, setExpandedFlightId] = useState(null);
   
+  // Round-trip selection state
+  const isRoundTrip = searchParams?.tripType === 'RT' || searchParams?.returnDate;
+  const [selectedDepartureFlight, setSelectedDepartureFlight] = useState(null);
+  const [selectedReturnFlight, setSelectedReturnFlight] = useState(null);
+  const [selectionStep, setSelectionStep] = useState('departure'); // 'departure' or 'return'
+  const [showFareModal, setShowFareModal] = useState(false);
+  const [modalFlight, setModalFlight] = useState(null);
+  const [modalType, setModalType] = useState('departure'); // 'departure' or 'return'
+  
   // Filter states
   const [filters, setFilters] = useState({
     stops: [],
