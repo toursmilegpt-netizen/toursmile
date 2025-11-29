@@ -1693,8 +1693,15 @@ function SimpleDatePicker({ label, value, onChange, minDate, overlay = false, au
       <div className="mb-3">
         <div className="flex items-center justify-between mb-2">
           <button 
-            onClick={() => setCurrentMonth(addMonths(currentMonth, -1))} 
-            className="p-2 sm:p-1.5 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 text-neutral-600 text-sm touch-manipulation"
+            onClick={() => {
+              const prevMonth = addMonths(currentMonth, -1);
+              // Don't allow going before the minimum date month
+              if (prevMonth >= new Date(effectiveMinDate.getFullYear(), effectiveMinDate.getMonth(), 1)) {
+                setCurrentMonth(prevMonth);
+              }
+            }}
+            disabled={currentMonth <= new Date(effectiveMinDate.getFullYear(), effectiveMinDate.getMonth(), 1)}
+            className="p-2 sm:p-1.5 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 text-neutral-600 text-sm touch-manipulation disabled:opacity-30 disabled:cursor-not-allowed"
           >
             ← Prev
           </button>
