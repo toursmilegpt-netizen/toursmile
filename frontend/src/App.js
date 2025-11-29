@@ -1565,17 +1565,18 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
 
 // Simple Date Picker Component for Overlays with Past Dates Disabled
 function SimpleDatePicker({ label, value, onChange, minDate, overlay = false, autoOpenReturn = false }) {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  // Set minDate to today by default to disable all past dates
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const effectiveMinDate = minDate || today;
+  
+  // Start calendar from the effective min date (today or departure date for return)
+  const [currentMonth, setCurrentMonth] = useState(effectiveMinDate);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
-  
-  // Set minDate to today by default to disable all past dates
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const effectiveMinDate = minDate || today;
   
   const addMonths = (date, months) => {
     const newDate = new Date(date);
