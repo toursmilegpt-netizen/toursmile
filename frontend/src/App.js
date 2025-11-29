@@ -2166,13 +2166,13 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           minHeight: '52px',
           flexDirection: isMobile ? 'column' : 'row'
         }}>
-          {/* From Field - Left Side */}
+          {/* From Field - Left Side - Optimized Width */}
           <div 
             className={`transition-all duration-200 ${getStepColor(1)}`}
             style={{ 
-              flex: '1', 
+              flex: '0 0 38%',
               minWidth: 0, 
-              maxWidth: '100%',
+              maxWidth: '38%',
               position: 'relative',
               cursor: 'pointer',
               borderRadius: '10px',
@@ -2185,7 +2185,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
           >
             <div style={{ 
-              padding: window.innerWidth <= 767 ? '5px 8px' : '6px 10px',
+              padding: window.innerWidth <= 767 ? '5px 8px' : '6px 8px',
               height: '100%',
               minHeight: window.innerWidth <= 767 ? '40px' : '44px',
               display: 'flex',
