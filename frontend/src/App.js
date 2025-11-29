@@ -2237,17 +2237,12 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             </div>
           </div>
           
-          {/* Compact Swap Icon - MakeMyTrip Style */}
+          {/* Compact Swap Icon - MakeMyTrip Style (Always Centered) */}
           <div style={{
-            position: isMobile ? 'absolute' : 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            flexShrink: 0,
-            top: isMobile ? '50%' : 'auto',
-            right: isMobile ? '12px' : 'auto',
-            transform: isMobile ? 'translateY(-50%)' : 'none',
-            zIndex: isMobile ? 10 : 'auto'
+            flexShrink: 0
           }}>
             <button
               aria-label="Swap Cities"
@@ -2260,8 +2255,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 setTo(tempFrom);
               }}
               style={{ 
-                width: isMobile ? '32px' : '36px',
-                height: isMobile ? '32px' : '36px',
+                width: window.innerWidth < 480 ? '28px' : window.innerWidth < 768 ? '32px' : '36px',
+                height: window.innerWidth < 480 ? '28px' : window.innerWidth < 768 ? '32px' : '36px',
                 borderRadius: '50%',
                 border: '2px solid #3B82F6',
                 background: 'white',
