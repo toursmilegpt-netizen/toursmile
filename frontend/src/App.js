@@ -2233,17 +2233,17 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         </div>
 
         {/* Options */}
-        <div className="mt-3 flex flex-wrap items-center gap-4">
-          <label className="flex items-center gap-2 text-sm text-neutral-700">
-            <input type="checkbox" className="h-4 w-4" /> Direct flights only
+        <div className="mt-2 flex flex-wrap items-center gap-3">
+          <label className="flex items-center gap-2 text-xs sm:text-sm text-neutral-700">
+            <input type="checkbox" className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Direct flights only
           </label>
-          <label className="flex items-center gap-2 text-sm text-neutral-700">
-            <input type="checkbox" className="h-4 w-4" /> Flexible dates ±3 days
+          <label className="flex items-center gap-2 text-xs sm:text-sm text-neutral-700">
+            <input type="checkbox" className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Flexible dates ±3 days
           </label>
         </div>
 
         {/* Search Button - Compact & Centered with Glow Effect */}
-        <div className="mt-4 flex justify-center">
+        <div className="mt-3 flex justify-center">
           <button
             onClick={async () => {
               if (!from || !to) {
