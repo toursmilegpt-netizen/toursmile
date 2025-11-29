@@ -1566,11 +1566,42 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
 // Simple Date Picker Component for Overlays
 function SimpleDatePicker({ label, value, onChange, minDate, overlay = false }) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
   
   const addMonths = (date, months) => {
     const newDate = new Date(date);
     newDate.setMonth(newDate.getMonth() + months);
     return newDate;
+  };
+  
+  // Touch event handlers for mobile swipe
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      // Swipe left = next month
+      setCurrentMonth(addMonths(currentMonth, 1));
+    }
+    if (isRightSwipe) {
+      // Swipe right = previous month
+      setCurrentMonth(addMonths(currentMonth, -1));
+    }
   };
 
   const formatDateDisplay = (dateStr) => {
