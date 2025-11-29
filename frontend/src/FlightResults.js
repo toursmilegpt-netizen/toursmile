@@ -26,6 +26,16 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
   // State for search modification overlay
   const [showSearchOverlay, setShowSearchOverlay] = useState(false);
   
+  // Modified search parameters state
+  const [modifiedSearch, setModifiedSearch] = useState({
+    from: searchParams?.from || null,
+    to: searchParams?.to || null,
+    departDate: searchParams?.departDate || '',
+    returnDate: searchParams?.returnDate || '',
+    tripType: searchParams?.tripType || 'OW',
+    passengers: searchParams?.passengers || 1
+  });
+  
   // Filter states
   const [filters, setFilters] = useState({
     stops: [],
