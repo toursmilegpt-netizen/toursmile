@@ -1563,7 +1563,138 @@ function DateInput({ label, value, onChange, title, disabled, autoFocus = false 
   );
 }
 
-// Simple Date Picker Component for Overlays with Past Dates Disabled
+// Dropdown Date Picker Component - Compact for one-screen view
+function DropdownDatePicker({ label, value, onChange, minDate }) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const effectiveMinDate = minDate || today;
+  
+  // Parse current value or use min date
+  const currentDate = value ? new Date(value) : effectiveMinDate;
+  const [selectedDay, setSelectedDay] = useState(currentDate.getDate());
+  const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth());
+  const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
+  
+  // Generate years (current year + 1 year ahead)
+  const years = [];
+  const currentYear = today.getFullYear();
+  for (let i = 0; i < 2; i++) {
+    years.push(currentYear + i);
+  }
+  
+  // Month names
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  
+  // Get days in selected month
+  const getDaysInMonth = (month, year) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+  
+  // Generate days for selected month/year
+  const generateDays = () => {
+    const daysInMonth = getDaysInMonth(selectedMonth, selectedYear);
+    const days = [];
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(selectedYear, selectedMonth, day);
+      date.setHours(0, 0, 0, 0);
+      
+      // Check if this date is before the minimum allowed date
+      const isDisabled = date < effectiveMinDate;
+      
+      if (!isDisabled) {
+        days.push(day);
+      }
+    }
+    
+    return days;
+  };
+  
+  const availableDays = generateDays();
+  
+  // Handle changes
+  const handleDayChange = (day) => {
+    setSelectedDay(day);
+    updateDate(day, selectedMonth, selectedYear);
+  };
+  
+  const handleMonthChange = (month) => {
+    setSelectedMonth(month);
+    // Adjust day if it doesn't exist in new month
+    const daysInNewMonth = getDaysInMonth(month, selectedYear);
+    const newDay = Math.min(selectedDay, daysInNewMonth);
+    setSelectedDay(newDay);
+    updateDate(newDay, month, selectedYear);
+  };
+  
+  const handleYearChange = (year) => {
+    setSelectedYear(year);
+    updateDate(selectedDay, selectedMonth, year);
+  };
+  
+  const updateDate = (day, month, year) => {
+    const newDate = new Date(year, month, day);
+    newDate.setHours(0, 0, 0, 0);
+    
+    // Only update if the date is valid and not before minDate
+    if (newDate >= effectiveMinDate) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      onChange(dateStr);
+    }
+  };
+  
+  return (
+    <div className="space-y-2">
+      <label className="text-sm font-medium text-gray-700 block">{label}</label>
+      <div className="grid grid-cols-3 gap-2">
+        {/* Day Dropdown */}
+        <select
+          value={selectedDay}
+          onChange={(e) => handleDayChange(parseInt(e.target.value))}
+          className="w-full px-2 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+        >
+          {availableDays.map(day => (
+            <option key={day} value={day}>{day}</option>
+          ))}
+        </select>
+        
+        {/* Month Dropdown */}
+        <select
+          value={selectedMonth}
+          onChange={(e) => handleMonthChange(parseInt(e.target.value))}
+          className="w-full px-2 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+        >
+          {months.map((month, index) => {
+            // Check if this month should be disabled
+            const firstDayOfMonth = new Date(selectedYear, index, 1);
+            const isDisabled = firstDayOfMonth < new Date(effectiveMinDate.getFullYear(), effectiveMinDate.getMonth(), 1);
+            
+            if (!isDisabled) {
+              return <option key={index} value={index}>{month}</option>;
+            }
+            return null;
+          })}
+        </select>
+        
+        {/* Year Dropdown */}
+        <select
+          value={selectedYear}
+          onChange={(e) => handleYearChange(parseInt(e.target.value))}
+          className="w-full px-2 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+        >
+          {years.map(year => (
+            <option key={year} value={year}>{year}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+}
+
+// Old Calendar-based Date Picker (keeping for reference, but not used)
 function SimpleDatePicker({ label, value, onChange, minDate, overlay = false, autoOpenReturn = false }) {
   // Set minDate to today by default to disable all past dates
   const today = new Date();
