@@ -2130,8 +2130,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-blue-100/10 to-purple-100/10 rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
         <div className="absolute -bottom-5 -left-5 w-24 h-24 bg-gradient-to-tr from-orange-100/15 to-yellow-100/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500"></div>
         <div className="relative z-10">
-        {/* Trip Type Tabs */}
-        <div className="inline-flex rounded-full bg-neutral-100 p-0.5">
+        {/* Trip Type Tabs - Centered */}
+        <div className="flex justify-center">
+          <div className="inline-flex rounded-full bg-neutral-100 p-0.5">
           {[
             { id: "OW", label: "One Way" },
             { id: "RT", label: "Round Trip" },
