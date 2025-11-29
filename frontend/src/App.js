@@ -1964,21 +1964,21 @@ function PaxOverlay({ value, onChange, onClose, compact = false }) {
     if (pax.adt < 1) updatePax('adt', 1);
   }, [pax.adt, pax.inf]);
 
-  // Compact mode for overlay - Optimized to fit in one view
+  // Compact mode for overlay - Ultra compact to fit without scrolling
   if (compact) {
     return (
       <div>
-        <div className="space-y-3">
+        <div className="space-y-2">
           <PaxRow label="Adults (12+)" hint="Ages 12+" value={pax.adt} onInc={() => increment('adt')} onDec={() => decrement('adt')} />
           <PaxRow label="Children (2–11)" hint="Ages 2–11" value={pax.chd} onInc={() => increment('chd')} onDec={() => decrement('chd')} />
           <PaxRow label="Infants (0–1)" hint="On lap" value={pax.inf} onInc={() => increment('inf')} onDec={() => decrement('inf')} />
           
-          <div className="pt-3 border-t border-neutral-200">
-            <label className="text-sm font-medium mb-2 block" style={{ fontWeight: '500' }}>Cabin Class</label>
+          <div className="pt-2 border-t border-neutral-200">
+            <label className="text-xs font-medium mb-1.5 block" style={{ fontWeight: '500' }}>Cabin Class</label>
             <select 
               value={pax.cabin}
               onChange={(e) => updatePax('cabin', e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-neutral-300 bg-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-2.5 py-1.5 rounded-lg border border-neutral-300 bg-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="Economy">Economy</option>
               <option value="Premium Economy">Premium Economy</option>
@@ -1988,18 +1988,13 @@ function PaxOverlay({ value, onChange, onClose, compact = false }) {
           </div>
         </div>
         
-        <div className="mt-4 pt-3 border-t border-neutral-200">
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-neutral-700">
-              {pax.adt} Adult{pax.adt > 1 ? 's' : ''}, {pax.chd} Child{pax.chd > 1 ? 'ren' : ''}, {pax.inf} Infant{pax.inf > 1 ? 's' : ''} · {pax.cabin}
-            </div>
-            <button 
-              onClick={() => onChange(pax)} 
-              className="px-6 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700"
-            >
-              Apply
-            </button>
-          </div>
+        <div className="mt-3 pt-2 border-t border-neutral-200">
+          <button 
+            onClick={() => onChange(pax)} 
+            className="w-full px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 text-sm"
+          >
+            Apply
+          </button>
         </div>
       </div>
     );
