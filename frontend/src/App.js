@@ -1582,6 +1582,16 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
   const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth());
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
   
+  // Sync internal state when value prop changes
+  useEffect(() => {
+    if (value && !isNaN(new Date(value))) {
+      const date = new Date(value);
+      setSelectedDay(date.getDate());
+      setSelectedMonth(date.getMonth());
+      setSelectedYear(date.getFullYear());
+    }
+  }, [value]);
+  
   // Generate years (current year + 1 year ahead)
   const years = [];
   const currentYear = today.getFullYear();
