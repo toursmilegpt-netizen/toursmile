@@ -10230,6 +10230,24 @@ async def download_tbo_report():
         filename="TBO_Certification_Report.json"
     )
 
+@app.get("/api/download/tbo-screenshot-results")
+async def download_tbo_screenshot_results():
+    """Download screenshot of successful flight search results"""
+    return FileResponse(
+        path="/app/frontend/public/tbo_flight_search_results.png",
+        media_type="image/png",
+        filename="TBO_Flight_Search_Results_60_Flights.png"
+    )
+
+@app.get("/api/download/tbo-screenshot-logs")
+async def download_tbo_screenshot_logs():
+    """Download screenshot of backend logs"""
+    return FileResponse(
+        path="/app/frontend/public/tbo_backend_logs.png",
+        media_type="image/png",
+        filename="TBO_Backend_Logs_Success.png"
+    )
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
