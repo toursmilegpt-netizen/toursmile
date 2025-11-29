@@ -2003,9 +2003,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
           >
             <div style={{ 
-              padding: window.innerWidth <= 767 ? '6px 10px' : '8px 12px',
+              padding: window.innerWidth <= 767 ? '5px 8px' : '6px 10px',
               height: '100%',
-              minHeight: window.innerWidth <= 767 ? '44px' : '52px',
+              minHeight: window.innerWidth <= 767 ? '40px' : '44px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center'
@@ -2105,9 +2105,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
           >
             <div style={{ 
-              padding: window.innerWidth <= 767 ? '6px 10px' : '8px 12px',
+              padding: window.innerWidth <= 767 ? '5px 8px' : '6px 10px',
               height: '100%',
-              minHeight: window.innerWidth <= 767 ? '44px' : '52px',
+              minHeight: window.innerWidth <= 767 ? '40px' : '44px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center'
