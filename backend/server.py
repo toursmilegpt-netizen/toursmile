@@ -10199,6 +10199,37 @@ app.include_router(destinations_router, prefix="/api", tags=["destinations"])
 # Include admin dashboard router (TEMPORARILY DISABLED FOR TESTING)
 # app.include_router(admin_dashboard_router, prefix="/api", tags=["admin-dashboard"])
 
+
+# TBO File Download Routes
+from fastapi.responses import FileResponse, PlainTextResponse
+
+@app.get("/api/download/tbo-email")
+async def download_tbo_email():
+    """Download TBO certification email draft"""
+    return FileResponse(
+        path="/app/TBO_CERTIFICATION_EMAIL_DRAFT.txt",
+        media_type="text/plain",
+        filename="TBO_Certification_Email.txt"
+    )
+
+@app.get("/api/download/tbo-summary")
+async def download_tbo_summary():
+    """Download TBO working routes summary"""
+    return FileResponse(
+        path="/app/TBO_WORKING_ROUTES_SUMMARY.md",
+        media_type="text/markdown",
+        filename="TBO_Working_Routes_Summary.md"
+    )
+
+@app.get("/api/download/tbo-report")
+async def download_tbo_report():
+    """Download TBO certification report JSON"""
+    return FileResponse(
+        path="/app/tbo_certification_report_20251127_223717.json",
+        media_type="application/json",
+        filename="TBO_Certification_Report.json"
+    )
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
