@@ -794,19 +794,19 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                 </span>
               </button>
               
-              {/* Sorting */}
-              <div className="flex items-center space-x-4">
-                <span className="text-sm font-medium text-gray-700">Sort by:</span>
+              {/* Sorting - Mobile First */}
+              <div className="flex items-center space-x-2 sm:space-x-4 flex-1 sm:flex-initial justify-end">
+                <span className="hidden sm:inline text-sm font-medium text-gray-700">Sort by:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
+                  className="bg-white border border-gray-200 rounded-lg px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm touch-manipulation"
                 >
-                  <option value="price_low">Price: Low to High</option>
-                  <option value="price_high">Price: High to Low</option>
-                  <option value="duration">Duration: Shortest</option>
-                  <option value="departure">Departure: Earliest</option>
-                  <option value="arrival">Arrival: Earliest</option>
+                  <option value="price_low">💰 Price: Low-High</option>
+                  <option value="price_high">💰 Price: High-Low</option>
+                  <option value="duration">⏱️ Shortest</option>
+                  <option value="departure">🛫 Earliest Departure</option>
+                  <option value="arrival">🛬 Earliest Arrival</option>
                 </select>
               </div>
             </div>
