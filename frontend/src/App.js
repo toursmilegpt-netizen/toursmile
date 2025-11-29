@@ -2164,9 +2164,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <div 
             className={`transition-all duration-200 ${getStepColor(1)}`}
             style={{ 
-              flex: isMobile ? '1 1 100%' : '0 0 40%',
-              minWidth: 0, 
-              maxWidth: isMobile ? '100%' : '40%',
+              flex: window.innerWidth < 480 ? '0 0 48%' : window.innerWidth < 768 ? '0 0 45%' : '0 0 42%',
+              minWidth: window.innerWidth < 480 ? '165px' : '180px',
+              maxWidth: window.innerWidth < 480 ? '48%' : window.innerWidth < 768 ? '45%' : '42%',
               position: 'relative',
               cursor: 'pointer',
               borderRadius: '12px',
