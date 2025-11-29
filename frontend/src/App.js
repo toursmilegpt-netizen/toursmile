@@ -1589,17 +1589,21 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
       setSelectedDay(date.getDate());
       setSelectedMonth(date.getMonth());
       setSelectedYear(date.getFullYear());
-    } else if (minDate && !isNaN(new Date(minDate))) {
-      // If no value but minDate changed, auto-select the minDate
+    }
+  }, [value]);
+  
+  // When minDate changes and no value set, initialize with minDate
+  useEffect(() => {
+    if ((!value || value === null) && minDate && !isNaN(new Date(minDate))) {
       const date = new Date(minDate);
       setSelectedDay(date.getDate());
       setSelectedMonth(date.getMonth());
       setSelectedYear(date.getFullYear());
-      // Also call onChange to update parent state
+      // Call onChange to update parent
       const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
       onChange(dateStr);
     }
-  }, [value, minDate]);
+  }, [minDate]);
   
   // Generate years (current year + 1 year ahead)
   const years = [];
