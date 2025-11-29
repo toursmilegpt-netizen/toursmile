@@ -834,45 +834,45 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         {/* Flight Details */}
                         <div className="flex-1">
-                          <div className="flex items-center space-x-4 mb-6">
+                          <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6">
                             {/* Enhanced Airline Logo with Real Branding */}
-                            <div className="relative">
+                            <div className="relative flex-shrink-0">
                               {/* Real Airline Logos Implementation */}
-                              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
+                              <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg ${
                                 getAirlineTheme(flight).bgClass
                               }`}>
                                 {getAirlineTheme(flight).hasLogo ? (
                                   <img 
                                     src={getAirlineTheme(flight).logoUrl} 
                                     alt={getAirlineTheme(flight).name}
-                                    className="w-10 h-10 object-contain filter brightness-0 invert"
+                                    className="w-8 h-8 sm:w-10 sm:h-10 object-contain filter brightness-0 invert"
                                   />
                                 ) : (
-                                  <span className="text-white text-lg font-bold">
+                                  <span className="text-white text-base sm:text-lg font-bold">
                                     {getAirlineTheme(flight).code}
                                   </span>
                                 )}
                               </div>
                               {/* Airline Rating Badge */}
-                              <div className="absolute -bottom-1 -right-1 bg-yellow-400 text-yellow-900 text-xs font-bold px-1.5 py-0.5 rounded-full">
+                              <div className="hidden sm:block absolute -bottom-1 -right-1 bg-yellow-400 text-yellow-900 text-xs font-bold px-1.5 py-0.5 rounded-full">
                                 4.2★
                               </div>
                             </div>
-                            <div className="flex-1">
-                              <div className="font-bold text-gray-900 text-lg">{getAirlineTheme(flight).name}</div>
-                              <div className="text-sm text-gray-600 font-medium">
+                            <div className="flex-1 min-w-0">
+                              <div className="font-bold text-gray-900 text-base sm:text-lg truncate">{getAirlineTheme(flight).name}</div>
+                              <div className="text-xs sm:text-sm text-gray-600 font-medium">
                                 {flight.flight_number || `${getAirlineTheme(flight).code}-${Math.floor(Math.random() * 9000) + 1000}`}
                               </div>
-                              <div className="flex items-center space-x-2 mt-1">
-                                {flight.refundable && <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Refundable</span>}
-                                {flight.stops === 0 && <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full">Non-stop</span>}
+                              <div className="flex items-center flex-wrap gap-1 sm:gap-2 mt-1">
+                                {flight.refundable && <span className="bg-green-100 text-green-700 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">Refundable</span>}
+                                {flight.stops === 0 && <span className="bg-blue-100 text-blue-700 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">Non-stop</span>}
                                 {flight.aircraft_type && (
-                                  <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
+                                  <span className="hidden sm:inline text-xs bg-gray-100 px-2 py-1 rounded-full">
                                     {flight.aircraft_type}
                                   </span>
                                 )}
                                 {flight.is_lcc && (
-                                  <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
+                                  <span className="text-[10px] sm:text-xs bg-orange-100 text-orange-700 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
                                     LCC
                                   </span>
                                 )}
