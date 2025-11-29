@@ -661,19 +661,19 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                 <img 
                   src="https://customer-assets.emergentagent.com/job_flywise-search/artifacts/kdx1ncq0_FINAL%20LOGO.png"
                   alt="TourSmile - Return to Homepage"
-                  className="h-6 w-auto"
+                  className="h-10 sm:h-12 w-auto"
                 />
               </button>
               
-              {/* Navigation */}
+              {/* Navigation - Removed Back to Search, keeping only service tabs */}
               <nav className="hidden md:flex space-x-6">
-                <button className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">
+                <button className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1 text-sm">
                   Flights
                 </button>
-                <button className="text-gray-600 hover:text-blue-600 transition-colors">
+                <button className="text-gray-600 hover:text-blue-600 transition-colors text-sm">
                   Hotels
                 </button>
-                <button className="text-gray-600 hover:text-blue-600 transition-colors">
+                <button className="text-gray-600 hover:text-blue-600 transition-colors text-sm">
                   Tours
                 </button>
               </nav>
