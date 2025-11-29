@@ -2641,9 +2641,9 @@ function App() {
       {/* Render different pages based on current state */}
       {currentPage === 'search' && (
         <>
-          {/* Header - Compact */}
+          {/* Header - More Compact on Mobile */}
           <header className="border-b border-neutral-100 bg-gradient-to-b from-white to-blue-50/30 backdrop-blur-sm">
-            <div className="mx-auto max-w-5xl px-4 py-2 flex items-center justify-between">
+            <div className="mx-auto max-w-5xl px-4 py-1.5 sm:py-2 flex items-center justify-between">
               <div className="flex items-center">
                 <img 
                   src="https://customer-assets.emergentagent.com/job_flywise-search/artifacts/kdx1ncq0_FINAL%20LOGO.png"
