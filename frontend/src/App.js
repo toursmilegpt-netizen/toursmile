@@ -2525,7 +2525,10 @@ function App() {
   const getDefaultDate = () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow;
+    const year = tomorrow.getFullYear();
+    const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+    const day = String(tomorrow.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
   const [depart, setDepart] = useState(getDefaultDate());
   const [ret, setRet] = useState(null);
