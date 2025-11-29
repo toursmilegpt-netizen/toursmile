@@ -2151,13 +2151,13 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Enhanced From/To Container - Centered & Aligned */}
+        {/* Enhanced From/To Container - MakeMyTrip Style (Always Horizontal) */}
         <div className="mt-2 flex justify-center">
           <div style={{ 
             display: 'flex',
             alignItems: 'center',
-            gap: isMobile ? '8px' : '12px',
-            flexDirection: isMobile ? 'column' : 'row',
+            gap: window.innerWidth < 480 ? '6px' : window.innerWidth < 768 ? '8px' : '12px',
+            flexDirection: 'row',
             maxWidth: '100%'
           }}>
           {/* From Field - Enhanced with Brand Colors */}
