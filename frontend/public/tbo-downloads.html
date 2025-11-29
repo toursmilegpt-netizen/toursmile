@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBO Certification Files - Download</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+        h1 {
+            color: #2d3748;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #718096;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        .file-section {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        .file-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        .file-desc {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .copy-btn {
+            background: #48bb78;
+        }
+        .copy-btn:hover {
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
+        .instructions {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .instructions h3 {
+            color: #c53030;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .instructions ol {
+            margin-left: 20px;
+            color: #2d3748;
+        }
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .success-msg {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+        @media (max-width: 640px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .download-btn {
+                display: block;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 TBO Certification Files</h1>
+        <p class="subtitle">Download all files needed for your TBO certification email</p>
+
+        <!-- Email Draft -->
+        <div class="file-section">
+            <div class="file-title">✉️ Email Draft (Main Document)</div>
+            <div class="file-desc">Complete email text ready to copy into Outlook. Customize the placeholders before sending.</div>
+            <a href="https://flight-cert-runner.preview.emergentagent.com/api/download/tbo-email" class="download-btn" download>
+                ⬇️ Download Email Draft
+            </a>
+            <button class="download-btn copy-btn" onclick="copyEmail()">
+                📋 Copy to Clipboard
+            </button>
+            <div id="email-success" class="success-msg">✅ Email copied to clipboard!</div>
+        </div>
+
+        <!-- Working Routes Summary -->
+        <div class="file-section">
+            <div class="file-title">📊 Working Routes Summary</div>
+            <div class="file-desc">Detailed summary of route testing with Trace IDs and statistics.</div>
+            <a href="https://flight-cert-runner.preview.emergentagent.com/api/download/tbo-summary" class="download-btn" download>
+                ⬇️ Download Summary (Attachment 1)
+            </a>
+        </div>
+
+        <!-- Certification Report -->
+        <div class="file-section">
+            <div class="file-title">📄 Certification Report JSON</div>
+            <div class="file-desc">Technical test results in JSON format with all Trace IDs.</div>
+            <a href="https://flight-cert-runner.preview.emergentagent.com/api/download/tbo-report" class="download-btn" download>
+                ⬇️ Download Report (Attachment 2)
+            </a>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3>📝 Instructions for Sending Email:</h3>
+            <ol>
+                <li><strong>Download Email Draft:</strong> Click "Download Email Draft" or "Copy to Clipboard" above</li>
+                <li><strong>Open Outlook:</strong> Create a new email</li>
+                <li><strong>Paste Content:</strong> Paste the email text into Outlook</li>
+                <li><strong>Customize These Fields:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>[Your Name]</li>
+                        <li>[Your Title]</li>
+                        <li>[Your website URL]</li>
+                        <li>[Your email]</li>
+                        <li>[Your phone]</li>
+                        <li>[Your Contact Information]</li>
+                    </ul>
+                </li>
+                <li><strong>Attach Files:</strong> Download and attach both summary and report files</li>
+                <li><strong>Send To:</strong> TBO certification team email address</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        async function copyEmail() {
+            try {
+                const response = await fetch('https://flight-cert-runner.preview.emergentagent.com/api/download/tbo-email');
+                const text = await response.text();
+                await navigator.clipboard.writeText(text);
+                
+                const successMsg = document.getElementById('email-success');
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            } catch (err) {
+                alert('Failed to copy. Please use the Download button instead.');
+            }
+        }
+    </script>
+</body>
+</html>
