@@ -159,7 +159,7 @@ Error Handling: Implemented for all scenarios
 
 1. TBO_Working_Routes_Summary.md - Detailed summary with all test results and Trace IDs
 2. TBO_Certification_Report.json - Technical test results in JSON format
-3. TBO_Flight_Search_Results_60_Flights.png - Screenshot showing 60 flights retrieved
+3. TBO_Flight_Search_Results_46_Flights.png - Screenshot showing 46 flights retrieved (BLR-DEL)
 4. TBO_Backend_Logs_Success.png - Screenshot of backend logs with authentication success
 
 ═══════════════════════════════════════════════════════════════
