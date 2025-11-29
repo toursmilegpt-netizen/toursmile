@@ -9629,13 +9629,14 @@ async def search_flights(request: FlightSearchRequest):
                 use_real_api = True
                 logging.info(f"✅ TBO API returned {len(real_flights)} flights (after variants & dedupe)")
             else:
-                logging.warning("⚠️ TBO API returned NO flights for this search - NO MOCK DATA FALLBACK")
+                logging.warning(f"⚠️ TBO API returned NO flights for {request.origin} → {request.destination}")
+                # Provide helpful message about data availability
+                logging.info("💡 TBO staging environment has limited data. Working routes: DEL-BLR, BLR-DEL, BOM-MAA")
         
         except Exception as api_error:
-            logging.error(f"❌ TBO API error: {str(api_error)} - NO MOCK DATA FALLBACK")
+            logging.error(f"❌ TBO API error: {str(api_error)}")
         
-        # NO MOCK DATA FALLBACK - Only show real TBO API results
-        # If no flights found, return empty list
+        # If no real API results, provide helpful response
         if not use_real_api:
             real_flights = []
             logging.warning(f"🚫 NO FLIGHTS FOUND - TBO API returned no results for {request.origin} → {request.destination}")
