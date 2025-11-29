@@ -1265,6 +1265,67 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
         </div>
       )}
       
+      {/* Search Modification Overlay - Full Search Form */}
+      {showSearchOverlay && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-start justify-center overflow-y-auto py-8 px-4">
+          <div className="bg-white rounded-2xl max-w-5xl w-full shadow-2xl relative animate-slideIn">
+            {/* Header */}
+            <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 rounded-t-2xl flex items-center justify-between z-10">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold">Modify Your Search</h2>
+                <p className="text-sm text-blue-100 mt-1">Update your travel details below</p>
+              </div>
+              <button
+                onClick={() => setShowSearchOverlay(false)}
+                className="text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+                aria-label="Close"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Search Form Container */}
+            <div className="p-6">
+              {/* Here we'll embed the SearchCard component with current values */}
+              <div className="bg-gray-50 rounded-xl p-4">
+                <p className="text-center text-gray-600 mb-4">
+                  Full search form will appear here (SearchCard component)
+                </p>
+                <div className="text-sm text-gray-500 space-y-2">
+                  <p>✓ Trip Type Tabs (One Way / Round Trip / Multi City)</p>
+                  <p>✓ From/To Airport Selection with Swap</p>
+                  <p>✓ Date Pickers (Departure & Return)</p>
+                  <p>✓ Passenger & Cabin Class Selector</p>
+                  <p>✓ Additional Options (Direct flights, Flexible dates)</p>
+                  <p>✓ Search Button</p>
+                </div>
+              </div>
+              
+              {/* Temporary Close Button */}
+              <div className="mt-6 flex justify-center gap-4">
+                <button
+                  onClick={() => setShowSearchOverlay(false)}
+                  className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-semibold"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    // Will trigger new search
+                    setShowSearchOverlay(false);
+                  }}
+                  className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-lg"
+                >
+                  Search Flights
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Fare Selection Modal for Round Trip */}
       {showFareModal && modalFlight && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
