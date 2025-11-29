@@ -2485,9 +2485,10 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <label className="flex items-center gap-2 text-xs sm:text-sm text-neutral-700">
             <input type="checkbox" className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Flexible dates ±3 days
           </label>
+          </div>
         </div>
 
-        {/* Search Button - Compact & Centered with Glow Effect */}
+        {/* Search Button - Centered */}
         <div className="mt-3 flex justify-center">
           <button
             onClick={async () => {
