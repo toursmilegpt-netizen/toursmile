@@ -1653,9 +1653,15 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
     if (availableDays.length > 0 && !availableDays.includes(selectedDay)) {
       const firstAvailableDay = availableDays[0];
       setSelectedDay(firstAvailableDay);
-      updateDate(firstAvailableDay, selectedMonth, selectedYear);
+      // Update parent with the new date
+      const newDate = new Date(selectedYear, selectedMonth, firstAvailableDay);
+      newDate.setHours(0, 0, 0, 0);
+      if (newDate >= effectiveMinDate) {
+        const dateStr = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}-${String(firstAvailableDay).padStart(2, '0')}`;
+        onChange(dateStr);
+      }
     }
-  }, [availableDays, selectedDay, selectedMonth, selectedYear]);
+  }, [selectedMonth, selectedYear, effectiveMinDate]);
   
   // Handle changes
   const handleDayChange = (day) => {
