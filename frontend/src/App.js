@@ -1774,7 +1774,7 @@ function PaxOverlay({ value, onChange, onClose, compact = false }) {
     if (pax.adt < 1) updatePax('adt', 1);
   }, [pax.adt, pax.inf]);
 
-  // Compact mode for overlay
+  // Compact mode for overlay - Optimized to fit in one view
   if (compact) {
     return (
       <div>
@@ -1784,20 +1784,17 @@ function PaxOverlay({ value, onChange, onClose, compact = false }) {
           <PaxRow label="Infants (0–1)" hint="On lap" value={pax.inf} onInc={() => increment('inf')} onDec={() => decrement('inf')} />
           
           <div className="pt-3 border-t border-neutral-200">
-            <div className="text-sm font-medium mb-2" style={{ fontWeight: '500' }}>Cabin Class</div>
-            <div className="grid grid-cols-2 gap-2">
-              {["Economy", "Premium Economy", "Business", "First"].map((cabin) => (
-                <button 
-                  key={cabin} 
-                  onClick={() => updatePax('cabin', cabin)} 
-                  className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
-                    pax.cabin === cabin ? "border-blue-400 bg-blue-50 text-blue-700" : "border-neutral-300 hover:bg-neutral-50"
-                  }`}
-                >
-                  {cabin}
-                </button>
-              ))}
-            </div>
+            <label className="text-sm font-medium mb-2 block" style={{ fontWeight: '500' }}>Cabin Class</label>
+            <select 
+              value={pax.cabin}
+              onChange={(e) => updatePax('cabin', e.target.value)}
+              className="w-full px-3 py-2 rounded-lg border border-neutral-300 bg-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="Economy">Economy</option>
+              <option value="Premium Economy">Premium Economy</option>
+              <option value="Business">Business</option>
+              <option value="First">First Class</option>
+            </select>
           </div>
         </div>
         
