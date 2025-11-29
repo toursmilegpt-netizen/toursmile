@@ -23,6 +23,9 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
   const [modalFlight, setModalFlight] = useState(null);
   const [modalType, setModalType] = useState('departure'); // 'departure' or 'return'
   
+  // State for search modification overlay
+  const [showSearchOverlay, setShowSearchOverlay] = useState(false);
+  
   // Filter states
   const [filters, setFilters] = useState({
     stops: [],
