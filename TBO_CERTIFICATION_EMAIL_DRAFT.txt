@@ -157,9 +157,10 @@ Error Handling: Implemented for all scenarios
 📎 ATTACHMENTS
 ═══════════════════════════════════════════════════════════════
 
-1. tbo_certification_report_20251127_223717.json - Latest test results
-2. Backend logs showing successful API calls and responses
-3. Screenshot of successful flight search results (51 flights)
+1. TBO_Working_Routes_Summary.md - Detailed summary with all test results and Trace IDs
+2. TBO_Certification_Report.json - Technical test results in JSON format
+3. TBO_Flight_Search_Results_60_Flights.png - Screenshot showing 60 flights retrieved
+4. TBO_Backend_Logs_Success.png - Screenshot of backend logs with authentication success
 
 ═══════════════════════════════════════════════════════════════
 📞 CONTACT INFORMATION
