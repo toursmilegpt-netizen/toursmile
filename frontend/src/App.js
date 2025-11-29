@@ -1582,28 +1582,31 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
   const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth());
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
   
-  // Sync internal state when value prop changes
+  // Sync internal state when value or minDate changes
   useEffect(() => {
+    let dateToUse;
+    
     if (value && !isNaN(new Date(value))) {
-      const date = new Date(value);
-      setSelectedDay(date.getDate());
-      setSelectedMonth(date.getMonth());
-      setSelectedYear(date.getFullYear());
+      // Use provided value
+      dateToUse = new Date(value);
+    } else if (minDate && !isNaN(new Date(minDate))) {
+      // No value, use minDate as default
+      dateToUse = new Date(minDate);
+    } else {
+      // Fallback to today
+      dateToUse = today;
     }
-  }, [value]);
-  
-  // When minDate changes and no value set, initialize with minDate
-  useEffect(() => {
-    if ((!value || value === null) && minDate && !isNaN(new Date(minDate))) {
-      const date = new Date(minDate);
-      setSelectedDay(date.getDate());
-      setSelectedMonth(date.getMonth());
-      setSelectedYear(date.getFullYear());
-      // Call onChange to update parent
-      const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    
+    setSelectedDay(dateToUse.getDate());
+    setSelectedMonth(dateToUse.getMonth());
+    setSelectedYear(dateToUse.getFullYear());
+    
+    // If we're using minDate (not value), update parent state
+    if (!value && minDate && !isNaN(new Date(minDate))) {
+      const dateStr = `${dateToUse.getFullYear()}-${String(dateToUse.getMonth() + 1).padStart(2, '0')}-${String(dateToUse.getDate()).padStart(2, '0')}`;
       onChange(dateStr);
     }
-  }, [minDate]);
+  }, [value, minDate]);
   
   // Generate years (current year + 1 year ahead)
   const years = [];
