@@ -92,8 +92,8 @@ Based on our comprehensive route testing, we propose these test cases using CONF
    - Date: December 6, 2025
    - Passengers: 1 Adult
    - Class: Economy
-   - Expected Results: ~111 flights
-   - Current Status: CONFIRMED WORKING (111 flights returned)
+   - Expected Results: 40-50+ flights (varies by search time)
+   - Current Status: CONFIRMED WORKING (46 flights returned in latest test)
    - Trace ID: 57f5c707-2803-474f-a879-5a4402c8f138
 
 ✅ PROPOSED TEST CASE 3: Mumbai → Chennai Route
