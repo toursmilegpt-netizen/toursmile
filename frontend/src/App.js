@@ -1648,6 +1648,15 @@ function DropdownDatePicker({ label, value, onChange, minDate }) {
   
   const availableDays = generateDays();
   
+  // If selected day is not in available days, select the first available day
+  useEffect(() => {
+    if (availableDays.length > 0 && !availableDays.includes(selectedDay)) {
+      const firstAvailableDay = availableDays[0];
+      setSelectedDay(firstAvailableDay);
+      updateDate(firstAvailableDay, selectedMonth, selectedYear);
+    }
+  }, [availableDays, selectedDay, selectedMonth, selectedYear]);
+  
   // Handle changes
   const handleDayChange = (day) => {
     setSelectedDay(day);
