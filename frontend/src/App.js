@@ -2373,14 +2373,15 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               border: getStepStatus(3) === 'active' ? '2px solid #3B82F6' : '1px solid #E5E7EB',
               borderRadius: '12px',
               padding: isMobile ? '10px 14px' : '12px 16px',
-              minHeight: isMobile ? '56px' : '64px',
-              display: 'inline-flex',
+              minHeight: window.innerWidth < 480 ? '52px' : window.innerWidth < 768 ? '56px' : '64px',
+              display: window.innerWidth < 480 ? 'flex' : 'inline-flex',
               flexDirection: 'column',
               justifyContent: 'center',
               cursor: 'pointer',
               boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
               transition: 'all 0.2s ease',
-              minWidth: isMobile ? '100%' : 'auto'
+              minWidth: window.innerWidth < 768 ? '100%' : 'auto',
+              width: window.innerWidth < 768 ? '100%' : 'auto'
             }}
             onClick={(e) => {
               e.preventDefault();
