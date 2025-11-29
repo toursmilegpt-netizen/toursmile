@@ -1954,7 +1954,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         <div className="absolute -bottom-5 -left-5 w-24 h-24 bg-gradient-to-tr from-orange-100/15 to-yellow-100/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500"></div>
         <div className="relative z-10">
         {/* Trip Type Tabs */}
-        <div className="inline-flex rounded-full bg-neutral-100 p-1">
+        <div className="inline-flex rounded-full bg-neutral-100 p-0.5">
           {[
             { id: "OW", label: "One Way" },
             { id: "RT", label: "Round Trip" },
@@ -1963,7 +1963,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             <button
               key={tab.id}
               onClick={() => setTrip(tab.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-colors ${
                 trip === tab.id ? "bg-white shadow-sm" : "text-neutral-600 hover:text-neutral-900"
               }`}
             >
@@ -1973,7 +1973,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         </div>
 
         {/* Compact From/To Container - Mobile Responsive */}
-        <div className="mt-3 compact-flight-container" style={{ 
+        <div className="mt-2 compact-flight-container" style={{ 
           position: 'relative',
           background: 'white',
           border: '1px solid #d1d5db',
