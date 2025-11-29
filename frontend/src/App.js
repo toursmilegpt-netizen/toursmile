@@ -2238,7 +2238,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             </div>
           </div>
           
-          {/* Enhanced Swap Button - User Friendly */}
+          {/* Compact Swap Icon - MakeMyTrip Style */}
           <div style={{
             position: isMobile ? 'absolute' : 'relative',
             display: 'flex',
@@ -2261,33 +2261,33 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 setTo(tempFrom);
               }}
               style={{ 
-                height: isMobile ? '36px' : '48px',
-                padding: isMobile ? '8px 12px' : '12px 16px',
-                borderRadius: '10px',
-                border: 'none',
-                background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
-                color: 'white',
+                width: isMobile ? '32px' : '36px',
+                height: isMobile ? '32px' : '36px',
+                borderRadius: '50%',
+                border: '2px solid #3B82F6',
+                background: 'white',
+                color: '#3B82F6',
                 display: 'flex',
                 alignItems: 'center',
-                gap: isMobile ? '4px' : '6px',
-                fontSize: isMobile ? '11px' : '13px',
-                fontWeight: '600',
+                justifyContent: 'center',
+                fontSize: isMobile ? '14px' : '16px',
+                fontWeight: 'bold',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
-                boxShadow: '0 2px 4px rgba(59, 130, 246, 0.2)',
-                whiteSpace: 'nowrap'
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.boxShadow = '0 4px 8px rgba(59, 130, 246, 0.3)';
+                e.currentTarget.style.background = '#3B82F6';
+                e.currentTarget.style.color = 'white';
+                e.currentTarget.style.transform = 'rotate(180deg)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = '0 2px 4px rgba(59, 130, 246, 0.2)';
+                e.currentTarget.style.background = 'white';
+                e.currentTarget.style.color = '#3B82F6';
+                e.currentTarget.style.transform = 'rotate(0deg)';
               }}
             >
-              <span style={{ fontSize: isMobile ? '14px' : '16px' }}>⇄</span>
-              {!isMobile && <span>Swap Cities</span>}
+              ⇄
             </button>
           </div>
           
