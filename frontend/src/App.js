@@ -2837,8 +2837,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Search Button - Centered */}
-        <div className="mt-3 flex justify-center">
+        {/* Search Button - Full width on mobile, centered on desktop */}
+        <div className="flex justify-center mt-4 px-4 lg:px-0">
           <button
             onClick={async () => {
               if (!from || !to) {
@@ -2863,8 +2863,12 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               }
             }}
             className={`search-button-premium ${
-              getStepStatus(6) === 'active' && from && to && depart ? 'ring-4 ring-indigo-300 scale-105 animate-pulse' : ''
+              getStepStatus(6) === 'active' && from && to && depart ? 'ring-4 ring-indigo-300 lg:scale-105 animate-pulse' : ''
             }`}
+            style={{
+              width: isMobile ? '100%' : 'auto',
+              height: isMobile ? '52px' : 'auto'
+            }}
             disabled={loading}
           >
             {loading ? 'Searching…' : 'Search Flights'}
