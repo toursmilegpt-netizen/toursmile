@@ -3506,7 +3506,7 @@ function App() {
     )}
     
     {/* Date Selection Overlay - Smart Desktop/Mobile Behavior */}
-    {showDateOverlay && (
+    {showDateOverlay && createPortal(
       <>
         {/* Backdrop - semi-transparent on desktop, hidden on mobile */}
         <div 
