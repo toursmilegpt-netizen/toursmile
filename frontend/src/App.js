@@ -2995,6 +2995,14 @@ function App() {
   // Search form state - moved to App level to share with overlays
   const [from, setFrom] = useState({ city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' });
   const [to, setTo] = useState({ city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' });
+  
+  // Multi-City state at App level
+  const [multiCitySegments, setMultiCitySegments] = useState([
+    { from: null, to: null, date: '' },
+    { from: null, to: null, date: '' }
+  ]);
+  const [activeMultiCitySegment, setActiveMultiCitySegment] = useState({ index: null, field: null });
+  
   // Default to tomorrow for flight searches (flights typically can't be booked same-day)
   const getDefaultDate = () => {
     const tomorrow = new Date();
