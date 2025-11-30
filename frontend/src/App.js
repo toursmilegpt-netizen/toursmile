@@ -2815,8 +2815,8 @@ function App() {
             </section>
 
             {/* Service Icons Section - Enterprise style with grey background for active */}
-            <section className="text-center pb-2 sm:pb-3">
-              <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 py-1.5 sm:py-2">
+            <section className="text-center pb-1.5">
+              <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 py-1">
                 {/* Flights Icon - Active with grey background */}
                 <div className="flex flex-col items-center space-y-1 group cursor-pointer">
                   <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center transition-all duration-300 shadow-sm">
