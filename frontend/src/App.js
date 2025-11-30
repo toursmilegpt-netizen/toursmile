@@ -3073,6 +3073,7 @@ function App() {
     } else {
       // One Way / Round Trip mode
       setDepart(selectedDate);
+      markStepComplete(3);
       setShowDateOverlay(false);
       // If round trip, guide to return date, otherwise to passengers
       if (trip === 'RT' && !ret) {
