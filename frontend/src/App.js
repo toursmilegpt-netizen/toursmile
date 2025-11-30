@@ -2234,16 +2234,16 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <div 
             className={`transition-all duration-200 ${getStepColor(1)}`}
             style={{ 
-              flex: window.innerWidth < 480 ? '0 0 48%' : window.innerWidth < 768 ? '0 0 45%' : '0 0 42%',
-              minWidth: window.innerWidth < 480 ? '165px' : '180px',
-              maxWidth: window.innerWidth < 480 ? '48%' : window.innerWidth < 768 ? '45%' : '42%',
+              flex: '1',
+              minWidth: isMobile ? '0' : '180px',
+              maxWidth: isMobile ? 'none' : '42%',
               position: 'relative',
               cursor: 'pointer',
-              borderRadius: '16px',
-              border: getStepStatus(1) === 'active' ? '2px solid #FF6B6B' : '1px solid #E2E8F0',
-              background: '#F8FAFC',
-              height: isMobile ? '48px' : '52px',
-              boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+              borderRadius: isMobile ? '12px' : '16px',
+              border: getStepStatus(1) === 'active' ? '2px solid #FF6B6B' : (isMobile ? '1px solid #D1D5DB' : '1px solid #E2E8F0'),
+              background: isMobile ? '#FFFFFF' : '#F8FAFC',
+              height: isMobile ? '56px' : '52px',
+              boxShadow: isMobile ? '0 1px 3px rgba(0, 0, 0, 0.1)' : '0 1px 2px rgba(0, 0, 0, 0.05)',
               transition: 'all 0.2s ease',
               display: 'flex',
               alignItems: 'center'
