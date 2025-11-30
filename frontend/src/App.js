@@ -2496,6 +2496,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             </div>
           </div>
           <div className="text-neutral-400 text-lg">›</div>
+          </div>
         </div>
 
         {/* Options - Centered */}
