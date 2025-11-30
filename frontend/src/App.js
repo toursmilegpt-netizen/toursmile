@@ -3633,7 +3633,7 @@ function App() {
     )}
     
     {/* Passenger Selection Overlay - Smart Desktop/Mobile Behavior */}
-    {showPassengerOverlay && (
+    {showPassengerOverlay && createPortal(
       <>
         {/* Backdrop - semi-transparent on desktop, hidden on mobile */}
         <div 
