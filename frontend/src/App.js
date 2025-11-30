@@ -1936,17 +1936,17 @@ function PaxRow({ label, hint, value, onInc, onDec }) {
         <div className="text-sm font-medium" style={{ fontWeight: '500' }}>{label}</div>
         <div className="text-xs text-neutral-500" style={{ fontWeight: '300' }}>{hint}</div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <button 
           onClick={onDec} 
-          className="h-10 w-10 rounded-full border border-neutral-300 hover:bg-neutral-50 flex items-center justify-center text-lg"
+          className="h-12 w-12 rounded-full border border-neutral-300 hover:bg-neutral-50 flex items-center justify-center text-xl transition-colors"
         >
           −
         </button>
-        <div className="w-8 text-center text-sm">{value}</div>
+        <div className="w-10 text-center text-base font-medium">{value}</div>
         <button 
           onClick={onInc} 
-          className="h-10 w-10 rounded-full border border-neutral-300 hover:bg-neutral-50 flex items-center justify-center text-lg"
+          className="h-12 w-12 rounded-full border border-neutral-300 hover:bg-neutral-50 flex items-center justify-center text-xl transition-colors"
         >
           +
         </button>
