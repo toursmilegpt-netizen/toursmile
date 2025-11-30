@@ -2485,7 +2485,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                     alignItems: 'center'
                   }}
                   onClick={() => {
-                    const tempOverlayState = { index, field: 'to' };
+                    setActiveMultiCitySegment({ index, field: 'to' });
                     setShowToOverlay(true);
                   }}
                 >
