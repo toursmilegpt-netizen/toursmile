@@ -2571,7 +2571,10 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
                     transition: 'all 0.2s ease'
                   }}
-                  onClick={() => setShowDateOverlay(true)}
+                  onClick={() => {
+                    setActiveMultiCitySegment({ index, field: 'date' });
+                    setShowDateOverlay(true);
+                  }}
                 >
                   <div style={{
                     padding: '0 14px',
