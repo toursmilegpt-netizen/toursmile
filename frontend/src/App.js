@@ -3430,10 +3430,19 @@ function App() {
               // Trigger global autocomplete search for 2+ characters
               if (query && query.length >= 2) {
                 const searchResults = performAutocompleteSearch(query);
-                setOverlayResults(searchResults);
+                // Filter out selected 'from' city in 'To' mode
+                if (showToOverlay && from) {
+                  setOverlayResults(searchResults.filter(city => city.iata !== from.iata));
+                } else {
+                  setOverlayResults(searchResults);
+                }
               } else {
-                // Clear results for < 2 characters - NO popular airports bias
-                setOverlayResults([]);
+                // Show filtered defaults when query is empty/short
+                let defaults = [...DEFAULT_CITIES];
+                if (showToOverlay && from) {
+                  defaults = defaults.filter(city => city.iata !== from.iata);
+                }
+                setOverlayResults(defaults);
               }
             }}
           />
