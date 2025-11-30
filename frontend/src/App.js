@@ -2086,6 +2086,12 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Multi-City segments state (max 4 segments)
+  const [multiCitySegments, setMultiCitySegments] = useState([
+    { from: null, to: null, date: '' },
+    { from: null, to: null, date: '' }
+  ]);
+
   // Responsive design hook
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth <= 768;
