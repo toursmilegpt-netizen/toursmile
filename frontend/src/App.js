@@ -2822,7 +2822,6 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <div className="text-neutral-400 text-lg">›</div>
           </div>
         </div>
-        )}
           </div>
         )}
 
