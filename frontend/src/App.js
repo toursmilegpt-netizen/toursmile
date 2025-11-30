@@ -2402,14 +2402,15 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
           >
             <div style={{
-              padding: window.innerWidth < 480 ? '8px 12px' : '10px 14px',
-              height: isMobile ? '48px' : '52px',
+              padding: '0 14px',
+              height: '100%',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px'
+              gap: '10px',
+              width: '100%'
             }}>
               <span style={{ fontSize: '18px', flexShrink: 0 }}>📅</span>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div style={{ 
                   fontSize: '9px', 
                   fontWeight: '600', 
