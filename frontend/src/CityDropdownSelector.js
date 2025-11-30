@@ -1,0 +1,173 @@
+import React, { useState, useEffect, useRef } from 'react';
+
+/**
+ * Premium City Dropdown Selector
+ * Shows default cities immediately on click, with search functionality
+ */
+const CityDropdownSelector = ({
+  value,
+  onChange,
+  onClose,
+  label,
+  defaultCities,
+  searchFunction,
+  autoFocusNext
+}) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(true);
+  const searchInputRef = useRef(null);
+  const dropdownRef = useRef(null);
+
+  // Show default cities on mount
+  useEffect(() => {
+    if (!searchQuery) {
+      setSearchResults(defaultCities || []);
+    } else {
+      // Perform search with the provided search function
+      const results = searchFunction(searchQuery);
+      setSearchResults(results.slice(0, 10)); // Limit to 10 results
+    }
+  }, [searchQuery, defaultCities, searchFunction]);
+
+  // Auto-focus search input
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, []);
+
+  // Handle click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [onClose]);
+
+  const handleCitySelect = (city) => {
+    onChange(city);
+    setShowDropdown(false);
+    onClose();
+    
+    // Auto-focus next field if provided
+    if (autoFocusNext) {
+      setTimeout(() => autoFocusNext(), 200);
+    }
+  };
+
+  return (
+    <div
+      ref={dropdownRef}
+      className="city-dropdown-premium"
+      style={{
+        position: 'absolute',
+        top: 'calc(100% + 8px)',
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        maxWidth: '400px',
+        width: '100%'
+      }}
+    >
+      {/* Search Input */}
+      <div style={{ padding: '12px', borderBottom: '1px solid #E5E7EB' }}>
+        <input
+          ref={searchInputRef}
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={`Search ${label.toLowerCase()}...`}
+          className="input-field-premium"
+          style={{
+            width: '100%',
+            height: '42px',
+            padding: '8px 12px',
+            fontSize: '14px',
+            border: '1px solid #D1D5DB',
+            borderRadius: '8px'
+          }}
+        />
+      </div>
+
+      {/* City List */}
+      <div style={{ maxHeight: '320px', overflowY: 'auto' }}>
+        {searchResults.length === 0 ? (
+          <div
+            style={{
+              padding: '20px',
+              textAlign: 'center',
+              color: '#9CA3AF',
+              fontSize: '14px'
+            }}
+          >
+            No cities found
+          </div>
+        ) : (
+          searchResults.map((city, index) => (
+            <div
+              key={`${city.iata}-${index}`}
+              className="city-dropdown-item"
+              onClick={() => handleCitySelect(city)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '12px 16px',
+                cursor: 'pointer',
+                transition: 'background 0.2s ease',
+                borderBottom: index < searchResults.length - 1 ? '1px solid #F3F4F6' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#FFF8F0';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'white';
+              }}
+            >
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    color: '#111827',
+                    marginBottom: '2px'
+                  }}
+                >
+                  {city.city}
+                </div>
+                <div
+                  style={{
+                    fontSize: '12px',
+                    color: '#6B7280'
+                  }}
+                >
+                  {city.airport}
+                </div>
+              </div>
+              <div
+                style={{
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  color: '#FF6B6B',
+                  fontFamily: 'monospace',
+                  padding: '4px 8px',
+                  background: '#FFF1F0',
+                  borderRadius: '6px'
+                }}
+              >
+                {city.iata}
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default CityDropdownSelector;
