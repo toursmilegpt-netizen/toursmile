@@ -2799,16 +2799,16 @@ function App() {
             background: 'linear-gradient(180deg, #FFF8F0 0%, #FFFCF5 100%)',
             minHeight: '100vh'
           }}>
-            {/* Hero Section - Compact to fit everything on screen */}
-            <section className="text-center pt-3 sm:pt-4 pb-2 sm:pb-3">
+            {/* Hero Section - Minimal to fit form in viewport */}
+            <section className="text-center pt-2 pb-1.5">
               <h1 className="heading-premium" style={{
-                fontSize: 'clamp(1.75rem, 4vw, 2.25rem)',
-                marginBottom: '0.5rem'
+                fontSize: '1.875rem',
+                marginBottom: '0.25rem'
               }}>
                 Discover the World
               </h1>
               <p className="subheading-premium" style={{
-                fontSize: 'clamp(0.875rem, 1.5vw, 1rem)'
+                fontSize: '0.9rem'
               }}>
                 Quick and Easy Planning at Best Fares
               </p>
