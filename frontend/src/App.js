@@ -2371,14 +2371,12 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <div 
             className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
             style={{
-              background: '#F0F9FF',
-              border: getStepStatus(3) === 'active' ? '2px solid #3B82F6' : '1px solid #E5E7EB',
-              borderRadius: '12px',
-              padding: isMobile ? '10px 14px' : '12px 16px',
-              minHeight: window.innerWidth < 480 ? '52px' : window.innerWidth < 768 ? '56px' : '64px',
-              display: window.innerWidth < 480 ? 'flex' : 'inline-flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
+              background: '#F8FAFC',
+              border: getStepStatus(3) === 'active' ? '2px solid #FF6B6B' : '1px solid #E2E8F0',
+              borderRadius: '16px',
+              height: isMobile ? '48px' : '52px',
+              display: 'inline-flex',
+              alignItems: 'center',
               cursor: 'pointer',
               boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
               transition: 'all 0.2s ease',
