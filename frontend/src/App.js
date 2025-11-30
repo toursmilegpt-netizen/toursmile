@@ -2091,6 +2091,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
     { from: null, to: null, date: '' },
     { from: null, to: null, date: '' }
   ]);
+  const [activeMultiCitySegment, setActiveMultiCitySegment] = useState({ index: null, field: null });
 
   // Responsive design hook
   const windowWidth = useWindowWidth();
