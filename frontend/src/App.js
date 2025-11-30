@@ -3006,7 +3006,7 @@ function App() {
 
   // Search form state - moved to App level to share with overlays
   const [from, setFrom] = useState({ city: 'Mumbai', iata: 'BOM', airport: 'Chhatrapati Shivaji Maharaj Intl', country: 'IN' });
-  const [to, setTo] = useState({ city: 'Delhi', iata: 'DEL', airport: 'Indira Gandhi Intl', country: 'IN' });
+  const [to, setTo] = useState({ city: 'New Delhi', iata: 'DEL', airport: 'Indira Gandhi International Airport', country: 'IN' });
   
   // Multi-City state at App level
   const [multiCitySegments, setMultiCitySegments] = useState([
