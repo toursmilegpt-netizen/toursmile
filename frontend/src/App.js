@@ -2699,7 +2699,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
 
         {/* Date & Passenger - Side by Side Equal Width (Only for OW/RT) */}
         {trip !== 'MC' && (
-        {/* Date & Passenger - Vertical on mobile, side by side on desktop */}
+          <div>
+            {/* Date & Passenger - Vertical on mobile, side by side on desktop */}
         <div className="mt-3 flex flex-col lg:flex-row justify-center gap-3 px-4 lg:px-0">
           {/* Date Selection */}
           <div 
