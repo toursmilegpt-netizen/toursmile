@@ -2699,7 +2699,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
 
         {/* Date & Passenger - Side by Side Equal Width (Only for OW/RT) */}
         {trip !== 'MC' && (
-        <div className="mt-2 flex justify-center gap-3">
+        {/* Date & Passenger - Vertical on mobile, side by side on desktop */}
+        <div className="mt-3 flex flex-col lg:flex-row justify-center gap-3 px-4 lg:px-0">
           {/* Date Selection */}
           <div 
             className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
