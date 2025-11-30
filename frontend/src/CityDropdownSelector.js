@@ -134,19 +134,10 @@ const CityDropdownSelector = ({
                   style={{
                     fontSize: '15px',
                     fontWeight: '600',
-                    color: '#111827',
-                    marginBottom: '2px'
+                    color: '#111827'
                   }}
                 >
                   {city.city}
-                </div>
-                <div
-                  style={{
-                    fontSize: '12px',
-                    color: '#6B7280'
-                  }}
-                >
-                  {city.airport}
                 </div>
               </div>
               <div
