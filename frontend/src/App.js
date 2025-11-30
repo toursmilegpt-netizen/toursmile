@@ -3194,7 +3194,9 @@ function App() {
               }}
               searchStates={{
                 from, setFrom, to, setTo, depart, setDepart, ret, setRet,
-                pax, setPax, trip, setTrip
+                pax, setPax, trip, setTrip,
+                multiCitySegments, setMultiCitySegments,
+                activeMultiCitySegment, setActiveMultiCitySegment
               }}
               guidedFlow={{
                 currentStep, markStepComplete, getStepStatus, getStepColor
