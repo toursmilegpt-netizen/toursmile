@@ -2190,8 +2190,10 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Enhanced From/To Container - MakeMyTrip Style (Always Horizontal) */}
-        <div className="mt-2 flex justify-center">
+        {/* Conditional Rendering: One Way / Round Trip vs Multi City */}
+        {trip !== 'MC' && (
+          /* Enhanced From/To Container - MakeMyTrip Style (Always Horizontal) */
+          <div className="mt-2 flex justify-center">
           <div style={{ 
             display: 'flex',
             alignItems: 'center',
