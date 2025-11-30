@@ -3351,8 +3351,8 @@ function App() {
         />
         
         {/* Overlay Container - Responsive Design */}
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6">
-          <div className="w-full h-full md:w-[28rem] md:h-[32rem] bg-white md:rounded-2xl md:shadow-2xl flex flex-col md:max-h-[80vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6" style={{ pointerEvents: 'none' }}>
+          <div className="w-full h-full md:w-[28rem] md:h-[32rem] bg-white md:rounded-2xl md:shadow-2xl flex flex-col md:max-h-[80vh]" style={{ pointerEvents: 'auto' }}>
             {/* Header */}
             <div style={{
               padding: '16px',
