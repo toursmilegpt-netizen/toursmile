@@ -2464,8 +2464,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             alignItems: 'center',
             gap: '10px',
             cursor: 'pointer',
-            flex: '1',
-            minWidth: '220px'
+            flex: '0 1 auto',
+            minWidth: '220px',
+            maxWidth: '300px'
           }}
           onClick={(e) => {
             e.preventDefault();
