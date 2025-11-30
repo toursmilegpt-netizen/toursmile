@@ -2960,8 +2960,8 @@ function App() {
     
     {/* OVERLAYS - App Level for Full-Screen Display */}
     
-    {/* City Selection Overlay - Smart Desktop/Mobile Behavior */}
-    {(showFromOverlay || showToOverlay) && (
+    {/* City Selection Overlay - DISABLED - Using inline dropdown instead */}
+    {false && (showFromOverlay || showToOverlay) && (
       <>
         {/* Backdrop - semi-transparent on desktop, hidden on mobile */}
         <div 
