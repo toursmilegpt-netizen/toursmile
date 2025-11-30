@@ -2170,14 +2170,27 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
   };
 
   const handleDateSelect = (selectedDate) => {
-    setDepart(selectedDate);
-    markStepComplete(3);
-    setShowDateOverlay(false);
-    // If round trip, guide to return date, otherwise to passengers
-    if (trip === 'RT' && !ret) {
-      setTimeout(() => setShowDateOverlay(true), 200);
+    if (trip === 'MC' && activeMultiCitySegment.index !== null) {
+      // Multi-city mode
+      updateMultiCitySegment(activeMultiCitySegment.index, 'date', selectedDate);
+      setShowDateOverlay(false);
+      // Check if all segments are filled, guide to passengers
+      const allFilled = multiCitySegments.every(seg => seg.from && seg.to && seg.date);
+      if (allFilled) {
+        setTimeout(() => setShowPassengerOverlay(true), 200);
+      }
+      setActiveMultiCitySegment({ index: null, field: null });
     } else {
-      setTimeout(() => setShowPassengerOverlay(true), 200);
+      // One Way / Round Trip mode
+      setDepart(selectedDate);
+      markStepComplete(3);
+      setShowDateOverlay(false);
+      // If round trip, guide to return date, otherwise to passengers
+      if (trip === 'RT' && !ret) {
+        setTimeout(() => setShowDateOverlay(true), 200);
+      } else {
+        setTimeout(() => setShowPassengerOverlay(true), 200);
+      }
     }
   };
 
