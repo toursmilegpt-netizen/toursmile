@@ -2400,9 +2400,245 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             )}
           </div>
           </div>
-        </div>
+          </div>
+        )}
 
-        {/* Date & Passenger - Side by Side Equal Width */}
+        {/* Multi-City Segments */}
+        {trip === 'MC' && (
+          <div className="mt-2 space-y-3">
+            {multiCitySegments.map((segment, index) => (
+              <div key={index} className="flex justify-center gap-3 items-center">
+                {/* Segment Label */}
+                <div className="text-sm font-semibold text-gray-600" style={{ width: '60px' }}>
+                  Flight {index + 1}
+                </div>
+
+                {/* From Field */}
+                <div 
+                  className="transition-all duration-200"
+                  style={{ 
+                    width: '220px',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    borderRadius: '16px',
+                    border: '1px solid #E2E8F0',
+                    background: '#F8FAFC',
+                    height: '52px',
+                    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                  onClick={() => {
+                    // Open dropdown for this segment
+                    const tempOverlayState = { index, field: 'from' };
+                    setShowFromOverlay(true);
+                  }}
+                >
+                  <div style={{ 
+                    padding: '0 14px',
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px'
+                  }}>
+                    <span style={{ fontSize: '18px', flexShrink: 0 }}>✈️</span>
+                    <div className="flex-1 min-w-0">
+                      <div style={{ 
+                        fontSize: '9px', 
+                        fontWeight: '600', 
+                        color: '#9CA3AF',
+                        marginBottom: '2px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}>FROM</div>
+                      <div className="truncate" style={{ 
+                        fontSize: '13px', 
+                        fontWeight: '600',
+                        color: segment.from ? '#111827' : '#9CA3AF',
+                        lineHeight: '1.2'
+                      }}>
+                        {segment.from ? `${segment.from.city} (${segment.from.iata})` : 'Select City'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Arrow */}
+                <div style={{ fontSize: '20px', color: '#9CA3AF' }}>→</div>
+
+                {/* To Field */}
+                <div 
+                  className="transition-all duration-200"
+                  style={{ 
+                    width: '220px',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    borderRadius: '16px',
+                    border: '1px solid #E2E8F0',
+                    background: '#F8FAFC',
+                    height: '52px',
+                    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                  onClick={() => {
+                    const tempOverlayState = { index, field: 'to' };
+                    setShowToOverlay(true);
+                  }}
+                >
+                  <div style={{ 
+                    padding: '0 14px',
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px'
+                  }}>
+                    <span style={{ fontSize: '18px', flexShrink: 0 }}>✈️</span>
+                    <div className="flex-1 min-w-0">
+                      <div style={{ 
+                        fontSize: '9px', 
+                        fontWeight: '600', 
+                        color: '#9CA3AF',
+                        marginBottom: '2px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}>TO</div>
+                      <div className="truncate" style={{ 
+                        fontSize: '13px', 
+                        fontWeight: '600',
+                        color: segment.to ? '#111827' : '#9CA3AF',
+                        lineHeight: '1.2'
+                      }}>
+                        {segment.to ? `${segment.to.city} (${segment.to.iata})` : 'Select City'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Date Field */}
+                <div 
+                  className="transition-all duration-200"
+                  style={{
+                    width: '180px',
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                    borderRadius: '16px',
+                    height: '52px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onClick={() => setShowDateOverlay(true)}
+                >
+                  <div style={{
+                    padding: '0 14px',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    width: '100%'
+                  }}>
+                    <span style={{ fontSize: '18px', flexShrink: 0 }}>📅</span>
+                    <div className="flex-1 min-w-0">
+                      <div style={{ 
+                        fontSize: '9px', 
+                        fontWeight: '600', 
+                        color: '#9CA3AF',
+                        marginBottom: '2px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}>DATE</div>
+                      <div style={{ 
+                        fontSize: '13px', 
+                        fontWeight: '600',
+                        color: segment.date ? '#111827' : '#9CA3AF',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}>
+                        {segment.date ? formatDate(segment.date) : 'Select Date'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Remove Button (only show if more than 2 segments) */}
+                {multiCitySegments.length > 2 && (
+                  <button
+                    onClick={() => removeMultiCitySegment(index)}
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      border: '1px solid #E5E7EB',
+                      background: 'white',
+                      color: '#EF4444',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '18px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#FEE2E2';
+                      e.currentTarget.style.borderColor = '#EF4444';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'white';
+                      e.currentTarget.style.borderColor = '#E5E7EB';
+                    }}
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            ))}
+
+            {/* Add Flight Button */}
+            {multiCitySegments.length < 4 && (
+              <div className="flex justify-center mt-3">
+                <button
+                  onClick={addMultiCitySegment}
+                  style={{
+                    padding: '10px 20px',
+                    borderRadius: '10px',
+                    border: '1px dashed #3B82F6',
+                    background: '#EFF6FF',
+                    color: '#3B82F6',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#DBEAFE';
+                    e.currentTarget.style.borderColor = '#2563EB';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#EFF6FF';
+                    e.currentTarget.style.borderColor = '#3B82F6';
+                  }}
+                >
+                  <span style={{ fontSize: '18px' }}>+</span>
+                  Add Another Flight
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Date & Passenger - Side by Side Equal Width (Only for OW/RT) */}
+        {trip !== 'MC' && (
         <div className="mt-2 flex justify-center gap-3">
           {/* Date Selection */}
           <div 
