@@ -2403,31 +2403,41 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               }
             }}
           >
-            <div style={{ 
-              fontSize: isMobile ? '9px' : '10px', 
-              fontWeight: '500', 
-              color: '#6B7280',
-              marginBottom: '4px',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px'
-            }}>TRAVEL DATES</div>
-            <div className="flex items-center">
-              <span style={{ fontSize: '16px', marginRight: '8px' }}>📅</span>
-              <div style={{ 
-                fontSize: window.innerWidth < 480 ? '12px' : window.innerWidth < 768 ? '14px' : '16px', 
-                fontWeight: '600',
-                color: depart ? '#111827' : '#9CA3AF',
-                whiteSpace: 'nowrap'
-              }}>
-                {depart && trip === 'RT' && ret ? (
-                  `${formatDate(depart)} → ${formatDate(ret)}`
-                ) : depart && trip === 'RT' && !ret ? (
-                  `${formatDate(depart)} → Select Date`
-                ) : depart ? (
-                  formatDate(depart)
-                ) : (
-                  'Select Dates'
-                )}
+            <div style={{
+              padding: window.innerWidth < 480 ? '8px 12px' : '10px 14px',
+              height: isMobile ? '48px' : '52px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              <span style={{ fontSize: '18px', flexShrink: 0 }}>📅</span>
+              <div className="flex-1">
+                <div style={{ 
+                  fontSize: '9px', 
+                  fontWeight: '600', 
+                  color: '#9CA3AF',
+                  marginBottom: '2px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>TRAVEL DATES</div>
+                <div style={{ 
+                  fontSize: isMobile ? '13px' : '15px', 
+                  fontWeight: '600',
+                  color: depart ? '#111827' : '#9CA3AF',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}>
+                  {depart && trip === 'RT' && ret ? (
+                    `${formatDate(depart)} → ${formatDate(ret)}`
+                  ) : depart && trip === 'RT' && !ret ? (
+                    `${formatDate(depart)} → Select Date`
+                  ) : depart ? (
+                    formatDate(depart)
+                  ) : (
+                    'Select Dates'
+                  )}
+                </div>
               </div>
             </div>
           </div>
