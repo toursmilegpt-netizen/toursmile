@@ -3019,7 +3019,6 @@ function App() {
     }
   }, [showFromOverlay, showToOverlay, from]);
 
-  ]);
   const [activeMultiCitySegment, setActiveMultiCitySegment] = useState({ index: null, field: null });
   
   // Default to tomorrow for flight searches (flights typically can't be booked same-day)
