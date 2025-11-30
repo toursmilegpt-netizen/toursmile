@@ -3339,7 +3339,7 @@ function App() {
     {/* OVERLAYS - App Level for Full-Screen Display */}
     
     {/* City Selection Overlay - Smart Desktop/Mobile Behavior */}
-    {(showFromOverlay || showToOverlay) && (
+    {(showFromOverlay || showToOverlay) && isMobile && (
       <>
         {/* Backdrop - semi-transparent on desktop, hidden on mobile */}
         <div 
