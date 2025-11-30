@@ -2263,30 +2263,28 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 setFrom(tempTo); 
                 setTo(tempFrom);
               }}
+              className="swap-icon-coral"
               style={{ 
-                width: window.innerWidth < 480 ? '28px' : window.innerWidth < 768 ? '32px' : '36px',
-                height: window.innerWidth < 480 ? '28px' : window.innerWidth < 768 ? '32px' : '36px',
+                width: window.innerWidth < 480 ? '32px' : '36px',
+                height: window.innerWidth < 480 ? '32px' : '36px',
                 borderRadius: '50%',
-                border: '2px solid #3B82F6',
-                background: 'white',
-                color: '#3B82F6',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: window.innerWidth < 480 ? '12px' : window.innerWidth < 768 ? '14px' : '16px',
+                fontSize: window.innerWidth < 480 ? '14px' : '16px',
                 fontWeight: 'bold',
                 cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 8px rgba(255, 107, 107, 0.2)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#3B82F6';
+                e.currentTarget.style.background = '#FF6B6B';
                 e.currentTarget.style.color = 'white';
                 e.currentTarget.style.transform = 'rotate(180deg)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'white';
-                e.currentTarget.style.color = '#3B82F6';
+                e.currentTarget.style.color = '#FF6B6B';
                 e.currentTarget.style.transform = 'rotate(0deg)';
               }}
             >
