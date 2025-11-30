@@ -2295,7 +2295,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 </div>
               </div>
             </div>
-            {showFromOverlay && (
+            {showFromOverlay && !isMobile && (
               <CityDropdownSelector
                 value={from}
                 onChange={handleFromSelect}
