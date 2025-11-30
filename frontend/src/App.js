@@ -2448,14 +2448,14 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <div 
             className={`passenger-selector-compact transition-all duration-200 ${getStepColor(5)}`}
           style={{
-            background: getStepStatus(5) === 'active' ? '#EFF6FF' : 'white',
-            border: getStepStatus(5) === 'active' ? '2px solid #3B82F6' : '1px solid #d1d5db',
-            borderRadius: '10px',
-            padding: isMobile ? '8px 12px' : '6px 10px',
-            minHeight: isMobile ? '48px' : '44px',
+            background: getStepStatus(5) === 'active' ? '#F8FAFC' : '#F8FAFC',
+            border: getStepStatus(5) === 'active' ? '2px solid #FF6B6B' : '1px solid #E2E8F0',
+            borderRadius: '16px',
+            padding: window.innerWidth < 480 ? '8px 12px' : '10px 14px',
+            height: isMobile ? '48px' : '52px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            gap: '10px',
             cursor: 'pointer'
           }}
           onClick={(e) => {
@@ -2464,10 +2464,17 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             setShowPassengerOverlay(true);
           }}
         >
-          <div>
-            <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">PASSENGERS & CABIN</div>
+          <span style={{ fontSize: '18px', flexShrink: 0 }}>👥</span>
+          <div className="flex-1">
+            <div style={{ 
+              fontSize: '9px', 
+              fontWeight: '600', 
+              color: '#9CA3AF',
+              marginBottom: '2px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>PASSENGERS & CABIN</div>
             <div className="flex items-center">
-              <span className="text-xs mr-1.5">👥</span>
               <div className="text-sm font-semibold" style={{ fontSize: '14px', color: '#111827' }}>
                 {(() => {
                   const total = pax.adt + pax.chd + pax.inf;
