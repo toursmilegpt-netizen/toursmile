@@ -2238,7 +2238,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             className={`transition-all duration-200 ${getStepColor(1)}`}
             style={{ 
               flex: '1',
-              minWidth: isMobile ? '0' : '180px',
+              minWidth: isMobile ? '0' : '360px',
               maxWidth: 'none',
               position: 'relative',
               cursor: 'pointer',
@@ -2362,7 +2362,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             className={`transition-all duration-200 ${getStepColor(2)}`}
             style={{ 
               flex: '1',
-              minWidth: isMobile ? '0' : '180px',
+              minWidth: isMobile ? '0' : '360px',
               maxWidth: 'none',
               position: 'relative',
               cursor: 'pointer',
