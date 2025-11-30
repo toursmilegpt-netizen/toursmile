@@ -2130,19 +2130,43 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
 
   // GUIDED UX FLOW HANDLERS - Enterprise-level user journey
   const handleFromSelect = (selectedFrom) => {
-    setFrom(selectedFrom);
-    markStepComplete(1);
-    setShowFromOverlay(false);
-    // Auto-guide user to next step
-    setTimeout(() => setShowToOverlay(true), 200);
+    if (trip === 'MC' && activeMultiCitySegment.index !== null) {
+      // Multi-city mode
+      updateMultiCitySegment(activeMultiCitySegment.index, 'from', selectedFrom);
+      setShowFromOverlay(false);
+      // Auto-guide to "To" field for same segment
+      setTimeout(() => {
+        setActiveMultiCitySegment({ index: activeMultiCitySegment.index, field: 'to' });
+        setShowToOverlay(true);
+      }, 200);
+    } else {
+      // One Way / Round Trip mode
+      setFrom(selectedFrom);
+      markStepComplete(1);
+      setShowFromOverlay(false);
+      // Auto-guide user to next step
+      setTimeout(() => setShowToOverlay(true), 200);
+    }
   };
 
   const handleToSelect = (selectedTo) => {
-    setTo(selectedTo);
-    markStepComplete(2);
-    setShowToOverlay(false);
-    // Auto-guide user to date selection
-    setTimeout(() => setShowDateOverlay(true), 200);
+    if (trip === 'MC' && activeMultiCitySegment.index !== null) {
+      // Multi-city mode
+      updateMultiCitySegment(activeMultiCitySegment.index, 'to', selectedTo);
+      setShowToOverlay(false);
+      // Auto-guide to date field for same segment
+      setTimeout(() => {
+        setActiveMultiCitySegment({ index: activeMultiCitySegment.index, field: 'date' });
+        setShowDateOverlay(true);
+      }, 200);
+    } else {
+      // One Way / Round Trip mode
+      setTo(selectedTo);
+      markStepComplete(2);
+      setShowToOverlay(false);
+      // Auto-guide user to date selection
+      setTimeout(() => setShowDateOverlay(true), 200);
+    }
   };
 
   const handleDateSelect = (selectedDate) => {
