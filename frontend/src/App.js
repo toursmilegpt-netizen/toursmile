@@ -3504,11 +3504,17 @@ function App() {
           <div style={{ maxWidth: '400px', margin: '0 auto' }}>
             {/* Departure Date Dropdown */}
             <DropdownDatePicker 
-              label="Departure Date" 
-              value={depart} 
+              label={trip === 'MC' ? 'Flight Date' : 'Departure Date'} 
+              value={trip === 'MC' && activeMultiCitySegment.index !== null 
+                ? multiCitySegments[activeMultiCitySegment.index]?.date 
+                : depart} 
               onChange={(date) => {
-                setDepart(date);
-                markStepComplete(3);
+                if (trip === 'MC') {
+                  handleDateSelect(date);
+                } else {
+                  setDepart(date);
+                  markStepComplete(3);
+                }
                 // Don't auto-close for better UX - user can see both dates
               }}
             />
