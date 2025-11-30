@@ -3169,8 +3169,8 @@ function App() {
               </p>
             </section>
 
-            {/* Service Icons Section - Enterprise style with grey background for active */}
-            <section className="text-center pb-1.5">
+            {/* Service Icons Section - Hidden on mobile like Cleartrip */}
+            <section className="hidden lg:block text-center pb-1.5">
               <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 py-1">
                 {/* Flights Icon - Active with grey background */}
                 <div className="flex flex-col items-center space-y-1 group cursor-pointer">
