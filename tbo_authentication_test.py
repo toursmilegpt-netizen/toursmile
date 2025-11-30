@@ -27,7 +27,7 @@ import httpx
 import asyncio
 
 # Backend URL from environment
-BACKEND_URL = "https://travel-portal-15.preview.emergentagent.com/api"
+BACKEND_URL = "https://responsive-travel-1.preview.emergentagent.com/api"
 
 # TBO API Configuration from backend/.env
 TBO_USERNAME = "Smile"

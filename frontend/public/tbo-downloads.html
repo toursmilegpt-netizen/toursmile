@@ -130,7 +130,7 @@
         <div class="file-section">
             <div class="file-title">✉️ Email Draft (Main Document)</div>
             <div class="file-desc">Complete email text ready to copy into Outlook. Customize the placeholders before sending.</div>
-            <a href="https://travel-portal-15.preview.emergentagent.com/api/download/tbo-email" class="download-btn" download>
+            <a href="https://responsive-travel-1.preview.emergentagent.com/api/download/tbo-email" class="download-btn" download>
                 ⬇️ Download Email Draft
             </a>
             <button class="download-btn copy-btn" onclick="copyEmail()">
@@ -143,7 +143,7 @@
         <div class="file-section">
             <div class="file-title">📊 Working Routes Summary</div>
             <div class="file-desc">Detailed summary of route testing with Trace IDs and statistics.</div>
-            <a href="https://travel-portal-15.preview.emergentagent.com/api/download/tbo-summary" class="download-btn" download>
+            <a href="https://responsive-travel-1.preview.emergentagent.com/api/download/tbo-summary" class="download-btn" download>
                 ⬇️ Download Summary (Attachment 1)
             </a>
         </div>
@@ -152,7 +152,7 @@
         <div class="file-section">
             <div class="file-title">📄 Certification Report JSON</div>
             <div class="file-desc">Technical test results in JSON format with all Trace IDs.</div>
-            <a href="https://travel-portal-15.preview.emergentagent.com/api/download/tbo-report" class="download-btn" download>
+            <a href="https://responsive-travel-1.preview.emergentagent.com/api/download/tbo-report" class="download-btn" download>
                 ⬇️ Download Report (Attachment 2)
             </a>
         </div>
@@ -161,7 +161,7 @@
         <div class="file-section">
             <div class="file-title">📸 Screenshot: 60 Flights Retrieved</div>
             <div class="file-desc">Visual proof showing 60 flights returned by TBO API for DEL→BLR route.</div>
-            <a href="https://travel-portal-15.preview.emergentagent.com/api/download/tbo-screenshot-results" class="download-btn" download>
+            <a href="https://responsive-travel-1.preview.emergentagent.com/api/download/tbo-screenshot-results" class="download-btn" download>
                 ⬇️ Download Screenshot (Attachment 3)
             </a>
         </div>
@@ -170,7 +170,7 @@
         <div class="file-section">
             <div class="file-title">📸 Screenshot: Backend Logs</div>
             <div class="file-desc">Backend logs showing successful TBO API authentication and response.</div>
-            <a href="https://travel-portal-15.preview.emergentagent.com/api/download/tbo-screenshot-logs" class="download-btn" download>
+            <a href="https://responsive-travel-1.preview.emergentagent.com/api/download/tbo-screenshot-logs" class="download-btn" download>
                 ⬇️ Download Screenshot (Attachment 4)
             </a>
         </div>
@@ -208,7 +208,7 @@
     <script>
         async function copyEmail() {
             try {
-                const response = await fetch('https://travel-portal-15.preview.emergentagent.com/api/download/tbo-email');
+                const response = await fetch('https://responsive-travel-1.preview.emergentagent.com/api/download/tbo-email');
                 const text = await response.text();
                 await navigator.clipboard.writeText(text);
                 

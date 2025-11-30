@@ -30,7 +30,7 @@ class TBOUpdatedEndpointTester:
             "Password": "Smile@123",
             "EndUserIp": "192.168.11.120"
         }
-        self.backend_url = "https://travel-portal-15.preview.emergentagent.com"
+        self.backend_url = "https://responsive-travel-1.preview.emergentagent.com"
         self.test_results = []
         
     def log_test(self, test_name: str, success: bool, details: str, data: Any = None):

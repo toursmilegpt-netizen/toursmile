@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 class TBOFinalIntegrationTester:
     def __init__(self):
-        self.backend_url = "https://travel-portal-15.preview.emergentagent.com"
+        self.backend_url = "https://responsive-travel-1.preview.emergentagent.com"
         self.tbo_auth_url = "https://Sharedapi.tektravels.com/SharedData.svc/rest/Authenticate"
         self.tbo_search_url = "https://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search"
         self.tbo_credentials = {
