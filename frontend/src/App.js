@@ -2077,7 +2077,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
   
   const {
     from, setFrom, to, setTo, depart, setDepart, ret, setRet,
-    pax, setPax, trip, setTrip
+    pax, setPax, trip, setTrip,
+    multiCitySegments, setMultiCitySegments,
+    activeMultiCitySegment, setActiveMultiCitySegment
   } = searchStates;
 
   const { currentStep, markStepComplete, getStepStatus, getStepColor } = guidedFlow;
