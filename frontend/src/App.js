@@ -2803,31 +2803,32 @@ function App() {
               </p>
             </section>
 
-            {/* Service Icons Section - More Compact on Mobile */}
-            <section className="text-center pb-1.5 sm:pb-2">
-              <div className="flex justify-center items-center space-x-3 sm:space-x-4 md:space-x-6 lg:space-x-8 py-1 sm:py-1.5">
-                {/* Flights Icon */}
-                <div className="flex items-center space-x-1 sm:space-x-1.5 group cursor-pointer">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-blue-50/30 flex items-center justify-center group-hover:border-blue-300 transition-all duration-300 shadow-sm">
-                    <span className="text-xs sm:text-sm md:text-base lg:text-lg">✈️</span>
+            {/* Service Icons Section - Premium with Coral Active State */}
+            <section className="text-center pb-4 sm:pb-6">
+              <div className="flex justify-center items-center space-x-6 sm:space-x-8 md:space-x-10 lg:space-x-12 py-2 sm:py-3">
+                {/* Flights Icon - Active with Coral */}
+                <div className="flex flex-col items-center space-y-2 group cursor-pointer">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl border-2 border-[#FF6B6B] bg-gradient-to-br from-white to-red-50/40 flex items-center justify-center transition-all duration-300 shadow-md">
+                    <span className="text-lg sm:text-xl md:text-2xl">✈️</span>
                   </div>
-                  <span className="text-[10px] sm:text-xs md:text-sm font-medium text-black">Flights</span>
+                  <span className="text-xs sm:text-sm font-semibold tab-active-coral">Flights</span>
+                  <div className="h-0.5 w-12 bg-[#FF6B6B] rounded-full"></div>
                 </div>
                 
                 {/* Hotels Icon */}
-                <div className="flex items-center space-x-1 sm:space-x-1.5 group cursor-pointer">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-green-50/30 flex items-center justify-center group-hover:border-green-300 transition-all duration-300 shadow-sm">
-                    <span className="text-xs sm:text-sm md:text-base lg:text-lg">🏨</span>
+                <div className="flex flex-col items-center space-y-2 group cursor-pointer">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl border border-neutral-300 bg-gradient-to-br from-white to-neutral-50/30 flex items-center justify-center group-hover:border-[#FF6B6B] transition-all duration-300 shadow-sm">
+                    <span className="text-lg sm:text-xl md:text-2xl">🏨</span>
                   </div>
-                  <span className="text-[10px] sm:text-xs md:text-sm font-medium text-neutral-400">Hotels</span>
+                  <span className="text-xs sm:text-sm font-medium text-neutral-400 group-hover:text-[#FF6B6B]">Hotels</span>
                 </div>
                 
                 {/* Tours Icon */}
-                <div className="flex items-center space-x-1 sm:space-x-1.5 group cursor-pointer">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-lg border border-neutral-300 bg-gradient-to-br from-white to-orange-50/30 flex items-center justify-center group-hover:border-orange-300 transition-all duration-300 shadow-sm">
-                    <span className="text-xs sm:text-sm md:text-base lg:text-lg">🗺️</span>
+                <div className="flex flex-col items-center space-y-2 group cursor-pointer">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl border border-neutral-300 bg-gradient-to-br from-white to-neutral-50/30 flex items-center justify-center group-hover:border-[#FF6B6B] transition-all duration-300 shadow-sm">
+                    <span className="text-lg sm:text-xl md:text-2xl">🗺️</span>
                   </div>
-                  <span className="text-[10px] sm:text-xs md:text-sm font-medium text-neutral-400">Tours</span>
+                  <span className="text-xs sm:text-sm font-medium text-neutral-400 group-hover:text-[#FF6B6B]">Tours</span>
                 </div>
               </div>
             </section>
