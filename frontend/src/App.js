@@ -2500,6 +2500,19 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                       </div>
                     </div>
                   </div>
+                  {showFromOverlay && activeMultiCitySegment.index === index && activeMultiCitySegment.field === 'from' && (
+                    <CityDropdownSelector
+                      value={segment.from}
+                      onChange={handleFromSelect}
+                      onClose={() => {
+                        setShowFromOverlay(false);
+                        setActiveMultiCitySegment({ index: null, field: null });
+                      }}
+                      label="From City"
+                      defaultCities={DEFAULT_CITIES}
+                      searchFunction={performAutocompleteSearch}
+                    />
+                  )}
                 </div>
 
                 {/* Arrow */}
