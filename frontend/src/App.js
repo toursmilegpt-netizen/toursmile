@@ -2492,13 +2492,13 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         </div>
 
         {/* Options - Centered */}
-        <div className="mt-2 flex justify-center">
-          <div className="flex flex-wrap items-center gap-3">
-          <label className="flex items-center gap-2 text-xs sm:text-sm text-neutral-700">
-            <input type="checkbox" className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Direct flights only
+        <div className="mt-4 flex justify-center">
+          <div className="flex flex-wrap items-center gap-4">
+          <label className="flex items-center gap-2 checkbox-label-premium cursor-pointer">
+            <input type="checkbox" className="checkbox-premium cursor-pointer" /> Direct flights only
           </label>
-          <label className="flex items-center gap-2 text-xs sm:text-sm text-neutral-700">
-            <input type="checkbox" className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Flexible dates ±3 days
+          <label className="flex items-center gap-2 checkbox-label-premium cursor-pointer">
+            <input type="checkbox" className="checkbox-premium cursor-pointer" /> Flexible dates ±3 days
           </label>
           </div>
         </div>
