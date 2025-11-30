@@ -2705,16 +2705,16 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <div 
             className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
             style={{
-              background: '#F8FAFC',
-              border: getStepStatus(3) === 'active' ? '2px solid #FF6B6B' : '1px solid #E2E8F0',
-              borderRadius: '16px',
-              height: isMobile ? '48px' : '52px',
+              background: isMobile ? '#FFFFFF' : '#F8FAFC',
+              border: getStepStatus(3) === 'active' ? '2px solid #FF6B6B' : (isMobile ? '1px solid #D1D5DB' : '1px solid #E2E8F0'),
+              borderRadius: isMobile ? '12px' : '16px',
+              height: isMobile ? '56px' : '52px',
               display: 'flex',
               alignItems: 'center',
               cursor: 'pointer',
-              boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+              boxShadow: isMobile ? '0 1px 3px rgba(0, 0, 0, 0.1)' : '0 1px 2px rgba(0, 0, 0, 0.05)',
               transition: 'all 0.2s ease',
-              width: '340px'
+              width: isMobile ? '100%' : '340px'
             }}
             onClick={(e) => {
               e.preventDefault();
