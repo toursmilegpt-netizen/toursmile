@@ -3526,9 +3526,14 @@ function App() {
                 style={{
                   background: 'none',
                   border: 'none',
-                  fontSize: '18px',
+                  fontSize: '24px',
                   cursor: 'pointer',
-                  padding: '8px',
+                  padding: '12px',
+                  minWidth: '48px',
+                  minHeight: '48px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   color: '#6b7280'
                 }}
               >
