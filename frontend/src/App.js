@@ -2107,6 +2107,26 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
     return date.toLocaleDateString('en-US', options);
   };
 
+  // Multi-City handlers
+  const addMultiCitySegment = () => {
+    if (multiCitySegments.length < 4) {
+      setMultiCitySegments([...multiCitySegments, { from: null, to: null, date: '' }]);
+    }
+  };
+
+  const removeMultiCitySegment = (index) => {
+    if (multiCitySegments.length > 2) {
+      const newSegments = multiCitySegments.filter((_, i) => i !== index);
+      setMultiCitySegments(newSegments);
+    }
+  };
+
+  const updateMultiCitySegment = (index, field, value) => {
+    const newSegments = [...multiCitySegments];
+    newSegments[index][field] = value;
+    setMultiCitySegments(newSegments);
+  };
+
   // GUIDED UX FLOW HANDLERS - Enterprise-level user journey
   const handleFromSelect = (selectedFrom) => {
     setFrom(selectedFrom);
