@@ -116,7 +116,7 @@ const CityDropdownSelector = ({
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-start',
                 padding: '12px 16px',
                 cursor: 'pointer',
                 transition: 'background 0.2s ease',
