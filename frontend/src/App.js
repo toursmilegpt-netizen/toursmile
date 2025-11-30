@@ -3040,15 +3040,8 @@ function App() {
   // Date selection handler - at App level to be accessible from date overlay
   const handleDateSelect = (selectedDate) => {
     if (trip === 'MC' && activeMultiCitySegment.index !== null) {
-      // Multi-city mode - use functional update to ensure React detects change
+      // Multi-city mode - just update the date, passenger overlay will open via Apply button
       const currentIndex = activeMultiCitySegment.index;
-      
-      // Get current segment states to check if first segment is complete
-      const currentSegments = multiCitySegments;
-      const isFirstSegment = currentIndex === 0;
-      const firstSegmentWillBeComplete = isFirstSegment && 
-        currentSegments[0]?.from && 
-        currentSegments[0]?.to;
       
       setMultiCitySegments(prevSegments => {
         const updatedSegments = prevSegments.map((segment, idx) => {
@@ -3063,13 +3056,7 @@ function App() {
       
       setShowDateOverlay(false);
       setActiveMultiCitySegment({ index: null, field: null });
-      
-      // Open passenger overlay after state updates complete - only for first segment
-      if (firstSegmentWillBeComplete) {
-        setTimeout(() => {
-          setShowPassengerOverlay(true);
-        }, 500);
-      }
+      // Note: Passenger overlay will be triggered by Apply Dates button, not here
     } else {
       // One Way / Round Trip mode
       setDepart(selectedDate);
