@@ -2326,47 +2326,42 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
           >
             <div style={{ 
-              padding: window.innerWidth < 480 ? '8px 10px' : window.innerWidth < 768 ? '10px 12px' : '12px 16px',
-              height: '100%',
-              minHeight: window.innerWidth < 480 ? '52px' : window.innerWidth < 768 ? '56px' : '64px',
+              padding: window.innerWidth < 480 ? '8px 12px' : '10px 14px',
+              height: isMobile ? '48px' : '52px',
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center'
+              alignItems: 'center',
+              gap: '10px'
             }}>
-              <div style={{ 
-                fontSize: isMobile ? '9px' : '10px', 
-                fontWeight: '500', 
-                color: '#6B7280',
-                marginBottom: '4px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
-              }}>TO</div>
-              <div className="flex items-center" style={{ minWidth: 0, maxWidth: '100%' }}>
-                <span style={{ fontSize: '16px', marginRight: '8px' }}>✈️</span>
-                <div className="flex-1 min-w-0">
-                  <div className="truncate" style={{ 
-                    fontSize: window.innerWidth < 480 ? '12px' : window.innerWidth < 768 ? '14px' : '16px', 
-                    fontWeight: '600',
-                    color: to ? '#111827' : '#9CA3AF',
-                    lineHeight: '1.2'
-                  }}>
-                    {to ? to.city : 'Select City'}
-                  </div>
-                  {to && to.iata && (
-                    <div style={{
-                      fontSize: isMobile ? '10px' : '11px',
-                      color: '#9CA3AF',
-                      fontFamily: 'monospace',
-                      textTransform: 'uppercase',
-                      marginTop: '2px',
-                      fontWeight: '400'
-                    }}>
-                      {to.iata}
-                    </div>
-                  )}
+              <span style={{ fontSize: '18px', flexShrink: 0 }}>✈️</span>
+              <div className="flex-1 min-w-0">
+                <div style={{ 
+                  fontSize: '9px', 
+                  fontWeight: '600', 
+                  color: '#9CA3AF',
+                  marginBottom: '2px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>TO</div>
+                <div className="truncate" style={{ 
+                  fontSize: isMobile ? '13px' : '15px', 
+                  fontWeight: '600',
+                  color: to ? '#111827' : '#9CA3AF',
+                  lineHeight: '1.2'
+                }}>
+                  {to ? `${to.city} ${to.iata ? `(${to.iata})` : ''}` : 'Select City'}
                 </div>
               </div>
             </div>
+            {showToOverlay && (
+              <CityDropdownSelector
+                value={to}
+                onChange={handleToSelect}
+                onClose={() => setShowToOverlay(false)}
+                label="To City"
+                defaultCities={DEFAULT_CITIES}
+                searchFunction={performAutocompleteSearch}
+              />
+            )}
           </div>
           </div>
         </div>
