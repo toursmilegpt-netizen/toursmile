@@ -2528,8 +2528,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 });
               }
             }}
-            className={`px-6 py-2.5 text-sm sm:text-base rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-300 disabled:opacity-60 ${
-              getStepStatus(6) === 'active' && from && to && depart ? 'ring-4 ring-blue-300 shadow-2xl from-blue-700 to-blue-800 scale-105 animate-pulse' : ''
+            className={`search-button-premium ${
+              getStepStatus(6) === 'active' && from && to && depart ? 'ring-4 ring-indigo-300 scale-105 animate-pulse' : ''
             }`}
             disabled={loading}
           >
