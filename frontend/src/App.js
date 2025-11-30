@@ -2807,32 +2807,31 @@ function App() {
               </p>
             </section>
 
-            {/* Service Icons Section - Premium with Coral Active State */}
-            <section className="text-center pb-4 sm:pb-6">
-              <div className="flex justify-center items-center space-x-6 sm:space-x-8 md:space-x-10 lg:space-x-12 py-2 sm:py-3">
-                {/* Flights Icon - Active with Coral */}
-                <div className="flex flex-col items-center space-y-2 group cursor-pointer">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl border-2 border-[#FF6B6B] bg-gradient-to-br from-white to-red-50/40 flex items-center justify-center transition-all duration-300 shadow-md">
-                    <span className="text-lg sm:text-xl md:text-2xl">✈️</span>
+            {/* Service Icons Section - Enterprise style with grey background for active */}
+            <section className="text-center pb-2 sm:pb-3">
+              <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 py-1.5 sm:py-2">
+                {/* Flights Icon - Active with grey background */}
+                <div className="flex flex-col items-center space-y-1 group cursor-pointer">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center transition-all duration-300 shadow-sm">
+                    <span className="text-base sm:text-lg md:text-xl">✈️</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-semibold tab-active-coral">Flights</span>
-                  <div className="h-0.5 w-12 bg-[#FF6B6B] rounded-full"></div>
+                  <span className="text-xs sm:text-sm font-semibold text-gray-700">Flights</span>
                 </div>
                 
                 {/* Hotels Icon */}
-                <div className="flex flex-col items-center space-y-2 group cursor-pointer">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl border border-neutral-300 bg-gradient-to-br from-white to-neutral-50/30 flex items-center justify-center group-hover:border-[#FF6B6B] transition-all duration-300 shadow-sm">
-                    <span className="text-lg sm:text-xl md:text-2xl">🏨</span>
+                <div className="flex flex-col items-center space-y-1 group cursor-pointer">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg border border-neutral-200 bg-white flex items-center justify-center hover:bg-gray-50 transition-all duration-300 shadow-sm">
+                    <span className="text-base sm:text-lg md:text-xl">🏨</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-medium text-neutral-400 group-hover:text-[#FF6B6B]">Hotels</span>
+                  <span className="text-xs sm:text-sm font-medium text-neutral-400 group-hover:text-gray-700">Hotels</span>
                 </div>
                 
                 {/* Tours Icon */}
-                <div className="flex flex-col items-center space-y-2 group cursor-pointer">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl border border-neutral-300 bg-gradient-to-br from-white to-neutral-50/30 flex items-center justify-center group-hover:border-[#FF6B6B] transition-all duration-300 shadow-sm">
-                    <span className="text-lg sm:text-xl md:text-2xl">🗺️</span>
+                <div className="flex flex-col items-center space-y-1 group cursor-pointer">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg border border-neutral-200 bg-white flex items-center justify-center hover:bg-gray-50 transition-all duration-300 shadow-sm">
+                    <span className="text-base sm:text-lg md:text-xl">🗺️</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-medium text-neutral-400 group-hover:text-[#FF6B6B]">Tours</span>
+                  <span className="text-xs sm:text-sm font-medium text-neutral-400 group-hover:text-gray-700">Tours</span>
                 </div>
               </div>
             </section>
