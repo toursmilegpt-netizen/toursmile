@@ -2221,8 +2221,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
 
         {/* Conditional Rendering: One Way / Round Trip vs Multi City */}
         {trip !== 'MC' && (
-          /* Enhanced From/To Container - MakeMyTrip Style (Always Horizontal) */
-          <div className="mt-2 flex justify-center">
+          /* Enhanced From/To Container - Side by side on all screens */
+          <div className="mt-0 lg:mt-2 flex justify-center px-4 lg:px-0">
           <div style={{ 
             display: 'flex',
             alignItems: 'center',
