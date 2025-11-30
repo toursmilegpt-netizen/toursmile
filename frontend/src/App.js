@@ -2560,7 +2560,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                       </div>
                     </div>
                   </div>
-                  {showToOverlay && activeMultiCitySegment.index === index && activeMultiCitySegment.field === 'to' && (
+                  {showToOverlay && activeMultiCitySegment.index === index && activeMultiCitySegment.field === 'to' && !isMobile && (
                     <CityDropdownSelector
                       value={segment.to}
                       onChange={handleToSelect}
