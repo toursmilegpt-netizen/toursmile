@@ -2120,9 +2120,14 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
   };
 
   const updateMultiCitySegment = (index, field, value) => {
-    const newSegments = [...multiCitySegments];
-    newSegments[index][field] = value;
-    setMultiCitySegments(newSegments);
+    setMultiCitySegments(prevSegments => {
+      return prevSegments.map((segment, idx) => {
+        if (idx === index) {
+          return { ...segment, [field]: value };
+        }
+        return segment;
+      });
+    });
   };
 
   // GUIDED UX FLOW HANDLERS - Enterprise-level user journey
