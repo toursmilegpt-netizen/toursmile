@@ -3527,7 +3527,10 @@ function App() {
               label={trip === 'MC' ? 'Flight Date' : 'Departure Date'} 
               value={trip === 'MC' && activeMultiCitySegment.index !== null 
                 ? multiCitySegments[activeMultiCitySegment.index]?.date 
-                : depart} 
+                : depart}
+              minDate={trip === 'MC' && activeMultiCitySegment.index !== null && activeMultiCitySegment.index > 0
+                ? multiCitySegments[activeMultiCitySegment.index - 1]?.date
+                : null}
               onChange={(date) => {
                 // Just update the state, don't trigger handleDateSelect yet
                 // handleDateSelect will be called when "Apply Dates" is clicked
