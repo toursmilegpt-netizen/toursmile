@@ -2778,16 +2778,16 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <div 
             className={`passenger-selector-compact transition-all duration-200 ${getStepColor(5)}`}
           style={{
-            background: '#F8FAFC',
-            border: getStepStatus(5) === 'active' ? '2px solid #FF6B6B' : '1px solid #E2E8F0',
-            borderRadius: '16px',
+            background: isMobile ? '#FFFFFF' : '#F8FAFC',
+            border: getStepStatus(5) === 'active' ? '2px solid #FF6B6B' : (isMobile ? '1px solid #D1D5DB' : '1px solid #E2E8F0'),
+            borderRadius: isMobile ? '12px' : '16px',
             padding: '0 14px',
-            height: isMobile ? '48px' : '52px',
+            height: isMobile ? '56px' : '52px',
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
             cursor: 'pointer',
-            width: '340px'
+            width: isMobile ? '100%' : '340px'
           }}
           onClick={(e) => {
             e.preventDefault();
