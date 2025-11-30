@@ -1131,8 +1131,10 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Multi-City Functionality Implementation"
     - "Flight Results Page Integration"
   stuck_tasks:
+    - "Multi-City Functionality Implementation"
     - "Flight Results Page Integration"
     - "Ixigo-Style Compact Design Implementation"
     - "Homepage Search Flow Integration"
