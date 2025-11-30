@@ -3154,8 +3154,8 @@ function App() {
             background: 'linear-gradient(180deg, #FFF8F0 0%, #FFFCF5 100%)',
             minHeight: '100vh'
           }}>
-            {/* Hero Section - Minimal to fit form in viewport */}
-            <section className="text-center pt-2 pb-1.5">
+            {/* Hero Section - Hidden on mobile, visible on desktop */}
+            <section className="hidden lg:block text-center pt-2 pb-1.5">
               <h1 className="heading-premium" style={{
                 fontSize: '1.875rem',
                 marginBottom: '0.25rem'
