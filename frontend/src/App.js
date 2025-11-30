@@ -3570,20 +3570,21 @@ function App() {
               <button
                 onClick={() => {
                   setShowDateOverlay(false);
-                  setActiveMultiCitySegment({ index: null, field: null });
                   
-                  // For multi-city, check if Flight 1 is complete and open passenger overlay
-                  if (trip === 'MC') {
+                  // For multi-city, check if THIS is Flight 1 (index 0) being completed
+                  if (trip === 'MC' && activeMultiCitySegment.index === 0) {
                     const firstSegment = multiCitySegments[0];
                     if (firstSegment.from && firstSegment.to && firstSegment.date) {
                       setTimeout(() => setShowPassengerOverlay(true), 200);
                     }
-                  } else {
+                  } else if (trip !== 'MC') {
                     // For OW/RT, auto-guide to passengers if dates are selected
                     if (depart && (trip !== 'RT' || ret)) {
                       setTimeout(() => setShowPassengerOverlay(true), 200);
                     }
                   }
+                  
+                  setActiveMultiCitySegment({ index: null, field: null });
                 }}
                 className="w-full px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors"
               >
