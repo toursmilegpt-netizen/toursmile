@@ -2374,8 +2374,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Date Selection - Centered Compact Field */}
-        <div className="mt-2 flex justify-center">
+        {/* Date & Passenger - Side by Side */}
+        <div className="mt-2 flex justify-center gap-3">
+          {/* Date Selection */}
           <div 
             className={`date-selector-compact transition-all duration-200 ${getStepColor(3)}`}
             style={{
@@ -2383,13 +2384,13 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               border: getStepStatus(3) === 'active' ? '2px solid #FF6B6B' : '1px solid #E2E8F0',
               borderRadius: '16px',
               height: isMobile ? '48px' : '52px',
-              display: 'inline-flex',
+              display: 'flex',
               alignItems: 'center',
               cursor: 'pointer',
               boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
               transition: 'all 0.2s ease',
-              minWidth: window.innerWidth < 768 ? '100%' : 'auto',
-              width: window.innerWidth < 768 ? '100%' : 'auto'
+              flex: '1',
+              minWidth: '280px'
             }}
             onClick={(e) => {
               e.preventDefault();
