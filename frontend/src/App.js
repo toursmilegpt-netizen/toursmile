@@ -2979,6 +2979,9 @@ function App() {
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [searchParams, setSearchParams] = useState(null);
   
+  // Responsive design hook
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth <= 768;
   // Overlay states - moved to App level for proper full-screen rendering
   const [showFromOverlay, setShowFromOverlay] = useState(false);
   const [showToOverlay, setShowToOverlay] = useState(false);
