@@ -644,7 +644,7 @@ const AIRPORT_INDEX = createAirportIndex();
 
 // Default cities for immediate dropdown (9 cities as requested)
 const DEFAULT_CITIES = [
-  'Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Kolkata', // Indian metros
+  'Mumbai', 'New Delhi', 'Bangalore', 'Chennai', 'Kolkata', // Indian metros
   'Singapore', 'London', 'New York', 'Dubai' // International
 ].map(cityName => {
   return GLOBAL_AIRPORTS_DATABASE.find(airport => airport.city === cityName) || null;
