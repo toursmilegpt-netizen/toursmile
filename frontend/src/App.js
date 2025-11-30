@@ -3542,8 +3542,19 @@ function App() {
                 ? multiCitySegments[activeMultiCitySegment.index]?.date 
                 : depart} 
               onChange={(date) => {
+                // Just update the state, don't trigger handleDateSelect yet
+                // handleDateSelect will be called when "Apply Dates" is clicked
                 if (trip === 'MC') {
-                  handleDateSelect(date);
+                  // For multi-city, just update the segment date temporarily
+                  const currentIndex = activeMultiCitySegment.index;
+                  setMultiCitySegments(prevSegments => {
+                    return prevSegments.map((segment, idx) => {
+                      if (idx === currentIndex) {
+                        return { ...segment, date };
+                      }
+                      return segment;
+                    });
+                  });
                 } else {
                   setDepart(date);
                   markStepComplete(3);
