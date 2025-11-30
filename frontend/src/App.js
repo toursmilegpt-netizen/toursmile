@@ -3000,6 +3000,8 @@ function App() {
   const [multiCitySegments, setMultiCitySegments] = useState([
     { from: null, to: null, date: '' },
     { from: null, to: null, date: '' }
+  ]);
+
   // Update overlay results with defaults when opening
   useEffect(() => {
     if (showFromOverlay || showToOverlay) {
