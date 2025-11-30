@@ -2326,17 +2326,18 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               }}
               className="swap-icon-coral"
               style={{ 
-                width: window.innerWidth < 480 ? '32px' : '36px',
-                height: window.innerWidth < 480 ? '32px' : '36px',
+                width: isMobile ? '40px' : '36px',
+                height: isMobile ? '40px' : '36px',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: window.innerWidth < 480 ? '14px' : '16px',
+                fontSize: isMobile ? '16px' : '16px',
                 fontWeight: 'bold',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 2px 8px rgba(255, 107, 107, 0.2)'
+                boxShadow: isMobile ? '0 2px 6px rgba(255, 107, 107, 0.25)' : '0 2px 8px rgba(255, 107, 107, 0.2)',
+                margin: isMobile ? '0 8px' : '0 12px'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = '#FF6B6B';
