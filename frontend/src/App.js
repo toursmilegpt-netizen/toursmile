@@ -3539,8 +3539,9 @@ function App() {
               <button
                 onClick={() => {
                   setShowDateOverlay(false);
-                  // Auto-guide to passengers if dates are selected
-                  if (depart && (trip !== 'RT' || ret)) {
+                  // For multi-city, the handleDateSelect already handled passenger overlay
+                  // For OW/RT, auto-guide to passengers if dates are selected
+                  if (trip !== 'MC' && depart && (trip !== 'RT' || ret)) {
                     setTimeout(() => setShowPassengerOverlay(true), 200);
                   }
                 }}
