@@ -2823,6 +2823,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
         )}
+          </div>
+        )}
 
         {/* Passenger Selection for Multi-City - Removed from bottom, appears via overlay after first flight */}
 
