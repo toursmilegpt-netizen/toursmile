@@ -2171,51 +2171,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
     }
   };
 
-  const handleDateSelect = (selectedDate) => {
-    if (trip === 'MC' && activeMultiCitySegment.index !== null) {
-      // Multi-city mode - use functional update to ensure React detects change
-      const currentIndex = activeMultiCitySegment.index;
-      
-      // Get current segment states to check if first segment is complete
-      const currentSegments = multiCitySegments;
-      const isFirstSegment = currentIndex === 0;
-      const firstSegmentWillBeComplete = isFirstSegment && 
-        currentSegments[0]?.from && 
-        currentSegments[0]?.to;
-      
-      setMultiCitySegments(prevSegments => {
-        const updatedSegments = prevSegments.map((segment, idx) => {
-          if (idx === currentIndex) {
-            return { ...segment, date: selectedDate };
-          }
-          return segment;
-        });
-        
-        return updatedSegments;
-      });
-      
-      setShowDateOverlay(false);
-      setActiveMultiCitySegment({ index: null, field: null });
-      
-      // Open passenger overlay after state updates complete - only for first segment
-      if (firstSegmentWillBeComplete) {
-        setTimeout(() => {
-          setShowPassengerOverlay(true);
-        }, 500);
-      }
-    } else {
-      // One Way / Round Trip mode
-      setDepart(selectedDate);
-      markStepComplete(3);
-      setShowDateOverlay(false);
-      // If round trip, guide to return date, otherwise to passengers
-      if (trip === 'RT' && !ret) {
-        setTimeout(() => setShowDateOverlay(true), 200);
-      } else {
-        setTimeout(() => setShowPassengerOverlay(true), 200);
-      }
-    }
-  };
+  // handleDateSelect is now at App level - removed from SearchCard
 
   const handlePassengerSelect = (selectedPax) => {
     setPax(selectedPax);
