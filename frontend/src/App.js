@@ -2237,7 +2237,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             style={{ 
               flex: '1',
               minWidth: isMobile ? '0' : '180px',
-              maxWidth: isMobile ? 'none' : '42%',
+              maxWidth: 'none',
               position: 'relative',
               cursor: 'pointer',
               borderRadius: isMobile ? '12px' : '16px',
@@ -2361,7 +2361,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             style={{ 
               flex: '1',
               minWidth: isMobile ? '0' : '180px',
-              maxWidth: isMobile ? 'none' : '42%',
+              maxWidth: 'none',
               position: 'relative',
               cursor: 'pointer',
               borderRadius: isMobile ? '12px' : '16px',
