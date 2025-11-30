@@ -2449,7 +2449,6 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               </div>
             </div>
           </div>
-        </div>
 
           {/* Passenger Selection */}
           <div 
