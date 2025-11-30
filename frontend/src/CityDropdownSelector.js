@@ -70,8 +70,8 @@ const CityDropdownSelector = ({
         left: 0,
         right: 0,
         zIndex: 1000,
-        maxWidth: '400px',
-        width: '100%'
+        maxWidth: 'none',
+        minWidth: '100%',
       }}
     >
       {/* Search Input */}
