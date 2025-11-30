@@ -2451,20 +2451,21 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Passenger Selection - Centered */}
-        <div className="mt-2 flex justify-center">
+          {/* Passenger Selection */}
           <div 
             className={`passenger-selector-compact transition-all duration-200 ${getStepColor(5)}`}
           style={{
-            background: getStepStatus(5) === 'active' ? '#F8FAFC' : '#F8FAFC',
+            background: '#F8FAFC',
             border: getStepStatus(5) === 'active' ? '2px solid #FF6B6B' : '1px solid #E2E8F0',
             borderRadius: '16px',
-            padding: window.innerWidth < 480 ? '8px 12px' : '10px 14px',
+            padding: '0 14px',
             height: isMobile ? '48px' : '52px',
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            flex: '1',
+            minWidth: '220px'
           }}
           onClick={(e) => {
             e.preventDefault();
