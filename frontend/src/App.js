@@ -2182,11 +2182,14 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               maxWidth: window.innerWidth < 480 ? '48%' : window.innerWidth < 768 ? '45%' : '42%',
               position: 'relative',
               cursor: 'pointer',
-              borderRadius: '12px',
-              border: getStepStatus(1) === 'active' ? '2px solid #3B82F6' : '1px solid #E5E7EB',
-              background: '#F0F9FF',
+              borderRadius: '16px',
+              border: getStepStatus(1) === 'active' ? '2px solid #FF6B6B' : '1px solid #E2E8F0',
+              background: '#F8FAFC',
+              height: isMobile ? '48px' : '52px',
               boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center'
             }}
             onClick={(e) => {
               e.preventDefault();
@@ -2195,20 +2198,21 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             }}
             onMouseEnter={(e) => {
               if (getStepStatus(1) !== 'active') {
-                e.currentTarget.style.borderColor = '#3B82F6';
-                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(59, 130, 246, 0.1)';
+                e.currentTarget.style.borderColor = '#FF6B6B';
+                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(255, 107, 107, 0.1)';
               }
             }}
             onMouseLeave={(e) => {
               if (getStepStatus(1) !== 'active') {
-                e.currentTarget.style.borderColor = '#E5E7EB';
+                e.currentTarget.style.borderColor = '#E2E8F0';
                 e.currentTarget.style.boxShadow = '0 1px 2px 0 rgba(0, 0, 0, 0.05)';
               }
             }}
           >
             <div style={{ 
-              padding: window.innerWidth < 480 ? '8px 12px' : '10px 14px',
-              height: isMobile ? '48px' : '52px',
+              padding: '0 14px',
+              height: '100%',
+              width: '100%',
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
