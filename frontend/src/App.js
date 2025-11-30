@@ -2467,7 +2467,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           }}
         >
           <div>
-            <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">PASSENGERS & CLASS</div>
+            <div className="text-[9px] font-medium text-neutral-500 mb-0.5 uppercase tracking-wide">PASSENGERS & CABIN</div>
             <div className="flex items-center">
               <span className="text-xs mr-1.5">👥</span>
               <div className="text-sm font-semibold" style={{ fontSize: '14px', color: '#111827' }}>
