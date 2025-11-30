@@ -2760,6 +2760,58 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           <div className="text-neutral-400 text-lg">›</div>
           </div>
         </div>
+        )}
+
+        {/* Passenger Selection for Multi-City */}
+        {trip === 'MC' && (
+          <div className="mt-3 flex justify-center">
+            <div 
+              className={`passenger-selector-compact transition-all duration-200`}
+              style={{
+                background: '#F8FAFC',
+                border: '1px solid #E2E8F0',
+                borderRadius: '16px',
+                padding: '0 14px',
+                height: '52px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                cursor: 'pointer',
+                width: '340px'
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowPassengerOverlay(true);
+              }}
+            >
+              <span style={{ fontSize: '18px', flexShrink: 0 }}>👥</span>
+              <div className="flex-1">
+                <div style={{ 
+                  fontSize: '9px', 
+                  fontWeight: '600', 
+                  color: '#9CA3AF',
+                  marginBottom: '2px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>PASSENGERS & CABIN</div>
+                <div className="flex items-center">
+                  <div className="text-sm font-semibold" style={{ fontSize: '14px', color: '#111827' }}>
+                    {(() => {
+                      const total = pax.adt + pax.chd + pax.inf;
+                      const parts = [];
+                      if (pax.adt > 0) parts.push(`${pax.adt} Adult${pax.adt > 1 ? 's' : ''}`);
+                      if (pax.chd > 0) parts.push(`${pax.chd} Child${pax.chd > 1 ? 'ren' : ''}`);
+                      if (pax.inf > 0) parts.push(`${pax.inf} Infant${pax.inf > 1 ? 's' : ''}`);
+                      return `${total} Passenger${total > 1 ? 's' : ''}, ${pax.cabin}`;
+                    })()}
+                  </div>
+                </div>
+              </div>
+              <div className="text-neutral-400 text-lg">›</div>
+            </div>
+          </div>
+        )}
 
         {/* Options - Centered */}
         <div className="mt-4 flex justify-center">
