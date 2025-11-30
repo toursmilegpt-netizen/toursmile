@@ -2431,8 +2431,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                     alignItems: 'center'
                   }}
                   onClick={() => {
-                    // Open dropdown for this segment
-                    const tempOverlayState = { index, field: 'from' };
+                    setActiveMultiCitySegment({ index, field: 'from' });
                     setShowFromOverlay(true);
                   }}
                 >
