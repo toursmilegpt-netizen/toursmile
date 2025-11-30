@@ -3550,7 +3550,66 @@ function App() {
               <div style={{ width: '34px' }}></div>
             </div>
 
-        {/* Dropdown Date Pickers - Both dates in one view */}
+        {/* Date Selection Content - Mobile vs Desktop */}
+        {isMobile ? (
+          <div style={{ flex: 1, height: '100%', overflow: 'hidden' }}>
+            <MobileCalendar
+              tripType={trip}
+              departDate={trip === 'MC' && activeMultiCitySegment.index !== null ? multiCitySegments[activeMultiCitySegment.index]?.date : depart}
+              returnDate={ret}
+              minDate={trip === 'MC' && activeMultiCitySegment.index !== null && activeMultiCitySegment.index > 0
+                ? multiCitySegments[activeMultiCitySegment.index - 1]?.date
+                : new Date()}
+              onClose={() => setShowDateOverlay(false)}
+              onSelect={(selection) => {
+                const formatDate = (d) => {
+                  if (!d) return null;
+                  const year = d.getFullYear();
+                  const month = String(d.getMonth() + 1).padStart(2, '0');
+                  const day = String(d.getDate()).padStart(2, '0');
+                  return `${year}-${month}-${day}`;
+                };
+
+                if (trip === 'MC') {
+                  const dStr = formatDate(selection.depart);
+                  const currentIndex = activeMultiCitySegment.index;
+                  setMultiCitySegments(prevSegments => {
+                    return prevSegments.map((segment, idx) => {
+                      if (idx === currentIndex) {
+                        return { ...segment, date: dStr };
+                      }
+                      return segment;
+                    });
+                  });
+                  // MobileCalendar handles closing for single date
+                } else {
+                  const dStr = formatDate(selection.depart);
+                  const rStr = formatDate(selection.return);
+                  
+                  if (dStr) {
+                    setDepart(dStr);
+                    markStepComplete(3);
+                  }
+                  
+                  if (rStr) {
+                    setRet(rStr);
+                    markStepComplete(4);
+                  } else if (trip === 'RT' && selection.depart && !selection.return) {
+                    // Just picked depart, waiting for return - do nothing else
+                  } else if (trip === 'RT' && !rStr) {
+                    setRet(null);
+                  }
+
+                  // Auto-close logic handled by MobileCalendar or here
+                  if (trip === 'OW' || (trip === 'RT' && dStr && rStr)) {
+                     setShowDateOverlay(false);
+                     setTimeout(() => setShowPassengerOverlay(true), 500);
+                  }
+                }
+              }}
+            />
+          </div>
+        ) : (
         <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
           <div style={{ maxWidth: '400px', margin: '0 auto' }}>
             {/* Departure Date Dropdown */}
@@ -3627,6 +3686,7 @@ function App() {
             </div>
           </div>
         </div>
+        )}
       </div>
       </div>
       </>,
