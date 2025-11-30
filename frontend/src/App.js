@@ -2168,20 +2168,30 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
 
   const handleDateSelect = (selectedDate) => {
     if (trip === 'MC' && activeMultiCitySegment.index !== null) {
-      // Multi-city mode - update the segment with the new date
-      const updatedSegments = [...multiCitySegments];
-      updatedSegments[activeMultiCitySegment.index].date = selectedDate;
-      setMultiCitySegments(updatedSegments);
+      // Multi-city mode - use functional update to ensure React detects change
+      const currentIndex = activeMultiCitySegment.index;
+      
+      setMultiCitySegments(prevSegments => {
+        const updatedSegments = prevSegments.map((segment, idx) => {
+          if (idx === currentIndex) {
+            return { ...segment, date: selectedDate };
+          }
+          return segment;
+        });
+        
+        // Check if this is the FIRST segment and it's fully filled, then show passenger selector
+        if (currentIndex === 0 && 
+            updatedSegments[0].from && 
+            updatedSegments[0].to && 
+            updatedSegments[0].date) {
+          setTimeout(() => setShowPassengerOverlay(true), 300);
+        }
+        
+        return updatedSegments;
+      });
+      
       setShowDateOverlay(false);
       setActiveMultiCitySegment({ index: null, field: null });
-      
-      // Check if this is the FIRST segment and it's fully filled, then show passenger selector
-      if (activeMultiCitySegment.index === 0 && 
-          updatedSegments[0].from && 
-          updatedSegments[0].to && 
-          updatedSegments[0].date) {
-        setTimeout(() => setShowPassengerOverlay(true), 200);
-      }
     } else {
       // One Way / Round Trip mode
       setDepart(selectedDate);
