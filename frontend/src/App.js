@@ -2374,7 +2374,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
           </div>
         </div>
 
-        {/* Date & Passenger - Side by Side with Max Width */}
+        {/* Date & Passenger - Side by Side Equal Width */}
         <div className="mt-2 flex justify-center gap-3">
           {/* Date Selection */}
           <div 
@@ -2389,9 +2389,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
               cursor: 'pointer',
               boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
               transition: 'all 0.2s ease',
-              flex: '0 1 auto',
-              minWidth: '280px',
-              maxWidth: '400px'
+              width: '340px'
             }}
             onClick={(e) => {
               e.preventDefault();
