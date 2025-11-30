@@ -129,29 +129,41 @@ const CityDropdownSelector = ({
                 e.currentTarget.style.background = 'white';
               }}
             >
-              <div style={{ flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    color: '#111827'
-                  }}
-                >
-                  {city.city}
-                </div>
-              </div>
               <div
                 style={{
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  color: '#FF6B6B',
-                  fontFamily: 'monospace',
-                  padding: '4px 8px',
-                  background: '#FFF1F0',
-                  borderRadius: '6px'
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '40px',
+                  height: '32px',
+                  backgroundColor: '#E5E7EB',
+                  borderRadius: '4px',
+                  marginRight: '12px',
+                  flexShrink: 0
                 }}
               >
-                {city.iata}
+                 <span style={{
+                   fontSize: '12px',
+                   fontWeight: '600',
+                   color: '#374151',
+                   fontFamily: 'sans-serif'
+                 }}>
+                   {city.iata}
+                 </span>
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    color: '#111827',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  {city.city}, {city.country} - {city.airport}
+                </div>
               </div>
             </div>
           ))
