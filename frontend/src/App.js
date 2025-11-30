@@ -2783,14 +2783,22 @@ function App() {
             </div>
           </header>
 
-          {/* Main Content */}
-          <main className="mx-auto max-w-5xl px-4 pb-24">
-            {/* Hero Section - Ultra Compact on Mobile, Minimal on Desktop */}
-            <section className="text-center pt-1 sm:pt-2 pb-0.5 sm:pb-1">
-              <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent mb-0.5 sm:mb-1">
+          {/* Main Content with Premium Sunset Background */}
+          <main className="mx-auto max-w-5xl px-4 pb-24" style={{
+            background: 'linear-gradient(180deg, #FFF8F0 0%, #FFFCF5 100%)',
+            minHeight: '100vh'
+          }}>
+            {/* Hero Section - Premium with larger sizing */}
+            <section className="text-center pt-6 sm:pt-8 pb-4 sm:pb-6">
+              <h1 className="heading-premium" style={{
+                fontSize: 'clamp(2rem, 5vw, 2.75rem)',
+                marginBottom: '0.75rem'
+              }}>
                 Discover the World
               </h1>
-              <p className="text-[10px] sm:text-xs md:text-sm text-gray-600 font-medium mb-0.5 sm:mb-1">
+              <p className="subheading-premium" style={{
+                fontSize: 'clamp(0.95rem, 2vw, 1.1rem)'
+              }}>
                 Quick and Easy Planning at Best Fares
               </p>
             </section>
