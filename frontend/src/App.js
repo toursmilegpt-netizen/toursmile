@@ -3227,7 +3227,7 @@ function App() {
                 ←
               </button>
               <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
-                Passengers & Class
+                Passengers & Cabin
               </h3>
               <div style={{ width: '34px' }}></div>
             </div>
