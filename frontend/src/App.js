@@ -2826,8 +2826,8 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         {/* Passenger Selection for Multi-City - Removed from bottom, appears via overlay after first flight */}
 
         {/* Options - Centered */}
-        <div className="mt-4 flex justify-center">
-          <div className="flex flex-wrap items-center gap-4">
+        <div className="mt-4 flex justify-center px-4 lg:px-0">
+          <div className="flex flex-wrap items-center gap-3 lg:gap-4 text-sm">
           <label className="flex items-center gap-2 checkbox-label-premium cursor-pointer">
             <input type="checkbox" className="checkbox-premium cursor-pointer" /> Direct flights only
           </label>
