@@ -2191,9 +2191,9 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-orange-100/10 to-red-100/10 rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
         <div className="absolute -bottom-5 -left-5 w-24 h-24 bg-gradient-to-tr from-orange-100/15 to-yellow-100/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500"></div>
         <div className="relative z-10">
-        {/* Trip Type Tabs - Premium Pill Style */}
-        <div className="flex justify-center mb-3">
-          <div className="inline-flex gap-2 bg-neutral-50 rounded-full p-1.5">
+        {/* Trip Type Tabs - Cleartrip flat style on mobile, pill style on desktop */}
+        <div className="flex justify-start lg:justify-center mb-3 px-4 lg:px-0">
+          <div className="flex lg:inline-flex gap-0 lg:gap-2 w-full lg:w-auto bg-white lg:bg-neutral-50 rounded-none lg:rounded-full p-0 lg:p-1.5 border-b lg:border-b-0 border-gray-200">
           {[
             { id: "OW", label: "One Way" },
             { id: "RT", label: "Round Trip" },
@@ -2202,7 +2202,16 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
             <button
               key={tab.id}
               onClick={() => setTrip(tab.id)}
-              className={`trip-pill ${trip === tab.id ? "trip-pill-active" : ""}`}
+              className={`
+                flex-1 lg:flex-none
+                py-3 lg:py-2 px-4 lg:px-6
+                text-sm font-medium
+                transition-all duration-200
+                ${trip === tab.id 
+                  ? "text-gray-900 border-b-2 lg:border-b-0 border-blue-600 lg:bg-white lg:text-[#FF6B6B] lg:border lg:border-[#FF6B6B] lg:rounded-full lg:shadow-sm" 
+                  : "text-gray-600 border-b-2 lg:border-b-0 border-transparent lg:bg-transparent hover:text-gray-900"
+                }
+              `}
             >
               {tab.label}
             </button>
