@@ -2621,8 +2621,10 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                     transition: 'all 0.2s ease'
                   }}
                   onClick={() => {
+                    // Set activeMultiCitySegment first, then show overlay in next tick
                     setActiveMultiCitySegment({ index, field: 'date' });
-                    setShowDateOverlay(true);
+                    // Use setTimeout to ensure state is updated before showing overlay
+                    setTimeout(() => setShowDateOverlay(true), 0);
                   }}
                 >
                   <div style={{
