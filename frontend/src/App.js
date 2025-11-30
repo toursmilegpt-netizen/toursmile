@@ -2146,7 +2146,7 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
         <div className="absolute -bottom-5 -left-5 w-24 h-24 bg-gradient-to-tr from-orange-100/15 to-yellow-100/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500"></div>
         <div className="relative z-10">
         {/* Trip Type Tabs - Premium Pill Style */}
-        <div className="flex justify-center mb-5">
+        <div className="flex justify-center mb-3">
           <div className="inline-flex gap-2 bg-neutral-50 rounded-full p-1.5">
           {[
             { id: "OW", label: "One Way" },
