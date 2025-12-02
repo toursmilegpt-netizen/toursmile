@@ -3299,9 +3299,9 @@ function App() {
       {/* Results Page */}
       {currentPage === 'results' && (
         <>
-          <FlightResults 
+          <FlightResultsPage 
             searchParams={searchParams}
-            onFlightSelect={handleFlightSelect}
+            onBack={() => setCurrentPage('search')}
           />
         </>
       )}
