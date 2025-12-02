@@ -5,6 +5,7 @@ import './premium-sunset-styles.css';
 import FlightResults from './FlightResults';
 import BookingFlow from './BookingFlow';
 import CityDropdownSelector from './CityDropdownSelector';
+import FlightResultsPage from './components/FlightResults/FlightResultsPage';
 import MobileCalendar from './MobileCalendar';
 
 // ===============================================================================
