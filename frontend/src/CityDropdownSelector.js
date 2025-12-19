@@ -112,7 +112,10 @@ const CityDropdownSelector = ({
             <div
               key={`${city.iata}-${index}`}
               className="city-dropdown-item"
-              onClick={() => handleCitySelect(city)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCitySelect(city);
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
