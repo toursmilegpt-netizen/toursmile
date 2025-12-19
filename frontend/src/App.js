@@ -2149,7 +2149,10 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
       markStepComplete(1);
       setShowFromOverlay(false);
       // Auto-guide user to next step
-      setTimeout(() => setShowToOverlay(true), 200);
+      // Important: Delay to prevent immediate re-opening if click bubbled, but fast enough for UX
+      setTimeout(() => {
+        setShowToOverlay(true);
+      }, 200);
     }
   };
 
