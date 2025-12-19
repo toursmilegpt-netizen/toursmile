@@ -3106,11 +3106,18 @@ function App() {
       // Note: Passenger overlay will be triggered by Apply Dates button, not here
     } else {
       // One Way / Round Trip mode
+      // If we are selecting a new departure date, and it's later than current return,
+      // OR if we are re-selecting departure, reset return to force valid selection
+      if (trip === 'RT' && ret) {
+        setRet(null); // Reset return date to force re-selection
+      }
+      
       setDepart(selectedDate);
       markStepComplete(3);
       setShowDateOverlay(false);
-      // If round trip, guide to return date, otherwise to passengers
-      if (trip === 'RT' && !ret) {
+      
+      // If round trip, guide to return date (which is now always null if re-selecting depart)
+      if (trip === 'RT') {
         setTimeout(() => setShowDateOverlay(true), 200);
       } else {
         setTimeout(() => setShowPassengerOverlay(true), 200);
