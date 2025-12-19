@@ -2306,7 +2306,6 @@ function SearchCard({ onSearch, overlayStates, searchStates, guidedFlow }) {
                 label="From City"
                 defaultCities={DEFAULT_CITIES}
                 searchFunction={performAutocompleteSearch}
-                autoFocusNext={() => setShowToOverlay(true)}
               />
             )}
           </div>
