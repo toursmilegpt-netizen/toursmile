@@ -54,10 +54,9 @@ const CityDropdownSelector = ({
     setShowDropdown(false);
     onClose();
     
-      // Auto-guide to next step
-      if (autoFocusNext) {
-        setTimeout(() => autoFocusNext(), 200);
-      }
+    // Auto-guide to next step
+    if (autoFocusNext) {
+      setTimeout(() => autoFocusNext(), 200);
     }
   };
 
