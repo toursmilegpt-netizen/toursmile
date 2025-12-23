@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { formatSectorDate, formatSectorTime, cleanSectorLabel } from '../../utils/dateFormatter';
 const PassengerDetailsPage = ({ selectedFlight, onBack }) => {
   const [formData, setFormData] = useState({
     firstName: '',
