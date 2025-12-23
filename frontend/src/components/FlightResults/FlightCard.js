@@ -1,12 +1,7 @@
 import React from 'react';
-
 import { formatSectorTime, cleanSectorLabel } from '../../utils/dateFormatter';
-const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
-  // Helper to format time
-  const formatTime = (timeStr) => {
-    return formatSectorTime(timeStr);
-  };
 
+const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
   // Helper to format duration
   const formatDuration = (minutes) => {
     if (!minutes) return '0h 0m';
@@ -15,11 +10,11 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
     return `${h}h ${m}m`;
   };
 
-  // Airline Logo Logic (Placeholder for now, matching App.js style later)
+  // Airline Logo Logic
   const airlineCode = flight.airline_code || 'AI';
   const airlineName = flight.airline || 'Airline';
 
-  // Use real fare types if available, otherwise mock a "Standard" fare for display
+  // Determine fares to show
   const fareOptions = flight.fare_types && flight.fare_types.length > 0 
     ? flight.fare_types 
     : [{
@@ -30,14 +25,19 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
         features: ['Standard Seat', 'Meal Available']
       }];
 
+  // Primary price to show on the main card (usually the cheapest/first option)
+  const displayPrice = flight.price || flight.base_price || 0;
+
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 mb-4 overflow-hidden">
-      <div className="p-4 sm:p-5">
+    <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 mb-4 overflow-hidden ${isExpanded ? 'ring-2 ring-blue-100 border-blue-200' : ''}`}>
+      
+      {/* Main Row - Always Visible */}
+      <div className="p-4 sm:p-5 cursor-pointer" onClick={() => onExpand(flight.id)}>
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
           
           {/* 1. Airline Info (Left) */}
           <div className="flex items-center gap-3 w-full sm:w-1/4">
-            <div className="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center border border-gray-100">
+            <div className="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center border border-gray-100 shadow-sm">
               <span className="text-xs font-bold text-gray-600">{airlineCode}</span>
             </div>
             <div>
@@ -46,11 +46,11 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
             </div>
           </div>
 
-          {/* 2. Flight Timing & Duration (Center) - The core UX from video */}
+          {/* 2. Flight Timing & Duration (Center) */}
           <div className="flex items-center justify-between flex-1 w-full sm:w-auto border-t sm:border-t-0 border-gray-100 pt-4 sm:pt-0 mt-2 sm:mt-0">
             <div className="text-left">
               <div className="text-xl sm:text-2xl font-bold text-gray-900 leading-none">
-                {formatTime(flight.departure_time)}
+                {formatSectorTime(flight.departure_time)}
               </div>
               <div className="text-xs text-gray-500 font-medium mt-1">
                 {cleanSectorLabel(flight.origin || 'DEL')}
@@ -69,7 +69,7 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
 
             <div className="text-right">
               <div className="text-xl sm:text-2xl font-bold text-gray-900 leading-none">
-                {formatTime(flight.arrival_time)}
+                {formatSectorTime(flight.arrival_time)}
               </div>
               <div className="text-xs text-gray-500 font-medium mt-1">
                 {cleanSectorLabel(flight.destination || 'BOM')}
@@ -81,77 +81,121 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
           <div className="flex items-center justify-between sm:flex-col sm:items-end w-full sm:w-auto border-t sm:border-t-0 border-gray-100 pt-4 sm:pt-0 mt-2 sm:mt-0 gap-2">
             <div className="text-left sm:text-right">
               <div className="text-2xl font-bold text-[#1e293b]">
-                ₹{(flight.price || flight.base_price || 0).toLocaleString()}
+                ₹{displayPrice.toLocaleString()}
               </div>
-              <div className="text-xs text-gray-400 line-through">
-                ₹{Math.round((flight.price || flight.base_price || 0) * 1.15).toLocaleString()}
+              <div className="text-xs text-gray-400">
+                per adult
               </div>
             </div>
+            
+            {/* Desktop: View Fares Button / Mobile: Chevron */}
             <button
-              onClick={() => onBook(flight)}
-              className="bg-[#FF6B6B] hover:bg-[#ff5252] text-white font-semibold py-2 px-6 rounded-xl transition-colors shadow-sm text-sm sm:text-base"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent double triggering if row click is enabled
+                onExpand(flight.id);
+              }}
+              className="bg-blue-50 text-blue-600 hover:bg-blue-100 font-semibold py-2 px-6 rounded-xl transition-colors text-sm flex items-center gap-2 group"
             >
-              Book
+              <span className="hidden sm:inline">{isExpanded ? 'Hide Fares' : 'View Fares'}</span>
+              <span className="sm:hidden">{isExpanded ? 'Hide' : 'Select'}</span>
+              <svg 
+                className={`w-4 h-4 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
           </div>
 
         </div>
       </div>
 
-      {/* 4. "View Fares" Footer Link (Expandable) */}
-      <div className="bg-gray-50 px-5 py-2 border-t border-gray-100 flex justify-center sm:justify-start">
-        <button 
-          onClick={() => onExpand(flight.id)}
-          className="text-xs font-medium text-[#4F46E5] hover:text-indigo-700 flex items-center gap-1 transition-colors"
-        >
-          {isExpanded ? 'Hide fares' : 'View more fares'}
-          <svg 
-            className={`w-3 h-3 transform transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-      </div>
-
-      {/* 5. Expanded Content - FARE CARDS from Server Logic */}
+      {/* 4. Expanded Content - INLINE ACCORDION */}
+      {/* Uses simple conditional rendering for instant "snap" effect as requested, no heavy animations */}
       {isExpanded && (
-        <div className="p-4 border-t border-gray-100 bg-white animate-fade-in">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">Select a Fare</h4>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {fareOptions.map((fare, idx) => (
-              <div key={idx} className="border border-gray-200 rounded-xl p-4 hover:border-[#4F46E5] transition-colors cursor-pointer" onClick={() => onBook({...flight, selectedFare: fare})}>
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <span className="text-xs font-bold uppercase text-[#4F46E5] bg-indigo-50 px-2 py-1 rounded">{fare.name || 'Standard'}</span>
-                  </div>
-                  <div className="text-lg font-bold text-gray-900">₹{fare.price?.toLocaleString()}</div>
-                </div>
-                
-                <div className="space-y-2 text-xs text-gray-600 mt-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-400">🎒</span> 
-                    <span>{fare.baggage || '15 kg'} Baggage</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-400">🔄</span> 
-                    <span>{fare.refundable ? 'Refundable' : 'Non-Refundable'}</span>
-                  </div>
-                  {fare.meal && (
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-400">🍽️</span> 
-                      <span>Meal Included</span>
-                    </div>
-                  )}
-                </div>
+        <div className="border-t border-gray-100 bg-gray-50/50 p-4 sm:p-6 animate-fade-in">
+          
+          <div className="flex flex-col md:flex-row gap-4">
+            
+            {/* A. Flight Details Column (Optional - Keep simple for now) */}
+            <div className="hidden lg:block w-1/4 pr-4 border-r border-gray-200">
+              <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Flight Details</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                  {airlineName} {flight.aircraft_type ? `• ${flight.aircraft_type}` : ''}
+                </li>
+                <li className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  {formatDuration(flight.duration_minutes)}
+                </li>
+              </ul>
+            </div>
 
-                <button className="w-full mt-3 py-2 bg-gray-900 text-white text-xs font-semibold rounded-lg hover:bg-gray-800 transition-colors">
-                  Select
-                </button>
+            {/* B. Fare Options Column - The Core Deliverable */}
+            <div className="flex-1">
+              <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 block lg:hidden">Select Fare</h4>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {fareOptions.map((fare, idx) => (
+                  <div 
+                    key={idx} 
+                    className="bg-white border border-gray-200 rounded-xl p-4 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer relative group"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onBook({...flight, selectedFare: fare});
+                    }}
+                  >
+                    {/* Header */}
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <span className="text-xs font-bold uppercase text-blue-600 bg-blue-50 px-2 py-1 rounded-md tracking-wide">
+                          {fare.name || 'Standard'}
+                        </span>
+                      </div>
+                      {/* Price Difference Indicator */}
+                      {fare.price > displayPrice && (
+                        <div className="text-xs text-gray-400">
+                          +₹{(fare.price - displayPrice).toLocaleString()}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Main Price */}
+                    <div className="text-xl font-bold text-gray-900 mb-3">
+                      ₹{fare.price?.toLocaleString()}
+                    </div>
+                    
+                    {/* Features List */}
+                    <div className="space-y-2 text-xs text-gray-600 mb-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">🎒</span> 
+                        <span className="font-medium text-gray-700">{fare.baggage || '15 kg'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">🔄</span> 
+                        <span className={`${fare.refundable ? 'text-green-600' : 'text-red-500'} font-medium`}>
+                          {fare.refundable ? 'Refundable' : 'Non-Refundable'}
+                        </span>
+                      </div>
+                      {fare.meal && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-400">🍽️</span> 
+                          <span className="font-medium text-gray-700">Meal Included</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Book Button - Visible on Hover (Desktop) or Always (Mobile) */}
+                    <button className="w-full py-2.5 bg-gray-900 text-white text-sm font-bold rounded-lg group-hover:bg-blue-600 transition-colors shadow-sm">
+                      Select
+                    </button>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
           </div>
         </div>
       )}
