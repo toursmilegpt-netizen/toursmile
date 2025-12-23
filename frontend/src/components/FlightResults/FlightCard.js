@@ -19,6 +19,17 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
   const airlineCode = flight.airline_code || 'AI';
   const airlineName = flight.airline || 'Airline';
 
+  // Use real fare types if available, otherwise mock a "Standard" fare for display
+  const fareOptions = flight.fare_types && flight.fare_types.length > 0 
+    ? flight.fare_types 
+    : [{
+        name: 'Standard',
+        price: flight.price || flight.base_price,
+        baggage: flight.baggage_allowance || '15 kg',
+        refundable: flight.refundable || false,
+        features: ['Standard Seat', 'Meal Available']
+      }];
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 mb-4 overflow-hidden">
       <div className="p-4 sm:p-5">
@@ -27,7 +38,6 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
           {/* 1. Airline Info (Left) */}
           <div className="flex items-center gap-3 w-full sm:w-1/4">
             <div className="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center border border-gray-100">
-              {/* Logo Placeholder - In production, use actual img tags */}
               <span className="text-xs font-bold text-gray-600">{airlineCode}</span>
             </div>
             <div>
@@ -71,10 +81,10 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
           <div className="flex items-center justify-between sm:flex-col sm:items-end w-full sm:w-auto border-t sm:border-t-0 border-gray-100 pt-4 sm:pt-0 mt-2 sm:mt-0 gap-2">
             <div className="text-left sm:text-right">
               <div className="text-2xl font-bold text-[#1e293b]">
-                ₹{flight.price?.toLocaleString() || '0'}
+                ₹{(flight.price || flight.base_price || 0).toLocaleString()}
               </div>
               <div className="text-xs text-gray-400 line-through">
-                ₹{Math.round((flight.price || 0) * 1.15).toLocaleString()}
+                ₹{Math.round((flight.price || flight.base_price || 0) * 1.15).toLocaleString()}
               </div>
             </div>
             <button
@@ -106,10 +116,43 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
         </button>
       </div>
 
-      {/* 5. Expanded Content (Placeholder for next iteration) */}
+      {/* 5. Expanded Content - FARE CARDS from Server Logic */}
       {isExpanded && (
         <div className="p-4 border-t border-gray-100 bg-white animate-fade-in">
-          <p className="text-sm text-gray-500 text-center">Fare details and options will appear here.</p>
+          <h4 className="text-sm font-semibold text-gray-700 mb-3">Select a Fare</h4>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {fareOptions.map((fare, idx) => (
+              <div key={idx} className="border border-gray-200 rounded-xl p-4 hover:border-[#4F46E5] transition-colors cursor-pointer" onClick={() => onBook({...flight, selectedFare: fare})}>
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <span className="text-xs font-bold uppercase text-[#4F46E5] bg-indigo-50 px-2 py-1 rounded">{fare.name || 'Standard'}</span>
+                  </div>
+                  <div className="text-lg font-bold text-gray-900">₹{fare.price?.toLocaleString()}</div>
+                </div>
+                
+                <div className="space-y-2 text-xs text-gray-600 mt-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-400">🎒</span> 
+                    <span>{fare.baggage || '15 kg'} Baggage</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-400">🔄</span> 
+                    <span>{fare.refundable ? 'Refundable' : 'Non-Refundable'}</span>
+                  </div>
+                  {fare.meal && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-400">🍽️</span> 
+                      <span>Meal Included</span>
+                    </div>
+                  )}
+                </div>
+
+                <button className="w-full mt-3 py-2 bg-gray-900 text-white text-xs font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                  Select
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
