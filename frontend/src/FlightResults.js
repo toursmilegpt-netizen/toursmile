@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import Header from './components/Header';
 
 // DESIGN CONSISTENCY RULE: ALL PAGES MUST MAINTAIN TOURSMILE HEADER BRANDING
 // This ensures consistent user experience and brand recognition across the application
