@@ -329,7 +329,17 @@ class TBOFlightService:
             
             # Format times to HH:MM
             dep_time_formatted = departure_time[:5] if len(departure_time) >= 5 else departure_time
+            if 'T' in dep_time_formatted:
+                dep_time_formatted = dep_time_formatted.split('T')[1][:5]
+            elif 'T' in departure_time:
+                # Fallback if slice was wrong but T exists
+                dep_time_formatted = departure_time.split('T')[1][:5]
+
             arr_time_formatted = arrival_time[:5] if len(arrival_time) >= 5 else arrival_time
+            if 'T' in arr_time_formatted:
+                arr_time_formatted = arr_time_formatted.split('T')[1][:5]
+            elif 'T' in arrival_time:
+                arr_time_formatted = arrival_time.split('T')[1][:5]
             
             # Calculate duration
             duration_minutes = 0
