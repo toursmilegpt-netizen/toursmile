@@ -3350,10 +3350,18 @@ function App() {
       
       {/* Flight Selection Page - REPLACED WITH NEW PASSENGER DETAILS PAGE */}
       {currentPage === 'selection' && selectedFlight && (
-        <PassengerDetailsPage 
-          selectedFlight={selectedFlight}
-          onBack={handleBackToResults}
-        />
+        <>
+          <Header 
+            variant="results"
+            searchParams={searchParams}
+            onEdit={() => setCurrentPage('search')}
+            onBack={handleBackToResults}
+          />
+          <PassengerDetailsPage 
+            selectedFlight={selectedFlight}
+            onBack={handleBackToResults}
+          />
+        </>
       )}
     
     {/* OVERLAYS - App Level for Full-Screen Display */}
