@@ -7,6 +7,7 @@ import BookingFlow from './BookingFlow';
 import CityDropdownSelector from './CityDropdownSelector';
 import FlightResultsPage from './components/FlightResults/FlightResultsPage';
 import MobileCalendar from './MobileCalendar';
+import PassengerDetailsPage from './components/PassengerDetails/PassengerDetailsPage';
 import SearchLoader from './components/common/SearchLoader';
 
 import Header from './components/Header';
