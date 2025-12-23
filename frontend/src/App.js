@@ -3134,10 +3134,13 @@ function App() {
         to: searchData.to,
         departDate: searchData.depart,
         returnDate: searchData.return,
-        passengers: `${searchData.pax.adt} Adult${searchData.pax.adt > 1 ? 's' : ''}${searchData.pax.chd > 0 ? `, ${searchData.pax.chd} Child${searchData.pax.chd > 1 ? 'ren' : ''}` : ''}${searchData.pax.inf > 0 ? `, ${searchData.pax.inf} Infant${searchData.pax.inf > 1 ? 's' : ''}` : ''}`,
-        class: searchData.pax.cabin,
+        passengers: searchData.pax ? `${searchData.pax.adt} Adult${searchData.pax.adt > 1 ? 's' : ''}${searchData.pax.chd > 0 ? `, ${searchData.pax.chd} Child${searchData.pax.chd > 1 ? 'ren' : ''}` : ''}${searchData.pax.inf > 0 ? `, ${searchData.pax.inf} Infant${searchData.pax.inf > 1 ? 's' : ''}` : ''}` : '1 Adult',
+        class: searchData.pax?.cabin || 'Economy',
         tripType: searchData.trip
       });
+      
+      // Ensure loading state is set true
+      setLoading(true);
       
       // Navigate to results page immediately to show loading state
       setCurrentPage('results');
