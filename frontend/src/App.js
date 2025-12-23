@@ -3340,6 +3340,7 @@ function App() {
                 console.log("Search complete callback received in App.js");
                 setLoading(false);
               }}
+              onFlightSelect={handleFlightSelect}
             />
           </div>
         </>
