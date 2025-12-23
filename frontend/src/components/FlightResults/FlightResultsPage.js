@@ -103,6 +103,8 @@ const FlightResultsPage = ({ searchParams, onBack, onEdit, onSearchComplete, onF
       ...flight,
       selectedFareType: selectedFare,
       price: selectedFare.price || flight.price,
+      // Pass full date context from search params if not in flight object
+      travelDate: searchParams?.departDate,
       // Ensure we pass TBO specific identifiers
       ResultIndex: flight.id, 
       TraceId: flight.trace_id // Ensure backend passes this
