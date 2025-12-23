@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { formatSectorTime, cleanSectorLabel } from '../../utils/dateFormatter';
 
 const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
+  const [selectedFareInCard, setSelectedFareInCard] = useState(null);
+
   // Helper to format duration
   const formatDuration = (minutes) => {
     if (!minutes) return '0h 0m';
@@ -27,6 +29,12 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
 
   // Primary price to show on the main card (usually the cheapest/first option)
   const displayPrice = flight.price || flight.base_price || 0;
+
+  // Handle local fare selection in mobile/inline mode
+  const handleLocalSelect = (e, fare) => {
+    e.stopPropagation();
+    setSelectedFareInCard(fare);
+  };
 
   return (
     <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 mb-4 overflow-hidden ${isExpanded ? 'ring-2 ring-blue-100 border-blue-200' : ''}`}>
@@ -88,7 +96,7 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
               </div>
             </div>
             
-            {/* Desktop: View Fares Button / Mobile: Chevron */}
+            {/* View Fares Button */}
             <button
               onClick={(e) => {
                 e.stopPropagation(); // Prevent double triggering if row click is enabled
@@ -112,14 +120,13 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
         </div>
       </div>
 
-      {/* 4. Expanded Content - INLINE ACCORDION */}
-      {/* Uses simple conditional rendering for instant "snap" effect as requested, no heavy animations */}
+      {/* 4. Expanded Content - INLINE ACCORDION (Mobile & Desktop) */}
       {isExpanded && (
-        <div className="border-t border-gray-100 bg-gray-50/50 p-4 sm:p-6 animate-fade-in">
+        <div className="border-t border-gray-100 bg-gray-50/50 p-4 sm:p-6 animate-fade-in relative">
           
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col md:flex-row gap-4 mb-16 sm:mb-0"> {/* Bottom margin for sticky footer on mobile */}
             
-            {/* A. Flight Details Column (Optional - Keep simple for now) */}
+            {/* A. Flight Details Column (Desktop Only) */}
             <div className="hidden lg:block w-1/4 pr-4 border-r border-gray-200">
               <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Flight Details</h4>
               <ul className="space-y-2 text-sm text-gray-600">
@@ -134,19 +141,27 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
               </ul>
             </div>
 
-            {/* B. Fare Options Column - The Core Deliverable */}
+            {/* B. Fare Options Column */}
             <div className="flex-1">
               <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 block lg:hidden">Select Fare</h4>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {fareOptions.map((fare, idx) => (
                   <div 
                     key={idx} 
-                    className="bg-white border border-gray-200 rounded-xl p-4 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer relative group"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onBook({...flight, selectedFare: fare});
-                    }}
+                    className={`bg-white border rounded-xl p-4 transition-all cursor-pointer relative group
+                      ${selectedFareInCard === fare 
+                        ? 'border-blue-600 ring-2 ring-blue-50 shadow-md transform scale-[1.02]' 
+                        : 'border-gray-200 hover:border-blue-400 hover:shadow-md'
+                      }`}
+                    onClick={(e) => handleLocalSelect(e, fare)}
                   >
+                    {/* Selected Badge */}
+                    {selectedFareInCard === fare && (
+                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-sm">
+                        SELECTED
+                      </div>
+                    )}
+
                     {/* Header */}
                     <div className="flex justify-between items-start mb-2">
                       <div>
@@ -187,16 +202,45 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
                       )}
                     </div>
 
-                    {/* Book Button - Visible on Hover (Desktop) or Always (Mobile) */}
-                    <button className="w-full py-2.5 bg-gray-900 text-white text-sm font-bold rounded-lg group-hover:bg-blue-600 transition-colors shadow-sm">
-                      Select
+                    {/* Desktop Select Button (Hidden on Mobile if using sticky footer) */}
+                    <button 
+                      className={`w-full py-2.5 text-sm font-bold rounded-lg transition-colors shadow-sm hidden sm:block
+                        ${selectedFareInCard === fare 
+                          ? 'bg-green-600 text-white hover:bg-green-700' 
+                          : 'bg-gray-900 text-white hover:bg-blue-600'
+                        }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onBook({...flight, selectedFare: fare});
+                      }}
+                    >
+                      {selectedFareInCard === fare ? 'Continue' : 'Select'}
                     </button>
                   </div>
                 ))}
               </div>
             </div>
-
           </div>
+
+          {/* C. Mobile Sticky Footer (Only when fare selected) */}
+          {selectedFareInCard && (
+            <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-50 flex items-center justify-between animate-slide-up">
+              <div>
+                <div className="text-xs text-gray-500">Total Price</div>
+                <div className="text-xl font-bold text-gray-900">₹{selectedFareInCard.price?.toLocaleString()}</div>
+              </div>
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onBook({...flight, selectedFare: selectedFareInCard});
+                }}
+                className="bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg hover:bg-blue-700 transition-all active:scale-95"
+              >
+                Continue
+              </button>
+            </div>
+          )}
+
         </div>
       )}
     </div>
