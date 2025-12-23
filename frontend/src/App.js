@@ -8,6 +8,7 @@ import CityDropdownSelector from './CityDropdownSelector';
 import FlightResultsPage from './components/FlightResults/FlightResultsPage';
 import MobileCalendar from './MobileCalendar';
 
+import Header from './components/Header';
 // ===============================================================================
 // TOURSMILE DESIGN CONSISTENCY STANDARDS - MANDATORY FOR ALL DEVELOPERS
 // ===============================================================================
