@@ -2986,6 +2986,7 @@ function App() {
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [searchParams, setSearchParams] = useState(null);
   
+  const [loading, setLoading] = useState(false);
   // Responsive design hook
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth <= 768;
