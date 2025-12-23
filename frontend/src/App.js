@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import './App.css';
 import './premium-sunset-styles.css';
 import FlightResults from './FlightResults';
+import './animations.css';
 import BookingFlow from './BookingFlow';
 import CityDropdownSelector from './CityDropdownSelector';
 import FlightResultsPage from './components/FlightResults/FlightResultsPage';
