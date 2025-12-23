@@ -3308,12 +3308,27 @@ function App() {
       )}
       
       {/* Results Page */}
-      {currentPage === 'results' && (
+      {currentPage === 'results' && !loading && (
         <>
+          <Header 
+            variant="results"
+            searchParams={searchParams}
+            onEdit={() => setCurrentPage('search')}
+            onBack={() => setCurrentPage('search')}
+          />
           <FlightResultsPage 
             searchParams={searchParams}
             onBack={() => setCurrentPage('search')}
+            onEdit={() => setCurrentPage('search')}
           />
+        </>
+      )}
+
+      {/* Loading State */}
+      {currentPage === 'results' && loading && (
+        <>
+          <Header variant="loading" searchParams={searchParams} />
+          <SearchLoader searchParams={searchParams} />
         </>
       )}
       
