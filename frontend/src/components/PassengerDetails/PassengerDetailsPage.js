@@ -44,13 +44,7 @@ const PassengerDetailsPage = ({ selectedFlight, onBack }) => {
 
   // Helper to format date
   const formatDate = (dateStr) => {
-    if (!dateStr) return 'Date not selected';
-    return new Date(dateStr).toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      day: 'numeric', 
-      month: 'long', 
-      year: 'numeric' 
-    });
+    return formatSectorDate(dateStr);
   };
 
   const formatDuration = (mins) => {
