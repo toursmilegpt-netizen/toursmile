@@ -3347,58 +3347,12 @@ function App() {
         </>
       )}
       
-      {/* Flight Selection Page */}
-      {currentPage === 'selection' && (
-        <>
-          <header className="border-b border-neutral-100 bg-gradient-to-b from-white to-blue-50/30">
-            <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <button 
-                  onClick={handleBackToResults}
-                  className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium"
-                >
-                  ← Back to Results
-                </button>
-              </div>
-            </div>
-          </header>
-          
-          <div className="mx-auto max-w-5xl px-4 py-6">
-            <h1 className="text-2xl font-bold mb-4">Flight Selection</h1>
-            <p className="text-gray-600 mb-8">Choose your fare option and proceed to passenger details</p>
-            
-            {selectedFlight && (
-              <div className="bg-white border rounded-xl p-6 mb-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-2xl">{selectedFlight.logo}</span>
-                    <div>
-                      <div className="font-semibold text-lg">{selectedFlight.airline}</div>
-                      <div className="text-gray-600">{selectedFlight.flightNumber}</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {selectedFlight.fareOptions?.map((option, index) => (
-                    <div key={index} className="border rounded-lg p-4 hover:border-blue-500 cursor-pointer">
-                      <div className="font-semibold mb-2">{option.type}</div>
-                      <div className="text-2xl font-bold text-blue-600 mb-2">₹{option.price.toLocaleString()}</div>
-                      <div className="text-sm text-gray-600 space-y-1">
-                        <div>🧳 {option.baggage}</div>
-                        <div>{option.meal ? '🍽️ Meal included' : '🚫 No meal'}</div>
-                        <div>{option.refundable ? '↩️ Refundable' : '🚫 Non-refundable'}</div>
-                      </div>
-                      <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Select This Fare
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </>
+      {/* Flight Selection Page - REPLACED WITH NEW PASSENGER DETAILS PAGE */}
+      {currentPage === 'selection' && selectedFlight && (
+        <PassengerDetailsPage 
+          selectedFlight={selectedFlight}
+          onBack={handleBackToResults}
+        />
       )}
     
     {/* OVERLAYS - App Level for Full-Screen Display */}
