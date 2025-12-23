@@ -3129,6 +3129,7 @@ function App() {
   };
   
   const handleSearch = async (searchData) => {
+    console.log("SEARCH CLICKED - handleSearch triggered");
     try {
       setSearchParams({
         from: searchData.from,
@@ -3140,6 +3141,7 @@ function App() {
         tripType: searchData.trip
       });
       
+      console.log("Setting loading state to true");
       // Ensure loading state is set true
       setLoading(true);
       
