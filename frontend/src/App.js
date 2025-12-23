@@ -3313,29 +3313,35 @@ function App() {
         </>
       )}
       
-      {/* Results Page */}
-      {currentPage === 'results' && !loading && (
+      {/* Results Page Logic with "Render-But-Hide" strategy to allow API call */}
+      {currentPage === 'results' && (
         <>
-          <Header 
-            variant="results"
-            searchParams={searchParams}
-            onEdit={() => setCurrentPage('search')}
-            onBack={() => setCurrentPage('search')}
-          />
-          <FlightResultsPage 
-            searchParams={searchParams}
-            onBack={() => setCurrentPage('search')}
-            onEdit={() => setCurrentPage('search')}
-            onSearchComplete={() => setLoading(false)}
-          />
-        </>
-      )}
-
-      {/* Loading State */}
-      {currentPage === 'results' && loading && (
-        <>
-          <Header variant="loading" searchParams={searchParams} />
-          <SearchLoader searchParams={searchParams} />
+          {loading && (
+            <>
+              <Header variant="loading" searchParams={searchParams} />
+              <SearchLoader searchParams={searchParams} />
+            </>
+          )}
+          
+          <div className={loading ? "hidden" : "block"}>
+            {/* Results Page Header (only visible when not loading) */}
+            <Header 
+              variant="results"
+              searchParams={searchParams}
+              onEdit={() => setCurrentPage('search')}
+              onBack={() => setCurrentPage('search')}
+            />
+            {/* FlightResultsPage is mounted but hidden during loading to allow useEffect to fire */}
+            <FlightResultsPage 
+              searchParams={searchParams}
+              onBack={() => setCurrentPage('search')}
+              onEdit={() => setCurrentPage('search')}
+              onSearchComplete={() => {
+                console.log("Search complete callback received in App.js");
+                setLoading(false);
+              }}
+            />
+          </div>
         </>
       )}
       
