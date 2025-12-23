@@ -54,6 +54,9 @@ const PassengerDetailsPage = ({ selectedFlight, onBack }) => {
     return `${h}h ${m}m`;
   };
 
+  const cleanLabel = (label) => cleanSectorLabel(label);
+  const cleanTime = (time) => formatSectorTime(time);
+
   return (
     <div className="min-h-screen bg-[#F3F4F6] pb-20">
       {/* Header is now handled by App.js wrapper */}
