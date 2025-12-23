@@ -798,7 +798,7 @@ const FlightResults = ({ searchParams, onFlightSelect }) => {
                 <div className="text-center py-12 px-4">
                   <div className="text-gray-400 text-5xl sm:text-6xl mb-4">✈️</div>
                   <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">No flights found for this route</h3>
-                  <p className="text-sm sm:text-base text-gray-600 mb-4">TBO's staging environment has limited data availability.</p>
+                  <p className="text-sm sm:text-base text-gray-600 mb-4">TBO&apos;s staging environment has limited data availability.</p>
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto text-left">
                     <p className="text-xs sm:text-sm text-blue-900 font-medium mb-2">✅ Routes with available data:</p>
                     <ul className="text-xs sm:text-sm text-blue-800 space-y-1">
