@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { formatSectorTime, cleanSectorLabel } from '../../utils/dateFormatter';
 const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
   // Helper to format time
   const formatTime = (timeStr) => {
