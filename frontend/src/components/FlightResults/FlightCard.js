@@ -53,7 +53,7 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
                 {formatTime(flight.departure_time)}
               </div>
               <div className="text-xs text-gray-500 font-medium mt-1">
-                {flight.origin || 'DEL'}
+                {cleanSectorLabel(flight.origin || 'DEL')}
               </div>
             </div>
 
@@ -72,7 +72,7 @@ const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
                 {formatTime(flight.arrival_time)}
               </div>
               <div className="text-xs text-gray-500 font-medium mt-1">
-                {flight.destination || 'BOM'}
+                {cleanSectorLabel(flight.destination || 'BOM')}
               </div>
             </div>
           </div>
