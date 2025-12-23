@@ -4,8 +4,7 @@ import { formatSectorTime, cleanSectorLabel } from '../../utils/dateFormatter';
 const FlightCard = ({ flight, onBook, onExpand, isExpanded }) => {
   // Helper to format time
   const formatTime = (timeStr) => {
-    if (!timeStr) return '--:--';
-    return timeStr.substring(0, 5);
+    return formatSectorTime(timeStr);
   };
 
   // Helper to format duration
