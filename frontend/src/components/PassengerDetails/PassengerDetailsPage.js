@@ -93,8 +93,8 @@ const PassengerDetailsPage = ({ selectedFlight, onBack }) => {
             {/* Time & Duration */}
             <div className="flex items-center justify-between bg-gray-50 rounded-xl p-4">
               <div className="text-center">
-                <div className="text-xl font-bold text-gray-900">{departure_time?.substring(0, 5)}</div>
-                <div className="text-sm font-semibold text-gray-600">{origin}</div>
+                <div className="text-xl font-bold text-gray-900">{cleanTime(departure_time)}</div>
+                <div className="text-sm font-semibold text-gray-600">{cleanLabel(origin)}</div>
               </div>
 
               <div className="flex flex-col items-center px-4 flex-1">
@@ -106,8 +106,8 @@ const PassengerDetailsPage = ({ selectedFlight, onBack }) => {
               </div>
 
               <div className="text-center">
-                <div className="text-xl font-bold text-gray-900">{arrival_time?.substring(0, 5)}</div>
-                <div className="text-sm font-semibold text-gray-600">{destination}</div>
+                <div className="text-xl font-bold text-gray-900">{cleanTime(arrival_time)}</div>
+                <div className="text-sm font-semibold text-gray-600">{cleanLabel(destination)}</div>
               </div>
             </div>
           </div>
