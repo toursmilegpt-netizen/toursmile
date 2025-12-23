@@ -33,9 +33,9 @@ const SearchLoader = ({ searchParams }) => {
         {searchParams?.to?.city || 'Destination'}
       </p>
 
-      {/* Progress Bar (Apple/MMT Style) */}
-      <div className="w-64 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-        <div className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 w-1/3 animate-indeterminate-bar rounded-full"></div>
+      {/* Progress Bar (Apple/MMT Style) - Using animate-indeterminate-bar from animations.css */}
+      <div className="w-64 h-1.5 bg-gray-100 rounded-full overflow-hidden relative">
+        <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 to-indigo-600 w-1/3 animate-indeterminate-bar rounded-full"></div>
       </div>
       
       {/* Trust Badges */}
