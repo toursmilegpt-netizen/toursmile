@@ -3323,6 +3323,7 @@ function App() {
             searchParams={searchParams}
             onBack={() => setCurrentPage('search')}
             onEdit={() => setCurrentPage('search')}
+            onSearchComplete={() => setLoading(false)}
           />
         </>
       )}
