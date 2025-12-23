@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FlightCard from './FlightCard';
 
-const FlightResultsPage = ({ searchParams, onBack, onEdit, onSearchComplete }) => {
+const FlightResultsPage = ({ searchParams, onBack, onEdit, onSearchComplete, onFlightSelect }) => {
   // State
   const [expandedId, setExpandedId] = useState(null);
   const [flights, setFlights] = useState([]);
@@ -74,7 +74,46 @@ const FlightResultsPage = ({ searchParams, onBack, onEdit, onSearchComplete }) =
   };
 
   const handleBook = (flight) => {
-    alert(`Booking ${flight.airline} for ₹${flight.price}`);
+    // FARE SELECTION LOGIC - MANDATORY VALIDATION
+    console.log("FARE SELECTED:", flight);
+
+    // 1. Validate mandatory TBO fields
+    // TBO requires ResultIndex (or id in our mapped object), TraceId (usually from search response), and Fare info
+    
+    // In our mapped object:
+    // id = ResultIndex
+    // validation_key = TraceId (mapped from backend) - wait, check backend mapping
+    
+    // Check backend mapping in tbo_flight_api.py:
+    // "id": option.get("ResultIndex"...
+    // "validation_key": option.get("Key"... -> This might need to be TraceId passed down
+    
+    // For now, we ensure 'flight' object has the fare details.
+    // If selectedFare is missing (direct Book click on card), use default/first fare
+    const selectedFare = flight.selectedFare || (flight.fare_types && flight.fare_types[0]) || {};
+    
+    // 2. Validate Price
+    if (!selectedFare.price && !flight.price) {
+      console.error("CRITICAL: Missing price in selected flight");
+      return; 
+    }
+
+    // 3. Construct Payload for Passenger Page
+    const flightPayload = {
+      ...flight,
+      selectedFareType: selectedFare,
+      price: selectedFare.price || flight.price,
+      // Ensure we pass TBO specific identifiers
+      ResultIndex: flight.id, 
+      TraceId: flight.trace_id // Ensure backend passes this
+    };
+
+    console.log("NAVIGATING TO PASSENGER PAGE WITH PAYLOAD:", flightPayload);
+    
+    // 4. Navigate
+    if (onFlightSelect) {
+      onFlightSelect(flightPayload);
+    }
   };
 
   // Note: We no longer render loading state here, as it's handled by App.js
