@@ -58,18 +58,22 @@ const MobileCalendar = ({
       onSelect({ depart: date, return: null });
       if (onClose) onClose();
     } else {
-      // Round Trip Logic
-      if (!initialDepart || (initialDepart && initialReturn)) {
-        // Case 1: No dates selected OR Range already selected -> Start new selection
+      // Round Trip Logic using 'selecting' state to enforce flow
+      if (selecting === 'depart') {
+        // Always set departure first, clear return
         onSelect({ depart: date, return: null });
-        // User needs to pick return next, stay open
-      } else if (initialDepart && !initialReturn) {
-        // Case 2: Depart selected, waiting for return
+        setSelecting('return');
+      } else {
+        // Picking return date
         if (isBefore(date, initialDepart)) {
-          // User picked a date before depart -> Update depart
+          // If user picks a date before departure, treat it as a correction to departure
           onSelect({ depart: date, return: null });
+          // Stay in return mode (waiting for return), or reset? 
+          // Usually if I pick earlier, I still need a return.
+          // Let's keep it simple: New Departure -> Wait for Return
+          setSelecting('return');
         } else {
-          // User picked valid return -> Complete range
+          // Valid return date
           onSelect({ depart: initialDepart, return: date });
           if (onClose) onClose();
         }
