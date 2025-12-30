@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-
 import { formatSectorDate, formatSectorTime, cleanSectorLabel } from '../../utils/dateFormatter';
+
 const PassengerDetailsPage = ({ selectedFlight, onBack }) => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -27,26 +27,19 @@ const PassengerDetailsPage = ({ selectedFlight, onBack }) => {
     );
   }
 
-  const { 
-    airline, 
-    flight_number, 
-    origin, 
-    destination, 
-    departure_time, 
-    arrival_time, 
-    price, 
-    selectedFareType,
-    travelDate, // Passed from FlightResultsPage payload
-    duration_minutes
-  } = selectedFlight;
+  // Detect Round Trip - check for returnFlight object
+  const isRoundTrip = !!selectedFlight.returnFlight;
+  
+  // Extract Flight Data
+  // For round trip, selectedFlight is the Onward flight, and selectedFlight.returnFlight is Return
+  const flights = isRoundTrip 
+    ? [selectedFlight, selectedFlight.returnFlight] 
+    : [selectedFlight];
 
-  const fare = selectedFareType || {};
-
-  // Helper to format date
-  const formatDate = (dateStr) => {
-    return formatSectorDate(dateStr);
-  };
-
+  // Helper Formatters
+  const formatDate = (dateStr) => formatSectorDate(dateStr);
+  const formatTime = (timeStr) => formatSectorTime(timeStr);
+  const cleanLabel = (label) => cleanSectorLabel(label);
   const formatDuration = (mins) => {
     if (!mins) return '';
     const h = Math.floor(mins / 60);
@@ -54,62 +47,84 @@ const PassengerDetailsPage = ({ selectedFlight, onBack }) => {
     return `${h}h ${m}m`;
   };
 
-  const cleanLabel = (label) => cleanSectorLabel(label);
-  const cleanTime = (time) => formatSectorTime(time);
-
   return (
     <div className="min-h-screen bg-[#F3F4F6] pb-20">
-      {/* Header is now handled by App.js wrapper */}
-      
       <div className="max-w-3xl mx-auto px-4 py-6">
         
-        {/* Flight Summary Card - Premium Design */}
+        {/* Flight Summary Card(s) - Stacked for Round Trip */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
           <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-            <span className="text-sm font-bold text-gray-700 uppercase tracking-wide">Flight Summary</span>
+            <span className="text-sm font-bold text-gray-700 uppercase tracking-wide">
+              {isRoundTrip ? 'Trip Summary' : 'Flight Summary'}
+            </span>
             <span className="text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
-              {fare.name || 'Standard'} Fare
+              {selectedFlight.selectedFareType?.name || 'Standard'} Fare
             </span>
           </div>
           
-          <div className="p-5">
-            {/* Route & Airline */}
-            <div className="flex justify-between items-start mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">
-                  {airline?.substring(0, 2).toUpperCase()}
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900">{airline}</h3>
-                  <p className="text-sm text-gray-500">{flight_number}</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-sm text-gray-500 mb-1">{formatDate(travelDate)}</div>
-                <div className="text-xl font-bold text-gray-900">₹{price?.toLocaleString()}</div>
-              </div>
-            </div>
+          <div className="divide-y divide-gray-100">
+            {flights.map((flight, index) => (
+              <div key={index} className="p-5">
+                {/* Leg Header (Onward/Return) */}
+                {isRoundTrip && (
+                  <div className="mb-4 flex items-center gap-2">
+                    <span className={`text-xs font-bold px-2 py-1 rounded ${index === 0 ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>
+                      {index === 0 ? 'ONWARD' : 'RETURN'}
+                    </span>
+                    <span className="text-sm font-medium text-gray-600">
+                      {formatDate(flight.travelDate || flight.departure_date)}
+                    </span>
+                  </div>
+                )}
 
-            {/* Time & Duration */}
-            <div className="flex items-center justify-between bg-gray-50 rounded-xl p-4">
-              <div className="text-center">
-                <div className="text-xl font-bold text-gray-900">{cleanTime(departure_time)}</div>
-                <div className="text-sm font-semibold text-gray-600">{cleanLabel(origin)}</div>
-              </div>
-
-              <div className="flex flex-col items-center px-4 flex-1">
-                <div className="text-xs text-gray-500 mb-1">{formatDuration(duration_minutes)}</div>
-                <div className="w-full h-[2px] bg-gray-300 relative flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-gray-400"></div>
+                {/* Route & Airline */}
+                <div className="flex justify-between items-start mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">
+                      {flight.airline?.substring(0, 2).toUpperCase()}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900">{flight.airline}</h3>
+                      <p className="text-sm text-gray-500">{flight.flight_number}</p>
+                    </div>
+                  </div>
+                  {/* Show Price only on first card (Total) or per leg? Usually Total is better */}
+                  {index === 0 && (
+                    <div className="text-right">
+                      {isRoundTrip ? (
+                        <div className="text-xl font-bold text-gray-900">
+                          ₹{((selectedFlight.price || 0) + (selectedFlight.returnFlight?.price || 0)).toLocaleString()}
+                        </div>
+                      ) : (
+                        <div className="text-xl font-bold text-gray-900">₹{flight.price?.toLocaleString()}</div>
+                      )}
+                      {isRoundTrip && <div className="text-xs text-gray-500">Total Price</div>}
+                    </div>
+                  )}
                 </div>
-                <div className="text-[10px] text-gray-400 mt-1">Non-stop</div>
-              </div>
 
-              <div className="text-center">
-                <div className="text-xl font-bold text-gray-900">{cleanTime(arrival_time)}</div>
-                <div className="text-sm font-semibold text-gray-600">{cleanLabel(destination)}</div>
+                {/* Time & Duration */}
+                <div className="flex items-center justify-between bg-gray-50 rounded-xl p-4">
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-gray-900">{formatTime(flight.departure_time)}</div>
+                    <div className="text-sm font-semibold text-gray-600">{cleanLabel(flight.origin)}</div>
+                  </div>
+
+                  <div className="flex flex-col items-center px-4 flex-1">
+                    <div className="text-xs text-gray-500 mb-1">{formatDuration(flight.duration_minutes)}</div>
+                    <div className="w-full h-[2px] bg-gray-300 relative flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-gray-400"></div>
+                    </div>
+                    <div className="text-[10px] text-gray-400 mt-1">Non-stop</div>
+                  </div>
+
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-gray-900">{formatTime(flight.arrival_time)}</div>
+                    <div className="text-sm font-semibold text-gray-600">{cleanLabel(flight.destination)}</div>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
