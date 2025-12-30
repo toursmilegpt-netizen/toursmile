@@ -160,35 +160,60 @@ const MobileCalendar = ({
 
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="flex-1 overflow-y-auto pb-24" ref={scrollRef}>
+      {/* Sticky Guidance Header */}
+      {tripType === 'RT' && (
+        <div className="bg-blue-50 border-b border-blue-100 p-3 sticky top-0 z-20 flex justify-center">
+          <span className="text-sm font-bold text-blue-800 animate-pulse bg-white px-4 py-1.5 rounded-full shadow-sm border border-blue-100">
+            {selecting === 'depart' ? 'Select Departure Date' : 'Now Select Return Date'}
+          </span>
+        </div>
+      )}
+
+      <div className="flex-1 overflow-y-auto pb-32" ref={scrollRef}>
         {months.map(renderMonth)}
       </div>
       
       {/* Floating Footer for Round Trip Status */}
       {tripType === 'RT' && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
-          {/* Visual Guidance Prompt */}
-          <div className="text-center mb-3">
-            <span className="text-sm font-semibold bg-gray-100 px-3 py-1 rounded-full text-gray-700 animate-pulse">
-              {selecting === 'depart' ? 'Select Departure Date' : 'Now Select Return Date'}
-            </span>
-          </div>
-
-          <div className="flex justify-between items-center">
-             <div className={`flex flex-col p-2 rounded-lg transition-colors ${selecting === 'depart' ? 'bg-blue-50 border border-blue-200' : ''}`}>
-               <span className="text-xs text-gray-500 uppercase font-semibold">Departure</span>
-               <span className={`text-sm font-bold ${initialDepart ? 'text-blue-600' : 'text-gray-300'}`}>
-                 {initialDepart ? initialDepart.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : 'Select'}
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-50">
+          <div className="flex justify-between items-center gap-4">
+             {/* Departure Field */}
+             <div 
+               onClick={() => setSelecting('depart')}
+               className={`flex-1 flex flex-col p-3 rounded-xl border-2 transition-all cursor-pointer ${
+                 selecting === 'depart' 
+                   ? 'bg-blue-50 border-blue-500 shadow-sm transform scale-[1.02]' 
+                   : 'bg-gray-50 border-transparent hover:bg-gray-100'
+               }`}
+             >
+               <span className={`text-[10px] font-bold uppercase tracking-wider mb-1 ${selecting === 'depart' ? 'text-blue-600' : 'text-gray-500'}`}>
+                 Departure
+               </span>
+               <span className={`text-sm font-bold truncate ${initialDepart ? 'text-gray-900' : 'text-gray-400'}`}>
+                 {initialDepart ? initialDepart.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : 'Select Date'}
                </span>
              </div>
              
-             <div className="text-gray-300">→</div>
+             <div className="text-gray-300 font-light text-xl">→</div>
              
-             <div className={`flex flex-col p-2 rounded-lg text-right transition-colors ${selecting === 'return' ? 'bg-blue-50 border border-blue-200' : ''}`}>
-               <span className="text-xs text-gray-500 uppercase font-semibold">Return</span>
-               <span className={`text-sm font-bold ${initialReturn ? 'text-blue-600' : 'text-gray-300'}`}>
-                 {initialReturn ? initialReturn.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : 'Select'}
+             {/* Return Field */}
+             <div 
+               onClick={() => initialDepart && setSelecting('return')}
+               className={`flex-1 flex flex-col p-3 rounded-xl border-2 transition-all cursor-pointer ${
+                 selecting === 'return' 
+                   ? 'bg-blue-50 border-blue-500 shadow-sm transform scale-[1.02]' 
+                   : !initialDepart ? 'bg-gray-50 border-transparent opacity-50 cursor-not-allowed' : 'bg-gray-50 border-transparent hover:bg-gray-100'
+               }`}
+             >
+               <span className={`text-[10px] font-bold uppercase tracking-wider mb-1 ${selecting === 'return' ? 'text-blue-600' : 'text-gray-500'}`}>
+                 Return
                </span>
+               <span className={`text-sm font-bold truncate ${initialReturn ? 'text-gray-900' : 'text-gray-400'}`}>
+                 {initialReturn ? initialReturn.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : 'Select Date'}
+               </span>
+               {selecting === 'depart' && !initialReturn && (
+                 <span className="text-[10px] text-orange-500 font-medium mt-1">Select departure first</span>
+               )}
              </div>
           </div>
         </div>
