@@ -162,18 +162,27 @@ const MobileCalendar = ({
       {/* Floating Footer for Round Trip Status */}
       {tripType === 'RT' && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
+          {/* Visual Guidance Prompt */}
+          <div className="text-center mb-3">
+            <span className="text-sm font-semibold bg-gray-100 px-3 py-1 rounded-full text-gray-700 animate-pulse">
+              {selecting === 'depart' ? 'Select Departure Date' : 'Now Select Return Date'}
+            </span>
+          </div>
+
           <div className="flex justify-between items-center">
-             <div className="flex flex-col">
+             <div className={`flex flex-col p-2 rounded-lg transition-colors ${selecting === 'depart' ? 'bg-blue-50 border border-blue-200' : ''}`}>
                <span className="text-xs text-gray-500 uppercase font-semibold">Departure</span>
                <span className={`text-sm font-bold ${initialDepart ? 'text-blue-600' : 'text-gray-300'}`}>
-                 {initialDepart ? initialDepart.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : 'Select Date'}
+                 {initialDepart ? initialDepart.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : 'Select'}
                </span>
              </div>
+             
              <div className="text-gray-300">→</div>
-             <div className="flex flex-col text-right">
+             
+             <div className={`flex flex-col p-2 rounded-lg text-right transition-colors ${selecting === 'return' ? 'bg-blue-50 border border-blue-200' : ''}`}>
                <span className="text-xs text-gray-500 uppercase font-semibold">Return</span>
                <span className={`text-sm font-bold ${initialReturn ? 'text-blue-600' : 'text-gray-300'}`}>
-                 {initialReturn ? initialReturn.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : 'Select Date'}
+                 {initialReturn ? initialReturn.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : 'Select'}
                </span>
              </div>
           </div>
