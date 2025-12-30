@@ -90,12 +90,17 @@ const MobileCalendar = ({
     
     const isToday = isSameDay(date, new Date());
 
+    // Round Trip Return Date Validation Logic
+    const isReturnSelection = tripType === 'RT' && selecting === 'return';
+    const isInvalidReturnDate = isReturnSelection && initialDepart && isBefore(date, initialDepart);
+
     return (
       <div 
         key={day} 
         className={`
           relative h-12 flex items-center justify-center text-sm font-medium cursor-pointer
           ${isDisabled ? 'text-gray-300 cursor-not-allowed' : 'text-gray-900'}
+          ${isInvalidReturnDate ? 'text-gray-300' : ''} 
           ${isSelectedDepart ? 'bg-blue-600 text-white rounded-l-full z-10' : ''}
           ${isSelectedReturn ? 'bg-blue-600 text-white rounded-r-full z-10' : ''}
           ${isInRange ? 'bg-blue-50' : ''}
